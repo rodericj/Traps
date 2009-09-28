@@ -12,6 +12,7 @@ class Item(models.Model):
 	)
 	name = models.CharField(max_length=50)
 	limit = models.IntegerField()
+	level = models.IntegerField()
 	note = models.CharField(max_length=100)
 	timeToLive = models.IntegerField()
 	assetPath = models.FilePathField(path="images")
