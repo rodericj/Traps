@@ -1,4 +1,5 @@
 from django.db import models
+import config
 
 # Create your models here.
 class Item(models.Model):
@@ -11,11 +12,12 @@ class Item(models.Model):
 		('DF', 'Defense'),
 	)
 	name = models.CharField(max_length=50)
-	limit = models.IntegerField()
+	limit = models.IntegerField(default=0)
 	note = models.CharField(max_length=100)
-	timeToLive = models.IntegerField()
+	timeToLive = models.IntegerField(default=0)
 	assetPath = models.FilePathField(path="images")
 	type = models.CharField(max_length=2, choices=TYPE_CHOICES)
+	level = models.IntegerField(default=1)
 
 	def __unicode__(self):
 		return self.name
@@ -28,9 +30,13 @@ class Venue(models.Model):
 	streetName = models.CharField(max_length=100)
 	city = models.CharField(max_length=30)
 	state = models.CharField(max_length=30)
-	coinValue = models.IntegerField()
+	coinValue = models.IntegerField(default=config.startVenueWithCoins)
 	phone = models.CharField(max_length=11)
 	item = models.ManyToManyField(Item, blank=True, null=True)
+	checkinCount = models.IntegerField(default=0)
+
+	def json(self): 
+		return {'id':self.id, 'name':self.name, 'latitude':self.latitude, 'longitude':self.longitude, 'streetName':self.streetName, 'city':self.city, 'state':self.state, 'coinValue':self.coinValue, 'phone':self.phone, 'checkinCount':self.checkinCount}
 
 	def __unicode__(self):
 		return self.name
@@ -71,15 +77,15 @@ class User(models.Model):
 	)
 	userName = models.CharField(max_length=20)
 	email = models.EmailField()
-	fbid = models.IntegerField()
-	twitterid = models.CharField(max_length=15)
-	photo = models.FilePathField(path="images/avatars")
+	fbid = models.IntegerField(null=True, blank=True)
+	twitterid = models.CharField(max_length=15, null=True, blank=True)
+	photo = models.FilePathField(path="images/avatars", null=True, blank=True)
 	gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
-	coinCount = models.IntegerField()
+	coinCount = models.IntegerField(default=config.startUserWithCoins)
 	hitPoints = models.IntegerField()
-	level = models.IntegerField()
-	killCount = models.IntegerField()
-	trapsSetCount = models.IntegerField()
+	level = models.IntegerField(1)
+	killCount = models.IntegerField(0)
+	trapsSetCount = models.IntegerField(0)
 	friends = models.ManyToManyField("self")
 	events = models.ManyToManyField(Event)
 

@@ -1,4 +1,57 @@
-<b>Nearby Places:</b>
-{% for venue in venues %}
-	<br>{{ venue.name }}
-{% endfor %}
+<!DOCTYPE html "-//W3C//DTD XHTML 1.0 Strict//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://www.facebook.com/2008/fbml">
+
+<head>
+<script type="text/javascript" src="/site_media/jquery.js"></script> 
+<script>
+
+function doneLoading(){
+	$.getJSON("/FindNearby/", gotNearby);
+}
+
+function buildVenueRow(item){
+	var newdiv = document.createElement('div');
+	$(newdiv).append("<a href=# onClick=getVenue("+item.id+")>"+item.name+"</a>")
+	return newdiv
+}
+
+function searchedVenue(data){
+	alert(data)
+}
+
+function searchVenue(vid){
+	var uid="123"
+	$.getJSON("/SearchVenue/"+vid+"/"+uid, searchedVenue);
+}
+
+function gotVenue(data){
+	var newpage = document.getElementById('venueInfo');
+	$(newpage).empty()
+	$(newpage).append(data.name+" click <a href=# onClick=searchVenue("+data.id+")> here</a> to search")
+}
+
+function getVenue(id){
+	$.getJSON("/GetVenue/"+id, gotVenue);
+}
+
+function gotNearby(data){
+	var newpage = document.getElementById('nearbyVenueList');
+	$.each(data, function(i, item){
+		newpage.appendChild(buildVenueRow(item))
+	});
+	
+}
+
+$(document).ready(doneLoading);
+</script>
+
+</head>
+<div id="startup">
+<b>Nearby Places that are in the database:</b>
+<div id="nearbyVenueList">
+<div id="venueInfo">
+</div>
+</div>
+</html>
+
