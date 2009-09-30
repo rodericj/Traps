@@ -53,8 +53,35 @@ def findYelpVenues(lat, lon):
 	
 	return dbBusinessList
 
-def SearchVenue(request, vid, uid):
-	print uid
+def noTrapWasHere(uid, venue):
+	print "get all the coins at this spot"
+	reward = {'coins': venue.coinValue}
+	user = User.objects.filter(id=uid)[0]
+	user.coinCount += venue.coinValue
+	user.save()
+	reward['usersCoinTotal'] = user.coinCount
+
+	print "get all rewards at this spot"
+	itemsAtVenue = venue.item.values()
+	#TODO figure out how to handle transferring items to users
+	print "do something with the items "
+	
+	return reward
+
+def trapWasHere(uid, venue, itemsThatAreTraps):
+	totalDamage = 0
+	for trap in itemsThatAreTraps:
+		#TODO see if they have a sheild
+		#TODO see if there was a multiplier on the trap
+		totalDamage += trap.value
+	user = User.objects.filter(id=uid)[0]
+	user.hitpoints = max(user.hitpoints - totalDamage, 0)
+	user.save()
+	return {'hitpointslost':totalDamage , 'hitpointsleft': user.hitpoints}
+
+def SearchVenue(request, vid):
+	uid = request.user.id
+	ret = {}
 	venue = Venue.objects.filter(id=vid)[0]
 	itemsAtVenue = venue.item.values()
 	itemsThatAreTraps = [i for i in itemsAtVenue if i['type'] =='TP']
@@ -62,11 +89,15 @@ def SearchVenue(request, vid, uid):
 	if len(itemsThatAreTraps) > 0:
 		#There are traps, take action	
 		print "There are traps"
+		ret['isTrapSet'] = True
+		ret['damage'] = trapWasHere(uid, venue, itemsThatAreTraps)
 	else:
 		#no traps here, give the go ahead to get coins and whatever
 		print "There are no traps"
+		ret['isTrapSet'] = False
+		ret['reward'] = noTrapWasHere(uid, venue)
 
-	return HttpResponse(simplejson.dumps({}), mimetype='application/json')
+	return HttpResponse(simplejson.dumps(ret), mimetype='application/json')
 
 
 def GetVenue(request, vid):

@@ -21,8 +21,7 @@ function searchedVenue(data){
 }
 
 function searchVenue(vid){
-	var uid="123"
-	$.getJSON("/SearchVenue/"+vid+"/"+uid, searchedVenue);
+	$.getJSON("/SearchVenue/"+vid, searchedVenue);
 }
 
 function gotVenue(data){

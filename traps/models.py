@@ -18,6 +18,7 @@ class Item(models.Model):
 	assetPath = models.FilePathField(path="images")
 	type = models.CharField(max_length=2, choices=TYPE_CHOICES)
 	level = models.IntegerField(default=1)
+	value = models.IntegerField(default=1)
 
 	def __unicode__(self):
 		return self.name
