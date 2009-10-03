@@ -22,18 +22,24 @@ function pointless(){
 
 function setTrap(vid, uid){
 	//TODO sending the default 1 which is a banana peel probably
-	$.getJSON("/SetTrap/"+vid+"/"+1+"/"+uid, searchedVenue);
+	$.getJSON("/SetTrap/"+vid+"/"+1+"/"+uid+"/", searchedVenue);
 }
 function searchedVenue(data){
 	var newpage = document.getElementById('searchResults');
 	if(data.isTrapSet){
 		$(newpage).empty()
-		$(newpage).append("You took "+data.damage.hitpointsleft+" damage. You have this many hp left " + data.damage.hitpointslost)
+		$(newpage).append("There were traps: ")
+		$.each(data.damage.traps, function(i, item){
+			$(newpage).append("<br>You took "+item.trapvalue+" damage from a trap called " + item.trapname)
+		});
+		$(newpage).append("<br>You took "+data.damage.hitpointslost+" damage. You have this many hp left " + data.damage.hitpointsleft)
 		$(newpage).append("set trap? <a href=# onClick=setTrap("+data.venueid+","+data.userid+")>yes</a> <a href=# onClick=pointless()>no</a>")
 	}
 	else{
 		$(newpage).empty()
-		$(newpage).append("You earned "+data.reward.coins + " you have this many left " + data.reward.userCoinTotal)
+		//alert(data)
+		//alert(data.reward)
+		$(newpage).append("No traps  here. You earned "+data.reward.coins + " coins you have this many total " + data.reward.usersCoinTotal+"<br>")
 		$(newpage).append("set trap? <a href=# onClick=setTrap("+data.venueid+","+data.userid+")>yes</a> <a href=# onClick=pointless()>no</a>")
 		//$(newpage).append(data.name+" click <a href=# onClick=searchVenue("+data.id+")> here</a> to search")
 	}

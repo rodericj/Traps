@@ -1,6 +1,6 @@
 from django.shortcuts import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login
-from Traps.traps.models import Venue, Item, TrapsUser
+from Traps.traps.models import Venue, Item, TrapsUser, VenueItem
 import urllib
 import sys
 import config
@@ -31,10 +31,8 @@ def findYelpVenues(lat, lon):
 			if len(dbsearch) > 1:
 				raise TooManySearchResultsError("Too many search results")
 			if dbsearch:
-				print "it exists"
 				dbBusinessList.append(dbsearch[0])
 			else:
-				print "it doesn't exist"
 				#create this venue
 				business['reviews'] = ''
 				b = business
@@ -78,17 +76,28 @@ def notifyTrapSetter(uid, venue):
 def trapWasHere(uid, venue, itemsThatAreTraps):
 	notifyTrapSetter(uid, venue)	
 	totalDamage = 0
+	trapData = [] 
 	for trap in itemsThatAreTraps:
 		#TODO see if they have a sheild
 		#TODO see if there was a multiplier on the trap
-		print dir(trap)
-		print type(trap)
-		totalDamage += trap['value']
+		#print dir(trap)
+		#print type(trap)
+		totalDamage += trap.value
+		trapData.append({'trapname':trap.name,'trapvalue':trap.value})
 	user = TrapsUser.objects.filter(id=uid)[0]
 	user.hitPoints = max(user.hitPoints - totalDamage, 0)
 	user.save()
-	return {'hitpointslost':totalDamage , 'hitpointsleft': user.hitPoints}
+	print "trapWasHere"
+	print trapData
+	return {'traps':trapData, 'hitpointslost':totalDamage , 'hitpointsleft': user.hitPoints}
 
+def getUserProfile(isSelf, uid):
+	user = TrapsUser.objects.get(id=uid)
+	inventory = user.useritem_set.all()
+	print inventory
+	userInfo = {'twitterid':user.twitterid, 'photo':user.photo, 'gender':user.gender, 'coinCount':user.coinCount, 'hitPoints':user.hitPoints, 'level':user.level, 'killCount':user.killCount, 'trapsSetCount':user.trapsSetCount, 'username':user.user.username}
+	return userInfo
+	
 def SetTrap(request, vid, iid, uid):
 	venue = Venue.objects.get(id=vid)
 	user = TrapsUser.objects.get(id=uid)
@@ -99,15 +108,16 @@ def SetTrap(request, vid, iid, uid):
 		item = alltraps[0].item
 		#put this item on the VenueItem table	
 		venue.venueitem_set.create(item=item)
-		alltraps[0].delete()
+		#user.useritem_set.get(id=alltraps[0].id).delete()
+		user.useritem_set.get(id=alltraps[0].id).isHolding=False
+		#alltraps[0].delete()
 
 	else:
 		print "user has no items"
-
-	#add the item to the venue
 	
 	print "sup"
 	ret = {}
+	userInfo = getUserProfile(True, uid)
 	return HttpResponse(simplejson.dumps(ret), mimetype='application/json')
 
 def SearchVenue(request, vid):
@@ -116,8 +126,15 @@ def SearchVenue(request, vid):
 	uid = request.user.id
 	ret = {}
 	venue = Venue.objects.filter(id=vid)[0]
-	itemsAtVenue = venue.item.values()
-	itemsThatAreTraps = [i for i in itemsAtVenue if i['type'] =='TP']
+	itemsAtVenue = venue.venueitem_set.filter()
+	#print itemsAtVenue1
+	#itemsAtVenue = venue.item.values()
+	for i in itemsAtVenue:
+		dir(i)	
+	itemsThatAreTraps = [i.item for i in itemsAtVenue if i.item.type =='TP']
+	print "I'm searching. Here are the items"
+	print itemsAtVenue
+	print itemsThatAreTraps
 	
 	if len(itemsThatAreTraps) > 0:
 		#There are traps, take action	
@@ -135,8 +152,6 @@ def SearchVenue(request, vid):
 		request.user.userprofile = get_or_create_profile(request.user)
 		request.user.userprofile.event_set.create(type='NT')
 		ret['reward'] = noTrapWasHere(uid, venue)
-		print "This is what we get when there are NOT traps"
-		print ret
 
 	ret['venueid'] = vid
 	ret['userid'] = uid

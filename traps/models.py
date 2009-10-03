@@ -22,7 +22,7 @@ class Item(models.Model):
 	value = models.IntegerField(default=1)
 
 	def __unicode__(self):
-		return self.name
+		return str(self.id) + " " + self.name
 
 	
 class Venue(models.Model):
@@ -66,7 +66,6 @@ class TrapsUser(models.Model):
 	trapsSetCount = models.IntegerField(default=0)
 	friends = models.ManyToManyField("self")
 	#events = models.ManyToManyField(Event)
-	inventory = models.ManyToManyField(Item)
 	user = models.ForeignKey(User, unique=True)
 
 	def __unicode__(self):
@@ -125,6 +124,7 @@ class VenueItem(models.Model):
 class UserItem(models.Model):
 	user = models.ForeignKey(TrapsUser)
 	item = models.ForeignKey(Item)	
+	isHolding = models.BooleanField(default=True)
 
 	def __unicode__(self):
 		return str(self.user) + " owns a " + str(self.item)
