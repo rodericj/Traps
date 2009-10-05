@@ -5,9 +5,9 @@ from django.contrib.auth.models import User
 # Create your models here.
 class Item(models.Model):
 	TYPE_CHOICES = (
-		('PR', 'Permanent'),
-		('SP', 'Special'),
-		('TM', 'Temporary'),
+		#('PR', 'Permanent'),
+		#('SP', 'Special'),
+		#('TM', 'Temporary'),
 		('RR', 'Rare'),
 		('TP', 'Trap'),
 		('DF', 'Defense'),
@@ -60,7 +60,7 @@ class TrapsUser(models.Model):
 	photo = models.FilePathField(path="images/avatars", null=True, blank=True)
 	gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
 	coinCount = models.IntegerField(default=config.startUserWithCoins)
-	hitPoints = models.IntegerField(default=0)
+	hitPoints = models.IntegerField(default=100)
 	level = models.IntegerField(default=1)
 	killCount = models.IntegerField(default=0)
 	trapsSetCount = models.IntegerField(default=0)
@@ -70,7 +70,8 @@ class TrapsUser(models.Model):
 
 	def __unicode__(self):
 		#return self.user.username+" coins: "+ str(self.coinCount) + " coins, " + str(self.killCount) + " kills"
-		return self.user.username
+		return "%d, %s"% (self.id, self.user.username)
+		#return self.id + self.user.username
 
 class Message(models.Model):
 	#From #django:
@@ -110,6 +111,9 @@ class Event(models.Model):
 	dateTime = models.DateTimeField(auto_now_add=True)
 	user = models.ForeignKey(TrapsUser)
 
+	def jsonify(self): 
+		return {'id':self.id, 'type':self.type, 'datetime':str(self.dateTime)}
+
 	def __unicode__(self):
 		longtype = [i for i in self.EVENT_CHOICES if self.type in i][0][1]		
 		return str(self.user) + " "+longtype + " at " + str(self.dateTime) + " " + self.data1 + " " + self.data2
@@ -117,6 +121,10 @@ class Event(models.Model):
 class VenueItem(models.Model):
 	venue = models.ForeignKey(Venue)
 	item = models.ForeignKey(Item)	
+	count = models.IntegerField(default=0)
+	dateTimePlaced = models.DateTimeField(auto_now_add=True)
+	dateTimeUsed = models.DateTimeField(null=True)
+	
 	
 	def __unicode__(self):
 		return str(self.venue) + " has a " + str(self.item)
@@ -125,6 +133,7 @@ class UserItem(models.Model):
 	user = models.ForeignKey(TrapsUser)
 	item = models.ForeignKey(Item)	
 	isHolding = models.BooleanField(default=True)
+	count = models.IntegerField(default=0)
 
 	def __unicode__(self):
 		return str(self.user) + " owns a " + str(self.item)

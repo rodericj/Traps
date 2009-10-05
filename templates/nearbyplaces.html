@@ -20,9 +20,17 @@ function pointless(){
 	alert("eat it")
 }
 
+function trapSet(data){
+	alert("you set a trap")
+	var venuePage = document.getElementById('venueInfo');
+	$(venuePage).empty()
+	var searchResults = document.getElementById('searchResults');
+	$(searchResults).empty()
+}
+
 function setTrap(vid, uid){
 	//TODO sending the default 1 which is a banana peel probably
-	$.getJSON("/SetTrap/"+vid+"/"+1+"/"+uid+"/", searchedVenue);
+	$.getJSON("/SetTrap/"+vid+"/"+1+"/"+uid+"/", trapSet);
 }
 function searchedVenue(data){
 	var newpage = document.getElementById('searchResults');
@@ -32,13 +40,11 @@ function searchedVenue(data){
 		$.each(data.damage.traps, function(i, item){
 			$(newpage).append("<br>You took "+item.trapvalue+" damage from a trap called " + item.trapname)
 		});
-		$(newpage).append("<br>You took "+data.damage.hitpointslost+" damage. You have this many hp left " + data.damage.hitpointsleft)
-		$(newpage).append("set trap? <a href=# onClick=setTrap("+data.venueid+","+data.userid+")>yes</a> <a href=# onClick=pointless()>no</a>")
+		$(newpage).append("<br>Total, you took "+data.damage.hitpointslost+" damage. You have this many hp left " + data.damage.hitpointsleft)
+		$(newpage).append("<br>set trap? <a href=# onClick=setTrap("+data.venueid+","+data.userid+")>yes</a> <a href=# onClick=pointless()>no</a>")
 	}
 	else{
 		$(newpage).empty()
-		//alert(data)
-		//alert(data.reward)
 		$(newpage).append("No traps  here. You earned "+data.reward.coins + " coins you have this many total " + data.reward.usersCoinTotal+"<br>")
 		$(newpage).append("set trap? <a href=# onClick=setTrap("+data.venueid+","+data.userid+")>yes</a> <a href=# onClick=pointless()>no</a>")
 		//$(newpage).append(data.name+" click <a href=# onClick=searchVenue("+data.id+")> here</a> to search")
@@ -46,7 +52,7 @@ function searchedVenue(data){
 }
 
 function searchVenue(vid){
-	$.getJSON("/SearchVenue/"+vid, searchedVenue);
+	$.getJSON("/SearchVenue/"+vid+"/", searchedVenue);
 }
 
 function gotVenue(data){
@@ -56,7 +62,11 @@ function gotVenue(data){
 }
 
 function getVenue(id){
-	$.getJSON("/GetVenue/"+id, gotVenue);
+	var venuePage = document.getElementById('venueInfo');
+	$(venuePage).empty()
+	var searchResults = document.getElementById('searchResults');
+	$(searchResults).empty()
+	$.getJSON("/GetVenue/"+id+"/", gotVenue);
 }
 
 function gotNearby(data){
@@ -79,5 +89,6 @@ $(document).ready(doneLoading);
 </div>
 <div id="searchResults">
 </div>
+<a href="/Logout/">logout</a>
 </html>
 
