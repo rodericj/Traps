@@ -52,17 +52,23 @@ def findYelpVenues(lat, lon):
 
 def noTrapWasHere(uid, venue):
 	print "get all the coins at this spot "+str(uid)+" " +str(venue)
-	reward = {'coins': venue.coinValue}
+
+	#potential coin reward - goes up 1 coin per minute to the max of that venue
+	timeDelta = datetime.now()-venue.lastUpdated
+	minutesSinceSearch = timeDelta.seconds/60
+	calculatedRewardValue = min(venue.coinValue, minutesSinceSearch)
+	reward = {'coins': calculatedRewardValue}
+
 	user = TrapsUser.objects.get(id=uid)
-	user.coinCount += venue.coinValue
+	user.coinCount += calculatedRewardValue
 	user.save()
 	reward['usersCoinTotal'] = user.coinCount
 
-	print "get all rewards at this spot"
+	#Just to activate the "last save timestamp" so there are no coins for a bit
+	if calculatedRewardValue:
+		#only save if we gave away coins
+		venue.save()
 	itemsAtVenue = venue.item.values()
-	#TODO figure out how to handle transferring items to users
-	#TODO make it so that this venue doesn't have coins for awhile
-	print "do something with the items "
 	
 	return reward
 
@@ -231,29 +237,33 @@ def Login(request):
 	return HttpResponseRedirect('/startup/')
 	
 def FindNearby(request):
-	#Find all venues near this one
-	venues = Venue.objects.all()
+	try:
+		#Find all venues near this one
+		venues = Venue.objects.all()
 
-	#Stored Venues
-	sendable_venues = [{'name':v.name, 'phone':v.phone, 'longitude':v.longitude} for v in venues]
-	ret = {'venues':sendable_venues}
+		#Stored Venues
+		sendable_venues = [{'name':v.name, 'phone':v.phone, 'longitude':v.longitude} for v in venues]
+		ret = {'venues':sendable_venues}
 
-	#yelp address
-	lat = '37.788022'
-	lon = '-122.399797'
+		#yelp address
+		lat = '37.788022'
+		lon = '-122.399797'
 
-	#larkin street
-	lat = "37.791846"
-	lon = "-122.419388"
+		#larkin street
+		lat = "37.791846"
+		lon = "-122.419388"
 
-	#find all yelp venues near here
-	#new yelp venues
-	dbVenues = findYelpVenues(lat, lon)
-	json = [v[0].json() for v in dbVenues]
-	#ret['businessList'] = dbVenues
-	#print ret.keys()
-	#print ret['businessList'][0].json()
-	#return HttpResponse(simplejson.dumps({'x':json}), mimetype='application/json')
-	request.user.userprofile = get_or_create_profile(request.user)
-	request.user.userprofile.event_set.create(type='FN')
+		#find all yelp venues near here
+		#new yelp venues
+		dbVenues = findYelpVenues(lat, lon)
+		json = [v[0].json() for v in dbVenues]
+		#ret['businessList'] = dbVenues
+		#print ret.keys()
+		#print ret['businessList'][0].json()
+		#return HttpResponse(simplejson.dumps({'x':json}), mimetype='application/json')
+		request.user.userprofile = get_or_create_profile(request.user)
+		request.user.userprofile.event_set.create(type='FN')
+	except:
+		print sys.exc_info()[0]
+		
 	return HttpResponse(simplejson.dumps(json), mimetype='application/json')

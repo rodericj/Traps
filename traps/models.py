@@ -37,6 +37,7 @@ class Venue(models.Model):
 	phone = models.CharField(max_length=11)
 	item = models.ManyToManyField(Item, blank=True, null=True)
 	checkinCount = models.IntegerField(default=0)
+	lastUpdated = models.DateTimeField(auto_now=True, auto_now_add=True)
 
 	def json(self): 
 		return {'id':self.id, 'name':self.name, 'latitude':self.latitude, 'longitude':self.longitude, 'streetName':self.streetName, 'city':self.city, 'state':self.state, 'coinValue':self.coinValue, 'phone':self.phone, 'checkinCount':self.checkinCount}
@@ -67,6 +68,7 @@ class TrapsUser(models.Model):
 	friends = models.ManyToManyField("self")
 	#events = models.ManyToManyField(Event)
 	user = models.ForeignKey(User, unique=True)
+	lastUpdated = models.DateTimeField(auto_now=True, auto_now_add=True)
 
 	def __unicode__(self):
 		#return self.user.username+" coins: "+ str(self.coinCount) + " coins, " + str(self.killCount) + " kills"
