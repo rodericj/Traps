@@ -1,0 +1,31 @@
+<!DOCTYPE html "-//W3C//DTD XHTML 1.0 Strict//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://www.facebook.com/2008/fbml">
+
+<head>
+<script type="text/javascript" src="/site_media/jquery.js"></script> 
+<script>
+
+function doneLoading(){
+	$.getJSON("/GetUserProfile/", gotProfile);
+}
+
+function gotProfile(data){
+	var newpage = document.getElementById('historyResults');
+	$(newpage).append("<br>name: "+data.username + "<br>hp: " + data.hitPoints + "<br>coins: " +data.coinCount+ "<br>kills: " + data.killCount)
+}
+
+$(document).ready(doneLoading);
+</script>
+
+</head>
+<div id="startup">
+<b>This is you</b>
+<div id="historyResults">
+</div>
+<div id="venueInfo">
+</div>
+<div id="searchResults">
+</div>
+</html>
+
