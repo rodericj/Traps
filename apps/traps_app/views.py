@@ -1,6 +1,7 @@
-from django.shortcuts import HttpResponse, HttpResponseRedirect
+from django.shortcuts import HttpResponse
+from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
-from Traps.traps.models import Venue, Item, TrapsUser, VenueItem
+from traps_app.models import Venue, Item, TrapsUser, VenueItem
 import urllib
 import sys
 import config

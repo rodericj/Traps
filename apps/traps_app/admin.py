@@ -1,4 +1,4 @@
-from Traps.traps.models import Message, Venue, Item, Event, TrapsUser, VenueItem, UserItem
+from traps_app.models import Message, Venue, Item, Event, TrapsUser, VenueItem, UserItem
 from django.contrib import admin
 
 admin.site.register(Message)
