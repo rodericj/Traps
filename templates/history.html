@@ -13,7 +13,7 @@ function doneLoading(){
 function gotHistory(data){
 	var newpage = document.getElementById('historyResults');
 	$.each(data, function(i, item){
-		$(newpage).append("<br>"+item.type)
+		$(newpage).append("<br>"+item.type +" at " +item.datetime)
 	});
 }
 

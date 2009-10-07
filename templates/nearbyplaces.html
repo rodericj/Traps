@@ -38,7 +38,7 @@ function searchedVenue(data){
 		$(newpage).empty()
 		$(newpage).append("There were traps: ")
 		$.each(data.damage.traps, function(i, item){
-			$(newpage).append("<br>You took "+item.trapvalue+" damage from a trap called " + item.trapname)
+			$(newpage).append("<br>You took "+item.trapvalue+" damage from a trap called " + item.trapname + " set by <a href='/profile/"+item.trapperid+"'>"+ item.trappername+"</a>")
 		});
 		$(newpage).append("<br>Total, you took "+data.damage.hitpointslost+" damage. You have this many hp left " + data.damage.hitpointsleft)
 		$(newpage).append("<br>set trap? <a href=# onClick=setTrap("+data.venueid+","+data.userid+")>yes</a> <a href=# onClick=pointless()>no</a>")

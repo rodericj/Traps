@@ -84,7 +84,7 @@ def trapWasHere(uid, venue, itemsThatAreTraps):
 		#TODO see if they have a sheild
 		#TODO see if there was a multiplier on the trap
 		totalDamage += trap.item.value
-		trapData.append({'trapname':trap.item.name,'trapvalue':trap.item.value})
+		trapData.append({'trapname':trap.item.name,'trapvalue':trap.item.value, 'trapperid':trap.user_id, 'trappername':trap.user.user.username})
 		trap.dateTimeUsed = datetime.now() 
 		trap.save()
 	user = TrapsUser.objects.get(id=uid)
@@ -110,10 +110,13 @@ def SetTrap(request, vid, iid, uid):
 	if len(alltraps) > 0:
 		item = alltraps[0].item
 		#put this item on the VenueItem table	
-		venue.venueitem_set.create(item=item)
+		venue.venueitem_set.create(item=item, user=user)
 		#TODO I'm not defining WHICH trap I'm setting here
 		#TODO actually this is kinda messy. I need to find only the holding traps
-		user.useritem_set.get(id=alltraps[0].id).isHolding=False
+		armedTrap = user.useritem_set.get(id=alltraps[0].id)
+		armedTrap.delete()
+		#armedTrap.isHolding=False
+		#armedTrap.save()
 		#alltraps[0].delete()
 
 	else:
@@ -127,19 +130,21 @@ def SetTrap(request, vid, iid, uid):
 
 def giveItemsAtVenueToUser(user, nonTrapVenueItems):
 	print "in give itmes at venue to user"
+	#Must do one of each type of rare item
 	for nonTrap in nonTrapVenueItems:
 		print "picking up the %s" %(nonTrap.item.name)
-		nonTrap.count -= 1
+		#nonTrap.count -= 1
 		nonTrap.save()
 		print nonTrap.item
-		try:
-			item = user.useritem_set.get(item=nonTrap.item)
-		except:
-			item = user.useritem_set.create(item=nonTrap.item)	
-		item.count += 1
-		item.save()
-	
-	
+
+		#TODO Revisit this idea here. No more count for UserItemo	Keep in mind that there IS a count at the VenueItem level
+		#try:
+			#item = user.useritem_set.get(item=nonTrap.item)
+		#except:
+			#item = user.useritem_set.create(item=nonTrap.item)	
+		item = user.useritem_set.create(item=nonTrap.item)	
+		#item.count += 1
+		#item.save()
 
 def SearchVenue(request, vid):
 	request.user.userprofile = get_or_create_profile(request.user)
@@ -168,7 +173,8 @@ def SearchVenue(request, vid):
 		request.user.userprofile.event_set.create(type='NT')
 
 		if len(itemsThatAreTraps) < len(itemsAtVenue):
-			nonTraps = [i for i in itemsAtVenue if i.count > 0 and i.item.type !='TP']
+			#nonTraps = [i for i in itemsAtVenue if i.count > 0 and i.item.type !='TP']
+			nonTraps = [i for i in itemsAtVenue if i.item.type !='TP']
 			#The assumption here is that if it is not a trap, I should get it
 			giveItemsAtVenueToUser(request.user.userprofile, nonTraps)
 		ret['reward'] = noTrapWasHere(uid, venue)
@@ -179,22 +185,45 @@ def SearchVenue(request, vid):
 	print ret
 	return HttpResponse(simplejson.dumps(ret), mimetype='application/json')
 
+
+def GetUserProfile(request):
+	userprofile = get_or_create_profile(request.user)
+	return GetUserProfile(request, userprofile.id)
+
+def GetUserProfile(request, uid):
+	userprofile = get_or_create_profile(request.user)
+	profile = userprofile.objectify()
+	print profile
+	return HttpResponse(simplejson.dumps(profile), mimetype='application/json')
+
+def GetUserDropHistory(request):
+	userprofile = get_or_create_profile(request.user)
+	print userprofile.id
+	#relevantHistoryItems = ['LI', 'PC', 'SE', 'UI', 'HT', 'ST']
+	#history=userprofile.event_set.filter(type__in=relevantHistoryItems)	
+	history=VenueItem.objects.filter(user__id__exact=userprofile.id)
+	jsonHistory = [h.objectify() for h in history]
+	print "This is the items you have dropped"
+	print jsonHistory
+		
+	return HttpResponse(simplejson.dumps(jsonHistory), mimetype='application/json')
+
 def GetUserHistory(request):
 	userprofile = get_or_create_profile(request.user)
 	print userprofile.id
 	relevantHistoryItems = ['LI', 'PC', 'SE', 'UI', 'HT', 'ST']
 	history=userprofile.event_set.filter(type__in=relevantHistoryItems)	
-	jsonHistory = [h.jsonify() for h in history]
+	jsonHistory = [h.objectify() for h in history]
 	print jsonHistory
-	
 		
 	return HttpResponse(simplejson.dumps(jsonHistory), mimetype='application/json')
+
 def GetVenue(request, vid):
 	request.user.userprofile = get_or_create_profile(request.user)
 	request.user.userprofile.event_set.create(type='GV')
 	venue = Venue.objects.get(id=vid)
 
-	return HttpResponse(simplejson.dumps(venue.json()), mimetype='application/json')
+	return HttpResponse(simplejson.dumps(venue.objectify()), mimetype='application/json')
 
 def get_or_create_profile(user):
 	try:
@@ -256,7 +285,7 @@ def FindNearby(request):
 		#find all yelp venues near here
 		#new yelp venues
 		dbVenues = findYelpVenues(lat, lon)
-		json = [v[0].json() for v in dbVenues]
+		json = [v[0].objectify() for v in dbVenues]
 		#ret['businessList'] = dbVenues
 		#print ret.keys()
 		#print ret['businessList'][0].json()

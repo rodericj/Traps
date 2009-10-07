@@ -24,7 +24,6 @@ class Item(models.Model):
 	def __unicode__(self):
 		return str(self.id) + " " + self.name
 
-	
 class Venue(models.Model):
 	name = models.CharField(max_length=50)
 	latitude = models.FloatField()
@@ -39,8 +38,18 @@ class Venue(models.Model):
 	checkinCount = models.IntegerField(default=0)
 	lastUpdated = models.DateTimeField(auto_now=True, auto_now_add=True)
 
-	def json(self): 
-		return {'id':self.id, 'name':self.name, 'latitude':self.latitude, 'longitude':self.longitude, 'streetName':self.streetName, 'city':self.city, 'state':self.state, 'coinValue':self.coinValue, 'phone':self.phone, 'checkinCount':self.checkinCount}
+	def objectify(self): 
+		return {'id':self.id,
+				 'name':self.name,
+				 'latitude':self.latitude,
+				 'longitude':self.longitude,
+				 'streetName':self.streetName,
+				 'city':self.city,
+				 'state':self.state,
+				 'coinValue':self.coinValue,
+				 'phone':self.phone,
+				 'checkinCount':self.checkinCount
+				}
 
 	def __unicode__(self):
 		return self.name
@@ -69,6 +78,20 @@ class TrapsUser(models.Model):
 	#events = models.ManyToManyField(Event)
 	user = models.ForeignKey(User, unique=True)
 	lastUpdated = models.DateTimeField(auto_now=True, auto_now_add=True)
+
+	def objectify(self):
+		return {'fbid':self.fbid,
+ 				'twitterid':self.twitterid,
+ 				'photo':self.photo,
+ 				'gender':self.gender,
+ 				'coinCount':self.coinCount,
+ 				'hitPoints':self.hitPoints,
+ 				'level':self.level,
+ 				'killCount':self.killCount,
+ 				'trapsSetCount':self.trapsSetCount,
+ 				'username':self.user.username,
+ 				'lastUpdated':str(self.lastUpdated)
+				}
 
 	def __unicode__(self):
 		#return self.user.username+" coins: "+ str(self.coinCount) + " coins, " + str(self.killCount) + " kills"
@@ -113,8 +136,11 @@ class Event(models.Model):
 	dateTime = models.DateTimeField(auto_now_add=True)
 	user = models.ForeignKey(TrapsUser)
 
-	def jsonify(self): 
-		return {'id':self.id, 'type':self.type, 'datetime':str(self.dateTime)}
+	def objectify(self): 
+		return {'id':self.id,
+				'type':dict(self.EVENT_CHOICES)[self.type],
+				'datetime':str(self.dateTime)
+				}
 
 	def __unicode__(self):
 		longtype = [i for i in self.EVENT_CHOICES if self.type in i][0][1]		
@@ -123,11 +149,20 @@ class Event(models.Model):
 class VenueItem(models.Model):
 	venue = models.ForeignKey(Venue)
 	item = models.ForeignKey(Item)	
-	count = models.IntegerField(default=0)
+	user = models.ForeignKey(TrapsUser, null=True, blank=True)
+	#count = models.IntegerField(default=0)
 	dateTimePlaced = models.DateTimeField(auto_now_add=True)
 	dateTimeUsed = models.DateTimeField(null=True)
 	
 	
+	def objectify(self): 
+		return {'id':self.id, 
+				'venuename':self.venue.name,
+				'type':self.item.name, 
+				'user':self.user.user.username, 
+				'datetimeplaced':str(self.dateTimePlaced), 
+				'datetimeused':str(self.dateTimeUsed)}
+
 	def __unicode__(self):
 		return str(self.venue) + " has a " + str(self.item)
 
@@ -135,7 +170,7 @@ class UserItem(models.Model):
 	user = models.ForeignKey(TrapsUser)
 	item = models.ForeignKey(Item)	
 	isHolding = models.BooleanField(default=True)
-	count = models.IntegerField(default=0)
+	#count = models.IntegerField(default=0)
 
 	def __unicode__(self):
 		return str(self.user) + " owns a " + str(self.item)
