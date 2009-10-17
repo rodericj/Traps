@@ -237,16 +237,37 @@ def Logout(request):
 	logout(request)
 	return HttpResponseRedirect('/loggedOut/')
 
+def ProfileRefresh(request):
+	print "refreshing profile"
+	user = request.user
+	user.userprofile = get_or_create_profile(user)
+	user.userprofile.event_set.create(type='LI')
+	return HttpResponse(simplejson.dumps(profileRefresh(user.userprofile)), mimetype='application/json')
+
+def profileRefresh(userprofile):
+	return userprofile.objectify()
+
 def Login(request):
 	print request.user
-	uname = request.GET['uname']
-	email = request.GET['email']
-
+	logout(request)
+	request.user
+	print '1'
+	if request.GET:
+		print '3'
+		uname = request.GET['uname']
+		password = request.GET['password']
+	else:
+		print '4'
+		print request.POST
+		uname = request.POST['uname']
+		password = request.POST['password']
+		
+	print '2'
 	if request.user.is_anonymous():
 		#create user and profile Create New User
 		print "create user"
-		user = User.objects.create_user(uname, email, '123')
-		user = authenticate(username=uname, password='123')
+		user = User.objects.create_user(uname, 'tmp@example.com', password)
+		user = authenticate(username=uname, password=password)
 		login(request, user)
 	else:
 		user = request.user	
@@ -263,6 +284,11 @@ def Login(request):
 		print starterItem
 		user.userprofile.useritem_set.create(item=starterItem)
 	
+	if request.POST.get('client', '') == 'iphone':
+		print "this is an iphone client"
+		json = profileRefresh(user.userprofile)
+		print json
+		return HttpResponse(simplejson.dumps(json), mimetype='application/json')
 	return HttpResponseRedirect('/startup/')
 	
 def FindNearby(request):
