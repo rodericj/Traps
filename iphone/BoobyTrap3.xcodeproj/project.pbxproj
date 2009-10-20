@@ -1,0 +1,328 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1D3623260D0F684500981E51 /* BoobyTrap3AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* BoobyTrap3AppDelegate.m */; };
+		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
+		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
+		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
+		28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD733E0D9D9553002E5188 /* MainWindow.xib */; };
+		5F43CAE51085720500543ADB /* home.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F43CAE41085720500543ADB /* home.png */; };
+		5F43CAEF1085726600543ADB /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F43CAEE1085726600543ADB /* LoginViewController.m */; };
+		5F43CAF3108572C100543ADB /* LoginView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F43CAF2108572C100543ADB /* LoginView.xib */; };
+		5FD2C5A01082B88100B8B0E4 /* HomeNavController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD2C59F1082B88100B8B0E4 /* HomeNavController.m */; };
+		5FD2C5B51082B92200B8B0E4 /* HomeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD2C5B41082B92200B8B0E4 /* HomeTableViewController.m */; };
+		5FD2C5BA1082B97700B8B0E4 /* HomeViewMiniProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD2C5B91082B97700B8B0E4 /* HomeViewMiniProfileViewController.m */; };
+		5FD2C5C11082BC8400B8B0E4 /* HomeViewContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD2C5C01082BC8400B8B0E4 /* HomeViewContainerViewController.m */; };
+		5FD2C5CD1082E4D300B8B0E4 /* HomeTable.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5FD2C5CC1082E4D300B8B0E4 /* HomeTable.xib */; };
+		5FD2C5D91082E8D900B8B0E4 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD2C5D81082E8D900B8B0E4 /* ProfileViewController.m */; };
+		5FD2C5DD1082E90B00B8B0E4 /* ProfileView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5FD2C5DC1082E90B00B8B0E4 /* ProfileView.xib */; };
+		5FD2C62D1082EC2800B8B0E4 /* walk.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FD2C62C1082EC2800B8B0E4 /* walk.png */; };
+		5FD2C62F1082EC3600B8B0E4 /* pin.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FD2C62E1082EC3600B8B0E4 /* pin.png */; };
+		5FD2C6311082EC4000B8B0E4 /* badge.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FD2C6301082EC4000B8B0E4 /* badge.png */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		1D3623240D0F684500981E51 /* BoobyTrap3AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BoobyTrap3AppDelegate.h; sourceTree = "<group>"; };
+		1D3623250D0F684500981E51 /* BoobyTrap3AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BoobyTrap3AppDelegate.m; sourceTree = "<group>"; };
+		1D6058910D05DD3D006BFB54 /* BoobyTrap3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BoobyTrap3.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		288765FC0DF74451002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		28AD733E0D9D9553002E5188 /* MainWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
+		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		32CA4F630368D1EE00C91783 /* BoobyTrap3_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BoobyTrap3_Prefix.pch; sourceTree = "<group>"; };
+		5F43CAE41085720500543ADB /* home.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = home.png; sourceTree = "<group>"; };
+		5F43CAED1085726600543ADB /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		5F43CAEE1085726600543ADB /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		5F43CAF2108572C100543ADB /* LoginView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoginView.xib; sourceTree = "<group>"; };
+		5FD2C59E1082B88100B8B0E4 /* HomeNavController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeNavController.h; sourceTree = "<group>"; };
+		5FD2C59F1082B88100B8B0E4 /* HomeNavController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeNavController.m; sourceTree = "<group>"; };
+		5FD2C5B31082B92200B8B0E4 /* HomeTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeTableViewController.h; sourceTree = "<group>"; };
+		5FD2C5B41082B92200B8B0E4 /* HomeTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeTableViewController.m; sourceTree = "<group>"; };
+		5FD2C5B81082B97700B8B0E4 /* HomeViewMiniProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewMiniProfileViewController.h; sourceTree = "<group>"; };
+		5FD2C5B91082B97700B8B0E4 /* HomeViewMiniProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewMiniProfileViewController.m; sourceTree = "<group>"; };
+		5FD2C5BF1082BC8400B8B0E4 /* HomeViewContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewContainerViewController.h; sourceTree = "<group>"; };
+		5FD2C5C01082BC8400B8B0E4 /* HomeViewContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewContainerViewController.m; sourceTree = "<group>"; };
+		5FD2C5CC1082E4D300B8B0E4 /* HomeTable.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeTable.xib; sourceTree = "<group>"; };
+		5FD2C5D71082E8D900B8B0E4 /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProfileViewController.h; path = ../ProfileViewController.h; sourceTree = "<group>"; };
+		5FD2C5D81082E8D900B8B0E4 /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProfileViewController.m; path = ../ProfileViewController.m; sourceTree = "<group>"; };
+		5FD2C5DC1082E90B00B8B0E4 /* ProfileView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileView.xib; sourceTree = "<group>"; };
+		5FD2C62C1082EC2800B8B0E4 /* walk.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = walk.png; sourceTree = "<group>"; };
+		5FD2C62E1082EC3600B8B0E4 /* pin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pin.png; sourceTree = "<group>"; };
+		5FD2C6301082EC4000B8B0E4 /* badge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = badge.png; sourceTree = "<group>"; };
+		8D1107310486CEB800E47090 /* BoobyTrap3-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "BoobyTrap3-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1D60588F0D05DD3D006BFB54 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
+				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
+				288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		080E96DDFE201D6D7F000001 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				5F2155A0108D8C7B006FA8F2 /* ProfileView */,
+				5F43CAEA1085724800543ADB /* LoginView */,
+				5FD2C5A31082B90500B8B0E4 /* HomeView */,
+				1D3623240D0F684500981E51 /* BoobyTrap3AppDelegate.h */,
+				1D3623250D0F684500981E51 /* BoobyTrap3AppDelegate.m */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		19C28FACFE9D520D11CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1D6058910D05DD3D006BFB54 /* BoobyTrap3.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
+			isa = PBXGroup;
+			children = (
+				080E96DDFE201D6D7F000001 /* Classes */,
+				29B97315FDCFA39411CA2CEA /* Other Sources */,
+				29B97317FDCFA39411CA2CEA /* Resources */,
+				29B97323FDCFA39411CA2CEA /* Frameworks */,
+				19C28FACFE9D520D11CA2CBB /* Products */,
+			);
+			name = CustomTemplate;
+			sourceTree = "<group>";
+		};
+		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				32CA4F630368D1EE00C91783 /* BoobyTrap3_Prefix.pch */,
+				29B97316FDCFA39411CA2CEA /* main.m */,
+			);
+			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		29B97317FDCFA39411CA2CEA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				5F43CAE41085720500543ADB /* home.png */,
+				5FD2C62E1082EC3600B8B0E4 /* pin.png */,
+				5FD2C6301082EC4000B8B0E4 /* badge.png */,
+				5FD2C62C1082EC2800B8B0E4 /* walk.png */,
+				28AD733E0D9D9553002E5188 /* MainWindow.xib */,
+				5FD2C5DC1082E90B00B8B0E4 /* ProfileView.xib */,
+				8D1107310486CEB800E47090 /* BoobyTrap3-Info.plist */,
+				5FD2C5CC1082E4D300B8B0E4 /* HomeTable.xib */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
+				1D30AB110D05D00D00671497 /* Foundation.framework */,
+				288765FC0DF74451002DB57D /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		5F2155A0108D8C7B006FA8F2 /* ProfileView */ = {
+			isa = PBXGroup;
+			children = (
+				5FD2C5D71082E8D900B8B0E4 /* ProfileViewController.h */,
+				5FD2C5D81082E8D900B8B0E4 /* ProfileViewController.m */,
+			);
+			name = ProfileView;
+			sourceTree = "<group>";
+		};
+		5F43CAEA1085724800543ADB /* LoginView */ = {
+			isa = PBXGroup;
+			children = (
+				5F43CAED1085726600543ADB /* LoginViewController.h */,
+				5F43CAEE1085726600543ADB /* LoginViewController.m */,
+				5F43CAF2108572C100543ADB /* LoginView.xib */,
+			);
+			name = LoginView;
+			sourceTree = "<group>";
+		};
+		5FD2C5A31082B90500B8B0E4 /* HomeView */ = {
+			isa = PBXGroup;
+			children = (
+				5FD2C5B81082B97700B8B0E4 /* HomeViewMiniProfileViewController.h */,
+				5FD2C5B91082B97700B8B0E4 /* HomeViewMiniProfileViewController.m */,
+				5FD2C5B31082B92200B8B0E4 /* HomeTableViewController.h */,
+				5FD2C5B41082B92200B8B0E4 /* HomeTableViewController.m */,
+				5FD2C59E1082B88100B8B0E4 /* HomeNavController.h */,
+				5FD2C59F1082B88100B8B0E4 /* HomeNavController.m */,
+				5FD2C5BF1082BC8400B8B0E4 /* HomeViewContainerViewController.h */,
+				5FD2C5C01082BC8400B8B0E4 /* HomeViewContainerViewController.m */,
+			);
+			name = HomeView;
+			path = ..;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1D6058900D05DD3D006BFB54 /* BoobyTrap3 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "BoobyTrap3" */;
+			buildPhases = (
+				1D60588D0D05DD3D006BFB54 /* Resources */,
+				1D60588E0D05DD3D006BFB54 /* Sources */,
+				1D60588F0D05DD3D006BFB54 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BoobyTrap3;
+			productName = BoobyTrap3;
+			productReference = 1D6058910D05DD3D006BFB54 /* BoobyTrap3.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		29B97313FDCFA39411CA2CEA /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "BoobyTrap3" */;
+			compatibilityVersion = "Xcode 3.1";
+			hasScannedForEncodings = 1;
+			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				1D6058900D05DD3D006BFB54 /* BoobyTrap3 */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1D60588D0D05DD3D006BFB54 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */,
+				5FD2C5CD1082E4D300B8B0E4 /* HomeTable.xib in Resources */,
+				5FD2C5DD1082E90B00B8B0E4 /* ProfileView.xib in Resources */,
+				5FD2C62D1082EC2800B8B0E4 /* walk.png in Resources */,
+				5FD2C62F1082EC3600B8B0E4 /* pin.png in Resources */,
+				5FD2C6311082EC4000B8B0E4 /* badge.png in Resources */,
+				5F43CAE51085720500543ADB /* home.png in Resources */,
+				5F43CAF3108572C100543ADB /* LoginView.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1D60588E0D05DD3D006BFB54 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
+				1D3623260D0F684500981E51 /* BoobyTrap3AppDelegate.m in Sources */,
+				5FD2C5A01082B88100B8B0E4 /* HomeNavController.m in Sources */,
+				5FD2C5B51082B92200B8B0E4 /* HomeTableViewController.m in Sources */,
+				5FD2C5BA1082B97700B8B0E4 /* HomeViewMiniProfileViewController.m in Sources */,
+				5FD2C5C11082BC8400B8B0E4 /* HomeViewContainerViewController.m in Sources */,
+				5FD2C5D91082E8D900B8B0E4 /* ProfileViewController.m in Sources */,
+				5F43CAEF1085726600543ADB /* LoginViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		1D6058940D05DD3E006BFB54 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = BoobyTrap3_Prefix.pch;
+				INFOPLIST_FILE = "BoobyTrap3-Info.plist";
+				PRODUCT_NAME = BoobyTrap3;
+			};
+			name = Debug;
+		};
+		1D6058950D05DD3E006BFB54 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = BoobyTrap3_Prefix.pch;
+				INFOPLIST_FILE = "BoobyTrap3-Info.plist";
+				PRODUCT_NAME = BoobyTrap3;
+			};
+			name = Release;
+		};
+		C01FCF4F08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				SDKROOT = iphoneos3.1;
+			};
+			name = Debug;
+		};
+		C01FCF5008A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				SDKROOT = iphoneos3.1;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "BoobyTrap3" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1D6058940D05DD3E006BFB54 /* Debug */,
+				1D6058950D05DD3E006BFB54 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "BoobyTrap3" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4F08A954540054247B /* Debug */,
+				C01FCF5008A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 29B97313FDCFA39411CA2CEA /* Project object */;
+}
