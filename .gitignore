@@ -1,2 +1,11 @@
 *.pyc
 *.swp
+
+#xcode noise
+build/*
+*.pbxuser
+*.mode1v3
+
+# osx noise
+.DS_Store
+
