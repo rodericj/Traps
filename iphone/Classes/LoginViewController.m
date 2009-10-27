@@ -34,8 +34,33 @@
 	NSLog(usernameTextField.text);
 	NSLog(passwordTextField.text);
 	
-	//call to the web service to see if we can log in
+	//NSString *urlString = [NSString stringWithFormat:@"http://localhost:8000/"
 	
+	//call to the web service to see if we can log in
+	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://localhost:8000/IPhoneLogin/"]
+										 cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
+									 timeoutInterval:60.0];
+    [request setHTTPMethod:@"POST"];
+    [request setHTTPBody:[[NSString stringWithFormat:@"uname=%@&password=%@&uid=%@", usernameTextField.text, passwordTextField.text,
+                        //   [sessionId URLEncodeString],
+                           [[UIDevice currentDevice] uniqueIdentifier]] dataUsingEncoding:NSUTF8StringEncoding]];
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+   // NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+	NSURLResponse *response;
+	NSError *error;
+
+	NSData *urlData = [NSURLConnection sendSynchronousRequest:request
+									returningResponse:&response
+												error:&error];
+	NSString *results = [[NSString alloc] initWithData:urlData encoding:NSUTF8StringEncoding];
+	NSLog(results);
+	
+	//
+//    if (connection) {
+//        NSMutableData *receivedData = [[NSMutableData data] retain];
+//		NSLog(receivedData);
+//    }
+//    
 	//if failed login, report the reason and bounce
 	
 	//once logged in, save this info into the property list then remove modal view

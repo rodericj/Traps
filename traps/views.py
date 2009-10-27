@@ -233,6 +233,16 @@ def get_or_create_profile(user):
 		profile.save()
 	return profile
 
+def IPhoneLogin(request):
+	#just in case
+	logout(request)
+	uname = request.POST['uname']
+	password = request.POST['password']
+	profile = doLogin(request, uname, password)
+	jsonprofile = profile.objectify()
+
+	return HttpResponse(simplejson.dumps(jsonprofile), mimetype='application/json')
+	
 def Logout(request):
 	logout(request)
 	return HttpResponseRedirect('/loggedOut/')
@@ -240,13 +250,19 @@ def Logout(request):
 def Login(request):
 	print request.user
 	uname = request.GET['uname']
-	email = request.GET['email']
+	password = request.GET['email']
+
+	profile = doLogin(request, uname, password)
+
+	return HttpResponseRedirect('/startup/')
+	
+def doLogin(request, uname, password):
 
 	if request.user.is_anonymous():
 		#create user and profile Create New User
 		print "create user"
-		user = User.objects.create_user(uname, email, '123')
-		user = authenticate(username=uname, password='123')
+		user = User.objects.create_user(uname, 'none', password)
+		user = authenticate(username=uname, password=password)
 		login(request, user)
 	else:
 		user = request.user	
@@ -257,13 +273,13 @@ def Login(request):
 	
 	#Is it safe to assume that a login is a first time user? I'm not sure TODO
 	#create a whole bunch of bananas	
-	
 	for i in range(config.numStarterItems):
 		starterItem = Item.objects.get(id=1)
 		print starterItem
 		user.userprofile.useritem_set.create(item=starterItem)
+
+	return user.userprofile
 	
-	return HttpResponseRedirect('/startup/')
 	
 def FindNearby(request):
 	try:

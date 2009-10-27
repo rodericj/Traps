@@ -24,6 +24,7 @@
 }
 
 
+
 - (void)dealloc {
     [window release];
 	[rootController release];

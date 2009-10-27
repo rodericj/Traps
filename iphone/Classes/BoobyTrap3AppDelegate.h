@@ -15,8 +15,8 @@
 	IBOutlet LoginViewController *loginViewController;
 	IBOutlet UITabBarController *rootController;
 	IBOutlet HomeNavController *homeNavController;
+	
 }
-
 @property (nonatomic, retain) IBOutlet UIWindow *window;
 @property (nonatomic, retain) IBOutlet LoginViewController *loginViewController;
 @property (nonatomic, retain) IBOutlet UITabBarController *rootController;

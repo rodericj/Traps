@@ -43,7 +43,13 @@
     [super viewDidLoad];
 }
 
+-(IBAction) logout{
+	if(loginViewController == nil){
+		loginViewController = [[LoginViewController alloc] init];
+	}
+	[self presentModalViewController:loginViewController animated:YES];
 
+}
 /*
 // Override to allow orientations other than the default portrait orientation.
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {

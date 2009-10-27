@@ -13,5 +13,5 @@
 	IBOutlet LoginViewController *loginViewController;
 }
 
-
+-(IBAction) logout;
 @end
