@@ -8,10 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "LoginViewController.h"
+#import "HomeTableViewController.h"
 
 @interface HomeNavController : UINavigationController {
 	IBOutlet LoginViewController *loginViewController;
+	IBOutlet HomeTableViewController *homeTableViewController;
 }
+//@property (nonatomic, retain) HomeTableViewController *homeTableViewController;
 
 -(IBAction) logout;
 @end

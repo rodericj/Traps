@@ -10,7 +10,7 @@
 
 
 @implementation HomeNavController
-
+//@synthesize homeTableViewController;
 /*
  // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -33,7 +33,20 @@
 	NSLog(@"HomeNavController did load");
 	//Lets see if we have any logged in data. check the property list
 	
-	if(1 == 1){
+	NSString *username;
+	NSDictionary *prefs;
+	prefs = [NSDictionary dictionaryWithContentsOfFile:@"Profile.plist"];
+	
+	if(prefs){
+		username = [prefs objectForKey:@"username"];
+		NSLog(username);
+		if(homeTableViewController == nil){
+			homeTableViewController = [[homeTableViewController alloc] init];
+		}
+		[homeTableViewController updateMiniProfile:(prefs)];
+		
+	}
+	else{
 		if(loginViewController == nil){
 			loginViewController = [[LoginViewController alloc] init];
 		}

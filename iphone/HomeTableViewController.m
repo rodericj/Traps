@@ -25,7 +25,13 @@
 }
 */
 
+-(void)updateMiniProfile:(NSDictionary *)profile{
+	NSLog(@"updating mini profile");
+	[userName setText:[profile objectForKey:@"username"]];
+	[userLevel setText:[profile objectForKey:@"userLevel"]];
+	[userCoinCount setText:[profile objectForKey:@"coinCount"]];
 
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
 	

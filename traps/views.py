@@ -240,6 +240,7 @@ def IPhoneLogin(request):
 	password = request.POST['password']
 	profile = doLogin(request, uname, password)
 	jsonprofile = profile.objectify()
+	print jsonprofile
 
 	return HttpResponse(simplejson.dumps(jsonprofile), mimetype='application/json')
 	

@@ -17,6 +17,7 @@
 	IBOutlet UILabel *userLevel;
 	IBOutlet UILabel *userCoinCount;
 }
+-(void)updateMiniProfile:(NSDictionary *)profile;
 
 @property (nonatomic, retain) NSMutableArray *menuArray;
 @property (nonatomic, retain) ProfileViewController *profileViewController;

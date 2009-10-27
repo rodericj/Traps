@@ -7,7 +7,7 @@
 //
 
 #import "LoginViewController.h"
-
+#import "JSON.h"
 
 @implementation LoginViewController
 @synthesize usernameTextField;
@@ -53,8 +53,18 @@
 									returningResponse:&response
 												error:&error];
 	NSString *results = [[NSString alloc] initWithData:urlData encoding:NSUTF8StringEncoding];
-	NSLog(results);
-	
+	NSLog(results);	
+	NSLog(@"make it json");
+
+	NSDictionary *resultsDict = [results JSONValue];
+	NSLog(@"about to write to file");
+	//NSLog([resultsDict objectsForKey:@"coinCount"]);
+	//NSLog([resultsDict objectsForKey:@"username"]);
+
+	[resultsDict writeToFile:@"Profile.plist" atomically:TRUE];
+
+	NSLog(@"wrote to file");
+
 	//
 //    if (connection) {
 //        NSMutableData *receivedData = [[NSMutableData data] retain];

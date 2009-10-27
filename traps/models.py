@@ -80,18 +80,27 @@ class TrapsUser(models.Model):
 	lastUpdated = models.DateTimeField(auto_now=True, auto_now_add=True)
 
 	def objectify(self):
-		return {'fbid':self.fbid,
- 				'twitterid':self.twitterid,
- 				'photo':self.photo,
- 				'gender':self.gender,
+		return {
  				'coinCount':self.coinCount,
  				'hitPoints':self.hitPoints,
- 				'level':self.level,
  				'killCount':self.killCount,
  				'trapsSetCount':self.trapsSetCount,
  				'username':self.user.username,
- 				'lastUpdated':str(self.lastUpdated)
-				}
+ 				'lastUpdated':str(self.lastUpdated),
+ 				'level':self.level,
+		}
+		#return {'fbid':self.fbid,
+ 				#'twitterid':self.twitterid,
+ 				#'photo':self.photo,
+ 				#'gender':self.gender,
+ 				#'coinCount':self.coinCount,
+ 				#'hitPoints':self.hitPoints,
+ 				#'level':self.level,
+ 				#'killCount':self.killCount,
+ 				#'trapsSetCount':self.trapsSetCount,
+ 				#'username':self.user.username,
+ 				#'lastUpdated':str(self.lastUpdated)
+				#}
 
 	def __unicode__(self):
 		#return self.user.username+" coins: "+ str(self.coinCount) + " coins, " + str(self.killCount) + " kills"
