@@ -234,6 +234,9 @@ def get_or_create_profile(user):
 	return profile
 
 def IPhoneLogin(request):
+
+	#TODO error case and feed it back to the iphone
+    #1. user name already exists does not work
 	#just in case
 	logout(request)
 	uname = request.POST['uname']

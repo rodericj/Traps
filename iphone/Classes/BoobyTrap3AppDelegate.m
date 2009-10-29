@@ -16,7 +16,7 @@
 @synthesize homeNavController;
 @synthesize loginViewController;
 - (void)applicationDidFinishLaunching:(UIApplication *)application {    
-
+	NSLog(@"app did finish launching");
     // Override point for customization after application launch
 	[window addSubview:rootController.view];
 	//[window addSubview:loginViewController.view];

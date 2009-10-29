@@ -31,11 +31,7 @@
 
 - (IBAction) submitLoginForm{
 	NSLog(@"Submit button pushed");
-	NSLog(usernameTextField.text);
-	NSLog(passwordTextField.text);
-	
-	//NSString *urlString = [NSString stringWithFormat:@"http://localhost:8000/"
-	
+		
 	//call to the web service to see if we can log in
 	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://localhost:8000/IPhoneLogin/"]
 										 cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
@@ -58,19 +54,14 @@
 
 	NSDictionary *resultsDict = [results JSONValue];
 	NSLog(@"about to write to file");
-	//NSLog([resultsDict objectsForKey:@"coinCount"]);
+	
+	[resultsDict writeToFile:@"Profile.plist" atomically:TRUE];
+	
+	NSLog(@"wrote to file");	
+
+
 	//NSLog([resultsDict objectsForKey:@"username"]);
 
-	[resultsDict writeToFile:@"Profile.plist" atomically:TRUE];
-
-	NSLog(@"wrote to file");
-
-	//
-//    if (connection) {
-//        NSMutableData *receivedData = [[NSMutableData data] retain];
-//		NSLog(receivedData);
-//    }
-//    
 	//if failed login, report the reason and bounce
 	
 	//once logged in, save this info into the property list then remove modal view

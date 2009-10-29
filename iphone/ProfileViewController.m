@@ -11,6 +11,14 @@
 
 @implementation ProfileViewController
 
+@synthesize usernameLabel;
+@synthesize coinsLabel;
+@synthesize hpLabel;
+@synthesize killLabel;
+@synthesize levelLabel;
+@synthesize totalTrapsLabel;
+@synthesize activeTrapsLabel;
+
 /*
  // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -30,10 +38,24 @@
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
-	NSLog(@"ProfileViewController");
+	NSLog(@"ProfileViewController did load. could be a good time to update");
     [super viewDidLoad];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+	NSLog(@"viewWillAppear in profile. Lets add stuff here");
+	NSDictionary *profile = [NSDictionary dictionaryWithContentsOfFile:@"Profile.plist"];
+
+	[usernameLabel setText:[profile objectForKey:@"username"]];
+	[levelLabel setText:[profile objectForKey:@"level"]];
+	[coinsLabel setText:[profile objectForKey:@"coinCount"]];
+	[hpLabel setText:[profile objectForKey:@"hitPoints"]];
+	[killLabel setText:[profile objectForKey:@"killCount"]];
+	[totalTrapsLabel setText:[profile objectForKey:@"trapsSetCount"]];
+	[profile release];
+	
+	[super viewWillAppear:animated];
+}
 
 /*
 // Override to allow orientations other than the default portrait orientation.

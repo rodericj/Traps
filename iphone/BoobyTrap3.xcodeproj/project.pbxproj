@@ -72,7 +72,7 @@
 		5FD2C5CC1082E4D300B8B0E4 /* HomeTable.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeTable.xib; sourceTree = "<group>"; };
 		5FD2C5D71082E8D900B8B0E4 /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProfileViewController.h; path = ../ProfileViewController.h; sourceTree = "<group>"; };
 		5FD2C5D81082E8D900B8B0E4 /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProfileViewController.m; path = ../ProfileViewController.m; sourceTree = "<group>"; };
-		5FD2C5DC1082E90B00B8B0E4 /* ProfileView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileView.xib; sourceTree = "<group>"; };
+		5FD2C5DC1082E90B00B8B0E4 /* ProfileView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ProfileView.xib; path = ../ProfileView.xib; sourceTree = "<group>"; };
 		5FD2C62C1082EC2800B8B0E4 /* walk.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = walk.png; sourceTree = "<group>"; };
 		5FD2C62E1082EC3600B8B0E4 /* pin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pin.png; sourceTree = "<group>"; };
 		5FD2C6301082EC4000B8B0E4 /* badge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = badge.png; sourceTree = "<group>"; };
@@ -143,7 +143,6 @@
 				5FD2C6301082EC4000B8B0E4 /* badge.png */,
 				5FD2C62C1082EC2800B8B0E4 /* walk.png */,
 				28AD733E0D9D9553002E5188 /* MainWindow.xib */,
-				5FD2C5DC1082E90B00B8B0E4 /* ProfileView.xib */,
 				8D1107310486CEB800E47090 /* BoobyTrap3-Info.plist */,
 				5FD2C5CC1082E4D300B8B0E4 /* HomeTable.xib */,
 			);
@@ -165,6 +164,7 @@
 			children = (
 				5FD2C5D71082E8D900B8B0E4 /* ProfileViewController.h */,
 				5FD2C5D81082E8D900B8B0E4 /* ProfileViewController.m */,
+				5FD2C5DC1082E90B00B8B0E4 /* ProfileView.xib */,
 			);
 			name = ProfileView;
 			sourceTree = "<group>";

@@ -7,13 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "HomeTableViewController.h"
 
 @interface LoginViewController : UIViewController {
 	IBOutlet UITextField *usernameTextField;
 	IBOutlet UITextField *passwordTextField;
+	
 }
 - (IBAction) submitLoginForm;
+
 @property (nonatomic, retain) UITextField *usernameTextField;
 @property (nonatomic, retain) UITextField *passwordTextField;
 

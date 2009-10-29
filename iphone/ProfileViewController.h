@@ -10,7 +10,21 @@
 
 
 @interface ProfileViewController : UIViewController {
-
+	IBOutlet UILabel *usernameLabel;
+	IBOutlet UILabel *coinsLabel;
+	IBOutlet UILabel *hpLabel;
+	IBOutlet UILabel *killLabel;	
+	IBOutlet UILabel *levelLabel;
+	IBOutlet UILabel *totalTrapsLabel;
+	IBOutlet UILabel *activeTrapsLabel;
 }
+@property (nonatomic, retain) UILabel *usernameLabel;
+@property (nonatomic, retain) UILabel *coinsLabel;
+@property (nonatomic, retain) UILabel *hpLabel;
+@property (nonatomic, retain) UILabel *killLabel;
+@property (nonatomic, retain) UILabel *levelLabel;
+@property (nonatomic, retain) UILabel *totalTrapsLabel;
+@property (nonatomic, retain) UILabel *activeTrapsLabel;
+
 
 @end

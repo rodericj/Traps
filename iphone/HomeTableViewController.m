@@ -27,8 +27,12 @@
 
 -(void)updateMiniProfile:(NSDictionary *)profile{
 	NSLog(@"updating mini profile");
+	NSLog([profile objectForKey:@"username"]);
+	NSLog([profile objectForKey:@"level"]);
+	NSLog([profile objectForKey:@"coinCount"]);
+
 	[userName setText:[profile objectForKey:@"username"]];
-	[userLevel setText:[profile objectForKey:@"userLevel"]];
+	[userLevel setText:[profile objectForKey:@"level"]];
 	[userCoinCount setText:[profile objectForKey:@"coinCount"]];
 
 }
@@ -48,11 +52,13 @@
 }
 
 
-/*
+
 - (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
+	NSLog(@"viewWillAppear in home table view controller");
+	[self updateMiniProfile:[NSDictionary dictionaryWithContentsOfFile:@"Profile.plist"]];
+	[super viewWillAppear:animated];
 }
-*/
+
 /*
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
