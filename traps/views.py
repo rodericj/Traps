@@ -20,6 +20,7 @@ class TooManySearchResultsError(Exception):
 # Create your views here.
 def findYelpVenues(lat, lon):
 
+	print "Find yelp ", (lat, lon)
 	#If we are online
 	try:
 		api_url = 'http://api.yelp.com/business_review_search?term=yelp&lat='+lat+'&long='+lon+'&radius=.1&num_biz_requested=10&ywsid='+ config.yelp_api_key
@@ -286,33 +287,48 @@ def doLogin(request, uname, password):
 	
 	
 def FindNearby(request):
+	print request.POST
+
 	try:
+		print "1"
+		ld = request.POST.get('ld', 0)
+		if ld:
+			print "2"
+			lat, lon = ld[ld.find("<")+1:ld.find(">")].split(", ")
+		else:
+			print "3"
+			#yelp address
+			lat = '37.788022'
+			lon = '-122.399797'
+
+			#larkin street
+		lat = "37.791846"
+		lon = "-122.419388"
+
 		#Find all venues near this one
 		venues = Venue.objects.all()
+		print "4"
 
 		#Stored Venues
 		sendable_venues = [{'name':v.name, 'phone':v.phone, 'longitude':v.longitude} for v in venues]
 		ret = {'venues':sendable_venues}
 
-		#yelp address
-		lat = '37.788022'
-		lon = '-122.399797'
-
-		#larkin street
-		lat = "37.791846"
-		lon = "-122.419388"
-
+		print "5"
 		#find all yelp venues near here
 		#new yelp venues
 		dbVenues = findYelpVenues(lat, lon)
+		print "6"
 		json = [v[0].objectify() for v in dbVenues]
+		print "7"
 		#ret['businessList'] = dbVenues
 		#print ret.keys()
 		#print ret['businessList'][0].json()
 		#return HttpResponse(simplejson.dumps({'x':json}), mimetype='application/json')
 		request.user.userprofile = get_or_create_profile(request.user)
+		print "8"
 		request.user.userprofile.event_set.create(type='FN')
+		print "9"
 	except:
 		print sys.exc_info()[0]
-		
+	print json
 	return HttpResponse(simplejson.dumps(json), mimetype='application/json')

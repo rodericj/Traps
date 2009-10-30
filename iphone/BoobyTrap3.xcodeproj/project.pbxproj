@@ -22,6 +22,9 @@
 		5F945DE71096B1A2004C7CEF /* SBJsonBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F945DDF1096B1A2004C7CEF /* SBJsonBase.m */; };
 		5F945DE81096B1A2004C7CEF /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F945DE11096B1A2004C7CEF /* SBJsonParser.m */; };
 		5F945DE91096B1A2004C7CEF /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F945DE31096B1A2004C7CEF /* SBJsonWriter.m */; };
+		5F9461071099682C004C7CEF /* NearbyPlacesTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F9461061099682C004C7CEF /* NearbyPlacesTableView.m */; };
+		5F946157109970F3004C7CEF /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F946156109970F3004C7CEF /* CoreLocation.framework */; };
+		5F94618D109A9E4F004C7CEF /* MyCLController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F94618C109A9E4F004C7CEF /* MyCLController.m */; };
 		5FD2C5A01082B88100B8B0E4 /* HomeNavController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD2C59F1082B88100B8B0E4 /* HomeNavController.m */; };
 		5FD2C5B51082B92200B8B0E4 /* HomeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD2C5B41082B92200B8B0E4 /* HomeTableViewController.m */; };
 		5FD2C5BA1082B97700B8B0E4 /* HomeViewMiniProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD2C5B91082B97700B8B0E4 /* HomeViewMiniProfileViewController.m */; };
@@ -61,6 +64,11 @@
 		5F945DE11096B1A2004C7CEF /* SBJsonParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonParser.m; sourceTree = "<group>"; };
 		5F945DE21096B1A2004C7CEF /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
 		5F945DE31096B1A2004C7CEF /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
+		5F9461051099682C004C7CEF /* NearbyPlacesTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NearbyPlacesTableView.h; sourceTree = "<group>"; };
+		5F9461061099682C004C7CEF /* NearbyPlacesTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NearbyPlacesTableView.m; sourceTree = "<group>"; };
+		5F946156109970F3004C7CEF /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		5F94618B109A9E4F004C7CEF /* MyCLController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyCLController.h; sourceTree = "<group>"; };
+		5F94618C109A9E4F004C7CEF /* MyCLController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyCLController.m; sourceTree = "<group>"; };
 		5FD2C59E1082B88100B8B0E4 /* HomeNavController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeNavController.h; sourceTree = "<group>"; };
 		5FD2C59F1082B88100B8B0E4 /* HomeNavController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeNavController.m; sourceTree = "<group>"; };
 		5FD2C5B31082B92200B8B0E4 /* HomeTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeTableViewController.h; sourceTree = "<group>"; };
@@ -87,6 +95,7 @@
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
 				288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */,
+				5F946157109970F3004C7CEF /* CoreLocation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -96,6 +105,7 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				5F94610210996812004C7CEF /* DropTrapViews */,
 				5F945DD61096B1A2004C7CEF /* JSON */,
 				5F2155A0108D8C7B006FA8F2 /* ProfileView */,
 				5F43CAEA1085724800543ADB /* LoginView */,
@@ -152,6 +162,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5F946156109970F3004C7CEF /* CoreLocation.framework */,
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
 				1D30AB110D05D00D00671497 /* Foundation.framework */,
 				288765FC0DF74451002DB57D /* CoreGraphics.framework */,
@@ -197,6 +208,17 @@
 				5F945DE31096B1A2004C7CEF /* SBJsonWriter.m */,
 			);
 			path = JSON;
+			sourceTree = "<group>";
+		};
+		5F94610210996812004C7CEF /* DropTrapViews */ = {
+			isa = PBXGroup;
+			children = (
+				5F94618B109A9E4F004C7CEF /* MyCLController.h */,
+				5F94618C109A9E4F004C7CEF /* MyCLController.m */,
+				5F9461051099682C004C7CEF /* NearbyPlacesTableView.h */,
+				5F9461061099682C004C7CEF /* NearbyPlacesTableView.m */,
+			);
+			name = DropTrapViews;
 			sourceTree = "<group>";
 		};
 		5FD2C5A31082B90500B8B0E4 /* HomeView */ = {
@@ -289,6 +311,8 @@
 				5F945DE71096B1A2004C7CEF /* SBJsonBase.m in Sources */,
 				5F945DE81096B1A2004C7CEF /* SBJsonParser.m in Sources */,
 				5F945DE91096B1A2004C7CEF /* SBJsonWriter.m in Sources */,
+				5F9461071099682C004C7CEF /* NearbyPlacesTableView.m in Sources */,
+				5F94618D109A9E4F004C7CEF /* MyCLController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
