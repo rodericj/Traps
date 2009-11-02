@@ -41,14 +41,14 @@ class Venue(models.Model):
 	def objectify(self): 
 		return {'id':self.id,
 				 'name':self.name,
-				 'latitude':self.latitude,
-				 'longitude':self.longitude,
+				 'latitude':str(self.latitude),
+				 'longitude':str(self.longitude),
 				 'streetName':self.streetName,
 				 'city':self.city,
 				 'state':self.state,
-				 'coinValue':self.coinValue,
+				 'coinValue':str(self.coinValue),
 				 'phone':self.phone,
-				 'checkinCount':self.checkinCount
+				 'checkinCount':str(self.checkinCount)
 				}
 
 	def __unicode__(self):

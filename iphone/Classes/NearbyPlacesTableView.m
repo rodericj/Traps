@@ -7,10 +7,12 @@
 //
 
 #import "NearbyPlacesTableView.h"
-
+#import "VenueDetailView.h"
+#import "BoobyTrap3AppDelegate.h"
 
 @implementation NearbyPlacesTableView
 @synthesize foundVenues;
+@synthesize venueDetailView;
 
 /*
 - (id)initWithStyle:(UITableViewStyle)style {
@@ -164,6 +166,22 @@
 	// AnotherViewController *anotherViewController = [[AnotherViewController alloc] initWithNibName:@"AnotherView" bundle:nil];
 	// [self.navigationController pushViewController:anotherViewController];
 	// [anotherViewController release];
+	NSInteger row = [indexPath row];
+	if (self.venueDetailView == nil){
+		VenueDetailView *aVenueDetail = [[VenueDetailView alloc] initWithNibName:@"VenueDetailView" bundle:nil];
+		self.venueDetailView = aVenueDetail;
+		[aVenueDetail release];
+	}
+	NSArray *venues = [NSArray arrayWithContentsOfFile:@"NearbyPlaces.plist"];
+	NSDictionary *venue = [venues objectAtIndex:row];
+	venueDetailView.title = [venue objectForKey:@"name"];
+
+	[venueDetailView updateVenueDetails:venue];
+
+	//[venueName setText:[venue objectForKey:@"name"]];
+	BoobyTrap3AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
+	[delegate.dropTrapsNavController pushViewController:venueDetailView animated:YES];
+	
 }
 
 
@@ -208,7 +226,8 @@
 
 
 - (void)dealloc {
-    [super dealloc];
+		//[dropTrapsNavController release];
+	[super dealloc];
 }
 
 

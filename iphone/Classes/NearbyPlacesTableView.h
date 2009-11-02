@@ -8,14 +8,17 @@
 
 #import <UIKit/UIKit.h>
 #import "MyCLController.h"
+@class VenueDetailView;
 
-
-@interface NearbyPlacesTableView : UITableViewController <MyCLControllerDelegate, UITableViewDataSource> {
+@interface NearbyPlacesTableView : UITableViewController <MyCLControllerDelegate, UITableViewDataSource, UITableViewDelegate> {
 	MyCLController *locationController;
 	NSDictionary *foundVenues;
+	VenueDetailView *venueDetailView;
 }
 
 @property (nonatomic, retain) NSDictionary *foundVenues;
+@property (nonatomic, retain) VenueDetailView *venueDetailView;
+
 
 - (void)locationUpdate:(CLLocation *)location; 
 - (void)locationError:(NSError *)error;
