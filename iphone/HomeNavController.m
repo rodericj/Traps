@@ -32,14 +32,10 @@
 - (void)viewDidLoad {
 	NSLog(@"HomeNavController did load");
 	//Lets see if we have any logged in data. check the property list
-	
-	NSString *username;
 	NSDictionary *prefs;
 	prefs = [NSDictionary dictionaryWithContentsOfFile:@"Profile.plist"];
 	
 	if(prefs){
-		username = [prefs objectForKey:@"username"];
-		NSLog(username);
 		if(homeTableViewController == nil){
 			homeTableViewController = [[homeTableViewController alloc] init];
 		}

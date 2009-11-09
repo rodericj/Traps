@@ -9,6 +9,7 @@
 #import "NearbyPlacesTableView.h"
 #import "VenueDetailView.h"
 #import "BoobyTrap3AppDelegate.h"
+#import "NetworkMiddleware.h"
 
 @implementation NearbyPlacesTableView
 @synthesize foundVenues;
@@ -31,23 +32,26 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
-- (void)locationUpdate:(CLLocation *)location {
-	//locationLabel.text = [location description];
-	NSLog(@"got the location");
-	NSLog([location description]);
-	NSLog(@"set up the url");
+- (void)getNearbyLocations:(CLLocation *)location {
+	NSLog(@"Set up the middleware");
+	NetworkMiddleware *net = [NetworkMiddleware alloc];
+	NSLog(@"Set up the middleware 1");
 
-	//need to find the nearby locations
-	//Send lat long to server
-	//call to the web service to see if we can log in
+	net.viewName = @"FindNearby";
+	NSLog(@"Set up the middleware 2");
+
+	net.postData = [NSString stringWithFormat:@"id=%@&uid=%@", [location description], [[UIDevice currentDevice] uniqueIdentifier] dataUsingEncoding:NSUTF8StringEncoding];
+	NSLog(@"Set up the middleware 3");
+
+	
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://localhost:8000/FindNearby/"]
 														   cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
 													   timeoutInterval:60.0];
     [request setHTTPMethod:@"POST"];
     [request setHTTPBody:[[NSString stringWithFormat:@"ld=%@&uid=%@", [location description],
-								[[UIDevice currentDevice] uniqueIdentifier]] dataUsingEncoding:NSUTF8StringEncoding]];
+						   [[UIDevice currentDevice] uniqueIdentifier]] dataUsingEncoding:NSUTF8StringEncoding]];
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-	// NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
 	NSURLResponse *response;
 	NSError *error;
 	NSData *urlData = [NSURLConnection sendSynchronousRequest:request
@@ -56,15 +60,32 @@
 	NSLog(@"get the url");
 	NSString *results = [[NSString alloc] initWithData:urlData encoding:NSUTF8StringEncoding];
 	NSLog(@"got the url");
-
+	
 	NSLog(results);	
 	NSLog(@"make it json");
 	
 	foundVenues = [results JSONValue];
 	[foundVenues writeToFile:@"NearbyPlaces.plist" atomically:TRUE];
-
+	
 	//get 
+	[self performSelectorOnMainThread:@selector(didGetNearbyLocations:) withObject:nil waitUntilDone:NO];
+	[pool release];
+}
+- (void)didGetNearbyLocations{
 	[self.tableView reloadData];
+}
+
+- (void)locationUpdate:(CLLocation *)location {
+	NSLog(@"got the location");
+	NSLog([location description]);
+	NSLog(@"set up the url");
+
+	[NSThread detachNewThreadSelector:@selector(getNearbyLocations) toTarget:self withObject:location];
+
+	//need to find the nearby locations
+	//Send lat long to server
+	//call to the web service to see if we can log in
+
 	
 	
 	//NSLog([location ]);
