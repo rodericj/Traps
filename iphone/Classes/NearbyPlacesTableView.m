@@ -25,23 +25,40 @@
 */
 
 - (void)viewDidLoad {
-
-    [super viewDidLoad];
-
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+	CGRect frame = CGRectMake(0.0, 0.0, 25.0, 25.0);
+	UIActivityIndicatorView *loading = [[UIActivityIndicatorView alloc] initWithFrame:frame];
+	[loading startAnimating];
+	[loading sizeToFit];
+	loading.autoresizingMask = (UIViewAutoresizingFlexibleLeftMargin |
+								UIViewAutoresizingFlexibleRightMargin |
+								UIViewAutoresizingFlexibleTopMargin |
+								UIViewAutoresizingFlexibleBottomMargin);
+	
+	// initing the bar button
+	UIBarButtonItem *loadingView = [[UIBarButtonItem alloc] initWithCustomView:loading];
+	[loading release];
+	loadingView.target = self;
+	
+	self.navigationItem.rightBarButtonItem = loadingView;
 }
+
+//- (void)viewDidLoad {
+//
+//    [super viewDidLoad];
+//
+//    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+//    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+//}
 
 - (void)getNearbyLocations:(CLLocation *)location {
 	NSLog(@"Set up the middleware");
-	NetworkMiddleware *net = [NetworkMiddleware alloc];
-	NSLog(@"Set up the middleware 1");
+	//NetworkMiddleware *net = [NetworkMiddleware alloc];
+	//NSLog(@"Set up the middleware 1");
+	//net.viewName = @"FindNearby";
+	//NSLog(@"Set up the middleware 2");
 
-	net.viewName = @"FindNearby";
-	NSLog(@"Set up the middleware 2");
-
-	net.postData = [NSString stringWithFormat:@"id=%@&uid=%@", [location description], [[UIDevice currentDevice] uniqueIdentifier] dataUsingEncoding:NSUTF8StringEncoding];
-	NSLog(@"Set up the middleware 3");
+	//net.postData = [NSString stringWithFormat:@"id=%@&uid=%@", [location description], [[UIDevice currentDevice] uniqueIdentifier] dataUsingEncoding:NSUTF8StringEncoding];
+	//NSLog(@"Set up the middleware 3");
 
 	
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
@@ -66,9 +83,14 @@
 	
 	foundVenues = [results JSONValue];
 	[foundVenues writeToFile:@"NearbyPlaces.plist" atomically:TRUE];
-	
+	self.navigationItem.rightBarButtonItem = nil;
 	//get 
-	[self performSelectorOnMainThread:@selector(didGetNearbyLocations:) withObject:nil waitUntilDone:NO];
+	[self performSelectorOnMainThread:@selector(didGetNearbyLocations) withObject:nil waitUntilDone:NO];
+	//[request release];
+	//[response release];
+	//[error release];
+	//[urlData release];
+	//[results release];
 	[pool release];
 }
 - (void)didGetNearbyLocations{
@@ -79,8 +101,11 @@
 	NSLog(@"got the location");
 	NSLog([location description]);
 	NSLog(@"set up the url");
-
-	[NSThread detachNewThreadSelector:@selector(getNearbyLocations) toTarget:self withObject:location];
+	//getNearbyLocations(location);
+	[[location description] writeToFile:@"location.plist" atomically:TRUE];
+	[self getNearbyLocations:location];
+	//[NSThread detachNewThreadSelector:@selector(getNearbyLocations) toTarget:self withObject:location];
+	[NSThread detachNewThreadSelector:@selector(getNearbyLocations:) toTarget:self withObject:nil];
 
 	//need to find the nearby locations
 	//Send lat long to server

@@ -147,7 +147,15 @@ def giveItemsAtVenueToUser(user, nonTrapVenueItems):
 		#item.count += 1
 		#item.save()
 
-def SearchVenue(request, vid):
+def SearchVenue(request):
+	print "In new search venue"
+	
+def SearchVenue(request, vid=None):
+	if vid == None:
+		print "vid is none"
+		print request.POST
+		vid = request.POST['vid']
+	
 	request.user.userprofile = get_or_create_profile(request.user)
 	request.user.userprofile.event_set.create(type='SE')
 	uid = request.user.userprofile.id
@@ -156,19 +164,18 @@ def SearchVenue(request, vid):
 	itemsAtVenue = venue.venueitem_set.filter()
 	itemsThatAreTraps = [i for i in itemsAtVenue if i.item.type =='TP' and i.dateTimeUsed==None]
 	
+	alertStatement = ''
 	if len(itemsThatAreTraps) > 0:
 		#There are traps, take action	
-		print "There are traps"
 		ret['isTrapSet'] = True
 		request.user.userprofile = get_or_create_profile(request.user)
 		request.user.userprofile.event_set.create(type='HT')
 		ret['damage'] = trapWasHere(uid, venue, itemsThatAreTraps)
-		print "This is what we get when there are traps"
+		ret['alertStatment'] = "There are traps at this venue. You took %s damage" % ret['damage']
 		print ret
 	else:
 
 		#no traps here, give the go ahead to get coins and whatever
-		print "There are no traps"
 		ret['isTrapSet'] = False
 		request.user.userprofile = get_or_create_profile(request.user)
 		request.user.userprofile.event_set.create(type='NT')
@@ -179,11 +186,13 @@ def SearchVenue(request, vid):
 			#The assumption here is that if it is not a trap, I should get it
 			giveItemsAtVenueToUser(request.user.userprofile, nonTraps)
 		ret['reward'] = noTrapWasHere(uid, venue)
+		ret['alertStatment'] = "There are no traps here. You got %s coins" % ret['reward']['coins']
 
 	ret['venueid'] = vid
 	ret['userid'] = uid
-	print ret.keys()
+	
 	print ret
+	print request.user.userprofile 
 	return HttpResponse(simplejson.dumps(ret), mimetype='application/json')
 
 
@@ -290,45 +299,46 @@ def FindNearby(request):
 	print request.POST
 
 	try:
-		print "1"
+		print "Finding Nearby Locations"
 		ld = request.POST.get('ld', 0)
 		if ld:
-			print "2"
+			print "Location description given"
+			print ld
 			lat, lon = ld[ld.find("<")+1:ld.find(">")].split(", ")
+			print "Location description given done"
 		else:
-			print "3"
+			print "default to yelp address"
 			#yelp address
 			lat = '37.788022'
 			lon = '-122.399797'
 
 			#larkin street
+		print "Default to Larkin Street"
 		lat = "37.791846"
 		lon = "-122.419388"
 
 		#Find all venues near this one
 		venues = Venue.objects.all()
-		print "4"
+		print "Got ALL venues BAD---------"
 
 		#Stored Venues
 		sendable_venues = [{'name':v.name, 'phone':v.phone, 'longitude':v.longitude} for v in venues]
 		ret = {'venues':sendable_venues}
 
-		print "5"
 		#find all yelp venues near here
 		#new yelp venues
 		dbVenues = findYelpVenues(lat, lon)
-		print "6"
 		json = [v[0].objectify() for v in dbVenues]
-		print "7"
 		#ret['businessList'] = dbVenues
 		#print ret.keys()
 		#print ret['businessList'][0].json()
 		#return HttpResponse(simplejson.dumps({'x':json}), mimetype='application/json')
 		request.user.userprofile = get_or_create_profile(request.user)
-		print "8"
 		request.user.userprofile.event_set.create(type='FN')
-		print "9"
 	except:
 		print sys.exc_info()[0]
+
+	print "Got the json, from find Nearby. send it over"
 	print json
+
 	return HttpResponse(simplejson.dumps(json), mimetype='application/json')

@@ -16,6 +16,7 @@
 		5F43CAE51085720500543ADB /* home.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F43CAE41085720500543ADB /* home.png */; };
 		5F43CAEF1085726600543ADB /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F43CAEE1085726600543ADB /* LoginViewController.m */; };
 		5F43CAF3108572C100543ADB /* LoginView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F43CAF2108572C100543ADB /* LoginView.xib */; };
+		5F72534010A94CDC00EB08F0 /* SearchResultsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F72533F10A94CDC00EB08F0 /* SearchResultsViewController.m */; };
 		5F847A8910A0070D0097C9B2 /* NetworkMiddleware.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F847A8810A0070D0097C9B2 /* NetworkMiddleware.m */; };
 		5F945DE41096B1A2004C7CEF /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F945DD91096B1A2004C7CEF /* NSObject+SBJSON.m */; };
 		5F945DE51096B1A2004C7CEF /* NSString+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F945DDB1096B1A2004C7CEF /* NSString+SBJSON.m */; };
@@ -55,6 +56,8 @@
 		5F43CAED1085726600543ADB /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		5F43CAEE1085726600543ADB /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		5F43CAF2108572C100543ADB /* LoginView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoginView.xib; sourceTree = "<group>"; };
+		5F72533E10A94CDC00EB08F0 /* SearchResultsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultsViewController.h; sourceTree = "<group>"; };
+		5F72533F10A94CDC00EB08F0 /* SearchResultsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchResultsViewController.m; sourceTree = "<group>"; };
 		5F847A8710A0070D0097C9B2 /* NetworkMiddleware.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkMiddleware.h; sourceTree = "<group>"; };
 		5F847A8810A0070D0097C9B2 /* NetworkMiddleware.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkMiddleware.m; sourceTree = "<group>"; };
 		5F945DD71096B1A2004C7CEF /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
@@ -234,15 +237,17 @@
 		5F94610210996812004C7CEF /* DropTrapViews */ = {
 			isa = PBXGroup;
 			children = (
-				5FA7351C109E653500227231 /* VenueDetailView.h */,
-				5FA7351D109E653500227231 /* VenueDetailView.m */,
-				5FA7351E109E653500227231 /* VenueDetailView.xib */,
 				5F94618B109A9E4F004C7CEF /* MyCLController.h */,
 				5F94618C109A9E4F004C7CEF /* MyCLController.m */,
 				5F9461051099682C004C7CEF /* NearbyPlacesTableView.h */,
 				5F9461061099682C004C7CEF /* NearbyPlacesTableView.m */,
 				5FA73516109E5D1C00227231 /* DropTrapsNavController.h */,
 				5FA73517109E5D1C00227231 /* DropTrapsNavController.m */,
+				5FA7351C109E653500227231 /* VenueDetailView.h */,
+				5FA7351D109E653500227231 /* VenueDetailView.m */,
+				5FA7351E109E653500227231 /* VenueDetailView.xib */,
+				5F72533E10A94CDC00EB08F0 /* SearchResultsViewController.h */,
+				5F72533F10A94CDC00EB08F0 /* SearchResultsViewController.m */,
 			);
 			name = DropTrapViews;
 			sourceTree = "<group>";
@@ -343,6 +348,7 @@
 				5FA73518109E5D1C00227231 /* DropTrapsNavController.m in Sources */,
 				5FA7351F109E653500227231 /* VenueDetailView.m in Sources */,
 				5F847A8910A0070D0097C9B2 /* NetworkMiddleware.m in Sources */,
+				5F72534010A94CDC00EB08F0 /* SearchResultsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

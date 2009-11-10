@@ -12,6 +12,57 @@
 @implementation VenueDetailView
 @synthesize venueInfo;
 
+- (IBAction) searchVenue{
+	//Spawn off a thread to go to the network. Display modal view later
+	[NSThread detachNewThreadSelector:@selector(doSearchVenue) toTarget:self withObject:nil];
+}
+
+- (void)doSearchVenue{
+	NSLog(@"doing the search");
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://localhost:8000/SearchVenue/"]
+														   cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
+													   timeoutInterval:60.0];
+    [request setHTTPMethod:@"POST"];
+    [request setHTTPBody:[[NSString stringWithFormat:@"vid=%@&uid=%@", [venueInfo objectForKey:@"id"],
+						   [[UIDevice currentDevice] uniqueIdentifier]] dataUsingEncoding:NSUTF8StringEncoding]];
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+	NSURLResponse *response;
+	NSError *error;
+	NSData *urlData = [NSURLConnection sendSynchronousRequest:request
+											returningResponse:&response
+														error:&error];
+	NSLog(@"get the url");
+	NSString *results = [[NSString alloc] initWithData:urlData encoding:NSUTF8StringEncoding];
+	NSLog(@"got the url");
+	
+	NSLog(results);	
+	NSLog(@"make it json");
+	
+	NSDictionary *returnData;
+	returnData = [results JSONValue];
+	NSLog(@"%@", returnData);
+	//[returnData writeToFile:@"NearbyPlaces.plist" atomically:TRUE];
+	self.navigationItem.rightBarButtonItem = nil;
+	//get 
+	[self performSelectorOnMainThread:@selector(didSearchVenue:) withObject:returnData waitUntilDone:NO];
+	
+	[pool release];
+	//[self performSelectorOnMainThread:@selector(didSearchVenue) withObject:nil waitUntilDone:NO];
+
+}
+
+- (void)didSearchVenue:(NSDictionary *)returnData{
+	NSString *alertStatement = [returnData objectForKey:@"alertStatment"];
+	
+	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:alertStatement delegate:self cancelButtonTitle:@"No" otherButtonTitles:nil]; 
+	[alert addButtonWithTitle:@"Yes"];
+	[alert show]; 
+	[alert release]; 
+	[self presentModalViewController:searchResultsViewController animated:YES];
+
+}
+
 - (void)updateVenueDetails:(NSDictionary *)venue{
 	self.venueInfo = venue;
 	//NSLog(@"inside updatevenuedetail");
@@ -33,15 +84,7 @@
 	[streetName setText:[self.venueInfo objectForKey:@"streetName"]];
 	[checkinCount setText:[self.venueInfo objectForKey:@"checkinCount"]];
 	//NSDictionary *profile = [NSDictionary dictionaryWithContentsOfFile:@"Profile.plist"];
-//	
-//	[usernameLabel setText:[profile objectForKey:@"username"]];
-//	[levelLabel setText:[profile objectForKey:@"level"]];
-//	[coinsLabel setText:[profile objectForKey:@"coinCount"]];
-//	[hpLabel setText:[profile objectForKey:@"hitPoints"]];
-//	[killLabel setText:[profile objectForKey:@"killCount"]];
-//	[totalTrapsLabel setText:[profile objectForKey:@"trapsSetCount"]];
-//	[profile release];
-//	
+
 	[super viewWillAppear:animated];
 }
 /*

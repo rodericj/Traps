@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "SearchResultsViewController.h"
 
 @interface VenueDetailView : UIViewController {
 	NSDictionary *venueInfo;
@@ -20,8 +20,13 @@
 	IBOutlet UILabel *phone;
 	IBOutlet UILabel *state;
 	IBOutlet UILabel *streetName;
+	
+	IBOutlet SearchResultsViewController *searchResultsViewController;
 }
 @property (nonatomic, retain) NSDictionary *venueInfo;
+@property (nonatomic, retain) SearchResultsViewController *searchResultsViewController;
 - (void)updateVenueDetails:(NSDictionary *)venue;
+- (IBAction) searchVenue;
+- (void)doSearchVenue;
 
 @end
