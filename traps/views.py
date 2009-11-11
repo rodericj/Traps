@@ -147,37 +147,49 @@ def giveItemsAtVenueToUser(user, nonTrapVenueItems):
 		#item.count += 1
 		#item.save()
 
-def SearchVenue(request):
-	print "In new search venue"
+#def SearchVenue(request):
+	#print "In new search venue"
 	
 def SearchVenue(request, vid=None):
 	if vid == None:
 		print "vid is none"
 		print request.POST
-		vid = request.POST['vid']
+		vid = request.POST['vid'][0]
 	
+	print "1"
 	request.user.userprofile = get_or_create_profile(request.user)
+	print "2"
 	request.user.userprofile.event_set.create(type='SE')
+	print "3"
 	uid = request.user.userprofile.id
+	print "4"
+	thisUsersTraps = request.user.userprofile.useritem_set.filter(item__type='TP')
+	optionString = thisUsersTraps.count() != 0 and "You have traps. Would you like to set one?" or "You have no traps."
+	print optionString
 	ret = {}
+	print "5"
 	venue = Venue.objects.get(id=vid)
+	print "6"
 	itemsAtVenue = venue.venueitem_set.filter()
+	print "7"
 	itemsThatAreTraps = [i for i in itemsAtVenue if i.item.type =='TP' and i.dateTimeUsed==None]
 	
+	print "8"
 	alertStatement = ''
 	if len(itemsThatAreTraps) > 0:
 		#There are traps, take action	
 		ret['isTrapSet'] = True
-		request.user.userprofile = get_or_create_profile(request.user)
+		#request.user.userprofile = get_or_create_profile(request.user)
 		request.user.userprofile.event_set.create(type='HT')
 		ret['damage'] = trapWasHere(uid, venue, itemsThatAreTraps)
-		ret['alertStatment'] = "There are traps at this venue. You took %s damage" % ret['damage']
+		ret['alertStatment'] = "There are traps at this venue. You took %s damage. %s" % ret['damage'], optionString
 		print ret
 	else:
+		print "9"
 
 		#no traps here, give the go ahead to get coins and whatever
 		ret['isTrapSet'] = False
-		request.user.userprofile = get_or_create_profile(request.user)
+		#request.user.userprofile = get_or_create_profile(request.user)
 		request.user.userprofile.event_set.create(type='NT')
 
 		if len(itemsThatAreTraps) < len(itemsAtVenue):
@@ -186,7 +198,8 @@ def SearchVenue(request, vid=None):
 			#The assumption here is that if it is not a trap, I should get it
 			giveItemsAtVenueToUser(request.user.userprofile, nonTraps)
 		ret['reward'] = noTrapWasHere(uid, venue)
-		ret['alertStatment'] = "There are no traps here. You got %s coins" % ret['reward']['coins']
+		ret['alertStatment'] = "There are no traps here. You got %s coins. %s" % ret['reward']['coins'], optionString
+	print ret['alertStatment']
 
 	ret['venueid'] = vid
 	ret['userid'] = uid

@@ -50,7 +50,6 @@
 			homeTableViewController = [[homeTableViewController alloc] init];
 		}
 		[self presentModalViewController:loginViewController animated:YES];
-		NSLog(@"Loaded modal view controller and left home nav controller thing");
 	}
 	
     [super viewDidLoad];

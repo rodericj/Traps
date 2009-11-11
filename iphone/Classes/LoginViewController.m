@@ -38,10 +38,8 @@
 									 timeoutInterval:60.0];
     [request setHTTPMethod:@"POST"];
     [request setHTTPBody:[[NSString stringWithFormat:@"uname=%@&password=%@&uid=%@", usernameTextField.text, passwordTextField.text,
-                        //   [sessionId URLEncodeString],
                            [[UIDevice currentDevice] uniqueIdentifier]] dataUsingEncoding:NSUTF8StringEncoding]];
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-   // NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
 	NSURLResponse *response;
 	NSError *error;
 

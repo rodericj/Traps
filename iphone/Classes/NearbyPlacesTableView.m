@@ -179,10 +179,7 @@
 // Customize the number of rows in the table view.
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 	NSArray *places = [NSArray arrayWithContentsOfFile:@"NearbyPlaces.plist"];
-	NSLog(@"Thats how many");
-	//NSLog([foundVenues ]);
-	return [places count];//[foundVenues count];
-   // return 2;
+	return [places count];
 }
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
 	return @"Nearby Joints";

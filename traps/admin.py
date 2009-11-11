@@ -8,3 +8,6 @@ admin.site.register(Event)
 admin.site.register(TrapsUser)
 admin.site.register(VenueItem)
 admin.site.register(UserItem)
+
+#class VenueAdmin(admin.ModelAdmin):
+	#list_display = ('name', 'coinValue', 'checkinCount', 'item')

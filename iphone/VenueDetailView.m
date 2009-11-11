@@ -18,7 +18,7 @@
 }
 
 - (void)doSearchVenue{
-	NSLog(@"doing the search");
+	NSLog(@"doing the search %@", [venueInfo objectForKey:@"id"]);
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://localhost:8000/SearchVenue/"]
 														   cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
@@ -53,13 +53,14 @@
 }
 
 - (void)didSearchVenue:(NSDictionary *)returnData{
+	NSLog(@"we did search");
 	NSString *alertStatement = [returnData objectForKey:@"alertStatment"];
 	
 	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:alertStatement delegate:self cancelButtonTitle:@"No" otherButtonTitles:nil]; 
 	[alert addButtonWithTitle:@"Yes"];
 	[alert show]; 
 	[alert release]; 
-	[self presentModalViewController:searchResultsViewController animated:YES];
+	//[self presentModalViewController:searchResultsViewController animated:YES];
 
 }
 

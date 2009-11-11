@@ -27,10 +27,7 @@
 
 -(void)updateMiniProfile:(NSDictionary *)profile{
 	NSLog(@"updating mini profile");
-	NSLog([profile objectForKey:@"username"]);
-	NSLog([profile objectForKey:@"level"]);
-	NSLog([profile objectForKey:@"coinCount"]);
-
+	
 	[userName setText:[profile objectForKey:@"username"]];
 	[userLevel setText:[profile objectForKey:@"level"]];
 	[userCoinCount setText:[profile objectForKey:@"coinCount"]];
