@@ -12,7 +12,6 @@
 @interface LoginViewController : UIViewController {
 	IBOutlet UITextField *usernameTextField;
 	IBOutlet UITextField *passwordTextField;
-	
 }
 - (IBAction) submitLoginForm;
 

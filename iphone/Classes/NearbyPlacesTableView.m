@@ -9,7 +9,7 @@
 #import "NearbyPlacesTableView.h"
 #import "VenueDetailView.h"
 #import "BoobyTrap3AppDelegate.h"
-#import "NetworkMiddleware.h"
+//#import "NetworkMiddleware.h"
 
 @implementation NearbyPlacesTableView
 @synthesize foundVenues;
@@ -51,71 +51,47 @@
 //}
 
 - (void)getNearbyLocations:(CLLocation *)location {
-	NSLog(@"Set up the middleware");
-	//NetworkMiddleware *net = [NetworkMiddleware alloc];
-	//NSLog(@"Set up the middleware 1");
-	//net.viewName = @"FindNearby";
-	//NSLog(@"Set up the middleware 2");
+	NSLog(@"getNearbyLocations Called");
 
-	//net.postData = [NSString stringWithFormat:@"id=%@&uid=%@", [location description], [[UIDevice currentDevice] uniqueIdentifier] dataUsingEncoding:NSUTF8StringEncoding];
-	//NSLog(@"Set up the middleware 3");
 
-	
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://localhost:8000/FindNearby/"]
+	if (location == NULL){
+		NSLog(@"the location was null which means that the thread is doing something intersting. Lets send this back.");
+	}
+	else{
+		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+		NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://localhost:8000/FindNearby/"]
 														   cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
 													   timeoutInterval:60.0];
-    [request setHTTPMethod:@"POST"];
-    [request setHTTPBody:[[NSString stringWithFormat:@"ld=%@&uid=%@", [location description],
+		[request setHTTPMethod:@"POST"];
+		[request setHTTPBody:[[NSString stringWithFormat:@"ld=%@&uid=%@", [location description],
 						   [[UIDevice currentDevice] uniqueIdentifier]] dataUsingEncoding:NSUTF8StringEncoding]];
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-	NSURLResponse *response;
-	NSError *error;
-	NSData *urlData = [NSURLConnection sendSynchronousRequest:request
+		[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+		NSURLResponse *response;
+		NSError *error;
+		NSData *urlData = [NSURLConnection sendSynchronousRequest:request
 											returningResponse:&response
 														error:&error];
-	NSLog(@"get the url");
-	NSString *results = [[NSString alloc] initWithData:urlData encoding:NSUTF8StringEncoding];
-	NSLog(@"got the url");
 	
-	NSLog(results);	
-	NSLog(@"make it json");
-	
-	foundVenues = [results JSONValue];
-	[foundVenues writeToFile:@"NearbyPlaces.plist" atomically:TRUE];
-	self.navigationItem.rightBarButtonItem = nil;
-	//get 
+		NSString *results = [[NSString alloc] initWithData:urlData encoding:NSUTF8StringEncoding];
+		
+		foundVenues = [results JSONValue];
+		[foundVenues writeToFile:@"NearbyPlaces.plist" atomically:TRUE];
+		self.navigationItem.rightBarButtonItem = nil;
+		[pool release];
+	}
 	[self performSelectorOnMainThread:@selector(didGetNearbyLocations) withObject:nil waitUntilDone:NO];
-	//[request release];
-	//[response release];
-	//[error release];
-	//[urlData release];
-	//[results release];
-	[pool release];
+
 }
+
 - (void)didGetNearbyLocations{
 	[self.tableView reloadData];
 }
 
 - (void)locationUpdate:(CLLocation *)location {
-	NSLog(@"got the location");
-	NSLog([location description]);
-	NSLog(@"set up the url");
 	//getNearbyLocations(location);
 	[[location description] writeToFile:@"location.plist" atomically:TRUE];
 	[self getNearbyLocations:location];
-	//[NSThread detachNewThreadSelector:@selector(getNearbyLocations) toTarget:self withObject:location];
 	[NSThread detachNewThreadSelector:@selector(getNearbyLocations:) toTarget:self withObject:nil];
-
-	//need to find the nearby locations
-	//Send lat long to server
-	//call to the web service to see if we can log in
-
-	
-	
-	//NSLog([location ]);
-	//[locationController.locationManager startUpdatingLocation];
-
 }
 
 - (void)locationError:(NSError *)error {
@@ -181,6 +157,7 @@
 	NSArray *places = [NSArray arrayWithContentsOfFile:@"NearbyPlaces.plist"];
 	return [places count];
 }
+
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
 	return @"Nearby Joints";
 }

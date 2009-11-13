@@ -6,8 +6,13 @@
 //  Copyright 2009 Slide. All rights reserved.
 //
 
+// Key 3243a6e2dd3a0d084480d05f301cba85
+// secret d8611553a286dce3531353b3de53ef2e
+
 #import "LoginViewController.h"
 #import "JSON.h"
+
+//#import "FBConnect.h"
 
 @implementation LoginViewController
 @synthesize usernameTextField;
@@ -68,11 +73,22 @@
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
-	NSLog(@"LoginViewController did load");
     [super viewDidLoad];
+	NSLog(@"LoginViewController did load");
+	
+	//FBSession *session = [[FBSession sessionForApplication:@"3243a6e2dd3a0d084480d05f301cba85"
+	//									secret:@"d8611553a286dce3531353b3de53ef2e" 
+	//									delegate:self] retain];
+//	FBLoginButton* button = [[[FBLoginButton alloc] init] autorelease];	
+	//[self.view addSubview:button];
 }
 
-
+//- (void)session:(FBSession*)session didLogin:(FBUID)uid{
+//	NSLog(@"Logged in as");
+//	FBPermissionDialog* dialog = [[[FBPermissionDialog alloc] init] autorelease];
+//	dialog.permission = @"status_update";
+//	[dialog show];
+//}
 /*
 // Override to allow orientations other than the default portrait orientation.
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {

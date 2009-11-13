@@ -37,9 +37,9 @@
     [super viewDidLoad];
 	
 	self.title = NSLocalizedString(@"Home", @"Home Title");	
-	[userName setText:@"Rod"];
-	[userLevel setText:@"1"];
-	[userCoinCount setText:@"100"];
+	//[userName setText:@"Rod"];
+	//[userLevel setText:@"1"];
+	//[userCoinCount setText:@"100"];
 	NSMutableArray *array = [[NSArray alloc] initWithObjects:@"Profile", @"Wall",@"Drop History", @"Inbox",@"Leaderboard",@"Store", nil];
 	self.menuArray = array;
 	[array release];
@@ -118,8 +118,7 @@
     
     // Set up the cell...
 	NSUInteger row = [indexPath row];
-	cell.text = [menuArray objectAtIndex:row];
-	
+	cell.text = [menuArray objectAtIndex:row];	
     return cell;
 }
 

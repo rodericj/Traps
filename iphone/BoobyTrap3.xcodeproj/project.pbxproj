@@ -17,7 +17,6 @@
 		5F43CAEF1085726600543ADB /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F43CAEE1085726600543ADB /* LoginViewController.m */; };
 		5F43CAF3108572C100543ADB /* LoginView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F43CAF2108572C100543ADB /* LoginView.xib */; };
 		5F72534010A94CDC00EB08F0 /* SearchResultsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F72533F10A94CDC00EB08F0 /* SearchResultsViewController.m */; };
-		5F847A8910A0070D0097C9B2 /* NetworkMiddleware.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F847A8810A0070D0097C9B2 /* NetworkMiddleware.m */; };
 		5F945DE41096B1A2004C7CEF /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F945DD91096B1A2004C7CEF /* NSObject+SBJSON.m */; };
 		5F945DE51096B1A2004C7CEF /* NSString+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F945DDB1096B1A2004C7CEF /* NSString+SBJSON.m */; };
 		5F945DE61096B1A2004C7CEF /* SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F945DDD1096B1A2004C7CEF /* SBJSON.m */; };
@@ -58,8 +57,6 @@
 		5F43CAF2108572C100543ADB /* LoginView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoginView.xib; sourceTree = "<group>"; };
 		5F72533E10A94CDC00EB08F0 /* SearchResultsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultsViewController.h; sourceTree = "<group>"; };
 		5F72533F10A94CDC00EB08F0 /* SearchResultsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchResultsViewController.m; sourceTree = "<group>"; };
-		5F847A8710A0070D0097C9B2 /* NetworkMiddleware.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkMiddleware.h; sourceTree = "<group>"; };
-		5F847A8810A0070D0097C9B2 /* NetworkMiddleware.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkMiddleware.m; sourceTree = "<group>"; };
 		5F945DD71096B1A2004C7CEF /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
 		5F945DD81096B1A2004C7CEF /* NSObject+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJSON.h"; sourceTree = "<group>"; };
 		5F945DD91096B1A2004C7CEF /* NSObject+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SBJSON.m"; sourceTree = "<group>"; };
@@ -119,7 +116,6 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				5F847A9810A00C0A0097C9B2 /* Network */,
 				5F94610210996812004C7CEF /* DropTrapViews */,
 				5F945DD61096B1A2004C7CEF /* JSON */,
 				5F2155A0108D8C7B006FA8F2 /* ProfileView */,
@@ -203,15 +199,6 @@
 				5F43CAF2108572C100543ADB /* LoginView.xib */,
 			);
 			name = LoginView;
-			sourceTree = "<group>";
-		};
-		5F847A9810A00C0A0097C9B2 /* Network */ = {
-			isa = PBXGroup;
-			children = (
-				5F847A8710A0070D0097C9B2 /* NetworkMiddleware.h */,
-				5F847A8810A0070D0097C9B2 /* NetworkMiddleware.m */,
-			);
-			name = Network;
 			sourceTree = "<group>";
 		};
 		5F945DD61096B1A2004C7CEF /* JSON */ = {
@@ -347,7 +334,6 @@
 				5F94618D109A9E4F004C7CEF /* MyCLController.m in Sources */,
 				5FA73518109E5D1C00227231 /* DropTrapsNavController.m in Sources */,
 				5FA7351F109E653500227231 /* VenueDetailView.m in Sources */,
-				5F847A8910A0070D0097C9B2 /* NetworkMiddleware.m in Sources */,
 				5F72534010A94CDC00EB08F0 /* SearchResultsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -389,6 +375,7 @@
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "~/Downloads/fbconnect-iphone/src";
 				PREBINDING = NO;
 				SDKROOT = iphoneos3.1;
 			};

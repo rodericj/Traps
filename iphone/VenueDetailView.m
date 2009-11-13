@@ -32,12 +32,9 @@
 	NSData *urlData = [NSURLConnection sendSynchronousRequest:request
 											returningResponse:&response
 														error:&error];
-	NSLog(@"get the url");
 	NSString *results = [[NSString alloc] initWithData:urlData encoding:NSUTF8StringEncoding];
-	NSLog(@"got the url");
 	
 	NSLog(results);	
-	NSLog(@"make it json");
 	
 	NSDictionary *returnData;
 	returnData = [results JSONValue];
@@ -54,16 +51,24 @@
 
 - (void)didSearchVenue:(NSDictionary *)returnData{
 	NSLog(@"we did search");
-	NSString *alertStatement = [returnData objectForKey:@"alertStatment"];
+	NSString *alertStatement = [returnData objectForKey:@"alertStatement"];
 	
-	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:alertStatement delegate:self cancelButtonTitle:@"No" otherButtonTitles:nil]; 
-	[alert addButtonWithTitle:@"Yes"];
+	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"UIAlertView" message:alertStatement delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil]; 
 	[alert show]; 
 	[alert release]; 
-	//[self presentModalViewController:searchResultsViewController animated:YES];
 
 }
-
+- (void)alertView:(UIAlertView *)alertView  clickedButtonAtIndex:(NSInteger)buttonIndex {
+	if(buttonIndex == 0){
+		NSLog(@"no");
+		//Do nothing I guess
+	}
+	else{
+		NSLog(@"Yes");
+		//Need to load the UITableView which shows what kind of traps we have to set
+	}
+		
+	}
 - (void)updateVenueDetails:(NSDictionary *)venue{
 	self.venueInfo = venue;
 	//NSLog(@"inside updatevenuedetail");

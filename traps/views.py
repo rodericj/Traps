@@ -152,29 +152,18 @@ def giveItemsAtVenueToUser(user, nonTrapVenueItems):
 	
 def SearchVenue(request, vid=None):
 	if vid == None:
-		print "vid is none"
-		print request.POST
 		vid = request.POST['vid'][0]
 	
-	print "1"
 	request.user.userprofile = get_or_create_profile(request.user)
-	print "2"
 	request.user.userprofile.event_set.create(type='SE')
-	print "3"
 	uid = request.user.userprofile.id
-	print "4"
 	thisUsersTraps = request.user.userprofile.useritem_set.filter(item__type='TP')
 	optionString = thisUsersTraps.count() != 0 and "You have traps. Would you like to set one?" or "You have no traps."
-	print optionString
 	ret = {}
-	print "5"
 	venue = Venue.objects.get(id=vid)
-	print "6"
 	itemsAtVenue = venue.venueitem_set.filter()
-	print "7"
 	itemsThatAreTraps = [i for i in itemsAtVenue if i.item.type =='TP' and i.dateTimeUsed==None]
 	
-	print "8"
 	alertStatement = ''
 	if len(itemsThatAreTraps) > 0:
 		#There are traps, take action	
@@ -182,30 +171,30 @@ def SearchVenue(request, vid=None):
 		#request.user.userprofile = get_or_create_profile(request.user)
 		request.user.userprofile.event_set.create(type='HT')
 		ret['damage'] = trapWasHere(uid, venue, itemsThatAreTraps)
-		ret['alertStatment'] = "There are traps at this venue. You took %s damage. %s" % ret['damage'], optionString
-		print ret
+		ret['alertStatement'] = "There are traps at this venue. You took %s damage. %s" % ret['damage'], optionString
 	else:
-		print "9"
-
 		#no traps here, give the go ahead to get coins and whatever
 		ret['isTrapSet'] = False
+
 		#request.user.userprofile = get_or_create_profile(request.user)
 		request.user.userprofile.event_set.create(type='NT')
 
 		if len(itemsThatAreTraps) < len(itemsAtVenue):
-			#nonTraps = [i for i in itemsAtVenue if i.count > 0 and i.item.type !='TP']
 			nonTraps = [i for i in itemsAtVenue if i.item.type !='TP']
+
 			#The assumption here is that if it is not a trap, I should get it
 			giveItemsAtVenueToUser(request.user.userprofile, nonTraps)
+
 		ret['reward'] = noTrapWasHere(uid, venue)
-		ret['alertStatment'] = "There are no traps here. You got %s coins. %s" % ret['reward']['coins'], optionString
-	print ret['alertStatment']
+		ret['alertStatement'] = ""
+		
+		alertStatement = "There are no traps here. You got %s coins." % ret['reward']['coins'] 
+		ret['alertStatement'] = alertStatement + " " +optionString
 
 	ret['venueid'] = vid
 	ret['userid'] = uid
 	
 	print ret
-	print request.user.userprofile 
 	return HttpResponse(simplejson.dumps(ret), mimetype='application/json')
 
 
@@ -352,6 +341,6 @@ def FindNearby(request):
 		print sys.exc_info()[0]
 
 	print "Got the json, from find Nearby. send it over"
-	print json
+	#print json[:50]
 
 	return HttpResponse(simplejson.dumps(json), mimetype='application/json')
