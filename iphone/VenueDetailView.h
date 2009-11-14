@@ -7,8 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SearchResultsViewController.h"
-
+@class TrapInventoryTableViewController;
 @interface VenueDetailView : UIViewController {
 	NSDictionary *venueInfo;
 	IBOutlet UILabel *venueName;
@@ -20,11 +19,11 @@
 	IBOutlet UILabel *phone;
 	IBOutlet UILabel *state;
 	IBOutlet UILabel *streetName;
-	
-	IBOutlet SearchResultsViewController *searchResultsViewController;
+	TrapInventoryTableViewController *trapInventoryTableViewController;
 }
 @property (nonatomic, retain) NSDictionary *venueInfo;
-@property (nonatomic, retain) SearchResultsViewController *searchResultsViewController;
+@property (nonatomic, retain) TrapInventoryTableViewController *trapInventoryTableViewController;
+
 - (void)updateVenueDetails:(NSDictionary *)venue;
 - (IBAction) searchVenue;
 - (void)doSearchVenue;

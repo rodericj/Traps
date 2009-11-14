@@ -7,10 +7,12 @@
 //
 
 #import "VenueDetailView.h"
-
+#import "BoobyTrap3AppDelegate.h"
+#import "TrapInventoryTableViewController.h"
 
 @implementation VenueDetailView
 @synthesize venueInfo;
+@synthesize trapInventoryTableViewController;
 
 - (IBAction) searchVenue{
 	//Spawn off a thread to go to the network. Display modal view later
@@ -52,6 +54,10 @@
 - (void)didSearchVenue:(NSDictionary *)returnData{
 	NSLog(@"we did search");
 	NSString *alertStatement = [returnData objectForKey:@"alertStatement"];
+	NSDictionary *profile = [returnData objectForKey:@"profile"];
+	[profile writeToFile:@"Profile.plist" atomically:TRUE];
+	[profile release];
+	//Save profile to profile.plist
 	
 	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"UIAlertView" message:alertStatement delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil]; 
 	[alert show]; 
@@ -66,6 +72,16 @@
 	else{
 		NSLog(@"Yes");
 		//Need to load the UITableView which shows what kind of traps we have to set
+		//[self.navigationController pushViewController:trapInventoryTableViewController];
+		//[delegate release];
+		if (self.trapInventoryTableViewController == nil){
+			TrapInventoryTableViewController *titvc = [[TrapInventoryTableViewController alloc] initWithNibName:@"TrapInventoryTableView" bundle:nil];
+			self.trapInventoryTableViewController = titvc;
+			[titvc release];
+		}
+		trapInventoryTableViewController.title = @"Drop a Trap";
+		BoobyTrap3AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
+		[delegate.dropTrapsNavController pushViewController:trapInventoryTableViewController animated:YES];
 	}
 		
 	}
@@ -132,6 +148,7 @@
 
 
 - (void)dealloc {
+	[trapInventoryTableViewController release];
     [super dealloc];
 }
 

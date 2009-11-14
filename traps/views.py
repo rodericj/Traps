@@ -194,6 +194,7 @@ def SearchVenue(request, vid=None):
 	ret['venueid'] = vid
 	ret['userid'] = uid
 	
+	ret['profile'] = request.user.userprofile.objectify()
 	print ret
 	return HttpResponse(simplejson.dumps(ret), mimetype='application/json')
 

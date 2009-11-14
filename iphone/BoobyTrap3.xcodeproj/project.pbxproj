@@ -16,7 +16,6 @@
 		5F43CAE51085720500543ADB /* home.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F43CAE41085720500543ADB /* home.png */; };
 		5F43CAEF1085726600543ADB /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F43CAEE1085726600543ADB /* LoginViewController.m */; };
 		5F43CAF3108572C100543ADB /* LoginView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F43CAF2108572C100543ADB /* LoginView.xib */; };
-		5F72534010A94CDC00EB08F0 /* SearchResultsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F72533F10A94CDC00EB08F0 /* SearchResultsViewController.m */; };
 		5F945DE41096B1A2004C7CEF /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F945DD91096B1A2004C7CEF /* NSObject+SBJSON.m */; };
 		5F945DE51096B1A2004C7CEF /* NSString+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F945DDB1096B1A2004C7CEF /* NSString+SBJSON.m */; };
 		5F945DE61096B1A2004C7CEF /* SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F945DDD1096B1A2004C7CEF /* SBJSON.m */; };
@@ -29,6 +28,8 @@
 		5FA73518109E5D1C00227231 /* DropTrapsNavController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FA73517109E5D1C00227231 /* DropTrapsNavController.m */; };
 		5FA7351F109E653500227231 /* VenueDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FA7351D109E653500227231 /* VenueDetailView.m */; };
 		5FA73520109E653500227231 /* VenueDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5FA7351E109E653500227231 /* VenueDetailView.xib */; };
+		5FB2D2AE10ADC4AB0080DB22 /* TrapInventoryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FB2D2AD10ADC4AB0080DB22 /* TrapInventoryTableViewController.m */; };
+		5FB2D2B210ADC4BB0080DB22 /* TrapInventoryTableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5FB2D2B110ADC4BB0080DB22 /* TrapInventoryTableView.xib */; };
 		5FD2C5A01082B88100B8B0E4 /* HomeNavController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD2C59F1082B88100B8B0E4 /* HomeNavController.m */; };
 		5FD2C5B51082B92200B8B0E4 /* HomeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD2C5B41082B92200B8B0E4 /* HomeTableViewController.m */; };
 		5FD2C5BA1082B97700B8B0E4 /* HomeViewMiniProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD2C5B91082B97700B8B0E4 /* HomeViewMiniProfileViewController.m */; };
@@ -55,8 +56,6 @@
 		5F43CAED1085726600543ADB /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		5F43CAEE1085726600543ADB /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		5F43CAF2108572C100543ADB /* LoginView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoginView.xib; sourceTree = "<group>"; };
-		5F72533E10A94CDC00EB08F0 /* SearchResultsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultsViewController.h; sourceTree = "<group>"; };
-		5F72533F10A94CDC00EB08F0 /* SearchResultsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchResultsViewController.m; sourceTree = "<group>"; };
 		5F945DD71096B1A2004C7CEF /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
 		5F945DD81096B1A2004C7CEF /* NSObject+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJSON.h"; sourceTree = "<group>"; };
 		5F945DD91096B1A2004C7CEF /* NSObject+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SBJSON.m"; sourceTree = "<group>"; };
@@ -80,6 +79,9 @@
 		5FA7351C109E653500227231 /* VenueDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VenueDetailView.h; path = ../VenueDetailView.h; sourceTree = "<group>"; };
 		5FA7351D109E653500227231 /* VenueDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VenueDetailView.m; path = ../VenueDetailView.m; sourceTree = "<group>"; };
 		5FA7351E109E653500227231 /* VenueDetailView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = VenueDetailView.xib; path = ../VenueDetailView.xib; sourceTree = "<group>"; };
+		5FB2D2AC10ADC4AB0080DB22 /* TrapInventoryTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrapInventoryTableViewController.h; sourceTree = "<group>"; };
+		5FB2D2AD10ADC4AB0080DB22 /* TrapInventoryTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrapInventoryTableViewController.m; sourceTree = "<group>"; };
+		5FB2D2B110ADC4BB0080DB22 /* TrapInventoryTableView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TrapInventoryTableView.xib; sourceTree = "<group>"; };
 		5FD2C59E1082B88100B8B0E4 /* HomeNavController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeNavController.h; sourceTree = "<group>"; };
 		5FD2C59F1082B88100B8B0E4 /* HomeNavController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeNavController.m; sourceTree = "<group>"; };
 		5FD2C5B31082B92200B8B0E4 /* HomeTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeTableViewController.h; sourceTree = "<group>"; };
@@ -224,6 +226,9 @@
 		5F94610210996812004C7CEF /* DropTrapViews */ = {
 			isa = PBXGroup;
 			children = (
+				5FB2D2AC10ADC4AB0080DB22 /* TrapInventoryTableViewController.h */,
+				5FB2D2AD10ADC4AB0080DB22 /* TrapInventoryTableViewController.m */,
+				5FB2D2B110ADC4BB0080DB22 /* TrapInventoryTableView.xib */,
 				5F94618B109A9E4F004C7CEF /* MyCLController.h */,
 				5F94618C109A9E4F004C7CEF /* MyCLController.m */,
 				5F9461051099682C004C7CEF /* NearbyPlacesTableView.h */,
@@ -233,8 +238,6 @@
 				5FA7351C109E653500227231 /* VenueDetailView.h */,
 				5FA7351D109E653500227231 /* VenueDetailView.m */,
 				5FA7351E109E653500227231 /* VenueDetailView.xib */,
-				5F72533E10A94CDC00EB08F0 /* SearchResultsViewController.h */,
-				5F72533F10A94CDC00EB08F0 /* SearchResultsViewController.m */,
 			);
 			name = DropTrapViews;
 			sourceTree = "<group>";
@@ -306,6 +309,7 @@
 				5F43CAE51085720500543ADB /* home.png in Resources */,
 				5F43CAF3108572C100543ADB /* LoginView.xib in Resources */,
 				5FA73520109E653500227231 /* VenueDetailView.xib in Resources */,
+				5FB2D2B210ADC4BB0080DB22 /* TrapInventoryTableView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -334,7 +338,7 @@
 				5F94618D109A9E4F004C7CEF /* MyCLController.m in Sources */,
 				5FA73518109E5D1C00227231 /* DropTrapsNavController.m in Sources */,
 				5FA7351F109E653500227231 /* VenueDetailView.m in Sources */,
-				5F72534010A94CDC00EB08F0 /* SearchResultsViewController.m in Sources */,
+				5FB2D2AE10ADC4AB0080DB22 /* TrapInventoryTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -375,7 +379,7 @@
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "~/Downloads/fbconnect-iphone/src";
+				HEADER_SEARCH_PATHS = .;
 				PREBINDING = NO;
 				SDKROOT = iphoneos3.1;
 			};

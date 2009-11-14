@@ -201,7 +201,7 @@
 	//[venueName setText:[venue objectForKey:@"name"]];
 	BoobyTrap3AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
 	[delegate.dropTrapsNavController pushViewController:venueDetailView animated:YES];
-	
+	//[delegate release];
 }
 
 
