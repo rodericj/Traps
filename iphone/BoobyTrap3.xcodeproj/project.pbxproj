@@ -32,8 +32,6 @@
 		5FB2D2B210ADC4BB0080DB22 /* TrapInventoryTableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5FB2D2B110ADC4BB0080DB22 /* TrapInventoryTableView.xib */; };
 		5FD2C5A01082B88100B8B0E4 /* HomeNavController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD2C59F1082B88100B8B0E4 /* HomeNavController.m */; };
 		5FD2C5B51082B92200B8B0E4 /* HomeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD2C5B41082B92200B8B0E4 /* HomeTableViewController.m */; };
-		5FD2C5BA1082B97700B8B0E4 /* HomeViewMiniProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD2C5B91082B97700B8B0E4 /* HomeViewMiniProfileViewController.m */; };
-		5FD2C5C11082BC8400B8B0E4 /* HomeViewContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD2C5C01082BC8400B8B0E4 /* HomeViewContainerViewController.m */; };
 		5FD2C5CD1082E4D300B8B0E4 /* HomeTable.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5FD2C5CC1082E4D300B8B0E4 /* HomeTable.xib */; };
 		5FD2C5D91082E8D900B8B0E4 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD2C5D81082E8D900B8B0E4 /* ProfileViewController.m */; };
 		5FD2C5DD1082E90B00B8B0E4 /* ProfileView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5FD2C5DC1082E90B00B8B0E4 /* ProfileView.xib */; };
@@ -86,10 +84,6 @@
 		5FD2C59F1082B88100B8B0E4 /* HomeNavController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeNavController.m; sourceTree = "<group>"; };
 		5FD2C5B31082B92200B8B0E4 /* HomeTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeTableViewController.h; sourceTree = "<group>"; };
 		5FD2C5B41082B92200B8B0E4 /* HomeTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeTableViewController.m; sourceTree = "<group>"; };
-		5FD2C5B81082B97700B8B0E4 /* HomeViewMiniProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewMiniProfileViewController.h; sourceTree = "<group>"; };
-		5FD2C5B91082B97700B8B0E4 /* HomeViewMiniProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewMiniProfileViewController.m; sourceTree = "<group>"; };
-		5FD2C5BF1082BC8400B8B0E4 /* HomeViewContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewContainerViewController.h; sourceTree = "<group>"; };
-		5FD2C5C01082BC8400B8B0E4 /* HomeViewContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewContainerViewController.m; sourceTree = "<group>"; };
 		5FD2C5CC1082E4D300B8B0E4 /* HomeTable.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeTable.xib; sourceTree = "<group>"; };
 		5FD2C5D71082E8D900B8B0E4 /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProfileViewController.h; path = ../ProfileViewController.h; sourceTree = "<group>"; };
 		5FD2C5D81082E8D900B8B0E4 /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProfileViewController.m; path = ../ProfileViewController.m; sourceTree = "<group>"; };
@@ -226,18 +220,18 @@
 		5F94610210996812004C7CEF /* DropTrapViews */ = {
 			isa = PBXGroup;
 			children = (
-				5FB2D2AC10ADC4AB0080DB22 /* TrapInventoryTableViewController.h */,
-				5FB2D2AD10ADC4AB0080DB22 /* TrapInventoryTableViewController.m */,
-				5FB2D2B110ADC4BB0080DB22 /* TrapInventoryTableView.xib */,
 				5F94618B109A9E4F004C7CEF /* MyCLController.h */,
 				5F94618C109A9E4F004C7CEF /* MyCLController.m */,
 				5F9461051099682C004C7CEF /* NearbyPlacesTableView.h */,
 				5F9461061099682C004C7CEF /* NearbyPlacesTableView.m */,
-				5FA73516109E5D1C00227231 /* DropTrapsNavController.h */,
-				5FA73517109E5D1C00227231 /* DropTrapsNavController.m */,
 				5FA7351C109E653500227231 /* VenueDetailView.h */,
 				5FA7351D109E653500227231 /* VenueDetailView.m */,
 				5FA7351E109E653500227231 /* VenueDetailView.xib */,
+				5FA73516109E5D1C00227231 /* DropTrapsNavController.h */,
+				5FA73517109E5D1C00227231 /* DropTrapsNavController.m */,
+				5FB2D2AC10ADC4AB0080DB22 /* TrapInventoryTableViewController.h */,
+				5FB2D2AD10ADC4AB0080DB22 /* TrapInventoryTableViewController.m */,
+				5FB2D2B110ADC4BB0080DB22 /* TrapInventoryTableView.xib */,
 			);
 			name = DropTrapViews;
 			sourceTree = "<group>";
@@ -245,14 +239,10 @@
 		5FD2C5A31082B90500B8B0E4 /* HomeView */ = {
 			isa = PBXGroup;
 			children = (
-				5FD2C5B81082B97700B8B0E4 /* HomeViewMiniProfileViewController.h */,
-				5FD2C5B91082B97700B8B0E4 /* HomeViewMiniProfileViewController.m */,
 				5FD2C5B31082B92200B8B0E4 /* HomeTableViewController.h */,
 				5FD2C5B41082B92200B8B0E4 /* HomeTableViewController.m */,
 				5FD2C59E1082B88100B8B0E4 /* HomeNavController.h */,
 				5FD2C59F1082B88100B8B0E4 /* HomeNavController.m */,
-				5FD2C5BF1082BC8400B8B0E4 /* HomeViewContainerViewController.h */,
-				5FD2C5C01082BC8400B8B0E4 /* HomeViewContainerViewController.m */,
 			);
 			name = HomeView;
 			path = ..;
@@ -324,8 +314,6 @@
 				1D3623260D0F684500981E51 /* BoobyTrap3AppDelegate.m in Sources */,
 				5FD2C5A01082B88100B8B0E4 /* HomeNavController.m in Sources */,
 				5FD2C5B51082B92200B8B0E4 /* HomeTableViewController.m in Sources */,
-				5FD2C5BA1082B97700B8B0E4 /* HomeViewMiniProfileViewController.m in Sources */,
-				5FD2C5C11082BC8400B8B0E4 /* HomeViewContainerViewController.m in Sources */,
 				5FD2C5D91082E8D900B8B0E4 /* ProfileViewController.m in Sources */,
 				5F43CAEF1085726600543ADB /* LoginViewController.m in Sources */,
 				5F945DE41096B1A2004C7CEF /* NSObject+SBJSON.m in Sources */,
