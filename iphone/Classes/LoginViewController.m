@@ -18,21 +18,7 @@
 @synthesize usernameTextField;
 @synthesize passwordTextField;
 
-/*
- // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-    if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) {
-        // Custom initialization
-    }
-    return self;
-}
-*/
-
-/*
-// Implement loadView to create a view hierarchy programmatically, without using a nib.
-- (void)loadView {
-}
-*/
+#pragma mark Submit button clicked
 
 - (IBAction) submitLoginForm{
 	NSLog(@"Submit button pushed");
@@ -70,6 +56,7 @@
 	[self dismissModalViewControllerAnimated:YES];
 }
 
+#pragma mark initialization
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -81,20 +68,6 @@
 //	FBLoginButton* button = [[[FBLoginButton alloc] init] autorelease];	
 //	[self.view addSubview:button];
 }
-
-//- (void)session:(FBSession*)session didLogin:(FBUID)uid{
-//	NSLog(@"Logged in as");
-//	FBPermissionDialog* dialog = [[[FBPermissionDialog alloc] init] autorelease];
-//	dialog.permission = @"status_update";
-//	[dialog show];
-//}
-/*
-// Override to allow orientations other than the default portrait orientation.
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-*/
 
 - (void)didReceiveMemoryWarning {
 	// Releases the view if it doesn't have a superview.

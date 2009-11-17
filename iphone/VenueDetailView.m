@@ -14,6 +14,7 @@
 @synthesize venueInfo;
 @synthesize trapInventoryTableViewController;
 
+#pragma mark Button clicked to initiate searching venue
 - (IBAction) searchVenue{
 	//Spawn off a thread to go to the network. Display modal view later
 	[NSThread detachNewThreadSelector:@selector(doSearchVenue) toTarget:self withObject:nil];
@@ -97,6 +98,8 @@
 - (void)updateVenueDetails:(NSDictionary *)venue{
 	self.venueInfo = venue;
 }
+
+#pragma mark initialization
 - (void)viewWillAppear:(BOOL)animated {
 	NSLog(@"viewWillAppear in VenueDetail");
 	[venueName setText:[self.venueInfo objectForKey:@"name"]];

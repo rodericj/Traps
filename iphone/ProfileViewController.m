@@ -19,33 +19,11 @@
 @synthesize totalTrapsLabel;
 @synthesize activeTrapsLabel;
 
-/*
- // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-    if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) {
-        // Custom initialization
-    }
-    return self;
-}
-*/
-
-/*
-// Implement loadView to create a view hierarchy programmatically, without using a nib.
-- (void)loadView {
-}
-*/
-
-
-// Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
-- (void)viewDidLoad {
-	NSLog(@"ProfileViewController did load. could be a good time to update");
-    [super viewDidLoad];
-}
-
+#pragma mark Set all of the labels just before the view loads
 - (void)viewWillAppear:(BOOL)animated {
 	NSLog(@"viewWillAppear in profile. Lets add stuff here");
 	NSDictionary *profile = [NSDictionary dictionaryWithContentsOfFile:@"Profile.plist"];
-
+	
 	[usernameLabel setText:[profile objectForKey:@"username"]];
 	[levelLabel setText:[profile objectForKey:@"level"]];
 	[coinsLabel setText:[profile objectForKey:@"coinCount"]];
@@ -56,6 +34,16 @@
 	
 	[super viewWillAppear:animated];
 }
+
+#pragma mark initialization
+
+// Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
+- (void)viewDidLoad {
+	NSLog(@"ProfileViewController did load. could be a good time to update");
+    [super viewDidLoad];
+}
+
+
 
 /*
 // Override to allow orientations other than the default portrait orientation.

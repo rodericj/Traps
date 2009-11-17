@@ -16,15 +16,8 @@
 @synthesize userName;
 @synthesize userLevel;
 @synthesize userCoinCount;
-/*
-- (id)initWithStyle:(UITableViewStyle)style {
-    // Override initWithStyle: if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
-    if (self = [super initWithStyle:style]) {
-    }
-    return self;
-}
-*/
 
+#pragma mark initialization and setup
 -(void)updateMiniProfile:(NSDictionary *)profile{
 	NSLog(@"updating mini profile");
 	
@@ -37,9 +30,6 @@
     [super viewDidLoad];
 	
 	self.title = NSLocalizedString(@"Home", @"Home Title");	
-	//[userName setText:@"Rod"];
-	//[userLevel setText:@"1"];
-	//[userCoinCount setText:@"100"];
 	NSMutableArray *array = [[NSArray alloc] initWithObjects:@"Profile", @"Wall",@"Drop History", @"Inbox",@"Leaderboard",@"Store", nil];
 	self.menuArray = array;
 	[array release];
@@ -48,37 +38,11 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
-
-
 - (void)viewWillAppear:(BOOL)animated {
 	NSLog(@"viewWillAppear in home table view controller");
 	[self updateMiniProfile:[NSDictionary dictionaryWithContentsOfFile:@"Profile.plist"]];
 	[super viewWillAppear:animated];
 }
-
-/*
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-}
-*/
-/*
-- (void)viewWillDisappear:(BOOL)animated {
-	[super viewWillDisappear:animated];
-}
-*/
-/*
-- (void)viewDidDisappear:(BOOL)animated {
-	[super viewDidDisappear:animated];
-}
-*/
-
-/*
-// Override to allow orientations other than the default portrait orientation.
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-*/
 
 - (void)didReceiveMemoryWarning {
 	// Releases the view if it doesn't have a superview.
@@ -92,6 +56,10 @@
 	// e.g. self.myOutlet = nil;
 }
 
+- (void)dealloc {
+	[profileViewController release];
+    [super dealloc];
+}
 
 #pragma mark Table view methods
 
@@ -148,51 +116,6 @@
 	
 }
 
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:YES];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-
-- (void)dealloc {
-	[profileViewController release];
-    [super dealloc];
-}
 
 
 @end
