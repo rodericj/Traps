@@ -36,11 +36,11 @@
 														error:&error];
 	NSString *results = [[NSString alloc] initWithData:urlData encoding:NSUTF8StringEncoding];
 	
-	NSLog(results);	
+	//NSLog(results);	
 	
 	NSDictionary *returnData;
 	returnData = [results JSONValue];
-	NSLog(@"%@", returnData);
+	//NSLog(@"%@", returnData);
 	//[returnData writeToFile:@"NearbyPlaces.plist" atomically:TRUE];
 	self.navigationItem.rightBarButtonItem = nil;
 	//get 
@@ -54,14 +54,22 @@
 - (void)didSearchVenue:(NSDictionary *)returnData{
 	NSLog(@"we did search");
 	NSString *alertStatement = [returnData objectForKey:@"alertStatement"];
+
+	//Save profile to profile.plist
 	NSDictionary *profile = [returnData objectForKey:@"profile"];
 	[profile writeToFile:@"Profile.plist" atomically:TRUE];
 	[profile release];
-	//Save profile to profile.plist
-	
+	NSLog(@"saved profile.plist. saving inventory.plist");
+
+	//Save inventory to profile.plist
+	//NSDictionary *inventory = [returnData objectForKey:@"inventory"];
+	//[inventory writeToFile:@"Inventory.plist" atomically:TRUE];
+	//NSLog(@"Bringing up the alert window");
+	NSLog(alertStatement);
 	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"UIAlertView" message:alertStatement delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil]; 
 	[alert show]; 
 	[alert release]; 
+	//[inventory release];
 
 }
 - (void)alertView:(UIAlertView *)alertView  clickedButtonAtIndex:(NSInteger)buttonIndex {
@@ -72,14 +80,15 @@
 	else{
 		NSLog(@"Yes");
 		//Need to load the UITableView which shows what kind of traps we have to set
-		//[self.navigationController pushViewController:trapInventoryTableViewController];
-		//[delegate release];
 		if (self.trapInventoryTableViewController == nil){
 			TrapInventoryTableViewController *titvc = [[TrapInventoryTableViewController alloc] initWithNibName:@"TrapInventoryTableView" bundle:nil];
 			self.trapInventoryTableViewController = titvc;
 			[titvc release];
 		}
+		NSLog(@"We have a titvc");
+
 		trapInventoryTableViewController.title = @"Drop a Trap";
+		trapInventoryTableViewController.whichVenue = [venueInfo objectForKey:@"id"];
 		BoobyTrap3AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
 		[delegate.dropTrapsNavController pushViewController:trapInventoryTableViewController animated:YES];
 	}
@@ -87,11 +96,6 @@
 	}
 - (void)updateVenueDetails:(NSDictionary *)venue{
 	self.venueInfo = venue;
-	//NSLog(@"inside updatevenuedetail");
-	//NSLog([venue objectForKey:@"name"]);
-	//venueName.text = [venue objectForKey:@"name"];
-	//[venueName setText:[venue objectForKey:@"name"]];
-	//venueName.
 }
 - (void)viewWillAppear:(BOOL)animated {
 	NSLog(@"viewWillAppear in VenueDetail");

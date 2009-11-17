@@ -182,4 +182,4 @@ class UserItem(models.Model):
 	#count = models.IntegerField(default=0)
 
 	def __unicode__(self):
-		return str(self.user) + " owns a " + str(self.item)
+		return str(self.user) + " " + str(self.item)

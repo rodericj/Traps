@@ -89,7 +89,9 @@
 
 - (void)locationUpdate:(CLLocation *)location {
 	//getNearbyLocations(location);
-	[[location description] writeToFile:@"location.plist" atomically:TRUE];
+	//NSLog([location description]);
+	//[[location description] writeToFile:@"location.plist" atomically:TRUE];
+	//[location writeToFile:@"location.plist" atomically:TRUE];
 	[self getNearbyLocations:location];
 	[NSThread detachNewThreadSelector:@selector(getNearbyLocations:) toTarget:self withObject:nil];
 }

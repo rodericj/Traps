@@ -8,14 +8,35 @@ from datetime import datetime
 import test
 from django.utils import simplejson
 from django.contrib.auth.models import User
+from django.db.models import Count
 from django.core.exceptions import ObjectDoesNotExist
 
+
+#def tb(f):
+	#def new_f():
+		#print "entering ", f.__name__
+		#try:
+			#f()
+		#except Exception as e:
+			#print type(e)
+			#print e
+		#print "exiting ", f.__name__
+	#return new_f
 
 class TooManySearchResultsError(Exception):
 	def __init__(self, value):
 		self.value = value
 	def __str__(self):
 		return repr(self.value)	
+
+def trace(f, *args, **kw):
+	print "calling %s with args %s, %s" % (f.func_name, args, kw)
+	try:
+		ret = f(*args, **kw)
+	except Exception as e:
+		print e	
+		print type(e)
+	return ret
 
 # Create your views here.
 def findYelpVenues(lat, lon):
@@ -95,19 +116,57 @@ def trapWasHere(uid, venue, itemsThatAreTraps):
 	print trapData
 	return {'traps':trapData, 'hitpointslost':totalDamage , 'hitpointsleft': user.hitPoints}
 
-def getUserProfile(isSelf, uid):
-	user = TrapsUser.objects.get(id=uid)
-	inventory = user.useritem_set.all()
+def getUserInventory(uid):
+	#>>> roditems = user.useritem_set.all()
+	traps = TrapsUser.objects.get(id=uid).useritem_set.all()
+	
+	print "sup"
+	try:
+		annotated_inv = TrapsUser.objects.get(id=1).useritem_set.all().values('item').annotate(Count('item')).order_by()
+	except Exception as inst:
+		print type(inst)
+		#print inst
+		raise
+	print "sup2"
+		
+	inventory = [{'name':Item.objects.get(id=i['item']).name, 'id':Item.objects.get(id=i['item']).id, 'count':i['item__count']} for i in annotated_inv]
 	print inventory
-	userInfo = {'twitterid':user.twitterid, 'photo':user.photo, 'gender':user.gender, 'coinCount':user.coinCount, 'hitPoints':user.hitPoints, 'level':user.level, 'killCount':user.killCount, 'trapsSetCount':user.trapsSetCount, 'username':user.user.username}
+	print "sup3"
+	return inventory
+
+def getUserProfile(uid):
+	print "in get User Profile"
+	user = TrapsUser.objects.get(id=uid)
+	print "getting inventory"
+	inventory = getUserInventory(uid)
+	print "got inventory"
+	#inventory = user.useritem_set.all()
+	print inventory
+	userInfo = {'twitterid':user.twitterid, 'photo':user.photo, 'gender':user.gender, 'coinCount':user.coinCount, 'hitPoints':user.hitPoints, 'level':user.level, 'killCount':user.killCount, 'trapsSetCount':user.trapsSetCount, 'username':user.user.username, 'inventory':inventory}
 	return userInfo
 	
-def SetTrap(request, vid, iid, uid):
+#def SetTrap(request, vid, iid, uid):
+def SetTrap(request):
+	print 1
+	request.user.userprofile = get_or_create_profile(request.user)
+	print 1
+	print dir(request.user.userprofile)
+	print request.user.userprofile.id
+	uid = request.user.userprofile.id
+	print request.POST
+	vid = request.POST['vid']
+	print 1
+	iid = request.POST['iid']
+	
+	print 2
 	venue = Venue.objects.get(id=vid)
+	print 3
 	user = TrapsUser.objects.get(id=uid)
+	print 4
 
 	#get the item from the user and subtract it
 	alltraps = user.useritem_set.all()
+	print 5
 	if len(alltraps) > 0:
 		item = alltraps[0].item
 		#put this item on the VenueItem table	
@@ -126,7 +185,8 @@ def SetTrap(request, vid, iid, uid):
 	ret = {}
 	request.user.userprofile = get_or_create_profile(request.user)
 	request.user.userprofile.event_set.create(type='ST')
-	userInfo = getUserProfile(True, uid)
+	userInfo = getUserProfile(uid)
+	print userInfo
 	return HttpResponse(simplejson.dumps(ret), mimetype='application/json')
 
 def giveItemsAtVenueToUser(user, nonTrapVenueItems):
@@ -147,9 +207,7 @@ def giveItemsAtVenueToUser(user, nonTrapVenueItems):
 		#item.count += 1
 		#item.save()
 
-#def SearchVenue(request):
-	#print "In new search venue"
-	
+#@tb
 def SearchVenue(request, vid=None):
 	if vid == None:
 		vid = request.POST['vid'][0]
@@ -166,6 +224,7 @@ def SearchVenue(request, vid=None):
 	
 	alertStatement = ''
 	if len(itemsThatAreTraps) > 0:
+		print "entering if"
 		#There are traps, take action	
 		ret['isTrapSet'] = True
 		#request.user.userprofile = get_or_create_profile(request.user)
@@ -173,6 +232,8 @@ def SearchVenue(request, vid=None):
 		ret['damage'] = trapWasHere(uid, venue, itemsThatAreTraps)
 		ret['alertStatement'] = "There are traps at this venue. You took %s damage. %s" % ret['damage'], optionString
 	else:
+		print "entering else"
+		#There are traps, take action	
 		#no traps here, give the go ahead to get coins and whatever
 		ret['isTrapSet'] = False
 
@@ -191,21 +252,36 @@ def SearchVenue(request, vid=None):
 		alertStatement = "There are no traps here. You got %s coins." % ret['reward']['coins'] 
 		ret['alertStatement'] = alertStatement + " " +optionString
 
+	print "out of all"
 	ret['venueid'] = vid
 	ret['userid'] = uid
 	
+	#ret['profile'] = request.user.userprofile.objectify()
+	print "getting profile"
 	ret['profile'] = request.user.userprofile.objectify()
+	ret['profile']['inventory'] = getUserInventory(uid)
 	print ret
 	return HttpResponse(simplejson.dumps(ret), mimetype='application/json')
 
 
+def GetUserProfileFromProfile(userprofile):
+	dir(userprofile)
+	profile = userprofile.objectify()
+	profile['inventory'] = getUserInventory(userprofile.id)
+	print profile['inventory']
+	return profile
+	
 def GetUserProfile(request):
 	userprofile = get_or_create_profile(request.user)
 	return GetUserProfile(request, userprofile.id)
 
 def GetUserProfile(request, uid):
+	print "in GetUserProfile"
 	userprofile = get_or_create_profile(request.user)
+	print 67
 	profile = userprofile.objectify()
+	print 7
+	profile['inventory'] = getUserInventory(uid)
 	print profile
 	return HttpResponse(simplejson.dumps(profile), mimetype='application/json')
 
@@ -251,12 +327,27 @@ def IPhoneLogin(request):
 	#TODO error case and feed it back to the iphone
     #1. user name already exists does not work
 	#just in case
+	print "1"
 	logout(request)
+	print "2"
 	uname = request.POST['uname']
+	print "3"
 	password = request.POST['password']
+	print "4"
 	profile = doLogin(request, uname, password)
-	jsonprofile = profile.objectify()
+	print "5"
+	#jsonprofile = profile.objectify()
+	print type(profile)
+	try:
+		jsonprofile = GetUserProfileFromProfile(profile)
+	except Exception as e:
+		print type(e)
+		print e
+		print e.args
+		raise
+	print "6"
 	print jsonprofile
+	print "7"
 
 	return HttpResponse(simplejson.dumps(jsonprofile), mimetype='application/json')
 	
@@ -342,6 +433,6 @@ def FindNearby(request):
 		print sys.exc_info()[0]
 
 	print "Got the json, from find Nearby. send it over"
-	#print json[:50]
+	print json[:50]
 
 	return HttpResponse(simplejson.dumps(json), mimetype='application/json')

@@ -62,7 +62,6 @@
 	
 	NSLog(@"wrote to file");	
 
-
 	//NSLog([resultsDict objectsForKey:@"username"]);
 
 	//if failed login, report the reason and bounce
