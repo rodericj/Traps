@@ -147,15 +147,15 @@ def getUserProfile(uid):
 	
 #def SetTrap(request, vid, iid, uid):
 def SetTrap(request):
-	print 1
+	print 1234
 	request.user.userprofile = get_or_create_profile(request.user)
-	print 1
+	print 13456
 	print dir(request.user.userprofile)
 	print request.user.userprofile.id
 	uid = request.user.userprofile.id
 	print request.POST
 	vid = request.POST['vid']
-	print 1
+	print 1456
 	iid = request.POST['iid']
 	
 	print 2

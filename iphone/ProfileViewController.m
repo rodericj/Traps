@@ -7,7 +7,7 @@
 //
 
 #import "ProfileViewController.h"
-
+#import "UserProfile.h"
 
 @implementation ProfileViewController
 
@@ -22,15 +22,23 @@
 #pragma mark Set all of the labels just before the view loads
 - (void)viewWillAppear:(BOOL)animated {
 	NSLog(@"viewWillAppear in profile. Lets add stuff here");
-	NSDictionary *profile = [NSDictionary dictionaryWithContentsOfFile:@"Profile.plist"];
+	//NSDictionary *profile = [NSDictionary dictionaryWithContentsOfFile:@"Profile.p list"];
+	UserProfile *userProfile = [UserProfile sharedSingleton];
 	
-	[usernameLabel setText:[profile objectForKey:@"username"]];
-	[levelLabel setText:[profile objectForKey:@"level"]];
-	[coinsLabel setText:[profile objectForKey:@"coinCount"]];
-	[hpLabel setText:[profile objectForKey:@"hitPoints"]];
-	[killLabel setText:[profile objectForKey:@"killCount"]];
-	[totalTrapsLabel setText:[profile objectForKey:@"trapsSetCount"]];
-	[profile release];
+//	[usernameLabel setText:[profile objectForKey:@"username"]];
+//	[levelLabel setText:[profile objectForKey:@"level"]];
+//	[coinsLabel setText:[profile objectForKey:@"coinCount"]];
+//	[hpLabel setText:[profile objectForKey:@"hitPoints"]];
+//	[killLabel setText:[profile objectForKey:@"killCount"]];
+//	[totalTrapsLabel setText:[profile objectForKey:@"trapsSetCount"]];	
+	
+	[usernameLabel setText:[userProfile getUserName]];
+	[levelLabel setText:(NSString *)[userProfile getLevel]];
+	[coinsLabel setText:(NSString *)[userProfile getCoinCount]];
+	[hpLabel setText:(NSString *)[userProfile getHitPoints]];
+	[killLabel setText:(NSString *)[userProfile getKillCount]];
+	[totalTrapsLabel setText:(NSString *)[userProfile getTrapsSetCount]];
+	//[profile release];
 	
 	[super viewWillAppear:animated];
 }

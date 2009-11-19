@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "HomeTableViewController.h"
-
+#import "UserProfile.h"
 @interface LoginViewController : UIViewController {
 	IBOutlet UITextField *usernameTextField;
 	IBOutlet UITextField *passwordTextField;

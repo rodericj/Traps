@@ -11,7 +11,7 @@
 
 #import "LoginViewController.h"
 #import "JSON.h"
-
+#import "UserProfile.h"
 //#import "FBConnect.h"
 
 @implementation LoginViewController
@@ -44,10 +44,12 @@
 	NSDictionary *resultsDict = [results JSONValue];
 	NSLog(@"about to write to file");
 	
-	[resultsDict writeToFile:@"Profile.plist" atomically:TRUE];
-	
+	UserProfile *userProfile = [UserProfile sharedSingleton];
+	//userProfile = [[UserProfile alloc] init];
+	[userProfile newProfileFromDictionary:resultsDict];
+	//[userProfile writeProfile];
 	NSLog(@"wrote to file");	
-
+	NSLog(@"username in the object is %@", [userProfile getUserName]);
 	//NSLog([resultsDict objectsForKey:@"username"]);
 
 	//if failed login, report the reason and bounce

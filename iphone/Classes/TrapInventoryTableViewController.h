@@ -9,12 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface TrapInventoryTableViewController : UITableViewController <UITableViewDelegate, UITableViewDataSource>{
-	NSInteger *whichTrap;
-	NSInteger *whichVenue;
-
 }
-@property (nonatomic) NSInteger *whichVenue;
-@property (nonatomic) NSInteger *whichTrap;
 
 - (void)doDropTrap:(NSString *)trap;
 - (void)didDropTrap:(NSDictionary *) results;

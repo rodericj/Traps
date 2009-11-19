@@ -17,14 +17,17 @@
 - (void)viewDidLoad {
 	NSLog(@"HomeNavController did load");
 	//Lets see if we have any logged in data. check the property list
-	NSDictionary *prefs;
-	prefs = [NSDictionary dictionaryWithContentsOfFile:@"Profile.plist"];
-	
-	if(prefs){
+	//NSDictionary *prefs;
+	//prefs = [NSDictionary dictionaryWithContentsOfFile:@"Profile.p list"];
+	UserProfile *profile = [UserProfile sharedSingleton];
+	//if(prefs){
+	if([profile exists]){
 		if(homeTableViewController == nil){
-			homeTableViewController = [[homeTableViewController alloc] init];
+			homeTableViewController = [[HomeTableViewController alloc] init];
+			//homeTableViewController = [[homeTableViewController alloc] init];
 		}
-		[homeTableViewController updateMiniProfile:(prefs)];
+		//[homeTableViewController updateMiniProfile:(prefs)];
+		[homeTableViewController updateMiniProfile:([profile profile])];
 		
 	}
 	else{
@@ -32,7 +35,8 @@
 			loginViewController = [[LoginViewController alloc] init];
 		}
 		if(homeTableViewController == nil){
-			homeTableViewController = [[homeTableViewController alloc] init];
+			homeTableViewController = [[HomeTableViewController alloc] init];
+			//homeTableViewController = [[homeTableViewController alloc] init];
 		}
 		[self presentModalViewController:loginViewController animated:YES];
 	}

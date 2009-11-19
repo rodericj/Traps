@@ -30,6 +30,7 @@
 		5FA73520109E653500227231 /* VenueDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5FA7351E109E653500227231 /* VenueDetailView.xib */; };
 		5FB2D2AE10ADC4AB0080DB22 /* TrapInventoryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FB2D2AD10ADC4AB0080DB22 /* TrapInventoryTableViewController.m */; };
 		5FB2D2B210ADC4BB0080DB22 /* TrapInventoryTableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5FB2D2B110ADC4BB0080DB22 /* TrapInventoryTableView.xib */; };
+		5FB2D72410B314CF0080DB22 /* UserProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FB2D72310B314CF0080DB22 /* UserProfile.m */; };
 		5FD2C5A01082B88100B8B0E4 /* HomeNavController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD2C59F1082B88100B8B0E4 /* HomeNavController.m */; };
 		5FD2C5B51082B92200B8B0E4 /* HomeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD2C5B41082B92200B8B0E4 /* HomeTableViewController.m */; };
 		5FD2C5CD1082E4D300B8B0E4 /* HomeTable.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5FD2C5CC1082E4D300B8B0E4 /* HomeTable.xib */; };
@@ -80,6 +81,8 @@
 		5FB2D2AC10ADC4AB0080DB22 /* TrapInventoryTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrapInventoryTableViewController.h; sourceTree = "<group>"; };
 		5FB2D2AD10ADC4AB0080DB22 /* TrapInventoryTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrapInventoryTableViewController.m; sourceTree = "<group>"; };
 		5FB2D2B110ADC4BB0080DB22 /* TrapInventoryTableView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TrapInventoryTableView.xib; sourceTree = "<group>"; };
+		5FB2D72210B314CF0080DB22 /* UserProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserProfile.h; sourceTree = "<group>"; };
+		5FB2D72310B314CF0080DB22 /* UserProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserProfile.m; sourceTree = "<group>"; };
 		5FD2C59E1082B88100B8B0E4 /* HomeNavController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeNavController.h; sourceTree = "<group>"; };
 		5FD2C59F1082B88100B8B0E4 /* HomeNavController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeNavController.m; sourceTree = "<group>"; };
 		5FD2C5B31082B92200B8B0E4 /* HomeTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeTableViewController.h; sourceTree = "<group>"; };
@@ -112,6 +115,8 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				5FB2D96410B50D6B0080DB22 /* Net */,
+				5FB2D72110B314A80080DB22 /* Model */,
 				5F94610210996812004C7CEF /* DropTrapViews */,
 				5F945DD61096B1A2004C7CEF /* JSON */,
 				5F2155A0108D8C7B006FA8F2 /* ProfileView */,
@@ -236,6 +241,22 @@
 			name = DropTrapViews;
 			sourceTree = "<group>";
 		};
+		5FB2D72110B314A80080DB22 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				5FB2D72210B314CF0080DB22 /* UserProfile.h */,
+				5FB2D72310B314CF0080DB22 /* UserProfile.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		5FB2D96410B50D6B0080DB22 /* Net */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Net;
+			sourceTree = "<group>";
+		};
 		5FD2C5A31082B90500B8B0E4 /* HomeView */ = {
 			isa = PBXGroup;
 			children = (
@@ -327,6 +348,7 @@
 				5FA73518109E5D1C00227231 /* DropTrapsNavController.m in Sources */,
 				5FA7351F109E653500227231 /* VenueDetailView.m in Sources */,
 				5FB2D2AE10ADC4AB0080DB22 /* TrapInventoryTableViewController.m in Sources */,
+				5FB2D72410B314CF0080DB22 /* UserProfile.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

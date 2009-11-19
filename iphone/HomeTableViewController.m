@@ -9,7 +9,7 @@
 #import "HomeTableViewController.h"
 #import "ProfileViewController.h"
 #import "BoobyTrap3AppDelegate.h"
-
+#import "UserProfile.h"
 @implementation HomeTableViewController
 @synthesize menuArray;
 @synthesize profileViewController;
@@ -40,7 +40,8 @@
 
 - (void)viewWillAppear:(BOOL)animated {
 	NSLog(@"viewWillAppear in home table view controller");
-	[self updateMiniProfile:[NSDictionary dictionaryWithContentsOfFile:@"Profile.plist"]];
+	//[self updateMiniProfile:[NSDictionary dictionaryWithContentsOfFile:@"Profile.p list"]];
+	[self updateMiniProfile:[[UserProfile sharedSingleton] profile]];
 	[super viewWillAppear:animated];
 }
 

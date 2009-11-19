@@ -9,6 +9,7 @@
 #import "VenueDetailView.h"
 #import "BoobyTrap3AppDelegate.h"
 #import "TrapInventoryTableViewController.h"
+#import "UserProfile.h"
 
 @implementation VenueDetailView
 @synthesize venueInfo;
@@ -56,16 +57,17 @@
 	NSLog(@"we did search");
 	NSString *alertStatement = [returnData objectForKey:@"alertStatement"];
 
-	//Save profile to profile.plist
-	NSDictionary *profile = [returnData objectForKey:@"profile"];
-	[profile writeToFile:@"Profile.plist" atomically:TRUE];
-	[profile release];
-	NSLog(@"saved profile.plist. saving inventory.plist");
+	UserProfile *profile = [UserProfile sharedSingleton];
+	NSDictionary *profileDict = [returnData objectForKey:@"profile"];
+	[profile newProfileFromDictionary:profileDict];
+	//[profile newProfileFromDictionary:[returnData objectForKey:@"profile"]];
+	//[profile 
+	//UserProfile *profile = [[[UserProfile alloc] init]newProfileFromDictionary:[returnData objectForKey:@"profile"]];
 
-	//Save inventory to profile.plist
-	//NSDictionary *inventory = [returnData objectForKey:@"inventory"];
-	//[inventory writeToFile:@"Inventory.plist" atomically:TRUE];
-	//NSLog(@"Bringing up the alert window");
+	//Save profile to profile.plist
+	//NSDictionary *profile = [returnData objectForKey:@"profile"];
+//	[profile writeToFile:@"Profile.plist" atomically:TRUE];
+//	[profile release];
 	NSLog(alertStatement);
 	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"UIAlertView" message:alertStatement delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil]; 
 	[alert show]; 
@@ -89,7 +91,10 @@
 		NSLog(@"We have a titvc");
 
 		trapInventoryTableViewController.title = @"Drop a Trap";
-		trapInventoryTableViewController.whichVenue = [venueInfo objectForKey:@"id"];
+		
+		UserProfile *profile = [UserProfile sharedSingleton];
+		[profile setWhichVenue:[venueInfo objectForKey:@"id"]];
+		//trapInventoryTableViewController.whichVenue = [venueInfo objectForKey:@"id"];
 		BoobyTrap3AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
 		[delegate.dropTrapsNavController pushViewController:trapInventoryTableViewController animated:YES];
 	}
