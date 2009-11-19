@@ -81,7 +81,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	UserProfile *profile = [UserProfile sharedSingleton];
 	NSArray *inventory = (NSArray *)[profile getInventory];
-	
+	NSLog(@"picked this row %d", [indexPath row]);
 	NSString *trap = [[inventory objectAtIndex:[indexPath row]] objectForKey:@"name"];
 	NSInteger *iid = (NSInteger *)[[inventory objectAtIndex:[indexPath row]] objectForKey:@"id"];
 	[profile setWhichTrap:iid];
@@ -123,14 +123,14 @@
 		NSArray *inventory = [profile getInventory];
 		NSLog(@"has inventory %@ \n %@", [profile whichTrap], inventory);
 		//[NSArray arrayWithContentsOfFile:@"Inventory.plist"];
-		NSString *trap = [inventory objectAtIndex:(NSInteger*)buttonIndex];
+		//NSString *trap = [inventory objectAtIndex:(NSInteger*)buttonIndex];
 
-		NSLog(@"the trap name is: %@", trap);
-		[NSThread detachNewThreadSelector:@selector(doDropTrap:) toTarget:self withObject:trap];
+		//NSLog(@"the trap name is: %@", trap);
+		[NSThread detachNewThreadSelector:@selector(doDropTrap) toTarget:self withObject:nil];
 	}
 }
 
-- (void)doDropTrap:(NSString *)trap {
+- (void)doDropTrap {
 	NSLog(@"doDropTrap Called");
 	
 

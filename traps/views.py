@@ -154,11 +154,12 @@ def SetTrap(request):
 	print request.user.userprofile.id
 	uid = request.user.userprofile.id
 	print request.POST
-	vid = request.POST['vid']
+	vid = request.POST['vid'][0]
 	print 1456
-	iid = request.POST['iid']
+	iid = request.POST['iid'][0]
 	
-	print 2
+	print "vid = "+vid
+	print "iid = "+iid
 	venue = Venue.objects.get(id=vid)
 	print 3
 	user = TrapsUser.objects.get(id=uid)
