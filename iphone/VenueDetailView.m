@@ -95,6 +95,8 @@
 		UserProfile *profile = [UserProfile sharedSingleton];
 		[profile setWhichVenue:[venueInfo objectForKey:@"id"]];
 		//trapInventoryTableViewController.whichVenue = [venueInfo objectForKey:@"id"];
+	
+		///TODO - may be able to use [self.navigationController pushViewController:...]
 		BoobyTrap3AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
 		[delegate.dropTrapsNavController pushViewController:trapInventoryTableViewController animated:YES];
 	}

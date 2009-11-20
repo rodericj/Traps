@@ -174,7 +174,7 @@
 	//UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Are you sure?" message:@"hi" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
 	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Boom" message:@"You've just set a trap." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil]; 
 	NSLog(@"stop popup");
-	
+	[self.navigationController popViewControllerAnimated:TRUE];
 	[alert show]; 
 	[alert release]; 
 	

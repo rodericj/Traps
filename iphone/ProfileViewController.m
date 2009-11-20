@@ -31,7 +31,7 @@
 //	[hpLabel setText:[profile objectForKey:@"hitPoints"]];
 //	[killLabel setText:[profile objectForKey:@"killCount"]];
 //	[totalTrapsLabel setText:[profile objectForKey:@"trapsSetCount"]];	
-	
+	NSLog(@"User has %s coins", [userProfile getCoinCount]);
 	[usernameLabel setText:[userProfile getUserName]];
 	[levelLabel setText:(NSString *)[userProfile getLevel]];
 	[coinsLabel setText:(NSString *)[userProfile getCoinCount]];
