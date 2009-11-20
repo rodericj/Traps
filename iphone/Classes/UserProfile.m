@@ -18,29 +18,17 @@
 	
 	@synchronized(self)
 	{
-		if (!sharedSingleton)
+		if (!sharedSingleton){
 			sharedSingleton = [[UserProfile alloc] init];
-			//profile = [NSDictionary initWithContentsOfFile:@"Profile.plist"];
-
+			[sharedSingleton refreshFromFile];
+		}
 		return sharedSingleton;
 	}
 }
 
-
-
-//@synthesize profile;
-//- (id)initWithDictionary:(NSDictionary *)dict{
-//	if(self = [super init]){
-//		self.profile = dict;
-//		[profile writeToFile:@"Profile.p list" atomically:YES];
-//	}
-//	return self;
-//}
-//-(UserProfile *)loadProfile{
-//	profile = [[NSDictionary alloc] initWithContentsOfFile:@"Profile.p list"];
-//	//profile = [NSDictionary dictionaryWithContentsOfFile:@"Profile.p list"];
-//	return self;
-//}
+-(void)refreshFromFile{
+	self.profile =  [[NSDictionary alloc] initWithContentsOfFile:@"Profile.plist"];
+}
 
 -(NSString *)getUserName{
 	return (NSString *)[self.profile objectForKey:@"username"];
@@ -73,20 +61,12 @@
 
 -(void)newProfileFromDictionary:(NSDictionary *)newProfile{
 	[newProfile writeToFile:@"Profile.plist" atomically:TRUE];
-	//self.profile = newProfile;
 	if(profile != newProfile){
 		[profile release];
 		profile = [newProfile copy];
 	}
-	//self.whichTrap = [NSInteger* alloc];
 }
 
-//-(void)setWhichTrap:(NSInteger *)newWhichTrap{
-//	NSLog(newWhichTrap);
-//	if(self.whichTrap != newWhichTrap){
-//		[self.whichTrap release];
-//		self.whichTrap = [newWhichTrap copy];
-//	}
-//}
+
 
 @end

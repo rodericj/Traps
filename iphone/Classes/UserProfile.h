@@ -30,6 +30,9 @@
 
 //-(void)setWhichTrap:(NSInteger *)whichTrap;
 -(BOOL)exists;
+-(void)refreshFromFile;
+
+
 -(UserProfile *)loadProfile;
 -(void)newProfileFromDictionary:(NSDictionary *)newProfile;
 -(NSString *)getUserName;
