@@ -218,7 +218,7 @@ def SearchVenue(request, vid=None):
 	uid = request.user.userprofile.id
 	thisUsersTraps = request.user.userprofile.useritem_set.filter(item__type='TP')
 	print "We have this many traps %d" %thisUsersTraps.count()
-	optionString = thisUsersTraps.count() != 0 and "You have traps. Would you like to set one?" or "You have no traps."
+	optionString = thisUsersTraps.count() != 0 or "You have traps. Would you like to set one?" and "You have no traps."
 	ret = {}
 	venue = Venue.objects.get(id=vid)
 	itemsAtVenue = venue.venueitem_set.filter()
