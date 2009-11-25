@@ -41,12 +41,60 @@
 	FBSession *session = [[FBSession sessionForApplication:@"3243a6e2dd3a0d084480d05f301cba85"
 								secret:@"d8611553a286dce3531353b3de53ef2e"
 								delegate:self] retain];
+	if([session resume] == NO){
+		NSLog(@"viewwillappear for hometableView. resume returned no");
+		//FBLoginDialog* dialog = [[[FBLoginDialog alloc] initWithSession:session] autorelease]; 
+//		dialog.delegate = self;
+//		[dialog show];
+	}
+	else{
+		NSLog(@"viewwillappear for homeTableView. resume returned yes");
+	}
 
 }
+
+-(void)session:(FBSession *)session willLogout:uid{
+	NSLog(@"will log out");
+	FBDialog *dialog = [[[FBLoginDialog alloc] initWithSession:session] autorelease];
+	dialog.delegate = self;
+	[dialog show];
+	
+}
+
+
 - (void)session:(FBSession *)session didLogin:(FBUID)uid{
-
-	NSLog(@"did log in from facebook");
+	
+	NSLog(@"did log in from facebook here and the session is %@ %d", 
+		  [session description], uid);
+	//Do fb query
+	//NSLog(@"Session: %@", [session description]);
+	NSString *fql = [NSString stringWithFormat:
+					 @"select uid, first_name, last_name, name, pic_square from user where uid= %lld", 
+					 [session uid]];
+	NSLog(fql);
+	NSDictionary *params = [NSDictionary dictionaryWithObject:fql forKey:@"query"];
+	[[FBRequest requestWithDelegate:self] call:@"facebook.fql.query" params:params];
 }
+
+- (void) request:(FBRequest *)request didLoad:(id)result {
+	NSLog(@"Request has returned %@", request);
+	NSArray *users = result;
+	NSLog(@"users returned is %@", users);
+	NSDictionary *user = [users objectAtIndex:0];
+	
+	//Set the mini profile image
+	NSURL *photoUrl = [NSURL URLWithString:[user objectForKey:@"pic_square"]];
+	NSLog([user objectForKey:@"pic_square"]);
+	NSData *photoData = [NSData dataWithContentsOfURL:photoUrl];
+	UIImage *profileImage =	[UIImage imageWithData:photoData];
+	userImage.image = profileImage;
+	
+	//Set the mini porofile name
+	userName.text = [user objectForKey:@"name"];
+	
+	//[self loadView];
+}
+
 - (void)viewWillAppear:(BOOL)animated {
 	NSLog(@"viewWillAppear in home table view controller");
 	//[self updateMiniProfile:[NSDictionary dictionaryWithContentsOfFile:@"Profile.p list"]];
@@ -54,6 +102,9 @@
 	FBSession *session = [[FBSession sessionForApplication:@"3243a6e2dd3a0d084480d05f301cba85"
 						secret:@"d8611553a286dce3531353b3de53ef2e"
 						delegate:self] retain];
+	//BoobyTrap3AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
+	//FBSession *session = delegate.session;
+	
 	
 	if([session resume] == NO){
 		NSLog(@"viewWillAppear,  we are not logged in, show the fb login dialog");
@@ -64,11 +115,13 @@
 	else{
 		NSLog(@"viewWillAppear, but we are logged in, so don't show the fb login thing");
 	}
+		
 	FBLoginButton *button = [[[FBLoginButton alloc] init] autorelease];
 	[self.view addSubview:button];
 	
 	[super viewWillAppear:animated];
 }
+
 - (void)didReceiveMemoryWarning {
 	// Releases the view if it doesn't have a superview.
     [super didReceiveMemoryWarning];
@@ -115,10 +168,6 @@
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Navigation logic may go here. Create and push another view controller.
-	// AnotherViewController *anotherViewController = [[AnotherViewController alloc] initWithNibName:@"AnotherView" bundle:nil];
-	// [self.navigationController pushViewController:anotherViewController];
-	// [anotherViewController release];
 	
 	NSInteger row = [indexPath row];
 	if (row == 0 ){

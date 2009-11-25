@@ -7,15 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
-@class ProfileViewController;
+#import "FBConnect/FBConnect.h"
 
-@interface HomeTableViewController : UITableViewController <UITableViewDelegate, UITableViewDataSource>{
+@class ProfileViewController;
+@class FBSessionDelegate;
+@interface HomeTableViewController : UITableViewController <FBRequestDelegate, FBDialogDelegate, FBSessionDelegate, UITableViewDelegate, UITableViewDataSource>{
 	IBOutlet UITableView *homeTableView;
 	NSMutableArray *menuArray;
 	ProfileViewController *profileViewController;
 	IBOutlet UILabel *userName;
 	IBOutlet UILabel *userLevel;
 	IBOutlet UILabel *userCoinCount;
+	IBOutlet UIImageView *userImage;
 }
 -(void)updateMiniProfile:(NSDictionary *)profile;
 
@@ -24,4 +27,5 @@
 @property (nonatomic, retain) UILabel *userName;
 @property (nonatomic, retain) UILabel *userLevel;
 @property (nonatomic, retain) UILabel *userCoinCount;
+@property (nonatomic, retain) UIImageView *userImage;
 @end

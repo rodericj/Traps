@@ -131,20 +131,14 @@
 }
 
 - (void)doDropTrap {
-	NSLog(@"doDropTrap Called");
-	
-
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://localhost:8000/SetTrap/"]
 															   cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
 														   timeoutInterval:60.0];
 	[request setHTTPMethod:@"POST"];
-	NSLog(@"get outta here");
 	//NSLog(@"%@", [self.whichVenue intValue]);
 	//NSLog(self.whichVenue);
-	NSLog(@"srsly");
 	UserProfile *profile = [UserProfile sharedSingleton];
-	NSLog(@"%@",[profile whichTrap]);
 	[request setHTTPBody:[[NSString stringWithFormat:@"vid=%@&iid=%@", [profile whichVenue], [profile whichTrap]] //vid, iid, uid
 							dataUsingEncoding:NSUTF8StringEncoding]];
 	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
@@ -156,24 +150,18 @@
 															error:&error];
 
 	NSString *results = [[NSString alloc] initWithData:urlData encoding:NSUTF8StringEncoding];
-	NSLog(@"doDropTrap networking 3");
-	NSLog(results);
-	NSLog(@"results done");
+
 	NSDictionary *resultsDict =[results JSONValue];
-	NSLog(@"net 4");
 	//NSLog(@)
 	//[foundVenues writeToFile:@"NearbyPlaces.plist" atomically:TRUE];
 	self.navigationItem.rightBarButtonItem = nil;
-	NSLog(@"net 5");
 	[self performSelectorOnMainThread:@selector(didDropTrap:) withObject:resultsDict waitUntilDone:NO];
-		[pool release];
+	[pool release];
 }
 
 - (void)didDropTrap:(NSDictionary *) results{
-	NSLog(@"start popup");
 	//UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Are you sure?" message:@"hi" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
 	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Boom" message:@"You've just set a trap." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil]; 
-	NSLog(@"stop popup");
 	[self.navigationController popViewControllerAnimated:TRUE];
 	[alert show]; 
 	[alert release]; 
