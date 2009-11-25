@@ -17,6 +17,7 @@
 @synthesize rootController;
 @synthesize homeNavController;
 @synthesize loginViewController;
+@synthesize session;
 - (void)applicationDidFinishLaunching:(UIApplication *)application {    
     // Override point for customization after application launch
 	[window addSubview:rootController.view];

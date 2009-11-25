@@ -10,6 +10,9 @@
 #import "ProfileViewController.h"
 #import "BoobyTrap3AppDelegate.h"
 #import "UserProfile.h"
+#import "FBConnect/FBConnect.h"
+
+
 @implementation HomeTableViewController
 @synthesize menuArray;
 @synthesize profileViewController;
@@ -28,23 +31,44 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+	NSLog(@"showing home tableview");
 	
 	self.title = NSLocalizedString(@"Home", @"Home Title");	
 	NSMutableArray *array = [[NSArray alloc] initWithObjects:@"Profile", @"Wall",@"Drop History", @"Inbox",@"Leaderboard",@"Store", nil];
 	self.menuArray = array;
 	[array release];
 	
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-}
+	FBSession *session = [[FBSession sessionForApplication:@"3243a6e2dd3a0d084480d05f301cba85"
+								secret:@"d8611553a286dce3531353b3de53ef2e"
+								delegate:self] retain];
 
+}
+- (void)session:(FBSession *)session didLogin:(FBUID)uid{
+
+	NSLog(@"did log in from facebook");
+}
 - (void)viewWillAppear:(BOOL)animated {
 	NSLog(@"viewWillAppear in home table view controller");
 	//[self updateMiniProfile:[NSDictionary dictionaryWithContentsOfFile:@"Profile.p list"]];
 	[self updateMiniProfile:[[UserProfile sharedSingleton] profile]];
+	FBSession *session = [[FBSession sessionForApplication:@"3243a6e2dd3a0d084480d05f301cba85"
+						secret:@"d8611553a286dce3531353b3de53ef2e"
+						delegate:self] retain];
+	
+	if([session resume] == NO){
+		NSLog(@"viewWillAppear,  we are not logged in, show the fb login dialog");
+		FBDialog *dialog = [[[FBLoginDialog alloc] initWithSession:session] autorelease];
+		dialog.delegate = self;
+		[dialog show];
+	}
+	else{
+		NSLog(@"viewWillAppear, but we are logged in, so don't show the fb login thing");
+	}
+	FBLoginButton *button = [[[FBLoginButton alloc] init] autorelease];
+	[self.view addSubview:button];
+	
 	[super viewWillAppear:animated];
 }
-
 - (void)didReceiveMemoryWarning {
 	// Releases the view if it doesn't have a superview.
     [super didReceiveMemoryWarning];
@@ -68,12 +92,10 @@
     return 1;
 }
 
-
 // Customize the number of rows in the table view.
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [menuArray count];
 }
-
 
 // Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

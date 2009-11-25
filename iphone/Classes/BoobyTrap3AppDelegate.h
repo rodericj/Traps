@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FBConnect/FBConnect.h"
+
 @class HomeNavController;
 @class LoginViewController;
 @class DropTrapsNavController;
@@ -16,7 +18,9 @@
 	IBOutlet UITabBarController *rootController;
 	IBOutlet HomeNavController *homeNavController;
 	IBOutlet DropTrapsNavController *dropTrapsNavController;
+	FBSession *session;
 }
+@property (retain) FBSession *session;
 @property (nonatomic, retain) IBOutlet UIWindow *window;
 @property (nonatomic, retain) IBOutlet LoginViewController *loginViewController;
 @property (nonatomic, retain) IBOutlet UITabBarController *rootController;
