@@ -20,15 +20,15 @@
 @synthesize userLevel;
 @synthesize userCoinCount;
 
-#pragma mark initialization and setup
+#pragma mark Initialization and setup
 -(void)updateMiniProfile:(NSDictionary *)profile{
 	NSLog(@"updating mini profile");
 	
 	[userName setText:[profile objectForKey:@"username"]];
 	[userLevel setText:[profile objectForKey:@"level"]];
 	[userCoinCount setText:[profile objectForKey:@"coinCount"]];
-
 }
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 	NSLog(@"showing home tableview");
@@ -38,20 +38,48 @@
 	self.menuArray = array;
 	[array release];
 	
-	FBSession *session = [[FBSession sessionForApplication:@"3243a6e2dd3a0d084480d05f301cba85"
+	session = [[FBSession sessionForApplication:@"3243a6e2dd3a0d084480d05f301cba85"
 								secret:@"d8611553a286dce3531353b3de53ef2e"
 								delegate:self] retain];
-	if([session resume] == NO){
-		NSLog(@"viewwillappear for hometableView. resume returned no");
-		//FBLoginDialog* dialog = [[[FBLoginDialog alloc] initWithSession:session] autorelease]; 
-//		dialog.delegate = self;
-//		[dialog show];
-	}
-	else{
-		NSLog(@"viewwillappear for homeTableView. resume returned yes");
-	}
 
 }
+
+- (void)viewDidAppear:(BOOL)animated {
+	[super viewDidAppear:animated];
+	[session resume];
+}
+
+
+- (void)viewWillAppear:(BOOL)animated {
+	NSLog(@"viewWillAppear in home table view controller");
+	//[self updateMiniProfile:[NSDictionary dictionaryWithContentsOfFile:@"Profile.p list"]];
+	[self updateMiniProfile:[[UserProfile sharedSingleton] profile]];
+	
+	FBLoginButton *button = [[[FBLoginButton alloc] init] autorelease];
+	[self.view addSubview:button];
+	[super viewWillAppear:animated];
+}
+
+- (void)didReceiveMemoryWarning {
+	// Releases the view if it doesn't have a superview.
+    [super didReceiveMemoryWarning];
+	
+	// Release any cached data, images, etc that aren't in use.
+}
+
+- (void)viewDidUnload {
+	// Release any retained subviews of the main view.
+	// e.g. self.myOutlet = nil;
+}
+
+- (void)dealloc {
+	[profileViewController release];
+	[session.delegates removeObject: self];
+    [super dealloc];
+}
+
+
+#pragma mark FB Connect stuff
 
 -(void)session:(FBSession *)session willLogout:uid{
 	NSLog(@"will log out");
@@ -61,13 +89,11 @@
 	
 }
 
-
 - (void)session:(FBSession *)session didLogin:(FBUID)uid{
 	
 	NSLog(@"did log in from facebook here and the session is %@ %d", 
 		  [session description], uid);
 	//Do fb query
-	//NSLog(@"Session: %@", [session description]);
 	NSString *fql = [NSString stringWithFormat:
 					 @"select uid, first_name, last_name, name, pic_square from user where uid= %lld", 
 					 [session uid]];
@@ -93,50 +119,6 @@
 	userName.text = [user objectForKey:@"name"];
 	
 	//[self loadView];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-	NSLog(@"viewWillAppear in home table view controller");
-	//[self updateMiniProfile:[NSDictionary dictionaryWithContentsOfFile:@"Profile.p list"]];
-	[self updateMiniProfile:[[UserProfile sharedSingleton] profile]];
-	FBSession *session = [[FBSession sessionForApplication:@"3243a6e2dd3a0d084480d05f301cba85"
-						secret:@"d8611553a286dce3531353b3de53ef2e"
-						delegate:self] retain];
-	//BoobyTrap3AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
-	//FBSession *session = delegate.session;
-	
-	
-	if([session resume] == NO){
-		NSLog(@"viewWillAppear,  we are not logged in, show the fb login dialog");
-		FBDialog *dialog = [[[FBLoginDialog alloc] initWithSession:session] autorelease];
-		dialog.delegate = self;
-		[dialog show];
-	}
-	else{
-		NSLog(@"viewWillAppear, but we are logged in, so don't show the fb login thing");
-	}
-		
-	FBLoginButton *button = [[[FBLoginButton alloc] init] autorelease];
-	[self.view addSubview:button];
-	
-	[super viewWillAppear:animated];
-}
-
-- (void)didReceiveMemoryWarning {
-	// Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-	
-	// Release any cached data, images, etc that aren't in use.
-}
-
-- (void)viewDidUnload {
-	// Release any retained subviews of the main view.
-	// e.g. self.myOutlet = nil;
-}
-
-- (void)dealloc {
-	[profileViewController release];
-    [super dealloc];
 }
 
 #pragma mark Table view methods
@@ -187,8 +169,5 @@
 	}
 	
 }
-
-
-
 @end
 

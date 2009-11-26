@@ -7,11 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FBConnect/FBConnect.h"
 
-
-@interface SocialTableViewController : UITableViewController {
+@interface SocialTableViewController : UITableViewController <FBSessionDelegate>{
 	NSArray *friendsWithApp;
-
+	FBSession *session;
 }
 @property (nonatomic, retain) NSArray *friendsWithApp;
 

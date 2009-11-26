@@ -12,7 +12,7 @@
 
 @implementation SocialTableViewController
 @synthesize friendsWithApp;
-
+//@synthesize session;
 - (void)viewDidLoad {
     [super viewDidLoad];
   }
@@ -25,27 +25,25 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-	FBSession *session = [[FBSession sessionForApplication:@"3243a6e2dd3a0d084480d05f301cba85"
+	
+	session = [[FBSession sessionForApplication:@"3243a6e2dd3a0d084480d05f301cba85"
  													secret:@"d8611553a286dce3531353b3de53ef2e" 
  												  delegate:self] retain];
-	if([session resume] == NO){
-		NSLog(@"viewwillappear for socialtableview. resume returned no");
-		}
-	else{
-		NSLog(@"viewwillappear for socialtableview. resume returned yes");
-	}
-	
-	//Do fb query
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+	[super viewDidAppear:animated];
+	[session resume];
+}
+
+- (void)session:(FBSession *)session didLogin:(FBUID)uid{
+	NSLog(@"did log in from facebook in socialtablview");
 	NSString *fql = [NSString stringWithFormat:
 					 @"select uid, first_name, last_name, name, pic_square from user where uid in (select uid from user where is_app_user = 1 and uid in (SELECT uid2 FROM friend WHERE uid1= %lld))", 
 					 [session uid]];
 	NSDictionary *params = [NSDictionary dictionaryWithObject:fql forKey:@"query"];
 	[[FBRequest requestWithDelegate:self] call:@"facebook.fql.query" params:params];
 	
-}
-
-- (void)session:(FBSession *)session didLogin:(FBUID)uid{
-	NSLog(@"did log in from facebook in socialtablview");
 }
 
 - (void)didReceiveMemoryWarning {

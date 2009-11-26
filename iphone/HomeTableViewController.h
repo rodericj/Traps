@@ -11,7 +11,7 @@
 
 @class ProfileViewController;
 @class FBSessionDelegate;
-@interface HomeTableViewController : UITableViewController <FBRequestDelegate, FBDialogDelegate, FBSessionDelegate, UITableViewDelegate, UITableViewDataSource>{
+@interface HomeTableViewController : UITableViewController <FBDialogDelegate, FBSessionDelegate, UITableViewDelegate, UITableViewDataSource>{
 	IBOutlet UITableView *homeTableView;
 	NSMutableArray *menuArray;
 	ProfileViewController *profileViewController;
@@ -19,6 +19,8 @@
 	IBOutlet UILabel *userLevel;
 	IBOutlet UILabel *userCoinCount;
 	IBOutlet UIImageView *userImage;
+	
+	FBSession *session;
 }
 -(void)updateMiniProfile:(NSDictionary *)profile;
 
