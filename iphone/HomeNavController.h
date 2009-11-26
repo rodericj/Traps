@@ -15,6 +15,5 @@
 	IBOutlet HomeTableViewController *homeTableViewController;
 }
 //@property (nonatomic, retain) HomeTableViewController *homeTableViewController;
-
 -(IBAction) logout;
 @end

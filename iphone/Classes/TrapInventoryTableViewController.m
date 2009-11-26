@@ -8,6 +8,7 @@
 
 #import "TrapInventoryTableViewController.h"
 #import "UserProfile.h"
+#import "FBConnect/FBConnect.h"
 
 @implementation TrapInventoryTableViewController
 
@@ -41,11 +42,9 @@
 // Customize the number of rows in the table view.
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 	UserProfile *profile = [UserProfile sharedSingleton];
-	//NSDictionary *profile = [NSDictionary dictionaryWithContentsOfFile:@"Profile.p list"];
 	NSLog(@"trying singleton inventory again");
 
 	NSArray *inventory = (NSArray *)[profile getInventory];
-	//NSArray *inventory = [profile objectForKey:@"inventory"];
 	NSLog(@"number of rows has an inventory: %@", inventory);
 
 	return [inventory count];
@@ -63,17 +62,12 @@
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     }
     
-	//NSArray *inventory = [NSArray arrayWithContentsOfFile:@"Inventory.p list"];
-	//NSDictionary *profile = [NSDictionary dictionaryWithContentsOfFile:@"Profile.p list"];
-	//NSArray *inventory = [profile objectForKey:@"inventory"];
-
 	UserProfile *profile = [UserProfile sharedSingleton];
 	NSArray *inventory = (NSArray *)[profile getInventory];
 
 
     // Set up the cell...
 	cell.text = [[inventory objectAtIndex:[indexPath row]] objectForKey:@"name"];
-	//[inventory release];
     return cell;
 }
 
@@ -81,7 +75,6 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	UserProfile *profile = [UserProfile sharedSingleton];
 	NSArray *inventory = (NSArray *)[profile getInventory];
-	NSLog(@"picked this row %d", [indexPath row]);
 	NSString *trap = [[inventory objectAtIndex:[indexPath row]] objectForKey:@"name"];
 	NSInteger *iid = (NSInteger *)[[inventory objectAtIndex:[indexPath row]] objectForKey:@"id"];
 	[profile setWhichTrap:iid];
@@ -89,16 +82,7 @@
 	
 //[profile setWhichTrap:iid];
 	//[profile setWhichTrap:(NSInteger *)[[inventory objectAtIndex:[indexPath row]] objectForKey:@"id"]];
-	NSLog(@"ok it's set");
-	NSLog(@"now whichTrap within our static object %@", [profile whichTrap]);
-	NSLog(@"now whichVenue within our static object %@", [profile whichVenue]);
-	//NSLog([indexPath row]);
-	//NSLog(@"Set trap 2");
-	//whichTrap = [indexPath row];
-	//NSLog(whichTrap);
-	
-	//NSLog(self.whichTrap);
-	NSLog(trap);
+
 	NSString *alertStatement = [NSString stringWithFormat:@"Are you sure you wish to drop %@? %@", trap, [profile whichTrap]];
 	NSLog(alertStatement);
 	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Are you sure?" message:alertStatement delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil]; 
@@ -117,15 +101,9 @@
 	}
 	else{
 		NSLog(@"Yes");
-//NSLog(whichTrap);
-		//NSLog([NSString stringWithFormat:@"%@", self.whichTrap]);
 		UserProfile *profile = [UserProfile sharedSingleton];
 		NSArray *inventory = [profile getInventory];
-		NSLog(@"has inventory %@ \n %@", [profile whichTrap], inventory);
-		//[NSArray arrayWithContentsOfFile:@"Inventory.plist"];
-		//NSString *trap = [inventory objectAtIndex:(NSInteger*)buttonIndex];
 
-		//NSLog(@"the trap name is: %@", trap);
 		[NSThread detachNewThreadSelector:@selector(doDropTrap) toTarget:self withObject:nil];
 	}
 }
@@ -136,8 +114,6 @@
 															   cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
 														   timeoutInterval:60.0];
 	[request setHTTPMethod:@"POST"];
-	//NSLog(@"%@", [self.whichVenue intValue]);
-	//NSLog(self.whichVenue);
 	UserProfile *profile = [UserProfile sharedSingleton];
 	[request setHTTPBody:[[NSString stringWithFormat:@"vid=%@&iid=%@", [profile whichVenue], [profile whichTrap]] //vid, iid, uid
 							dataUsingEncoding:NSUTF8StringEncoding]];
@@ -152,8 +128,6 @@
 	NSString *results = [[NSString alloc] initWithData:urlData encoding:NSUTF8StringEncoding];
 
 	NSDictionary *resultsDict =[results JSONValue];
-	//NSLog(@)
-	//[foundVenues writeToFile:@"NearbyPlaces.plist" atomically:TRUE];
 	self.navigationItem.rightBarButtonItem = nil;
 	[self performSelectorOnMainThread:@selector(didDropTrap:) withObject:resultsDict waitUntilDone:NO];
 	[pool release];
@@ -162,10 +136,16 @@
 - (void)didDropTrap:(NSDictionary *) results{
 	//UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Are you sure?" message:@"hi" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
 	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Boom" message:@"You've just set a trap." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil]; 
-	[self.navigationController popViewControllerAnimated:TRUE];
 	[alert show]; 
 	[alert release]; 
 	
+	//FBPermissionDialog *dialog = [[[FBPermissionDialog alloc] init] autorelease];
+//	dialog.permission = @"status_update";
+//	[dialog show];
+	
+	
+	[self.navigationController popViewControllerAnimated:TRUE];
+
 }
 
 @end

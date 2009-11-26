@@ -10,18 +10,13 @@
 
 
 @interface UserProfile : NSObject {
-	NSInteger *coinCount;
-	NSInteger *hitPoints;
-	NSArray *inventory;
-	NSInteger *killCount;
-	NSInteger *level;
-	NSInteger *trapsSetCount;
-	NSString *userName;
+	NSDictionary *fbprofile;
 	NSDictionary *profile;
 	NSString *whichTrap;
 	NSString *whichVenue;
 }
 @property (nonatomic) NSDictionary *profile;
+@property (nonatomic) NSDictionary *fbprofile;
 @property (retain) NSString *whichTrap;
 @property (retain) NSString *whichVenue;
 
@@ -32,9 +27,8 @@
 -(BOOL)exists;
 -(void)refreshFromFile;
 
-
--(UserProfile *)loadProfile;
 -(void)newProfileFromDictionary:(NSDictionary *)newProfile;
+-(void)newFBProfileFromDictionary:(NSDictionary *)newFBProfile;
 -(NSString *)getUserName;
 -(NSInteger *)getCoinCount;
 -(NSInteger *)getHitPoints;
@@ -42,5 +36,6 @@
 -(NSInteger *)getLevel;
 -(NSInteger *)getTrapsSetCount;
 -(NSDictionary *)getInventory;
+-(NSString *)getPicture;
 
 @end

@@ -17,6 +17,8 @@
 	IBOutlet UILabel *levelLabel;
 	IBOutlet UILabel *totalTrapsLabel;
 	IBOutlet UILabel *activeTrapsLabel;
+	IBOutlet UIImageView *userImage;
+
 }
 @property (nonatomic, retain) UILabel *usernameLabel;
 @property (nonatomic, retain) UILabel *coinsLabel;
@@ -25,6 +27,7 @@
 @property (nonatomic, retain) UILabel *levelLabel;
 @property (nonatomic, retain) UILabel *totalTrapsLabel;
 @property (nonatomic, retain) UILabel *activeTrapsLabel;
+@property (nonatomic, retain) UIImageView *userImage;
 
 
 @end

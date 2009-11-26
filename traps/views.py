@@ -12,16 +12,17 @@ from django.db.models import Count
 from django.core.exceptions import ObjectDoesNotExist
 
 
-#def tb(f):
-	#def new_f():
-		#print "entering ", f.__name__
-		#try:
-			#f()
-		#except Exception as e:
-			#print type(e)
-			#print e
-		#print "exiting ", f.__name__
-	#return new_f
+def tb(f):
+	def new_f():
+		print "entering ", f.__name__
+		try:
+			f()
+		except Exception as e:
+			print type(e)
+			print e
+			print sys.exc_info()[0]
+		print "exiting ", f.__name__
+	return new_f
 
 class TooManySearchResultsError(Exception):
 	def __init__(self, value):
@@ -92,6 +93,7 @@ def noTrapWasHere(uid, venue):
 		venue.save()
 	itemsAtVenue = venue.item.values()
 	
+	print "The reward you got for this non trapped place %s "% (reward)
 	return reward
 
 def notifyTrapSetter(uid, venue):
@@ -147,27 +149,16 @@ def getUserProfile(uid):
 	
 #def SetTrap(request, vid, iid, uid):
 def SetTrap(request):
-	print 1234
 	request.user.userprofile = get_or_create_profile(request.user)
-	print 13456
-	print dir(request.user.userprofile)
-	print request.user.userprofile.id
 	uid = request.user.userprofile.id
-	print request.POST
 	vid = request.POST['vid'][0]
-	print 1456
 	iid = request.POST['iid'][0]
 	
-	print "vid = "+vid
-	print "iid = "+iid
 	venue = Venue.objects.get(id=vid)
-	print 3
 	user = TrapsUser.objects.get(id=uid)
-	print 4
 
 	#get the item from the user and subtract it
 	alltraps = user.useritem_set.all()
-	print 5
 	if len(alltraps) > 0:
 		item = alltraps[0].item
 		#put this item on the VenueItem table	
@@ -217,8 +208,10 @@ def SearchVenue(request, vid=None):
 	request.user.userprofile.event_set.create(type='SE')
 	uid = request.user.userprofile.id
 	thisUsersTraps = request.user.userprofile.useritem_set.filter(item__type='TP')
-	print "We have this many traps %d" %thisUsersTraps.count()
-	optionString = thisUsersTraps.count() != 0 or "You have traps. Would you like to set one?" and "You have no traps."
+	if thisUsersTraps.count() != 0:
+		optionString = "You have %d traps. Would you like to set one?" %(thisUsersTraps.count())
+	else:
+		optionString = "You have no traps"
 	ret = {}
 	venue = Venue.objects.get(id=vid)
 	itemsAtVenue = venue.venueitem_set.filter()
@@ -252,7 +245,9 @@ def SearchVenue(request, vid=None):
 		ret['alertStatement'] = ""
 		
 		alertStatement = "There are no traps here. You got %s coins." % ret['reward']['coins'] 
+		print "alertStatement: %s, optionString: %s" %(alertStatement, optionString)
 		ret['alertStatement'] = alertStatement + " " +optionString
+		print ret
 
 	print "out of all"
 	ret['venueid'] = vid
@@ -280,11 +275,8 @@ def GetUserProfile(request):
 def GetUserProfile(request, uid):
 	print "in GetUserProfile"
 	userprofile = get_or_create_profile(request.user)
-	print 67
 	profile = userprofile.objectify()
-	print 7
 	profile['inventory'] = getUserInventory(uid)
-	print profile
 	return HttpResponse(simplejson.dumps(profile), mimetype='application/json')
 
 def GetUserDropHistory(request):
@@ -325,21 +317,22 @@ def get_or_create_profile(user):
 	return profile
 
 def IPhoneLogin(request):
+	print request.user
 
 	#TODO error case and feed it back to the iphone
-    #1. user name already exists does not work
+	#1. user name already exists does not work
 	#just in case
 	print "1"
-	logout(request)
+	#logout(request)
 	print "2"
 	uname = request.POST['uname']
 	print "3"
 	password = request.POST['password']
+	print request.POST
 	print "4"
 	profile = doLogin(request, uname, password)
 	print "5"
 	#jsonprofile = profile.objectify()
-	print type(profile)
 	try:
 		jsonprofile = GetUserProfileFromProfile(profile)
 	except Exception as e:
@@ -353,9 +346,12 @@ def IPhoneLogin(request):
 
 	return HttpResponse(simplejson.dumps(jsonprofile), mimetype='application/json')
 	
+#@tb
 def Logout(request):
+	print "logout"
 	logout(request)
-	return HttpResponseRedirect('/loggedOut/')
+	return HttpResponse({'status':'success'}, mimetype='application/json')
+	#return HttpResponseRedirect('/loggedOut/')
 
 def Login(request):
 	print request.user
@@ -367,29 +363,29 @@ def Login(request):
 	return HttpResponseRedirect('/startup/')
 	
 def doLogin(request, uname, password):
-
+	
 	if request.user.is_anonymous():
 		#create user and profile Create New User
-		print "create user"
+		print "create user: i.e. we just checked and this user is NOT logged in"
 		user = User.objects.create_user(uname, 'none', password)
 		user = authenticate(username=uname, password=password)
 		login(request, user)
+		user.userprofile = get_or_create_profile(user)
+		user.userprofile.event_set.create(type='LI')
+		#create a whole bunch of bananas	
+		for i in range(config.numStarterItems):
+			starterItem = Item.objects.get(id=1)
+			print starterItem
+			user.userprofile.useritem_set.create(item=starterItem)
 	else:
+		print "This user was logged in when they called doLogin"
 		user = request.user	
+		user.userprofile = get_or_create_profile(user)
+		user.userprofile.event_set.create(type='LI')
 	
-	user.userprofile = get_or_create_profile(user)
-	user.userprofile.event_set.create(type='LI')
 	print " created a new user %d" %(user.userprofile.id)
-	
-	#Is it safe to assume that a login is a first time user? I'm not sure TODO
-	#create a whole bunch of bananas	
-	for i in range(config.numStarterItems):
-		starterItem = Item.objects.get(id=1)
-		print starterItem
-		user.userprofile.useritem_set.create(item=starterItem)
 
 	return user.userprofile
-	
 	
 def FindNearby(request):
 	print request.POST

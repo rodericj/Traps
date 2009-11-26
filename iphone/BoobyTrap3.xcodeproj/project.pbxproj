@@ -25,6 +25,7 @@
 		5F9461071099682C004C7CEF /* NearbyPlacesTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F9461061099682C004C7CEF /* NearbyPlacesTableView.m */; };
 		5F946157109970F3004C7CEF /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F946156109970F3004C7CEF /* CoreLocation.framework */; };
 		5F94618D109A9E4F004C7CEF /* MyCLController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F94618C109A9E4F004C7CEF /* MyCLController.m */; };
+		5F9A383110BE1E9800E59AA2 /* NetworkRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F9A383010BE1E9800E59AA2 /* NetworkRequestOperation.m */; };
 		5FA73518109E5D1C00227231 /* DropTrapsNavController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FA73517109E5D1C00227231 /* DropTrapsNavController.m */; };
 		5FA7351F109E653500227231 /* VenueDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FA7351D109E653500227231 /* VenueDetailView.m */; };
 		5FA73520109E653500227231 /* VenueDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5FA7351E109E653500227231 /* VenueDetailView.xib */; };
@@ -87,6 +88,8 @@
 		5F946156109970F3004C7CEF /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		5F94618B109A9E4F004C7CEF /* MyCLController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyCLController.h; sourceTree = "<group>"; };
 		5F94618C109A9E4F004C7CEF /* MyCLController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyCLController.m; sourceTree = "<group>"; };
+		5F9A382F10BE1E9800E59AA2 /* NetworkRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkRequestOperation.h; sourceTree = "<group>"; };
+		5F9A383010BE1E9800E59AA2 /* NetworkRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkRequestOperation.m; sourceTree = "<group>"; };
 		5FA73516109E5D1C00227231 /* DropTrapsNavController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DropTrapsNavController.h; sourceTree = "<group>"; };
 		5FA73517109E5D1C00227231 /* DropTrapsNavController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DropTrapsNavController.m; sourceTree = "<group>"; };
 		5FA7351C109E653500227231 /* VenueDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VenueDetailView.h; path = ../VenueDetailView.h; sourceTree = "<group>"; };
@@ -297,6 +300,8 @@
 		5FB2D96410B50D6B0080DB22 /* Net */ = {
 			isa = PBXGroup;
 			children = (
+				5F9A382F10BE1E9800E59AA2 /* NetworkRequestOperation.h */,
+				5F9A383010BE1E9800E59AA2 /* NetworkRequestOperation.m */,
 			);
 			name = Net;
 			sourceTree = "<group>";
@@ -455,6 +460,7 @@
 				5FB2E11510BBB9330080DB22 /* SocialTableViewController.m in Sources */,
 				5FB2E22310BCE4320080DB22 /* CompositeSubviewBasedApplicationCell.m in Sources */,
 				5FB2E22810BCE54C0080DB22 /* ApplicationCell.m in Sources */,
+				5F9A383110BE1E9800E59AA2 /* NetworkRequestOperation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -18,27 +18,27 @@
 @synthesize levelLabel;
 @synthesize totalTrapsLabel;
 @synthesize activeTrapsLabel;
+@synthesize userImage;
 
 #pragma mark Set all of the labels just before the view loads
 - (void)viewWillAppear:(BOOL)animated {
 	NSLog(@"viewWillAppear in profile. Lets add stuff here");
-	//NSDictionary *profile = [NSDictionary dictionaryWithContentsOfFile:@"Profile.p list"];
 	UserProfile *userProfile = [UserProfile sharedSingleton];
+	[userProfile printUserProfile];
 	
-//	[usernameLabel setText:[profile objectForKey:@"username"]];
-//	[levelLabel setText:[profile objectForKey:@"level"]];
-//	[coinsLabel setText:[profile objectForKey:@"coinCount"]];
-//	[hpLabel setText:[profile objectForKey:@"hitPoints"]];
-//	[killLabel setText:[profile objectForKey:@"killCount"]];
-//	[totalTrapsLabel setText:[profile objectForKey:@"trapsSetCount"]];	
-	NSLog(@"User has %s coins", [userProfile getCoinCount]);
+	//Set the profile image
+	NSURL *photoUrl = [NSURL URLWithString:[userProfile getPicture]];
+	NSData *photoData = [NSData dataWithContentsOfURL:photoUrl];
+	UIImage *profileImage =	[UIImage imageWithData:photoData];
+	userImage.image = profileImage;
+	
+	NSLog(@"User has %s coins -- the whole profile is %@", [userProfile getCoinCount], userProfile);
 	[usernameLabel setText:[userProfile getUserName]];
 	[levelLabel setText:(NSString *)[userProfile getLevel]];
 	[coinsLabel setText:(NSString *)[userProfile getCoinCount]];
 	[hpLabel setText:(NSString *)[userProfile getHitPoints]];
 	[killLabel setText:(NSString *)[userProfile getKillCount]];
 	[totalTrapsLabel setText:(NSString *)[userProfile getTrapsSetCount]];
-	//[profile release];
 	
 	[super viewWillAppear:animated];
 }
@@ -50,16 +50,6 @@
 	NSLog(@"ProfileViewController did load. could be a good time to update");
     [super viewDidLoad];
 }
-
-
-
-/*
-// Override to allow orientations other than the default portrait orientation.
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-*/
 
 - (void)didReceiveMemoryWarning {
 	// Releases the view if it doesn't have a superview.
@@ -73,10 +63,7 @@
 	// e.g. self.myOutlet = nil;
 }
 
-
 - (void)dealloc {
     [super dealloc];
 }
-
-
 @end

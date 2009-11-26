@@ -10,6 +10,7 @@
 
 @implementation UserProfile
 @synthesize profile;
+@synthesize fbprofile;
 @synthesize whichTrap;
 @synthesize whichVenue;
 + (UserProfile *)sharedSingleton
@@ -29,9 +30,11 @@
 -(void)refreshFromFile{
 	self.profile =  [[NSDictionary alloc] initWithContentsOfFile:@"Profile.plist"];
 }
-
+-(void)printUserProfile{
+	NSLog(@"profile %@  \n fbprofile %@", profile, fbprofile);
+}
 -(NSString *)getUserName{
-	return (NSString *)[self.profile objectForKey:@"username"];
+	return (NSString *)[fbprofile objectForKey:@"name"];
 }
 -(NSInteger *)getCoinCount{
 	return (NSInteger *)[profile objectForKey:@"coinCount"];
@@ -51,12 +54,24 @@
 -(NSDictionary *)getInventory{
 	return [profile objectForKey:@"inventory"];
 }
+-(NSString *)getPicture{
+	return [fbprofile objectForKey:@"pic_square"];
+}
 
 
 -(BOOL)exists{
 	NSDictionary *newprofile = [[NSDictionary alloc]initWithContentsOfFile:@"Profile.plist"];
 	[self newProfileFromDictionary:newprofile];
 	return [profile objectForKey:@"username"] != NULL;
+}
+
+-(void)newFBProfileFromDictionary:(NSDictionary *)newFBProfile{
+	NSLog(@"writing the fbprofile to fbprofile.plist");
+	[newFBProfile writeToFile:@"FBProfile.plist" atomically:TRUE];
+	if(fbprofile != newFBProfile){
+		[fbprofile release];
+		fbprofile = [newFBProfile copy];
+	}
 }
 
 -(void)newProfileFromDictionary:(NSDictionary *)newProfile{
@@ -66,7 +81,4 @@
 		profile = [newProfile copy];
 	}
 }
-
-
-
 @end

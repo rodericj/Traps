@@ -10,6 +10,7 @@
 #import "ProfileViewController.h"
 #import "BoobyTrap3AppDelegate.h"
 #import "UserProfile.h"
+#import "NetworkRequestOperation.h"
 #import "FBConnect/FBConnect.h"
 
 
@@ -19,6 +20,7 @@
 @synthesize userName;
 @synthesize userLevel;
 @synthesize userCoinCount;
+@synthesize userImage;
 
 #pragma mark Initialization and setup
 -(void)updateMiniProfile:(NSDictionary *)profile{
@@ -38,15 +40,27 @@
 	self.menuArray = array;
 	[array release];
 	
-	session = [[FBSession sessionForApplication:@"3243a6e2dd3a0d084480d05f301cba85"
+	mySession = [[FBSession sessionForApplication:@"3243a6e2dd3a0d084480d05f301cba85"
 								secret:@"d8611553a286dce3531353b3de53ef2e"
 								delegate:self] retain];
 
+	hasAppeared = FALSE;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
 	[super viewDidAppear:animated];
-	[session resume];
+	if(!hasAppeared){
+		if([mySession resume] == YES){
+			NSLog(@"session resumed");
+		}
+		else{
+			NSLog(@"should show dialog?");
+			FBDialog *dialog = [[[FBLoginDialog alloc] initWithSession:mySession] autorelease];
+			dialog.delegate = self;
+			[dialog show];
+		}
+		hasAppeared = TRUE;
+	}
 }
 
 
@@ -74,7 +88,7 @@
 
 - (void)dealloc {
 	[profileViewController release];
-	[session.delegates removeObject: self];
+	[mySession.delegates removeObject: self];
     [super dealloc];
 }
 
@@ -83,9 +97,22 @@
 
 -(void)session:(FBSession *)session willLogout:uid{
 	NSLog(@"will log out");
+	
+	NetworkRequestOperation *op = [[NetworkRequestOperation alloc] init];
+	op.targetURL = @"http://localhost:8000/Logout/";
+	//op.arguments = [[NSMutableDictionary alloc] init];
+	//[op.arguments setObject:[user objectForKey:@"uid"] forKey:@"uname"];
+	//[op.arguments setObject:[user objectForKey:@"uid"] forKey:@"password"];
+	op.callingDelegate = self;
+	
+	queue = [[NSOperationQueue alloc] init];
+	[queue addOperation:op];
+	[op release];
+	
 	FBDialog *dialog = [[[FBLoginDialog alloc] initWithSession:session] autorelease];
 	dialog.delegate = self;
 	[dialog show];
+	hasAppeared = FALSE;
 	
 }
 
@@ -108,6 +135,20 @@
 	NSLog(@"users returned is %@", users);
 	NSDictionary *user = [users objectAtIndex:0];
 	
+	UserProfile *sharedSingleton = [UserProfile sharedSingleton];
+	[sharedSingleton newFBProfileFromDictionary:user];
+	
+	NetworkRequestOperation *op = [[NetworkRequestOperation alloc] init];
+	op.targetURL = @"http://localhost:8000/IPhoneLogin/";
+	op.arguments = [[NSMutableDictionary alloc] init];
+	[op.arguments setObject:[user objectForKey:@"uid"] forKey:@"uname"];
+	[op.arguments setObject:(NSString *)[user objectForKey:@"uid"] forKey:@"password"];
+	op.callingDelegate = self;
+	
+	queue = [[NSOperationQueue alloc] init];
+	[queue addOperation:op];
+	[op release];
+	
 	//Set the mini profile image
 	NSURL *photoUrl = [NSURL URLWithString:[user objectForKey:@"pic_square"]];
 	NSLog([user objectForKey:@"pic_square"]);
@@ -119,6 +160,12 @@
 	userName.text = [user objectForKey:@"name"];
 	
 	//[self loadView];
+}
+
+- (void)pageLoaded:(NSDictionary*)webRequestResults{
+	NSLog(@"webrequest returned %@", webRequestResults);
+	UserProfile *userProfile = [UserProfile sharedSingleton];
+	[userProfile newProfileFromDictionary:webRequestResults];
 }
 
 #pragma mark Table view methods
