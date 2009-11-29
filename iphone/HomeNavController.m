@@ -19,25 +19,10 @@
 
 	//Lets see if we have any logged in data. check the property list
 	UserProfile *profile = [UserProfile sharedSingleton];
-	//if([profile exists]){
-		if(homeTableViewController == nil){
-			homeTableViewController = [[HomeTableViewController alloc] init];
-			//homeTableViewController = [[homeTableViewController alloc] init];
-		}
-		//[homeTableViewController updateMiniProfile:(prefs)];
-		[homeTableViewController updateMiniProfile:([profile profile])];
-		
-	//}
-	//else{
-//		if(loginViewController == nil){
-//			loginViewController = [[LoginViewController alloc] init];
-//		}
-//		if(homeTableViewController == nil){
-//			homeTableViewController = [[HomeTableViewController alloc] init];
-//			//homeTableViewController = [[homeTableViewController alloc] init];
-//		}
-//		[self presentModalViewController:loginViewController animated:YES];
-//	}
+	if(homeTableViewController == nil){
+		homeTableViewController = [[HomeTableViewController alloc] init];
+	}
+	[homeTableViewController updateMiniProfile:([profile profile])];
 	
     [super viewDidLoad];
 }

@@ -21,7 +21,6 @@
 }
 
 -(void) main{
-	NSLog(@"starting network comm...set up the arguments later yeah?");
 	NSLog(@"Going to this URL %@", targetURL);
 	BoobyTrap3AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
 	NSLog(@"%s", [delegate serverAddress]);

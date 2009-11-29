@@ -22,7 +22,6 @@
 
 #pragma mark Set all of the labels just before the view loads
 - (void)viewWillAppear:(BOOL)animated {
-	NSLog(@"viewWillAppear in profile. Lets add stuff here");
 	UserProfile *userProfile = [UserProfile sharedSingleton];
 	[userProfile printUserProfile];
 	
@@ -47,7 +46,6 @@
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
-	NSLog(@"ProfileViewController did load. could be a good time to update");
     [super viewDidLoad];
 }
 

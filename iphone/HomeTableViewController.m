@@ -63,7 +63,6 @@
 	}
 }
 
-
 - (void)viewWillAppear:(BOOL)animated {
 	NSLog(@"viewWillAppear in home table view controller");
 	//[self updateMiniProfile:[NSDictionary dictionaryWithContentsOfFile:@"Profile.p list"]];
@@ -137,10 +136,6 @@
 	UserProfile *sharedSingleton = [UserProfile sharedSingleton];
 	[sharedSingleton newFBProfileFromDictionary:user];
 	
-	//BoobyTrap3AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
-	//NSString *urlString = [NSString stringWithFormat:@"%@/%@/", [delegate serverAddress], @"FindNearby"];
-
-	//[op setTargetURL:[NSString stringWithFormat:@"%@/%@", [delegate serverAddress], @"IPhoneLogin"]];
 	NetworkRequestOperation *op = [[NetworkRequestOperation alloc] init];
 	[op setTargetURL:@"IPhoneLogin"];
 	op.arguments = [[NSMutableDictionary alloc] init];

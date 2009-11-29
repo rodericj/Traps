@@ -74,10 +74,6 @@
 	NSString *trap = [[inventory objectAtIndex:[indexPath row]] objectForKey:@"name"];
 	NSInteger *iid = (NSInteger *)[[inventory objectAtIndex:[indexPath row]] objectForKey:@"id"];
 	[profile setWhichTrap:iid];
-	//[profile setWhichVenue:[NSString stringWithFormat:@"%d", [indexPath row]]];
-	
-//[profile setWhichTrap:iid];
-	//[profile setWhichTrap:(NSInteger *)[[inventory objectAtIndex:[indexPath row]] objectForKey:@"id"]];
 
 	NSString *alertStatement = [NSString stringWithFormat:@"Are you sure you wish to drop %@? %@", trap, [profile whichTrap]];
 	NSLog(alertStatement);
@@ -100,7 +96,6 @@
 		UserProfile *profile = [UserProfile sharedSingleton];
 		NSArray *inventory = [profile getInventory];
 		[self doDropTrap];
-		//[NSThread detachNewThreadSelector:@selector(doDropTrap) toTarget:self withObject:nil];
 	}
 }
 
@@ -116,46 +111,14 @@
 	[queue addOperation:op];
 	[op release];
 	
-	
-	
-	
-	//BoobyTrap3AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
-//	NSString *urlString = [NSString stringWithFormat:@"%@/%@/", [delegate serverAddress], @"SetTrap"];
-//
-//	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-//	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]
-//															   cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
-//														   timeoutInterval:60.0];
-//	[request setHTTPMethod:@"POST"];
-//	UserProfile *profile = [UserProfile sharedSingleton];
-//	[request setHTTPBody:[[NSString stringWithFormat:@"vid=%@&iid=%@", [profile whichVenue], [profile whichTrap]] //vid, iid, uid
-//							dataUsingEncoding:NSUTF8StringEncoding]];
-//	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-//	NSURLResponse *response;
-//	NSError *error;
-//
-//	NSData *urlData = [NSURLConnection sendSynchronousRequest:request
-//												returningResponse:&response
-//															error:&error];
-//
-//	NSString *results = [[NSString alloc] initWithData:urlData encoding:NSUTF8StringEncoding];
-//
-//	NSDictionary *resultsDict =[results JSONValue];
-//	self.navigationItem.rightBarButtonItem = nil;
-//	[self performSelectorOnMainThread:@selector(didDropTrap:) withObject:resultsDict waitUntilDone:NO];
-//	[pool release];
 }
 
 - (void)pageLoaded:(NSDictionary*)webRequestResults{
 	NSLog(@"webrequest returned %@", webRequestResults);
-	//NSDictionary *resultsDict =[webRequestResults JSONValue];
 	[self didDropTrap:webRequestResults];
-	//[self performSelectorOnMainThread:@selector(didDropTrap:) withObject:resultsDict waitUntilDone:NO];
-
 }
 
 - (void)didDropTrap:(NSDictionary *) results{
-	//UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Are you sure?" message:@"hi" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
 	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Boom" message:@"You've just set a trap." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil]; 
 	[alert show]; 
 	[alert release]; 
@@ -164,9 +127,7 @@
 //	dialog.permission = @"status_update";
 //	[dialog show];
 	
-	
 	[self.navigationController popViewControllerAnimated:TRUE];
-
 }
 
 @end

@@ -67,11 +67,6 @@
 - (void)getNearbyLocations:(CLLocation *)location {
 	NSLog(@"getNearbyLocations Called");
 
-	BoobyTrap3AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
-	NSString *urlString = [NSString stringWithFormat:@"%@/%@/", [delegate serverAddress], @"FindNearby"];
-
-	NSLog(@"Testing the production vs test thing %@", urlString);
-	
 	if (location == NULL){
 		NSLog(@"the location was null which means that the thread is doing something intersting. Lets send this back.");
 	}
@@ -86,40 +81,11 @@
 		queue = [[NSOperationQueue alloc] init];
 		[queue addOperation:op];
 		[op release];
-		
-		
-		
-		//NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-//		NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]
-//														   cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
-//													   timeoutInterval:60.0];
-//		[request setHTTPMethod:@"POST"];
-//		[request setHTTPBody:[[NSString stringWithFormat:@"ld=%@&uid=%@", [location description],
-//						   [[UIDevice currentDevice] uniqueIdentifier]] dataUsingEncoding:NSUTF8StringEncoding]];
-//		[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-//		NSURLResponse *response;
-//		NSError *error;
-//		NSData *urlData = [NSURLConnection sendSynchronousRequest:request
-//											returningResponse:&response
-//														error:&error];
-//	
-//		NSString *results = [[NSString alloc] initWithData:urlData encoding:NSUTF8StringEncoding];
-//		
-//		foundVenues = [results JSONValue];
-//		[foundVenues writeToFile:@"NearbyPlaces.plist" atomically:TRUE];
-//		self.navigationItem.rightBarButtonItem = nil;
-//		[pool release];
 	}
-	//[self performSelectorOnMainThread:@selector(didGetNearbyLocations) withObject:nil waitUntilDone:NO];
-
 }
 
 - (void)pageLoaded:(NSDictionary*)webRequestResults{
 	NSLog(@"webrequest returned %@", webRequestResults);
-	//UserProfile *userProfile = [UserProfile sharedSingleton];
-//	[userProfile newProfileFromDictionary:webRequestResults];
-	
-	//foundVenues = [webRequestResults JSONValue];
 	[webRequestResults writeToFile:@"NearbyPlaces.plist" atomically:TRUE];
 	self.navigationItem.rightBarButtonItem = nil;
 	[self didGetNearbyLocations];
@@ -127,7 +93,6 @@
 
 - (void)locationUpdate:(CLLocation *)location {
 	[self getNearbyLocations:location];
-	//[NSThread detachNewThreadSelector:@selector(getNearbyLocations:) toTarget:self withObject:nil];
 }
 
 - (void)didGetNearbyLocations{
@@ -135,7 +100,6 @@
 }
 
 - (void)locationError:(NSError *)error {
-	//locationLabel.text = [error description];
 	NSLog([error description]);
 }
 
@@ -177,10 +141,7 @@
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Navigation logic may go here. Create and push another view controller.
-	// AnotherViewController *anotherViewController = [[AnotherViewController alloc] initWithNibName:@"AnotherView" bundle:nil];
-	// [self.navigationController pushViewController:anotherViewController];
-	// [anotherViewController release];
+
 	NSInteger row = [indexPath row];
 	if (self.venueDetailView == nil){
 		VenueDetailView *aVenueDetail = [[VenueDetailView alloc] initWithNibName:@"VenueDetailView" bundle:nil];
@@ -193,10 +154,8 @@
 
 	[venueDetailView updateVenueDetails:venue];
 
-	//[venueName setText:[venue objectForKey:@"name"]];
 	BoobyTrap3AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
 	[delegate.dropTrapsNavController pushViewController:venueDetailView animated:YES];
-	//[delegate release];
 }
 @end
 

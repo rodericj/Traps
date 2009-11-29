@@ -19,8 +19,6 @@
 #pragma mark Button clicked to initiate searching venue
 - (IBAction) searchVenue{
 	[self doSearchVenue];
-	//Spawn off a thread to go to the network. Display modal view later
-	//[NSThread detachNewThreadSelector:@selector(doSearchVenue) toTarget:self withObject:nil];
 }
 
 - (void)doSearchVenue{
@@ -35,41 +33,6 @@
 	[queue addOperation:op];
 	[op release];
 	
-	
-	
-	
-//	BoobyTrap3AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
-//	NSString *urlString = [NSString stringWithFormat:@"%@/%@/", [delegate serverAddress], @"SearchVenue"];
-//	
-//	NSLog(@"doing the search %@", [venueInfo objectForKey:@"id"]);
-//	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-//	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]
-//														   cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
-//													   timeoutInterval:60.0];
-//    [request setHTTPMethod:@"POST"];
-//    [request setHTTPBody:[[NSString stringWithFormat:@"vid=%@&uid=%@", [venueInfo objectForKey:@"id"],
-//						   [[UIDevice currentDevice] uniqueIdentifier]] dataUsingEncoding:NSUTF8StringEncoding]];
-//    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-//	NSURLResponse *response;
-//	NSError *error;
-//	NSData *urlData = [NSURLConnection sendSynchronousRequest:request
-//											returningResponse:&response
-//														error:&error];
-//	NSString *results = [[NSString alloc] initWithData:urlData encoding:NSUTF8StringEncoding];
-//	
-//	//NSLog(results);	
-//	
-//	NSDictionary *returnData;
-//	returnData = [results JSONValue];
-//	//NSLog(@"%@", returnData);
-//	//[returnData writeToFile:@"NearbyPlaces.plist" atomically:TRUE];
-//	self.navigationItem.rightBarButtonItem = nil;
-//	//get 
-//	[self performSelectorOnMainThread:@selector(didSearchVenue:) withObject:returnData waitUntilDone:NO];
-//	
-//	[pool release];
-	//[self performSelectorOnMainThread:@selector(didSearchVenue) withObject:nil waitUntilDone:NO];
-
 }
 
 - (void)pageLoaded:(NSDictionary*)webRequestResults{
@@ -89,7 +52,6 @@
 	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"UIAlertView" message:alertStatement delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil]; 
 	[alert show]; 
 	[alert release]; 
-	//[inventory release];
 
 }
 - (void)alertView:(UIAlertView *)alertView  clickedButtonAtIndex:(NSInteger)buttonIndex {
@@ -111,7 +73,6 @@
 		
 		UserProfile *profile = [UserProfile sharedSingleton];
 		[profile setWhichVenue:[venueInfo objectForKey:@"id"]];
-		//trapInventoryTableViewController.whichVenue = [venueInfo objectForKey:@"id"];
 	
 		///TODO - may be able to use [self.navigationController pushViewController:...]
 		BoobyTrap3AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
@@ -127,7 +88,6 @@
 - (void)viewWillAppear:(BOOL)animated {
 	NSLog(@"viewWillAppear in VenueDetail");
 	[venueName setText:[self.venueInfo objectForKey:@"name"]];
-	//[checkinCount setText:[self.venueInfo objectForKey:@"checkinCount"]];
 	[city setText:[self.venueInfo objectForKey:@"city"]];
 	[coinValue setText:[self.venueInfo objectForKey:@"coinValue"]];
 	[latitude setText:[self.venueInfo objectForKey:@"latitude"]];
@@ -136,34 +96,9 @@
 	[state setText:[self.venueInfo objectForKey:@"state"]];
 	[streetName setText:[self.venueInfo objectForKey:@"streetName"]];
 	[checkinCount setText:[self.venueInfo objectForKey:@"checkinCount"]];
-	//NSDictionary *profile = [NSDictionary dictionaryWithContentsOfFile:@"Profile.plist"];
 
 	[super viewWillAppear:animated];
 }
-/*
- // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-    if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) {
-        // Custom initialization
-    }
-    return self;
-}
-*/
-
-/*
-// Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
-- (void)viewDidLoad {
-    [super viewDidLoad];
-}
-*/
-
-/*
-// Override to allow orientations other than the default portrait orientation.
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-*/
 
 - (void)didReceiveMemoryWarning {
 	// Releases the view if it doesn't have a superview.
@@ -177,11 +112,9 @@
 	// e.g. self.myOutlet = nil;
 }
 
-
 - (void)dealloc {
 	[trapInventoryTableViewController release];
     [super dealloc];
 }
-
 
 @end

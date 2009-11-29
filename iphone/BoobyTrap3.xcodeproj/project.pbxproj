@@ -14,8 +14,6 @@
 		288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
 		28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD733E0D9D9553002E5188 /* MainWindow.xib */; };
 		5F43CAE51085720500543ADB /* home.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F43CAE41085720500543ADB /* home.png */; };
-		5F43CAEF1085726600543ADB /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F43CAEE1085726600543ADB /* LoginViewController.m */; };
-		5F43CAF3108572C100543ADB /* LoginView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F43CAF2108572C100543ADB /* LoginView.xib */; };
 		5F945DE41096B1A2004C7CEF /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F945DD91096B1A2004C7CEF /* NSObject+SBJSON.m */; };
 		5F945DE51096B1A2004C7CEF /* NSString+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F945DDB1096B1A2004C7CEF /* NSString+SBJSON.m */; };
 		5F945DE61096B1A2004C7CEF /* SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F945DDD1096B1A2004C7CEF /* SBJSON.m */; };
@@ -67,9 +65,6 @@
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* BoobyTrap3_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BoobyTrap3_Prefix.pch; sourceTree = "<group>"; };
 		5F43CAE41085720500543ADB /* home.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = home.png; sourceTree = "<group>"; };
-		5F43CAED1085726600543ADB /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
-		5F43CAEE1085726600543ADB /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
-		5F43CAF2108572C100543ADB /* LoginView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoginView.xib; sourceTree = "<group>"; };
 		5F945DD71096B1A2004C7CEF /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
 		5F945DD81096B1A2004C7CEF /* NSObject+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJSON.h"; sourceTree = "<group>"; };
 		5F945DD91096B1A2004C7CEF /* NSObject+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SBJSON.m"; sourceTree = "<group>"; };
@@ -166,7 +161,6 @@
 				5F94610210996812004C7CEF /* DropTrapViews */,
 				5F945DD61096B1A2004C7CEF /* JSON */,
 				5F2155A0108D8C7B006FA8F2 /* ProfileView */,
-				5F43CAEA1085724800543ADB /* LoginView */,
 				5FD2C5A31082B90500B8B0E4 /* HomeView */,
 				1D3623240D0F684500981E51 /* BoobyTrap3AppDelegate.h */,
 				1D3623250D0F684500981E51 /* BoobyTrap3AppDelegate.m */,
@@ -237,16 +231,6 @@
 				5FD2C5DC1082E90B00B8B0E4 /* ProfileView.xib */,
 			);
 			name = ProfileView;
-			sourceTree = "<group>";
-		};
-		5F43CAEA1085724800543ADB /* LoginView */ = {
-			isa = PBXGroup;
-			children = (
-				5F43CAED1085726600543ADB /* LoginViewController.h */,
-				5F43CAEE1085726600543ADB /* LoginViewController.m */,
-				5F43CAF2108572C100543ADB /* LoginView.xib */,
-			);
-			name = LoginView;
 			sourceTree = "<group>";
 		};
 		5F945DD61096B1A2004C7CEF /* JSON */ = {
@@ -415,7 +399,6 @@
 				5FD2C62F1082EC3600B8B0E4 /* pin.png in Resources */,
 				5FD2C6311082EC4000B8B0E4 /* badge.png in Resources */,
 				5F43CAE51085720500543ADB /* home.png in Resources */,
-				5F43CAF3108572C100543ADB /* LoginView.xib in Resources */,
 				5FA73520109E653500227231 /* VenueDetailView.xib in Resources */,
 				5FB2D2B210ADC4BB0080DB22 /* TrapInventoryTableView.xib in Resources */,
 				5FB2E0CD10BBB37E0080DB22 /* FBConnect.bundle in Resources */,
@@ -435,7 +418,6 @@
 				5FD2C5A01082B88100B8B0E4 /* HomeNavController.m in Sources */,
 				5FD2C5B51082B92200B8B0E4 /* HomeTableViewController.m in Sources */,
 				5FD2C5D91082E8D900B8B0E4 /* ProfileViewController.m in Sources */,
-				5F43CAEF1085726600543ADB /* LoginViewController.m in Sources */,
 				5F945DE41096B1A2004C7CEF /* NSObject+SBJSON.m in Sources */,
 				5F945DE51096B1A2004C7CEF /* NSString+SBJSON.m in Sources */,
 				5F945DE61096B1A2004C7CEF /* SBJSON.m in Sources */,

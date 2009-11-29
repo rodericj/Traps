@@ -24,15 +24,12 @@
     // Override point for customization after application launch
 #if defined(TARGET_IPHONE_SIMULATOR)
 	[self setServerAddress:@"http://localhost:8000"];
-
-	//serverAddress = [NSString stringWithFormat:@"web111.webfaction.com"];
 #else
-	[self setServerAddress:[NSString stringWithFormat:@"web111.ljljljl"]];
+	[self setServerAddress:[NSString stringWithFormat:@"web111.webfaction.com"]];
 
 #endif
 
 	[window addSubview:rootController.view];
-	//[window addSubview:loginViewController.view];
 	[window makeKeyAndVisible];
 }
 
