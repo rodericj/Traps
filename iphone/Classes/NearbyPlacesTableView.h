@@ -14,6 +14,8 @@
 	MyCLController *locationController;
 	NSDictionary *foundVenues;
 	VenueDetailView *venueDetailView;
+	NSOperationQueue *queue;
+
 }
 
 @property (nonatomic, retain) NSDictionary *foundVenues;

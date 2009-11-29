@@ -57,6 +57,10 @@
 -(NSString *)getPicture{
 	return [fbprofile objectForKey:@"pic_square"];
 }
+-(void)clear{
+	//FBProfile.plist
+	//Profile.plist
+}
 
 
 -(BOOL)exists{

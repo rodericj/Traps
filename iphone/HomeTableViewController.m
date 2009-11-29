@@ -97,12 +97,10 @@
 
 -(void)session:(FBSession *)session willLogout:uid{
 	NSLog(@"will log out");
-	
+	BoobyTrap3AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
+
 	NetworkRequestOperation *op = [[NetworkRequestOperation alloc] init];
-	op.targetURL = @"http://localhost:8000/Logout/";
-	//op.arguments = [[NSMutableDictionary alloc] init];
-	//[op.arguments setObject:[user objectForKey:@"uid"] forKey:@"uname"];
-	//[op.arguments setObject:[user objectForKey:@"uid"] forKey:@"password"];
+	op.targetURL =[NSString stringWithFormat:@"%s%s", [delegate serverAddress], @"/Logout/"];
 	op.callingDelegate = self;
 	
 	queue = [[NSOperationQueue alloc] init];
@@ -113,6 +111,7 @@
 	dialog.delegate = self;
 	[dialog show];
 	hasAppeared = FALSE;
+	
 	
 }
 
@@ -138,13 +137,16 @@
 	UserProfile *sharedSingleton = [UserProfile sharedSingleton];
 	[sharedSingleton newFBProfileFromDictionary:user];
 	
+	//BoobyTrap3AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
+	//NSString *urlString = [NSString stringWithFormat:@"%@/%@/", [delegate serverAddress], @"FindNearby"];
+
+	//[op setTargetURL:[NSString stringWithFormat:@"%@/%@", [delegate serverAddress], @"IPhoneLogin"]];
 	NetworkRequestOperation *op = [[NetworkRequestOperation alloc] init];
-	op.targetURL = @"http://localhost:8000/IPhoneLogin/";
+	[op setTargetURL:@"IPhoneLogin"];
 	op.arguments = [[NSMutableDictionary alloc] init];
 	[op.arguments setObject:[user objectForKey:@"uid"] forKey:@"uname"];
 	[op.arguments setObject:(NSString *)[user objectForKey:@"uid"] forKey:@"password"];
 	op.callingDelegate = self;
-	
 	queue = [[NSOperationQueue alloc] init];
 	[queue addOperation:op];
 	[op release];

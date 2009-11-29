@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface TrapInventoryTableViewController : UITableViewController <UITableViewDelegate, UITableViewDataSource>{
+	NSOperationQueue *queue;
 }
 
 - (void)doDropTrap:(NSString *)trap;

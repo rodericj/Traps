@@ -10,6 +10,7 @@
 #import "BoobyTrap3AppDelegate.h"
 #import "TrapInventoryTableViewController.h"
 #import "UserProfile.h"
+#import "NetworkRequestOperation.h"
 
 @implementation VenueDetailView
 @synthesize venueInfo;
@@ -17,40 +18,63 @@
 
 #pragma mark Button clicked to initiate searching venue
 - (IBAction) searchVenue{
+	[self doSearchVenue];
 	//Spawn off a thread to go to the network. Display modal view later
-	[NSThread detachNewThreadSelector:@selector(doSearchVenue) toTarget:self withObject:nil];
+	//[NSThread detachNewThreadSelector:@selector(doSearchVenue) toTarget:self withObject:nil];
 }
 
 - (void)doSearchVenue{
-	NSLog(@"doing the search %@", [venueInfo objectForKey:@"id"]);
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://localhost:8000/SearchVenue/"]
-														   cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
-													   timeoutInterval:60.0];
-    [request setHTTPMethod:@"POST"];
-    [request setHTTPBody:[[NSString stringWithFormat:@"vid=%@&uid=%@", [venueInfo objectForKey:@"id"],
-						   [[UIDevice currentDevice] uniqueIdentifier]] dataUsingEncoding:NSUTF8StringEncoding]];
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-	NSURLResponse *response;
-	NSError *error;
-	NSData *urlData = [NSURLConnection sendSynchronousRequest:request
-											returningResponse:&response
-														error:&error];
-	NSString *results = [[NSString alloc] initWithData:urlData encoding:NSUTF8StringEncoding];
 	
-	//NSLog(results);	
+	NetworkRequestOperation *op = [[NetworkRequestOperation alloc] init];
+	[op setTargetURL:@"SearchVenue"];
+	op.arguments = [[NSMutableDictionary alloc] init];
+	[op.arguments setObject:[venueInfo objectForKey:@"id"] forKey:@"vid"];
+	[op.arguments setObject:[[UIDevice currentDevice] uniqueIdentifier] forKey:@"uid"];
+	op.callingDelegate = self;
+	queue = [[NSOperationQueue alloc] init];
+	[queue addOperation:op];
+	[op release];
 	
-	NSDictionary *returnData;
-	returnData = [results JSONValue];
-	//NSLog(@"%@", returnData);
-	//[returnData writeToFile:@"NearbyPlaces.plist" atomically:TRUE];
-	self.navigationItem.rightBarButtonItem = nil;
-	//get 
-	[self performSelectorOnMainThread:@selector(didSearchVenue:) withObject:returnData waitUntilDone:NO];
 	
-	[pool release];
+	
+	
+//	BoobyTrap3AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
+//	NSString *urlString = [NSString stringWithFormat:@"%@/%@/", [delegate serverAddress], @"SearchVenue"];
+//	
+//	NSLog(@"doing the search %@", [venueInfo objectForKey:@"id"]);
+//	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+//	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]
+//														   cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
+//													   timeoutInterval:60.0];
+//    [request setHTTPMethod:@"POST"];
+//    [request setHTTPBody:[[NSString stringWithFormat:@"vid=%@&uid=%@", [venueInfo objectForKey:@"id"],
+//						   [[UIDevice currentDevice] uniqueIdentifier]] dataUsingEncoding:NSUTF8StringEncoding]];
+//    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+//	NSURLResponse *response;
+//	NSError *error;
+//	NSData *urlData = [NSURLConnection sendSynchronousRequest:request
+//											returningResponse:&response
+//														error:&error];
+//	NSString *results = [[NSString alloc] initWithData:urlData encoding:NSUTF8StringEncoding];
+//	
+//	//NSLog(results);	
+//	
+//	NSDictionary *returnData;
+//	returnData = [results JSONValue];
+//	//NSLog(@"%@", returnData);
+//	//[returnData writeToFile:@"NearbyPlaces.plist" atomically:TRUE];
+//	self.navigationItem.rightBarButtonItem = nil;
+//	//get 
+//	[self performSelectorOnMainThread:@selector(didSearchVenue:) withObject:returnData waitUntilDone:NO];
+//	
+//	[pool release];
 	//[self performSelectorOnMainThread:@selector(didSearchVenue) withObject:nil waitUntilDone:NO];
 
+}
+
+- (void)pageLoaded:(NSDictionary*)webRequestResults{
+	NSLog(@"webrequest returned %@", webRequestResults);
+	[self didSearchVenue:webRequestResults];
 }
 
 - (void)didSearchVenue:(NSDictionary *)returnData{
@@ -60,14 +84,7 @@
 	UserProfile *profile = [UserProfile sharedSingleton];
 	NSDictionary *profileDict = [returnData objectForKey:@"profile"];
 	[profile newProfileFromDictionary:profileDict];
-	//[profile newProfileFromDictionary:[returnData objectForKey:@"profile"]];
-	//[profile 
-	//UserProfile *profile = [[[UserProfile alloc] init]newProfileFromDictionary:[returnData objectForKey:@"profile"]];
 
-	//Save profile to profile.plist
-	//NSDictionary *profile = [returnData objectForKey:@"profile"];
-//	[profile writeToFile:@"Profile.plist" atomically:TRUE];
-//	[profile release];
 	NSLog(alertStatement);
 	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"UIAlertView" message:alertStatement delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil]; 
 	[alert show]; 

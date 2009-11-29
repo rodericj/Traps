@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 @class TrapInventoryTableViewController;
 @interface VenueDetailView : UIViewController {
+	NSOperationQueue *queue;
 	NSDictionary *venueInfo;
 	IBOutlet UILabel *venueName;
 	IBOutlet UILabel *checkinCount;

@@ -26,6 +26,7 @@
 //-(void)setWhichTrap:(NSInteger *)whichTrap;
 -(BOOL)exists;
 -(void)refreshFromFile;
+-(void)clear;
 
 -(void)newProfileFromDictionary:(NSDictionary *)newProfile;
 -(void)newFBProfileFromDictionary:(NSDictionary *)newFBProfile;

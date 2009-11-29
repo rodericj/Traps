@@ -8,6 +8,8 @@
 
 #import "TrapInventoryTableViewController.h"
 #import "UserProfile.h"
+#import "NetworkRequestOperation.h"
+#import "BoobyTrap3AppDelegate.h"
 #import "FBConnect/FBConnect.h"
 
 @implementation TrapInventoryTableViewController
@@ -38,18 +40,12 @@
     return 1;
 }
 
-
 // Customize the number of rows in the table view.
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 	UserProfile *profile = [UserProfile sharedSingleton];
-	NSLog(@"trying singleton inventory again");
-
 	NSArray *inventory = (NSArray *)[profile getInventory];
-	NSLog(@"number of rows has an inventory: %@", inventory);
-
 	return [inventory count];
 }
-
 
 // Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -103,34 +99,59 @@
 		NSLog(@"Yes");
 		UserProfile *profile = [UserProfile sharedSingleton];
 		NSArray *inventory = [profile getInventory];
-
-		[NSThread detachNewThreadSelector:@selector(doDropTrap) toTarget:self withObject:nil];
+		[self doDropTrap];
+		//[NSThread detachNewThreadSelector:@selector(doDropTrap) toTarget:self withObject:nil];
 	}
 }
 
 - (void)doDropTrap {
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://localhost:8000/SetTrap/"]
-															   cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
-														   timeoutInterval:60.0];
-	[request setHTTPMethod:@"POST"];
 	UserProfile *profile = [UserProfile sharedSingleton];
-	[request setHTTPBody:[[NSString stringWithFormat:@"vid=%@&iid=%@", [profile whichVenue], [profile whichTrap]] //vid, iid, uid
-							dataUsingEncoding:NSUTF8StringEncoding]];
-	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-	NSURLResponse *response;
-	NSError *error;
+	NetworkRequestOperation *op = [[NetworkRequestOperation alloc] init];
+	[op setTargetURL:@"SetTrap"];
+	op.arguments = [[NSMutableDictionary alloc] init];
+	[op.arguments setObject:[profile whichVenue] forKey:@"vid"];
+	[op.arguments setObject:(NSString *)[profile whichTrap] forKey:@"iid"];
+	op.callingDelegate = self;
+	queue = [[NSOperationQueue alloc] init];
+	[queue addOperation:op];
+	[op release];
+	
+	
+	
+	
+	//BoobyTrap3AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
+//	NSString *urlString = [NSString stringWithFormat:@"%@/%@/", [delegate serverAddress], @"SetTrap"];
+//
+//	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+//	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]
+//															   cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
+//														   timeoutInterval:60.0];
+//	[request setHTTPMethod:@"POST"];
+//	UserProfile *profile = [UserProfile sharedSingleton];
+//	[request setHTTPBody:[[NSString stringWithFormat:@"vid=%@&iid=%@", [profile whichVenue], [profile whichTrap]] //vid, iid, uid
+//							dataUsingEncoding:NSUTF8StringEncoding]];
+//	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+//	NSURLResponse *response;
+//	NSError *error;
+//
+//	NSData *urlData = [NSURLConnection sendSynchronousRequest:request
+//												returningResponse:&response
+//															error:&error];
+//
+//	NSString *results = [[NSString alloc] initWithData:urlData encoding:NSUTF8StringEncoding];
+//
+//	NSDictionary *resultsDict =[results JSONValue];
+//	self.navigationItem.rightBarButtonItem = nil;
+//	[self performSelectorOnMainThread:@selector(didDropTrap:) withObject:resultsDict waitUntilDone:NO];
+//	[pool release];
+}
 
-	NSData *urlData = [NSURLConnection sendSynchronousRequest:request
-												returningResponse:&response
-															error:&error];
+- (void)pageLoaded:(NSDictionary*)webRequestResults{
+	NSLog(@"webrequest returned %@", webRequestResults);
+	//NSDictionary *resultsDict =[webRequestResults JSONValue];
+	[self didDropTrap:webRequestResults];
+	//[self performSelectorOnMainThread:@selector(didDropTrap:) withObject:resultsDict waitUntilDone:NO];
 
-	NSString *results = [[NSString alloc] initWithData:urlData encoding:NSUTF8StringEncoding];
-
-	NSDictionary *resultsDict =[results JSONValue];
-	self.navigationItem.rightBarButtonItem = nil;
-	[self performSelectorOnMainThread:@selector(didDropTrap:) withObject:resultsDict waitUntilDone:NO];
-	[pool release];
 }
 
 - (void)didDropTrap:(NSDictionary *) results{

@@ -1,6 +1,13 @@
 # Django settings for Traps project.
 import os
 
+PRODUCTION_SERVERS = ['web111.webfaction.com']
+
+if os.environ.get('HOSTNAME', '') in PRODUCTION_SERVERS:
+	PRODUCTION = True
+else:
+	PRODUCTION = False
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -10,12 +17,20 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-DATABASE_ENGINE = 'sqlite3'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-DATABASE_NAME = '/tmp/traps.db'             # Or path to database file if using sqlite3.
-DATABASE_USER = ''             # Not used with sqlite3.
-DATABASE_PASSWORD = ''         # Not used with sqlite3.
-DATABASE_HOST = ''             # Set to empty string for localhost. Not used with sqlite3.
-DATABASE_PORT = ''             # Set to empty string for default. Not used with sqlite3.
+if PRODUCTION:
+	DATABASE_ENGINE = 'mysql'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+	DATABASE_USER = 'rodericj'             # Not used with sqlite3.
+	DATABASE_PASSWORD = 'bananarama'         # Not used with sqlite3.
+	DATABASE_HOST = 'web111.webfaction.com'             # Set to empty string for localhost. Not used with sqlite3.
+	DATABASE_PORT = ''             # Set to empty string for default. Not used with sqlite3.
+
+else:
+	DATABASE_ENGINE = 'sqlite3'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+	DATABASE_NAME = '/tmp/traps.db'             # Or path to database file if using sqlite3.
+	DATABASE_USER = ''             # Not used with sqlite3.
+	DATABASE_PASSWORD = ''         # Not used with sqlite3.
+	DATABASE_HOST = ''             # Set to empty string for localhost. Not used with sqlite3.
+	DATABASE_PORT = ''             # Set to empty string for default. Not used with sqlite3.
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name

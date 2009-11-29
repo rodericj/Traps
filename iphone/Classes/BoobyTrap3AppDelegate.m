@@ -18,8 +18,19 @@
 @synthesize homeNavController;
 @synthesize loginViewController;
 @synthesize session;
-- (void)applicationDidFinishLaunching:(UIApplication *)application {    
+@synthesize serverAddress;
+
+- (void)applicationDidFinishLaunching:(UIApplication *)application {  
     // Override point for customization after application launch
+#if defined(TARGET_IPHONE_SIMULATOR)
+	[self setServerAddress:@"http://localhost:8000"];
+
+	//serverAddress = [NSString stringWithFormat:@"web111.webfaction.com"];
+#else
+	[self setServerAddress:[NSString stringWithFormat:@"web111.ljljljl"]];
+
+#endif
+
 	[window addSubview:rootController.view];
 	//[window addSubview:loginViewController.view];
 	[window makeKeyAndVisible];

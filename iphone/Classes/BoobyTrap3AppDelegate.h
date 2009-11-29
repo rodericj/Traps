@@ -19,8 +19,10 @@
 	IBOutlet HomeNavController *homeNavController;
 	IBOutlet DropTrapsNavController *dropTrapsNavController;
 	FBSession *session;
+	NSString *serverAddress;
 }
 @property (retain) FBSession *session;
+@property (nonatomic, retain) NSString *serverAddress;
 @property (nonatomic, retain) IBOutlet UIWindow *window;
 @property (nonatomic, retain) IBOutlet LoginViewController *loginViewController;
 @property (nonatomic, retain) IBOutlet UITabBarController *rootController;
