@@ -30,14 +30,14 @@ class TooManySearchResultsError(Exception):
 	def __str__(self):
 		return repr(self.value)	
 
-def trace(f, *args, **kw):
-	print "calling %s with args %s, %s" % (f.func_name, args, kw)
-	try:
-		ret = f(*args, **kw)
-	except Exception as e:
-		print e	
-		print type(e)
-	return ret
+#def trace(f, *args, **kw):
+	#print "calling %s with args %s, %s" % (f.func_name, args, kw)
+	#try:
+		##ret = f(*args, **kw)
+	#except Exception as e:
+		#print e	
+		#print type(e)
+	#return ret
 
 # Create your views here.
 def findYelpVenues(lat, lon):
@@ -125,8 +125,9 @@ def getUserInventory(uid):
 	print "sup"
 	try:
 		annotated_inv = TrapsUser.objects.get(id=1).useritem_set.all().values('item').annotate(Count('item')).order_by()
-	except Exception as inst:
-		print type(inst)
+	except:
+		print sys.exc_info()[0]
+		#print type(inst)
 		#print inst
 		raise
 	print "sup2"
@@ -335,10 +336,11 @@ def IPhoneLogin(request):
 	#jsonprofile = profile.objectify()
 	try:
 		jsonprofile = GetUserProfileFromProfile(profile)
-	except Exception as e:
-		print type(e)
-		print e
-		print e.args
+	except:
+		print sys.exc_info()[0]
+		#print type(e)
+		#print e
+		#print e.args
 		raise
 	print "6"
 	print jsonprofile

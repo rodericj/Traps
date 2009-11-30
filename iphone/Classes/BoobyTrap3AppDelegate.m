@@ -24,8 +24,7 @@
 #if defined(TARGET_IPHONE_SIMULATOR)
 	[self setServerAddress:@"http://localhost:8000"];
 #else
-	[self setServerAddress:[NSString stringWithFormat:@"web111.webfaction.com"]];
-
+	[self setServerAddress:[NSString stringWithFormat:@"http://rodericj.webfactional.com/"]];
 #endif
 
 	[window addSubview:rootController.view];
