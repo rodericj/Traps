@@ -12,17 +12,17 @@ from django.db.models import Count
 from django.core.exceptions import ObjectDoesNotExist
 
 
-def tb(f):
-	def new_f():
-		print "entering ", f.__name__
-		try:
-			f()
-		except Exception as e:
-			print type(e)
-			print e
-			print sys.exc_info()[0]
-		print "exiting ", f.__name__
-	return new_f
+#def tb(f):
+	#def new_f():
+		#print "entering ", f.__name__
+		#try:
+			#f()
+		#except Exception as e:
+			#print type(e)
+			#print e
+			#print sys.exc_info()[0]
+		#print "exiting ", f.__name__
+	#return new_f
 
 class TooManySearchResultsError(Exception):
 	def __init__(self, value):
