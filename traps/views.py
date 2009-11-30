@@ -42,7 +42,6 @@ class TooManySearchResultsError(Exception):
 # Create your views here.
 def findYelpVenues(lat, lon):
 
-	print "Find yelp ", (lat, lon)
 	#If we are online
 	try:
 		api_url = 'http://api.yelp.com/business_review_search?term=yelp&lat='+lat+'&long='+lon+'&radius=.1&num_biz_requested=10&ywsid='+ config.yelp_api_key
@@ -65,7 +64,7 @@ def findYelpVenues(lat, lon):
 					v.save()
 					dbBusinessList.append(v)
 				except:
-					print b['name'] + " will not be added"
+					pass
 					
 	except TooManySearchResultsError: 
 		print "Too Many"
@@ -74,7 +73,6 @@ def findYelpVenues(lat, lon):
 	return dbBusinessList
 
 def noTrapWasHere(uid, venue):
-	print "get all the coins at this spot "+str(uid)+" " +str(venue)
 
 	#potential coin reward - goes up 1 coin per minute to the max of that venue
 	timeDelta = datetime.now()-venue.lastUpdated
@@ -93,12 +91,12 @@ def noTrapWasHere(uid, venue):
 		venue.save()
 	itemsAtVenue = venue.item.values()
 	
-	print "The reward you got for this non trapped place %s "% (reward)
 	return reward
 
 def notifyTrapSetter(uid, venue):
 	#TODO
-	print "notify trap setter"
+	pass
+	#print "notify trap setter"
 
 def trapWasHere(uid, venue, itemsThatAreTraps):
 	notifyTrapSetter(uid, venue)	
@@ -114,15 +112,12 @@ def trapWasHere(uid, venue, itemsThatAreTraps):
 	user = TrapsUser.objects.get(id=uid)
 	user.hitPoints = max(user.hitPoints - totalDamage, 0)
 	user.save()
-	print "trapWasHere"
-	print trapData
 	return {'traps':trapData, 'hitpointslost':totalDamage , 'hitpointsleft': user.hitPoints}
 
 def getUserInventory(uid):
 	#>>> roditems = user.useritem_set.all()
 	traps = TrapsUser.objects.get(id=uid).useritem_set.all()
 	
-	print "sup"
 	try:
 		annotated_inv = TrapsUser.objects.get(id=1).useritem_set.all().values('item').annotate(Count('item')).order_by()
 	except:
@@ -130,21 +125,14 @@ def getUserInventory(uid):
 		#print type(inst)
 		#print inst
 		raise
-	print "sup2"
 		
 	inventory = [{'name':Item.objects.get(id=i['item']).name, 'id':Item.objects.get(id=i['item']).id, 'count':i['item__count']} for i in annotated_inv]
-	print inventory
-	print "sup3"
 	return inventory
 
 def getUserProfile(uid):
-	print "in get User Profile"
 	user = TrapsUser.objects.get(id=uid)
-	print "getting inventory"
 	inventory = getUserInventory(uid)
-	print "got inventory"
 	#inventory = user.useritem_set.all()
-	print inventory
 	userInfo = {'twitterid':user.twitterid, 'photo':user.photo, 'gender':user.gender, 'coinCount':user.coinCount, 'hitPoints':user.hitPoints, 'level':user.level, 'killCount':user.killCount, 'trapsSetCount':user.trapsSetCount, 'username':user.user.username, 'inventory':inventory}
 	return userInfo
 	
@@ -173,23 +161,20 @@ def SetTrap(request):
 		#alltraps[0].delete()
 
 	else:
-		print "user has no items"
+		pass
+		#print "user has no items"
 	
 	ret = {}
 	request.user.userprofile = get_or_create_profile(request.user)
 	request.user.userprofile.event_set.create(type='ST')
 	userInfo = getUserProfile(uid)
-	print userInfo
 	return HttpResponse(simplejson.dumps(ret), mimetype='application/json')
 
 def giveItemsAtVenueToUser(user, nonTrapVenueItems):
-	print "in give itmes at venue to user"
 	#Must do one of each type of rare item
 	for nonTrap in nonTrapVenueItems:
-		print "picking up the %s" %(nonTrap.item.name)
 		#nonTrap.count -= 1
 		nonTrap.save()
-		print nonTrap.item
 
 		#TODO Revisit this idea here. No more count for UserItemo	Keep in mind that there IS a count at the VenueItem level
 		#try:
@@ -220,7 +205,6 @@ def SearchVenue(request, vid=None):
 	
 	alertStatement = ''
 	if len(itemsThatAreTraps) > 0:
-		print "entering if"
 		#There are traps, take action	
 		ret['isTrapSet'] = True
 		#request.user.userprofile = get_or_create_profile(request.user)
@@ -228,7 +212,6 @@ def SearchVenue(request, vid=None):
 		ret['damage'] = trapWasHere(uid, venue, itemsThatAreTraps)
 		ret['alertStatement'] = "There are traps at this venue. You took %s damage. %s" % ret['damage'], optionString
 	else:
-		print "entering else"
 		#There are traps, take action	
 		#no traps here, give the go ahead to get coins and whatever
 		ret['isTrapSet'] = False
@@ -246,19 +229,14 @@ def SearchVenue(request, vid=None):
 		ret['alertStatement'] = ""
 		
 		alertStatement = "There are no traps here. You got %s coins." % ret['reward']['coins'] 
-		print "alertStatement: %s, optionString: %s" %(alertStatement, optionString)
 		ret['alertStatement'] = alertStatement + " " +optionString
-		print ret
 
-	print "out of all"
 	ret['venueid'] = vid
 	ret['userid'] = uid
 	
 	#ret['profile'] = request.user.userprofile.objectify()
-	print "getting profile"
 	ret['profile'] = request.user.userprofile.objectify()
 	ret['profile']['inventory'] = getUserInventory(uid)
-	print ret
 	return HttpResponse(simplejson.dumps(ret), mimetype='application/json')
 
 
@@ -266,7 +244,6 @@ def GetUserProfileFromProfile(userprofile):
 	dir(userprofile)
 	profile = userprofile.objectify()
 	profile['inventory'] = getUserInventory(userprofile.id)
-	print profile['inventory']
 	return profile
 	
 def GetUserProfile(request):
@@ -274,7 +251,6 @@ def GetUserProfile(request):
 	return GetUserProfile(request, userprofile.id)
 
 def GetUserProfile(request, uid):
-	print "in GetUserProfile"
 	userprofile = get_or_create_profile(request.user)
 	profile = userprofile.objectify()
 	profile['inventory'] = getUserInventory(uid)
@@ -282,23 +258,18 @@ def GetUserProfile(request, uid):
 
 def GetUserDropHistory(request):
 	userprofile = get_or_create_profile(request.user)
-	print userprofile.id
 	#relevantHistoryItems = ['LI', 'PC', 'SE', 'UI', 'HT', 'ST']
 	#history=userprofile.event_set.filter(type__in=relevantHistoryItems)	
 	history=VenueItem.objects.filter(user__id__exact=userprofile.id)
 	jsonHistory = [h.objectify() for h in history]
-	print "This is the items you have dropped"
-	print jsonHistory
 		
 	return HttpResponse(simplejson.dumps(jsonHistory), mimetype='application/json')
 
 def GetUserHistory(request):
 	userprofile = get_or_create_profile(request.user)
-	print userprofile.id
 	relevantHistoryItems = ['LI', 'PC', 'SE', 'UI', 'HT', 'ST']
 	history=userprofile.event_set.filter(type__in=relevantHistoryItems)	
 	jsonHistory = [h.objectify() for h in history]
-	print jsonHistory
 		
 	return HttpResponse(simplejson.dumps(jsonHistory), mimetype='application/json')
 
@@ -318,45 +289,34 @@ def get_or_create_profile(user):
 	return profile
 
 def IPhoneLogin(request):
-	print request.user
 
 	#TODO error case and feed it back to the iphone
 	#1. user name already exists does not work
 	#just in case
-	print "1"
 	#logout(request)
-	print "2"
 	uname = request.POST['uname']
-	print "3"
 	password = request.POST['password']
-	print request.POST
-	print "4"
 	profile = doLogin(request, uname, password)
-	print "5"
 	#jsonprofile = profile.objectify()
 	try:
 		jsonprofile = GetUserProfileFromProfile(profile)
 	except:
-		print sys.exc_info()[0]
+		#print sys.exc_info()[0]
+		pass
 		#print type(e)
 		#print e
 		#print e.args
 		raise
-	print "6"
-	print jsonprofile
-	print "7"
 
 	return HttpResponse(simplejson.dumps(jsonprofile), mimetype='application/json')
 	
 #@tb
 def Logout(request):
-	print "logout"
 	logout(request)
 	return HttpResponse({'status':'success'}, mimetype='application/json')
 	#return HttpResponseRedirect('/loggedOut/')
 
 def Login(request):
-	print request.user
 	uname = request.GET['uname']
 	password = request.GET['email']
 
@@ -368,7 +328,6 @@ def doLogin(request, uname, password):
 	
 	if request.user.is_anonymous():
 		#create user and profile Create New User
-		print "create user: i.e. we just checked and this user is NOT logged in"
 		user = User.objects.create_user(uname, 'none', password)
 		user = authenticate(username=uname, password=password)
 		login(request, user)
@@ -377,43 +336,32 @@ def doLogin(request, uname, password):
 		#create a whole bunch of bananas	
 		for i in range(config.numStarterItems):
 			starterItem = Item.objects.get(id=1)
-			print starterItem
 			user.userprofile.useritem_set.create(item=starterItem)
 	else:
-		print "This user was logged in when they called doLogin"
 		user = request.user	
 		user.userprofile = get_or_create_profile(user)
 		user.userprofile.event_set.create(type='LI')
 	
-	print " created a new user %d" %(user.userprofile.id)
 
 	return user.userprofile
 	
 def FindNearby(request):
-	print request.POST
 
 	try:
-		print "Finding Nearby Locations"
 		ld = request.POST.get('ld', 0)
 		if ld:
-			print "Location description given"
-			print ld
 			lat, lon = ld[ld.find("<")+1:ld.find(">")].split(", ")
-			print "Location description given done"
 		else:
-			print "default to yelp address"
 			#yelp address
 			lat = '37.788022'
 			lon = '-122.399797'
 
 			#larkin street
-		print "Default to Larkin Street"
 		lat = "37.791846"
 		lon = "-122.419388"
 
 		#Find all venues near this one
 		venues = Venue.objects.all()
-		print "Got ALL venues BAD---------"
 
 		#Stored Venues
 		sendable_venues = [{'name':v.name, 'phone':v.phone, 'longitude':v.longitude} for v in venues]
@@ -432,7 +380,5 @@ def FindNearby(request):
 	except:
 		print sys.exc_info()[0]
 
-	print "Got the json, from find Nearby. send it over"
-	print json[:50]
 
 	return HttpResponse(simplejson.dumps(json), mimetype='application/json')
