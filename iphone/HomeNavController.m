@@ -22,8 +22,11 @@
 	if(homeTableViewController == nil){
 		homeTableViewController = [[HomeTableViewController alloc] init];
 	}
-	[homeTableViewController updateMiniProfile:([profile profile])];
-	
+	NSLog(@"in updateMiniProfile viewDidLoad Home Nav");
+
+	[homeTableViewController updateMiniProfile:profile];
+	NSLog(@"out of updateMiniProfile viewDidLoad Home Nav");
+
     [super viewDidLoad];
 }
 

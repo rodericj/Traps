@@ -28,7 +28,12 @@
 }
 
 -(void)refreshFromFile{
-	self.profile =  [[NSDictionary alloc] initWithContentsOfFile:@"Profile.plist"];
+	NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+	self.fbprofile = [prefs dictionaryForKey:@"fbprofile"];
+	self.profile = [prefs dictionaryForKey:@"profile"];
+	
+	//[prefs setObject:newFBProfile forKey:@"fbprofile"];
+	//self.profile =  [[NSDictionary alloc] initWithContentsOfFile:@"Profile.plist"];
 }
 -(void)printUserProfile{
 	NSLog(@"profile %@  \n fbprofile %@", profile, fbprofile);
@@ -58,31 +63,31 @@
 	return [fbprofile objectForKey:@"pic_square"];
 }
 -(void)clear{
-	//FBProfile.plist
-	//Profile.plist
-}
-
-
--(BOOL)exists{
-	NSDictionary *newprofile = [[NSDictionary alloc]initWithContentsOfFile:@"Profile.plist"];
-	[self newProfileFromDictionary:newprofile];
-	return [profile objectForKey:@"username"] != NULL;
+	//FBProfile.p list
+	//Profile.p list
 }
 
 -(void)newFBProfileFromDictionary:(NSDictionary *)newFBProfile{
-	NSLog(@"writing the fbprofile to fbprofile.plist");
-	[newFBProfile writeToFile:@"FBProfile.plist" atomically:TRUE];
-	if(fbprofile != newFBProfile){
-		[fbprofile release];
-		fbprofile = [newFBProfile copy];
-	}
+	NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+	[prefs setObject:newFBProfile forKey:@"fbprofile"];
+	self.fbprofile = newFBProfile;
+	NSLog(@"writing the fbprofile to fbprofile.p list");
+	//[newFBProfile writeToFile:@"FBProfile.plist" atomically:TRUE];
+//	if(fbprofile != newFBProfile){
+//		[fbprofile release];
+//		fbprofile = [newFBProfile copy];
+//	}
 }
 
 -(void)newProfileFromDictionary:(NSDictionary *)newProfile{
-	[newProfile writeToFile:@"Profile.plist" atomically:TRUE];
-	if(profile != newProfile){
-		[profile release];
-		profile = [newProfile copy];
-	}
+	NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+	[prefs setObject:newProfile forKey:@"profile"];
+	self.profile = newProfile;
+	
+	//[newProfile writeToFile:@"Profile.plist" atomically:TRUE];
+//	if(profile != newProfile){
+//		[profile release];
+//		profile = [newProfile copy];
+//	}
 }
 @end

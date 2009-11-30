@@ -21,11 +21,11 @@
 }
 
 -(void) main{
-	NSLog(@"Going to this URL %@", targetURL);
+	NSLog(@"1 Going to this target %@", targetURL);
 	BoobyTrap3AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
-	NSLog(@"%s", [delegate serverAddress]);
+	NSLog(@"2 Going to this the server address %@", [delegate serverAddress]);
 	NSString *target = [NSString stringWithFormat:@"%@/%@/", [delegate serverAddress], targetURL];
-	NSLog(@"Going to this URL %s", target);
+	NSLog(@"3 Now Going to this URL %@", target);
 
 	//Set the arguments up
 	NSString *argString = [[NSString alloc] initWithString:@""];

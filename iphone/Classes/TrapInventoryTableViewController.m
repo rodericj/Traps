@@ -114,7 +114,7 @@
 }
 
 - (void)pageLoaded:(NSDictionary*)webRequestResults{
-	NSLog(@"webrequest returned %@", webRequestResults);
+	NSLog(@"trap inventory table webrequest returned %@", webRequestResults);
 	[self didDropTrap:webRequestResults];
 }
 

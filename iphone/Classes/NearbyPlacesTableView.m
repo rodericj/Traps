@@ -82,10 +82,11 @@
 		[queue addOperation:op];
 		[op release];
 	}
+
 }
 
 - (void)pageLoaded:(NSDictionary*)webRequestResults{
-	NSLog(@"webrequest returned %@", webRequestResults);
+	NSLog(@"nearby places webrequest returned %@", webRequestResults);
 	[webRequestResults writeToFile:@"NearbyPlaces.plist" atomically:TRUE];
 	self.navigationItem.rightBarButtonItem = nil;
 	[self didGetNearbyLocations];
@@ -93,6 +94,9 @@
 
 - (void)locationUpdate:(CLLocation *)location {
 	[self getNearbyLocations:location];
+	locationController = [[MyCLController alloc] init];
+	locationController.delegate = self;
+	[locationController.locationManager stopUpdatingLocation];
 }
 
 - (void)didGetNearbyLocations{

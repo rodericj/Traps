@@ -11,6 +11,7 @@
 
 @class ProfileViewController;
 @class FBSessionDelegate;
+@class UserProfile;
 @interface HomeTableViewController : UITableViewController <FBRequestDelegate, FBDialogDelegate, FBSessionDelegate, UITableViewDelegate, UITableViewDataSource>{
 	IBOutlet UITableView *homeTableView;
 	NSMutableArray *menuArray;
@@ -24,7 +25,7 @@
 	NSOperationQueue *queue;
 	FBSession *mySession;
 }
--(void)updateMiniProfile:(NSDictionary *)profile;
+-(void)updateMiniProfile:(UserProfile *)profile;
 - (void)pageLoaded:(NSDictionary*)webRequestResults;
 
 @property (nonatomic, retain) NSMutableArray *menuArray;

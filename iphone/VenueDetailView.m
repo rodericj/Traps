@@ -36,7 +36,7 @@
 }
 
 - (void)pageLoaded:(NSDictionary*)webRequestResults{
-	NSLog(@"webrequest returned %@", webRequestResults);
+	NSLog(@"venue detail webrequest returned %@", webRequestResults);
 	[self didSearchVenue:webRequestResults];
 }
 

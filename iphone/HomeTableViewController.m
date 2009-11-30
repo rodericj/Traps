@@ -23,12 +23,14 @@
 @synthesize userImage;
 
 #pragma mark Initialization and setup
--(void)updateMiniProfile:(NSDictionary *)profile{
-	NSLog(@"updating mini profile");
-	
-	[userName setText:[profile objectForKey:@"username"]];
-	[userLevel setText:[profile objectForKey:@"level"]];
-	[userCoinCount setText:[profile objectForKey:@"coinCount"]];
+-(void)updateMiniProfile:(UserProfile *)profile{
+	NSLog(@"updating mini profile here %@", profile);
+	[userName setText:[profile getUserName]];
+	NSLog(@"updated username");
+	[userLevel setText:[profile getLevel]];
+	NSLog(@"updated level");
+	[userCoinCount setText:[profile getCoinCount]];
+	NSLog(@"updated coins");
 }
 
 - (void)viewDidLoad {
@@ -66,8 +68,10 @@
 - (void)viewWillAppear:(BOOL)animated {
 	NSLog(@"viewWillAppear in home table view controller");
 	//[self updateMiniProfile:[NSDictionary dictionaryWithContentsOfFile:@"Profile.p list"]];
-	[self updateMiniProfile:[[UserProfile sharedSingleton] profile]];
-	
+	UserProfile *userProfile = [UserProfile sharedSingleton];
+	NSLog(@"in updateMiniProfile viewWillAppear");
+	[self updateMiniProfile:userProfile];
+	NSLog(@"out of updateMiniProfile viewWillAppear");
 	FBLoginButton *button = [[[FBLoginButton alloc] init] autorelease];
 	[self.view addSubview:button];
 	[super viewWillAppear:animated];
@@ -160,9 +164,15 @@
 }
 
 - (void)pageLoaded:(NSDictionary*)webRequestResults{
-	NSLog(@"webrequest returned %@", webRequestResults);
+	NSLog(@"home table view webrequest returned %@", webRequestResults);
 	UserProfile *userProfile = [UserProfile sharedSingleton];
 	[userProfile newProfileFromDictionary:webRequestResults];
+	NSLog(@"%@", [userProfile getUserName]);
+	//NSLog(@"update with this username %@", [userProfile obje)
+	NSLog(@"in updateMiniProfile pageLoaded");
+	[self updateMiniProfile:userProfile];
+	NSLog(@"out of updateMiniProfile pageLoaded");
+
 }
 
 #pragma mark Table view methods

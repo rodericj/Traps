@@ -21,11 +21,11 @@
 
 - (void)applicationDidFinishLaunching:(UIApplication *)application {  
     // Override point for customization after application launch
-#if defined(TARGET_IPHONE_SIMULATOR)
-	[self setServerAddress:@"http://localhost:8000"];
-#else
-	[self setServerAddress:[NSString stringWithFormat:@"http://rodericj.webfactional.com/"]];
-#endif
+//#if defined(TARGET_IPHONE_SIMULATOR)
+//	[self setServerAddress:@"http://localhost:8000"];
+//#else
+	[self setServerAddress:@"http://rodericj.webfactional.com"];
+//#endif
 
 	[window addSubview:rootController.view];
 	[window makeKeyAndVisible];

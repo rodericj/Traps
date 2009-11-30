@@ -15,8 +15,8 @@
 	NSString *whichTrap;
 	NSString *whichVenue;
 }
-@property (nonatomic) NSDictionary *profile;
-@property (nonatomic) NSDictionary *fbprofile;
+@property (nonatomic, retain) NSDictionary *profile;
+@property (nonatomic, retain) NSDictionary *fbprofile;
 @property (retain) NSString *whichTrap;
 @property (retain) NSString *whichVenue;
 
@@ -24,7 +24,6 @@
 +(UserProfile *)sharedSingleton;
 
 //-(void)setWhichTrap:(NSInteger *)whichTrap;
--(BOOL)exists;
 -(void)refreshFromFile;
 -(void)clear;
 
