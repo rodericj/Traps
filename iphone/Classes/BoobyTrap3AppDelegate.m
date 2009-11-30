@@ -16,7 +16,6 @@
 @synthesize window;
 @synthesize rootController;
 @synthesize homeNavController;
-@synthesize loginViewController;
 @synthesize session;
 @synthesize serverAddress;
 

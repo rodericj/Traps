@@ -7,7 +7,7 @@
 //
 
 #import "HomeNavController.h"
-
+#import "UserProfile.h"
 
 @implementation HomeNavController
 
@@ -27,13 +27,6 @@
     [super viewDidLoad];
 }
 
--(IBAction) logout{
-	if(loginViewController == nil){
-		loginViewController = [[LoginViewController alloc] init];
-	}
-	[self presentModalViewController:loginViewController animated:YES];
-
-}
 
 - (void)didReceiveMemoryWarning {
 	// Releases the view if it doesn't have a superview.
