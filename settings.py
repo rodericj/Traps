@@ -13,14 +13,17 @@ TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
     # ('Your Name', 'your_email@domain.com'),
+     ('roderic', 'roderic@gmail.com'),
 )
 
 MANAGERS = ADMINS
 
 if PRODUCTION:
-	DATABASE_ENGINE = 'mysql'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-	DATABASE_USER = 'rodericj'             # Not used with sqlite3.
-	DATABASE_PASSWORD = 'bananarama'         # Not used with sqlite3.
+	DATABASE_ENGINE = 'postgresql_psycopg2'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+	DATABASE_NAME = 'rodericj_traps'             # Not used with sqlite3.
+	DATABASE_USER = 'rodericj_traps'             # Not used with sqlite3.
+	#DATABASE_PASSWORD = 'bananarama'         # Not used with sqlite3.
+	DATABASE_PASSWORD = '0634b340'         # Not used with sqlite3.
 	DATABASE_HOST = 'web111.webfaction.com'             # Set to empty string for localhost. Not used with sqlite3.
 	DATABASE_PORT = ''             # Set to empty string for default. Not used with sqlite3.
 
@@ -51,17 +54,26 @@ USE_I18N = True
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = ''
+if PRODUCTION:
+	MEDIA_ROOT = '/home/rodericj/webapps/traps/media/'
+else:
+	MEDIA_ROOT = ''
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
 # Examples: "http://media.lawrence.com", "http://example.com/media/"
-MEDIA_URL = ''
+if PRODUCTION:
+	MEDIA_URL = 'http://thetrapgame.com/media'
+else:
+	MEDIA_URL = ''
 
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
 # Examples: "http://foo.com/media/", "/media/".
-ADMIN_MEDIA_PREFIX = '/media/'
+if PRODUCTION:
+	ADMIN_MEDIA_PREFIX = 'http://thetrapgame.com/media/admin/'
+else:
+	ADMIN_MEDIA_PREFIX = '/media/'
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'yd_9ogfx_!&0$qk^l(_3gcemx8r81d))4tab1xs98d_dhkf0z#'
@@ -98,3 +110,9 @@ INSTALLED_APPS = (
 	'django.contrib.admin',
 	'Traps.traps',
 )
+
+EMAIL_HOST = 'smtp.webfaction.com'
+EMAIL_HOST_USER = 'rodericj'
+EMAIL_HOST_PASSWORD = 'emailpass'
+DEFAULT_FROM_EMAIL = 'roderic+webfaction@gmail.com'
+SERVER_EMAIL = 'roderic+webfactionserveremail@gmail.com'
