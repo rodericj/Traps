@@ -12,10 +12,12 @@
 @interface UserProfile : NSObject {
 	NSDictionary *fbprofile;
 	NSDictionary *profile;
+	NSArray *locations;
 	NSString *whichTrap;
 	NSString *whichVenue;
 }
 @property (nonatomic, retain) NSDictionary *profile;
+@property (nonatomic, retain) NSArray *locations;
 @property (nonatomic, retain) NSDictionary *fbprofile;
 @property (retain) NSString *whichTrap;
 @property (retain) NSString *whichVenue;
@@ -29,6 +31,7 @@
 
 -(void)newProfileFromDictionary:(NSDictionary *)newProfile;
 -(void)newFBProfileFromDictionary:(NSDictionary *)newFBProfile;
+-(void)newLocationsFromDictionary:(NSArray *)newLocations;
 -(NSString *)getUserName;
 -(NSInteger *)getCoinCount;
 -(NSInteger *)getHitPoints;

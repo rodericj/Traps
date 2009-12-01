@@ -10,6 +10,7 @@
 #import "VenueDetailView.h"
 #import "BoobyTrap3AppDelegate.h"
 #import "NetworkRequestOperation.h"
+#import "UserProfile.h"
 //#import "NetworkMiddleware.h"
 
 @implementation NearbyPlacesTableView
@@ -87,7 +88,16 @@
 
 - (void)pageLoaded:(NSDictionary*)webRequestResults{
 	NSLog(@"nearby places webrequest returned %@", webRequestResults);
-	[webRequestResults writeToFile:@"NearbyPlaces.plist" atomically:TRUE];
+
+	UserProfile *userProfile = [UserProfile sharedSingleton];
+	[userProfile newLocationsFromDictionary:webRequestResults];
+	//NSLog(@"%@", [userProfile getUserName]);
+	//NSLog(@"update with this username %@", [userProfile obje)
+	//NSLog(@"in updateMiniProfile pageLoaded");
+	//[self updateMiniProfile:userProfile];
+	//NSLog(@"out of updateMiniProfile pageLoaded");
+	
+	
 	self.navigationItem.rightBarButtonItem = nil;
 	[self didGetNearbyLocations];
 }
@@ -117,7 +127,9 @@
 
 // Customize the number of rows in the table view.
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-	NSArray *places = [NSArray arrayWithContentsOfFile:@"NearbyPlaces.plist"];
+	UserProfile *userProfile = [UserProfile sharedSingleton];
+	NSArray *places = [userProfile locations];
+	//NSArray *places = [NSArray arrayWithContentsOfFile:@"NearbyPlaces.plist"];
 	return [places count];
 }
 
@@ -136,7 +148,10 @@
     }
     
     // Set up the cell...
-	NSArray *places = [NSArray arrayWithContentsOfFile:@"NearbyPlaces.plist"];
+	UserProfile *userProfile = [UserProfile sharedSingleton];
+	NSArray *places = [userProfile locations];
+
+	//NSArray *places = [NSArray arrayWithContentsOfFile:@"NearbyPlaces.plist"];
 	NSDictionary *venue = (NSDictionary *)[places objectAtIndex:[indexPath row]];
 	cell.text = [venue objectForKey:@"name"];
 	//cell.text = @"hi";
@@ -152,7 +167,10 @@
 		self.venueDetailView = aVenueDetail;
 		[aVenueDetail release];
 	}
-	NSArray *venues = [NSArray arrayWithContentsOfFile:@"NearbyPlaces.plist"];
+	UserProfile *userProfile = [UserProfile sharedSingleton];
+	NSArray *venues = [userProfile locations];
+
+	//NSArray *venues = [NSArray arrayWithContentsOfFile:@"NearbyPlaces.plist"];
 	NSDictionary *venue = [venues objectAtIndex:row];
 	venueDetailView.title = [venue objectForKey:@"name"];
 

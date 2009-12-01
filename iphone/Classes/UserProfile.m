@@ -10,6 +10,7 @@
 
 @implementation UserProfile
 @synthesize profile;
+@synthesize locations;
 @synthesize fbprofile;
 @synthesize whichTrap;
 @synthesize whichVenue;
@@ -31,7 +32,7 @@
 	NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
 	self.fbprofile = [prefs dictionaryForKey:@"fbprofile"];
 	self.profile = [prefs dictionaryForKey:@"profile"];
-	
+	self.locations = [prefs arrayForKey:@"locations"];
 	//[prefs setObject:newFBProfile forKey:@"fbprofile"];
 	//self.profile =  [[NSDictionary alloc] initWithContentsOfFile:@"Profile.plist"];
 }
@@ -65,6 +66,12 @@
 -(void)clear{
 	//FBProfile.p list
 	//Profile.p list
+}
+
+-(void)newLocationsFromDictionary:(NSArray *)newLocations{
+	NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+	[prefs setObject:newLocations forKey:@"locations"];
+	self.locations = locations;
 }
 
 -(void)newFBProfileFromDictionary:(NSDictionary *)newFBProfile{

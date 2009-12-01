@@ -18,13 +18,16 @@
 	didUpdateToLocation:(CLLocation *)newLocation
 		   fromLocation:(CLLocation *)oldLocation
 {
+	NSLog(@"Got a new location");
 	[self.delegate locationUpdate:newLocation];
+	[self.locationManager stopUpdatingLocation];
 }
 
 
 - (void)locationManager:(CLLocationManager *)manager
 	   didFailWithError:(NSError *)error
 {
+	NSLog(@"Got a location error");
 	[self.delegate locationError:error];
 }
 
