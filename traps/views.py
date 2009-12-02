@@ -67,7 +67,7 @@ def findYelpVenues(lat, lon):
 					pass
 					
 	except TooManySearchResultsError: 
-		print "Too Many"
+		#print "Too Many"
 		raise TooManySearchResultsError(e.value)
 	
 	return dbBusinessList
@@ -121,7 +121,7 @@ def getUserInventory(uid):
 	try:
 		annotated_inv = TrapsUser.objects.get(id=1).useritem_set.all().values('item').annotate(Count('item')).order_by()
 	except:
-		print sys.exc_info()[0]
+		#print sys.exc_info()[0]
 		#print type(inst)
 		#print inst
 		raise
@@ -210,7 +210,7 @@ def SearchVenue(request, vid=None):
 		#request.user.userprofile = get_or_create_profile(request.user)
 		request.user.userprofile.event_set.create(type='HT')
 		ret['damage'] = trapWasHere(uid, venue, itemsThatAreTraps)
-		ret['alertStatement'] = "There are traps at this venue. You took %s damage. %s" % ret['damage'], optionString
+		ret['alertStatement'] = "There are traps at this venue. You took %s damage. %s" % (str(ret['damage']['hitpointslost']), optionString)
 	else:
 		#There are traps, take action	
 		#no traps here, give the go ahead to get coins and whatever
