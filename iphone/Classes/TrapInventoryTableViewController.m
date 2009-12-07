@@ -130,6 +130,20 @@
 	[alert show]; 
 	[alert release]; 
 	
+	
+	FBStreamDialog* dialog = [[[FBStreamDialog alloc] init] autorelease]; 
+	dialog.delegate = self; 
+	dialog.userMessagePrompt = @"Talk smack about your trap."; 
+	dialog.attachment = @"{\"name\":\"I've been setting traps all over town\","
+	"\"href\":\"http://www.thetrapgame.com\"," 
+	"\"caption\":\"The Trap Game\",\"description\":\"It's the greatest location based game ever. Join the fun and prank your friends in the real world.\"," 
+	"\"media\":[{\"type\":\"image\"," 
+	"\"src\":\"http://img40.yfrog.com/img40/5914/iphoneconnectbtn.jpg\","
+	"\"href\":\"http://developers.facebook.com/connect.php?tab=iphone/\"}],"
+	"\"properties\":{\"another link\":{\"text\":\"Facebook home page\",\"href\":\"http://www.facebook.com\"}}}"; // replace this with a friend's UID // dialog.targetId = @"999999"; 
+	[dialog show];
+	
+	
 	//FBPermissionDialog *dialog = [[[FBPermissionDialog alloc] init] autorelease];
 //	dialog.permission = @"status_update";
 //	[dialog show];

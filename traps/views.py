@@ -31,22 +31,16 @@ class TooManySearchResultsError(Exception):
 	def __str__(self):
 		return repr(self.value)	
 
-#def trace(f, *args, **kw):
-	#print "calling %s with args %s, %s" % (f.func_name, args, kw)
-	#try:
-		##ret = f(*args, **kw)
-	#except Exception as e:
-		#print e	
-		#print type(e)
-	#return ret
-
-# Create your views here.
 def findYelpVenues(lat, lon):
 
 	#If we are online
 	try:
 		api_url = 'http://api.yelp.com/business_review_search?term=yelp&lat='+lat+'&long='+lon+'&radius=.1&num_biz_requested=10&ywsid='+ config.yelp_api_key
 		json_returned = simplejson.load(urllib.urlopen(api_url))
+
+		#foursquare_api_url = 'http://api.foursquare.com/venues?geolat=%s&geolong=%s' %(lat, lon)
+		#foursquare_json_returned = simplejson.load(urllib.urlopen(foursquare_api_url))
+
 		#print json_returned
 		businessList = json_returned['businesses'] 
 		dbBusinessList = []
@@ -382,6 +376,7 @@ def FindNearby(request):
 		#find all yelp venues near here
 		#new yelp venues
 		dbVenues = findYelpVenues(lat, lon)
+		print dbVenues
 		json = [v[0].objectify() for v in dbVenues]
 		#ret['businessList'] = dbVenues
 		#print ret.keys()
