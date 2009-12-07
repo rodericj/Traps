@@ -10,6 +10,7 @@ from django.utils import simplejson
 from django.contrib.auth.models import User
 from django.db.models import Count
 from django.core.exceptions import ObjectDoesNotExist
+import urbanairship
 
 
 #def tb(f):
@@ -94,9 +95,17 @@ def noTrapWasHere(uid, venue):
 	return reward
 
 def notifyTrapSetter(uid, venue):
-	#TODO
-	pass
-	#print "notify trap setter"
+	#TODO 
+	#uid is the user who set off the trap
+	alertNote = 'Someone just hit the trap you left at %s' % (venue.name)
+	theTrapQuery = VenueItem.objects.filter(venue__id__exact=venue.id).filter(dateTimeUsed__isnull=True)
+	token = theTrapQuery[0].user.iphoneDeviceToken
+	## From go.urbanairship.com. This is the App key and the APP MASTER SECRET...not the app secret
+	airship = urbanairship.Airship('EK_BtrOrSOmo95TTsAb_Fw', 'vAixh-KLT5u0Ay8Xv6cf4Q')
+	
+	#TODO This needs to be deferred for sure
+	#airship.push({'aps':{'alert':alertNote}}, aliases=['hollabills'])
+	airship.push({'aps':{'alert':alertNote}, 'device_tokens':[token]})
 
 def trapWasHere(uid, venue, itemsThatAreTraps):
 	notifyTrapSetter(uid, venue)	
@@ -142,9 +151,12 @@ def SetTrap(request):
 	uid = request.user.userprofile.id
 	vid = request.POST['vid'][0]
 	iid = request.POST['iid'][0]
+	iphonetoken = request.POST['deviceToken']
 	
 	venue = Venue.objects.get(id=vid)
 	user = TrapsUser.objects.get(id=uid)
+	user.iphoneDeviceToken = iphonetoken
+	user.save()
 
 	#get the item from the user and subtract it
 	alltraps = user.useritem_set.all()
@@ -382,3 +394,16 @@ def FindNearby(request):
 
 
 	return HttpResponse(simplejson.dumps(json), mimetype='application/json')
+
+def SetDeviceToken(request):
+	ret = {"rc":0}
+	try:
+		userprofile = get_or_create_profile(request.user)
+		userprofile.iphoneDeviceToken = request.POST['deviceToken']
+		userprofile.save()
+		
+	except:
+		ret = {"rc":1}
+		
+	
+	return HttpResponse(simplejson.dumps(ret), mimetype='application/json')

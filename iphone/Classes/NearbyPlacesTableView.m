@@ -129,6 +129,9 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 	UserProfile *userProfile = [UserProfile sharedSingleton];
 	NSArray *places = [userProfile locations];
+	NSLog(@"places at this point is: %@", places);
+	NSLog(@"reloading the tableView for nearby places %d", [places count]);
+
 	//NSArray *places = [NSArray arrayWithContentsOfFile:@"NearbyPlaces.plist"];
 	return [places count];
 }
@@ -169,11 +172,13 @@
 	}
 	UserProfile *userProfile = [UserProfile sharedSingleton];
 	NSArray *venues = [userProfile locations];
-
 	//NSArray *venues = [NSArray arrayWithContentsOfFile:@"NearbyPlaces.plist"];
 	NSDictionary *venue = [venues objectAtIndex:row];
 	venueDetailView.title = [venue objectForKey:@"name"];
 
+	NSLog(@"loading each row %@", venueDetailView.title);
+
+	
 	[venueDetailView updateVenueDetails:venue];
 
 	BoobyTrap3AppDelegate *delegate = [[UIApplication sharedApplication] delegate];

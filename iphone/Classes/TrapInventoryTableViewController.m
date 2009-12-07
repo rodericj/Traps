@@ -100,17 +100,24 @@
 }
 
 - (void)doDropTrap {
+	BoobyTrap3AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
+
 	UserProfile *profile = [UserProfile sharedSingleton];
 	NetworkRequestOperation *op = [[NetworkRequestOperation alloc] init];
 	[op setTargetURL:@"SetTrap"];
 	op.arguments = [[NSMutableDictionary alloc] init];
 	[op.arguments setObject:[profile whichVenue] forKey:@"vid"];
 	[op.arguments setObject:(NSString *)[profile whichTrap] forKey:@"iid"];
+	if([delegate deviceToken] != Nil){
+		[op.arguments setObject:(NSString *) [delegate deviceToken] forKey:@"deviceToken"];
+	}
+	else{
+		[op.arguments setObject:(NSString *) @"there is no device id here" forKey:@"deviceToken"];
+	}
 	op.callingDelegate = self;
 	queue = [[NSOperationQueue alloc] init];
 	[queue addOperation:op];
 	[op release];
-	
 }
 
 - (void)pageLoaded:(NSDictionary*)webRequestResults{

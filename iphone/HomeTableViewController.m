@@ -99,9 +99,10 @@
 #pragma mark FB Connect stuff
 
 -(void)session:(FBSession *)session willLogout:uid{
-	NSLog(@"will log out");
+//	NSLog(@"will u log out");
+	NSLog(@"test the log out output");
 	BoobyTrap3AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
-
+	NSLog(@"the server address %@, %@", [delegate serverAddress], @"/Logout");		
 	NetworkRequestOperation *op = [[NetworkRequestOperation alloc] init];
 	op.targetURL =[NSString stringWithFormat:@"%s%s", [delegate serverAddress], @"/Logout/"];
 	op.callingDelegate = self;

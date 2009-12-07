@@ -78,6 +78,7 @@ class TrapsUser(models.Model):
 	#events = models.ManyToManyField(Event)
 	user = models.ForeignKey(User, unique=True)
 	lastUpdated = models.DateTimeField(auto_now=True, auto_now_add=True)
+	iphoneDeviceToken = models.CharField(max_length=64, null=True, blank=True)
 
 	def objectify(self):
 		return {

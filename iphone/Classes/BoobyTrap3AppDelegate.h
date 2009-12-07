@@ -18,7 +18,12 @@
 	IBOutlet DropTrapsNavController *dropTrapsNavController;
 	FBSession *session;
 	NSString *serverAddress;
+	NSString *deviceToken;
+	NSOperationQueue *queue;
+
 }
+
+@property (nonatomic, retain) NSString *deviceToken;
 @property (retain) FBSession *session;
 @property (nonatomic, retain) NSString *serverAddress;
 @property (nonatomic, retain) IBOutlet UIWindow *window;
