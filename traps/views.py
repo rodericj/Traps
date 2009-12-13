@@ -141,17 +141,18 @@ def getUserProfile(uid):
 	
 #def SetTrap(request, vid, iid, uid):
 def SetTrap(request):
+	print "SetTrap"
 	request.user.userprofile = get_or_create_profile(request.user)
 	uid = request.user.userprofile.id
-	vid = request.POST['vid'][0]
-	iid = request.POST['iid'][0]
+	vid = request.POST['vid']
+	iid = request.POST['iid']
 	iphonetoken = request.POST['deviceToken']
 	
-	venue = Venue.objects.get(id=vid)
+	venue = Venue.objects.get(foursquareid=vid)
 	user = TrapsUser.objects.get(id=uid)
 	user.iphoneDeviceToken = iphonetoken
 	user.save()
-
+	
 	#get the item from the user and subtract it
 	alltraps = user.useritem_set.all()
 	if len(alltraps) > 0:
@@ -168,7 +169,7 @@ def SetTrap(request):
 
 	else:
 		pass
-		#print "user has no items"
+		print "user has no items"
 	
 	ret = {}
 	request.user.userprofile = get_or_create_profile(request.user)
@@ -193,19 +194,47 @@ def giveItemsAtVenueToUser(user, nonTrapVenueItems):
 
 #@tb
 def SearchVenue(request, vid=None):
+	print "In Search Venue"
+	print request.POST
+	print vid
 	if vid == None:
-		vid = request.POST['vid'][0]
+		vid = request.POST['vid']
+	print vid
 	
 	request.user.userprofile = get_or_create_profile(request.user)
 	request.user.userprofile.event_set.create(type='SE')
+	print 1
 	uid = request.user.userprofile.id
+	print 2
 	thisUsersTraps = request.user.userprofile.useritem_set.filter(item__type='TP')
 	if thisUsersTraps.count() != 0:
+		print 3
 		optionString = "You have %d traps. Would you like to set one?" %(thisUsersTraps.count())
 	else:
+		print 31
 		optionString = "You have no traps"
 	ret = {}
-	venue = Venue.objects.get(id=vid)
+
+	print 4
+	venueSearch = Venue.objects.filter(foursquareid=vid)
+	if len(venueSearch) == 0:
+		print 5
+		#this venue isn't in the db, create it
+		a = urllib.urlopen("http://api.foursquare.com/v1/venue.json?vid="+vid)
+		print 6
+		json_str = a.read()
+		print 7
+		b = simplejson.loads(json_str)['venue']
+		print 8
+		v = Venue(foursquareid=vid, name=b['name'], 
+					latitude=b['geolat'], longitude=b['geolong'], 
+					streetName=b['address'], city=b['city'], state=b['state'], 
+					coinValue=config.startVenueWithCoins)
+		print 9
+		v.save()
+		print 10
+
+	venue = Venue.objects.get(foursquareid=vid)
 	itemsAtVenue = venue.venueitem_set.filter()
 	itemsThatAreTraps = [i for i in itemsAtVenue if i.item.type =='TP' and i.dateTimeUsed==None]
 	
@@ -295,6 +324,8 @@ def get_or_create_profile(user):
 	return profile
 
 def IPhoneLogin(request):
+	jsonprofile = {}
+	profile=None
 
 	#TODO error case and feed it back to the iphone
 	#1. user name already exists does not work
@@ -302,17 +333,39 @@ def IPhoneLogin(request):
 	#logout(request)
 	uname = request.POST['uname']
 	password = request.POST['password']
-	profile = doLogin(request, uname, password)
-	#jsonprofile = profile.objectify()
-	try:
-		jsonprofile = GetUserProfileFromProfile(profile)
-	except:
-		#print sys.exc_info()[0]
+
+	print uname, password
+	#profile = doLogin(request, uname, password)
+
+	user = authenticate(username=uname, password=password)
+	#user.userprofile = {}
+	print "user authenticated", user
+	if user is not None:
+		print "user is not none"
+		if user.is_active:
+			print "user is active"
+			login(request, user)
+			user.userprofile = get_or_create_profile(user)
+			user.userprofile.event_set.create(type='LI')
+			profile = user.userprofile
+			print 1
+			
+		else:
+			print "user is not active"
+			#return a disabled account error message
+			pass
+	else:
+		print "invalid login, create new user"
+		profile = doLogin(request, uname, password)
+		
+		#return "invalid login error message
 		pass
-		#print type(e)
-		#print e
-		#print e.args
-		raise
+
+	print 23
+	print 3
+	print "got profile"
+	jsonprofile = profile.objectify()
+	print jsonprofile
 
 	return HttpResponse(simplejson.dumps(jsonprofile), mimetype='application/json')
 	
@@ -333,6 +386,7 @@ def Login(request):
 def doLogin(request, uname, password):
 	
 	if request.user.is_anonymous():
+		print "user is anon"
 		#create user and profile Create New User
 		user = User.objects.create_user(uname, 'none', password)
 		user = authenticate(username=uname, password=password)
@@ -344,9 +398,13 @@ def doLogin(request, uname, password):
 			starterItem = Item.objects.get(id=1)
 			user.userprofile.useritem_set.create(item=starterItem)
 	else:
+		print "user is not anon"
 		user = request.user	
+		print 1
 		user.userprofile = get_or_create_profile(user)
+		print 2
 		user.userprofile.event_set.create(type='LI')
+		print 3
 	
 
 	return user.userprofile

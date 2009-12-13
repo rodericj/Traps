@@ -143,11 +143,6 @@
 	"\"properties\":{\"another link\":{\"text\":\"Facebook home page\",\"href\":\"http://www.facebook.com\"}}}"; // replace this with a friend's UID // dialog.targetId = @"999999"; 
 	[dialog show];
 	
-	
-	//FBPermissionDialog *dialog = [[[FBPermissionDialog alloc] init] autorelease];
-//	dialog.permission = @"status_update";
-//	[dialog show];
-	
 	[self.navigationController popViewControllerAnimated:TRUE];
 }
 

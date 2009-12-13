@@ -32,6 +32,7 @@
 
 
 - (void)didReceiveMemoryWarning {
+	NSLog(@"DidReceiveMemoryWarning in Home Nav controller");
 	// Releases the view if it doesn't have a superview.
     [super didReceiveMemoryWarning];
 	
@@ -39,6 +40,7 @@
 }
 
 - (void)viewDidUnload {
+	NSLog(@"viewDidUnload HomeNavController");
 	// Release any retained subviews of the main view.
 	// e.g. self.myOutlet = nil;
 }

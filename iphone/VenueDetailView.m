@@ -22,7 +22,7 @@
 }
 
 - (void)doSearchVenue{
-	
+	NSLog(@"venue that we clicked on: %@", venueInfo);
 	NetworkRequestOperation *op = [[NetworkRequestOperation alloc] init];
 	[op setTargetURL:@"SearchVenue"];
 	op.arguments = [[NSMutableDictionary alloc] init];

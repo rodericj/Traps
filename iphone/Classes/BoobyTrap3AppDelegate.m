@@ -22,10 +22,17 @@
 @synthesize deviceToken;
 
 - (void)applicationDidFinishLaunching:(UIApplication *)application {  
+	
+	if(
+	   getenv("NSZombieEnabled") || getenv("NSAutoreleaseFreedObjectCheckEnabled")
+	   ) {
+		NSLog(@"NSZombieEnabled/NSAutoreleaseFreedObjectCheckEnabled enabled!");
+	}
+	
     // Override point for customization after application launch
 //#if defined(TARGET_IPHONE_SIMULATOR)
-//	[self setServerAddress:@"http://localhost:8000"];
-	[self setServerAddress:@"http://192.168.1.130:8000"];
+	[self setServerAddress:@"http://localhost:8000"];
+//	[self setServerAddress:@"http://192.168.1.8:8000"];
 //#else
 //	[self setServerAddress:@"http://rodericj.webfactional.com"];
 //#endif
@@ -43,6 +50,7 @@
 }
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)_deviceToken {
+	NSLog(@"we did register for remote notifications");
 	// Get a hex string from the device token with no spaces or < >
 	self.deviceToken = [[[[_deviceToken description] stringByReplacingOccurrencesOfString:@"<"withString:@""] 
 						 stringByReplacingOccurrencesOfString:@">" withString:@""] 

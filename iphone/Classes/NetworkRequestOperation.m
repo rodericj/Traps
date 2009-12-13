@@ -33,7 +33,7 @@
 		argString = [argString stringByAppendingString:[NSString stringWithFormat:@"%@=%@&", argument, [arguments objectForKey:argument]]];
 	}
 	argString = [argString stringByAppendingString:[NSString stringWithFormat:@"%@=%@", @"deviceID", [[UIDevice currentDevice] uniqueIdentifier]]];
-
+	NSLog(@"argString is %@", argString);
 	//call to the web service to see if we can log in
 	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:target]
 														   cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
@@ -50,6 +50,7 @@
 
 	NSString *results = [[NSString alloc] initWithData:urlData encoding:NSUTF8StringEncoding];	
 	NSDictionary *resultsDict = [results JSONValue];
+	NSLog(@"results Dict from Network request %@", resultsDict);
 	[callingDelegate performSelectorOnMainThread:@selector(pageLoaded:)
                                            withObject:resultsDict
                                         waitUntilDone:YES];

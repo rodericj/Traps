@@ -53,6 +53,7 @@
 		5FD6A3D410CCD50B00A10065 /* FBFeedDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD6A3C910CCD50B00A10065 /* FBFeedDialog.m */; };
 		5FD6A3D510CCD50B00A10065 /* FBStreamDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD6A3CA10CCD50B00A10065 /* FBStreamDialog.m */; };
 		5FD6A3D610CCD50B00A10065 /* FBConnect.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5FD6A3CB10CCD50B00A10065 /* FBConnect.bundle */; };
+		5FD6A40210CF615500A10065 /* FoursquareNetworkOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD6A40110CF615500A10065 /* FoursquareNetworkOperation.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -136,6 +137,8 @@
 		5FD6A3C910CCD50B00A10065 /* FBFeedDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FBFeedDialog.m; path = "../../facebook-iphone-sdk/src/FBFeedDialog.m"; sourceTree = SOURCE_ROOT; };
 		5FD6A3CA10CCD50B00A10065 /* FBStreamDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FBStreamDialog.m; path = "../../facebook-iphone-sdk/src/FBStreamDialog.m"; sourceTree = SOURCE_ROOT; };
 		5FD6A3CB10CCD50B00A10065 /* FBConnect.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = FBConnect.bundle; path = "../../facebook-iphone-sdk/src/FBConnect.bundle"; sourceTree = SOURCE_ROOT; };
+		5FD6A40010CF615500A10065 /* FoursquareNetworkOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FoursquareNetworkOperation.h; sourceTree = "<group>"; };
+		5FD6A40110CF615500A10065 /* FoursquareNetworkOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FoursquareNetworkOperation.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* BoobyTrap3-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "BoobyTrap3-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -287,6 +290,8 @@
 		5FB2D96410B50D6B0080DB22 /* Net */ = {
 			isa = PBXGroup;
 			children = (
+				5FD6A40010CF615500A10065 /* FoursquareNetworkOperation.h */,
+				5FD6A40110CF615500A10065 /* FoursquareNetworkOperation.m */,
 				5F9A382F10BE1E9800E59AA2 /* NetworkRequestOperation.h */,
 				5F9A383010BE1E9800E59AA2 /* NetworkRequestOperation.m */,
 			);
@@ -449,6 +454,7 @@
 				5FD6A3D310CCD50B00A10065 /* FBPermissionDialog.m in Sources */,
 				5FD6A3D410CCD50B00A10065 /* FBFeedDialog.m in Sources */,
 				5FD6A3D510CCD50B00A10065 /* FBStreamDialog.m in Sources */,
+				5FD6A40210CF615500A10065 /* FoursquareNetworkOperation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

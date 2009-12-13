@@ -25,13 +25,15 @@ class Item(models.Model):
 		return str(self.id) + " " + self.name
 
 class Venue(models.Model):
+	foursquareid = models.IntegerField(blank=False, null=False)
 	name = models.CharField(max_length=50)
 	latitude = models.FloatField()
 	longitude = models.FloatField()
-	yelpAddress = models.CharField(max_length=100)
+	#yelpAddress = models.CharField(max_length=100)
 	streetName = models.CharField(max_length=100)
 	city = models.CharField(max_length=30)
 	state = models.CharField(max_length=30)
+	zip = models.CharField(max_length=10)
 	coinValue = models.IntegerField(default=config.startVenueWithCoins)
 	phone = models.CharField(max_length=11)
 	item = models.ManyToManyField(Item, blank=True, null=True)
@@ -52,7 +54,8 @@ class Venue(models.Model):
 				}
 
 	def __unicode__(self):
-		return "%d, %s" % (self.id, self.name)
+		#return "%d, %s" % (self.id, self.name)
+		return "%s" % (self.name)
 
 #class ItemAtVenue(models.Model):
 	#venue = models.ForeignKey(Venue)

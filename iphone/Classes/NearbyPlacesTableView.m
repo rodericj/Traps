@@ -11,7 +11,7 @@
 #import "BoobyTrap3AppDelegate.h"
 #import "NetworkRequestOperation.h"
 #import "UserProfile.h"
-//#import "NetworkMiddleware.h"
+#import "FoursquareNetworkOperation.h"
 
 @implementation NearbyPlacesTableView
 @synthesize foundVenues;
@@ -66,37 +66,68 @@
 #pragma mark Location handlers
 
 - (void)getNearbyLocations:(CLLocation *)location {
-	NSLog(@"getNearbyLocations Called");
+	NSLog(@"getNearbyLocations Called %@", [location description]);
 
 	if (location == NULL){
 		NSLog(@"the location was null which means that the thread is doing something intersting. Lets send this back.");
 	}
 	else{
+		//Make location string 2 separate lat/long
+		NSString *latlong = [[[location description] stringByReplacingOccurrencesOfString:@"<" withString:@""] 
+							 stringByReplacingOccurrencesOfString:@">" withString:@""];
+		NSLog(@"new lat long %@", latlong);
+		NSArray *chunks = [latlong componentsSeparatedByString:@" "];
+		NSString *lat = [chunks objectAtIndex:0];
+		NSString *lon = [chunks objectAtIndex:1];
+		//[chunks release];
+		//[latlong release];
 		
-		NetworkRequestOperation *op = [[NetworkRequestOperation alloc] init];
-		[op setTargetURL:@"FindNearby"];
+		NSLog(@"now we've split them up into %@ and %@", lat, lon);
+		FoursquareNetworkOperation *op = [[FoursquareNetworkOperation alloc] init];
+		[op setTargetURL:@"venues.json"];
 		op.arguments = [[NSMutableDictionary alloc] init];
-		[op.arguments setObject:[location description] forKey:@"ld"];
-		[op.arguments setObject:[[UIDevice currentDevice] uniqueIdentifier] forKey:@"uid"];
+		[op.arguments setObject:[lat stringByReplacingOccurrencesOfString:@"," withString:@""] forKey:@"geolat"];
+		[op.arguments setObject:lon forKey:@"geolong"];
 		op.callingDelegate = self;
 		queue = [[NSOperationQueue alloc] init];
 		[queue addOperation:op];
 		[op release];
+		
+		//NetworkRequestOperation *op = [[NetworkRequestOperation alloc] init];
+//		[op setTargetURL:@"FindNearby"];
+//		op.arguments = [[NSMutableDictionary alloc] init];
+//		[op.arguments setObject:[location description] forKey:@"ld"];
+//		[op.arguments setObject:[[UIDevice currentDevice] uniqueIdentifier] forKey:@"uid"];
+//		op.callingDelegate = self;
+//		queue = [[NSOperationQueue alloc] init];
+//		[queue addOperation:op];
+//		[op release];
 	}
 
 }
 
 - (void)pageLoaded:(NSDictionary*)webRequestResults{
-	NSLog(@"nearby places webrequest returned %@", webRequestResults);
+	//NSLog(@"nearby places webrequest returned %@", webRequestResults);
 
+	NSArray *groups = [webRequestResults objectForKey:@"groups"];
+	//NSArray *venues = [groups objectForKey:@"venues"];
+	//NSLog(@"the group item is: %@", groups);
+	NSDictionary *venues = [groups objectAtIndex:0];
+	NSArray *venues1 = [venues objectForKey:@"venues"];
+	NSLog(@"venues1 is: %@", venues1);
 	UserProfile *userProfile = [UserProfile sharedSingleton];
-	[userProfile newLocationsFromDictionary:webRequestResults];
+	//[userProfile newLocationsFromDictionary:webRequestResults];
+	[userProfile setLocations:venues1];
+	
+//	[groups release];
+//	[venues release];
+//	[venues1 release];
+	
 	//NSLog(@"%@", [userProfile getUserName]);
 	//NSLog(@"update with this username %@", [userProfile obje)
 	//NSLog(@"in updateMiniProfile pageLoaded");
 	//[self updateMiniProfile:userProfile];
 	//NSLog(@"out of updateMiniProfile pageLoaded");
-	
 	
 	self.navigationItem.rightBarButtonItem = nil;
 	[self didGetNearbyLocations];
@@ -110,6 +141,7 @@
 }
 
 - (void)didGetNearbyLocations{
+	NSLog(@"didGetNearbyLocations: Time to reload");
 	[self.tableView reloadData];
 }
 
