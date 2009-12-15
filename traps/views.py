@@ -122,7 +122,8 @@ def getUserInventory(uid):
 	traps = TrapsUser.objects.get(id=uid).useritem_set.all()
 	
 	try:
-		annotated_inv = TrapsUser.objects.get(id=1).useritem_set.all().values('item').annotate(Count('item')).order_by()
+		#annotated_inv = TrapsUser.objects.get(id=1).useritem_set.all().values('item').annotate(Count('item')).order_by()
+		annotated_inv = traps.values('item').annotate(Count('item')).order_by()
 	except:
 		#print sys.exc_info()[0]
 		#print type(inst)
@@ -207,13 +208,15 @@ def SearchVenue(request, vid=None):
 	uid = request.user.userprofile.id
 	print 2
 	thisUsersTraps = request.user.userprofile.useritem_set.filter(item__type='TP')
+	ret = {}
 	if thisUsersTraps.count() != 0:
 		print 3
 		optionString = "You have %d traps. Would you like to set one?" %(thisUsersTraps.count())
+		ret['hasTraps'] = True 
 	else:
 		print 31
+		ret['hasTraps'] = False 
 		optionString = "You have no traps"
-	ret = {}
 
 	print 4
 	venueSearch = Venue.objects.filter(foursquareid=vid)
@@ -272,6 +275,7 @@ def SearchVenue(request, vid=None):
 	#ret['profile'] = request.user.userprofile.objectify()
 	ret['profile'] = request.user.userprofile.objectify()
 	ret['profile']['inventory'] = getUserInventory(uid)
+	print ret
 	return HttpResponse(simplejson.dumps(ret), mimetype='application/json')
 
 
@@ -334,38 +338,28 @@ def IPhoneLogin(request):
 	uname = request.POST['uname']
 	password = request.POST['password']
 
-	print uname, password
 	#profile = doLogin(request, uname, password)
 
 	user = authenticate(username=uname, password=password)
 	#user.userprofile = {}
-	print "user authenticated", user
+	print user
 	if user is not None:
-		print "user is not none"
 		if user.is_active:
-			print "user is active"
 			login(request, user)
 			user.userprofile = get_or_create_profile(user)
 			user.userprofile.event_set.create(type='LI')
 			profile = user.userprofile
-			print 1
 			
 		else:
-			print "user is not active"
 			#return a disabled account error message
 			pass
 	else:
-		print "invalid login, create new user"
 		profile = doLogin(request, uname, password)
 		
 		#return "invalid login error message
 		pass
 
-	print 23
-	print 3
-	print "got profile"
 	jsonprofile = profile.objectify()
-	print jsonprofile
 
 	return HttpResponse(simplejson.dumps(jsonprofile), mimetype='application/json')
 	
@@ -386,7 +380,7 @@ def Login(request):
 def doLogin(request, uname, password):
 	
 	if request.user.is_anonymous():
-		print "user is anon"
+		print "In doLogin, user is anonymous"
 		#create user and profile Create New User
 		user = User.objects.create_user(uname, 'none', password)
 		user = authenticate(username=uname, password=password)
@@ -398,13 +392,10 @@ def doLogin(request, uname, password):
 			starterItem = Item.objects.get(id=1)
 			user.userprofile.useritem_set.create(item=starterItem)
 	else:
-		print "user is not anon"
+		print "In doLogin, user is not"
 		user = request.user	
-		print 1
 		user.userprofile = get_or_create_profile(user)
-		print 2
 		user.userprofile.event_set.create(type='LI')
-		print 3
 	
 
 	return user.userprofile
@@ -434,11 +425,8 @@ def FindNearby(request):
 		#find all yelp venues near here
 		#new yelp venues
 		dbVenues = findYelpVenues(lat, lon)
-		print dbVenues
 		json = [v[0].objectify() for v in dbVenues]
 		#ret['businessList'] = dbVenues
-		#print ret.keys()
-		#print ret['businessList'][0].json()
 		#return HttpResponse(simplejson.dumps({'x':json}), mimetype='application/json')
 		request.user.userprofile = get_or_create_profile(request.user)
 		request.user.userprofile.event_set.create(type='FN')

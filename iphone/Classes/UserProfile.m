@@ -33,8 +33,6 @@
 	self.fbprofile = [prefs dictionaryForKey:@"fbprofile"];
 	self.profile = [prefs dictionaryForKey:@"profile"];
 	self.locations = [prefs arrayForKey:@"locations"];
-	//[prefs setObject:newFBProfile forKey:@"fbprofile"];
-	//self.profile =  [[NSDictionary alloc] initWithContentsOfFile:@"Profile.plist"];
 }
 -(void)printUserProfile{
 	NSLog(@"profile %@  \n fbprofile %@", profile, fbprofile);

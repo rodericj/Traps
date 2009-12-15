@@ -32,8 +32,6 @@
     [super dealloc];
 }
 
-
-
 #pragma mark Table view methods
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -49,7 +47,6 @@
 
 // Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-	NSLog(@"creating the cells at the rows");
 
     static NSString *CellIdentifier = @"Cell";
     
@@ -60,7 +57,6 @@
     
 	UserProfile *profile = [UserProfile sharedSingleton];
 	NSArray *inventory = (NSArray *)[profile getInventory];
-
 
     // Set up the cell...
 	cell.text = [[inventory objectAtIndex:[indexPath row]] objectForKey:@"name"];
@@ -75,10 +71,9 @@
 	NSInteger *iid = (NSInteger *)[[inventory objectAtIndex:[indexPath row]] objectForKey:@"id"];
 	[profile setWhichTrap:iid];
 
-	NSString *alertStatement = [NSString stringWithFormat:@"Are you sure you wish to drop %@? %@", trap, [profile whichTrap]];
-	NSLog(alertStatement);
+	NSString *alertStatement = [NSString stringWithFormat:@"Are you sure you wish to drop %@?", trap];
+
 	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Are you sure?" message:alertStatement delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil]; 
-	
 	[alert show]; 
 	[alert release]; 
 }
@@ -88,13 +83,9 @@
 - (void)alertView:(UIAlertView *)alertView  clickedButtonAtIndex:(NSInteger)buttonIndex {
 
 	if(buttonIndex == 0){
-		NSLog(@"no");
 		//Do nothing I guess
 	}
 	else{
-		NSLog(@"Yes");
-		UserProfile *profile = [UserProfile sharedSingleton];
-		NSArray *inventory = [profile getInventory];
 		[self doDropTrap];
 	}
 }

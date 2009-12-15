@@ -41,15 +41,20 @@
 }
 
 - (void)didSearchVenue:(NSDictionary *)returnData{
-	NSLog(@"we did search");
 	NSString *alertStatement = [returnData objectForKey:@"alertStatement"];
 
 	UserProfile *profile = [UserProfile sharedSingleton];
 	NSDictionary *profileDict = [returnData objectForKey:@"profile"];
 	[profile newProfileFromDictionary:profileDict];
 
-	NSLog(alertStatement);
-	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"UIAlertView" message:alertStatement delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil]; 
+	UIAlertView *alert;
+	Boolean *hasTraps = [returnData objectForKey:@"hasTraps"];
+	if([hasTraps boolValue]== YES){
+		alert = [[UIAlertView alloc] initWithTitle:@"Venue has been Searched" message:alertStatement delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil]; 
+	}
+	else{
+		alert = [[UIAlertView alloc] initWithTitle:@"Venue has been Searched" message:alertStatement delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil]; 
+	}
 	[alert show]; 
 	[alert release]; 
 
@@ -67,7 +72,6 @@
 			self.trapInventoryTableViewController = titvc;
 			[titvc release];
 		}
-		NSLog(@"We have a titvc");
 
 		trapInventoryTableViewController.title = @"Drop a Trap";
 		

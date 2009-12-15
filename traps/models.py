@@ -55,7 +55,7 @@ class Venue(models.Model):
 
 	def __unicode__(self):
 		#return "%d, %s" % (self.id, self.name)
-		return "%s" % (self.name)
+		return "%s, id:%s" % (self.name, self.foursquareid)
 
 #class ItemAtVenue(models.Model):
 	#venue = models.ForeignKey(Venue)

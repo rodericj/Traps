@@ -99,12 +99,23 @@
 #pragma mark FB Connect stuff
 
 -(void)session:(FBSession *)session willLogout:uid{
-//	NSLog(@"will u log out");
-	NSLog(@"test the log out output");
+	//Clear profile
+	NSMutableDictionary *emptyProfile = [[NSMutableDictionary alloc] init];
+	[emptyProfile setObject:@"" forKey:@"userName"];
+	[emptyProfile setObject:@"" forKey:@"coinCount"];
+	[emptyProfile setObject:@"" forKey:@"level"];
+	UserProfile *userProfile = [UserProfile sharedSingleton];
+	[userProfile newProfileFromDictionary:emptyProfile];
+	[emptyProfile release];
+	NSLog(@"%@", [userProfile getUserName]);
+	//NSLog(@"update with this username %@", [userProfile obje)
+	NSLog(@"in updateMiniProfile pageLoaded");
+	[self updateMiniProfile:userProfile];
+	
+	
 	BoobyTrap3AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
-	NSLog(@"the server address %@, %@", [delegate serverAddress], @"/Logout");		
 	NetworkRequestOperation *op = [[NetworkRequestOperation alloc] init];
-	op.targetURL =[NSString stringWithFormat:@"%s%s", [delegate serverAddress], @"/Logout/"];
+	op.targetURL = @"Logout";
 	op.callingDelegate = self;
 	
 	queue = [[NSOperationQueue alloc] init];
@@ -160,8 +171,6 @@
 	
 	//Set the mini porofile name
 	userName.text = [user objectForKey:@"name"];
-	
-	//[self loadView];
 }
 
 - (void)pageLoaded:(NSDictionary*)webRequestResults{
