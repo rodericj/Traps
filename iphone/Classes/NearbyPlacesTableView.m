@@ -92,42 +92,18 @@
 		queue = [[NSOperationQueue alloc] init];
 		[queue addOperation:op];
 		[op release];
-		
-		//NetworkRequestOperation *op = [[NetworkRequestOperation alloc] init];
-//		[op setTargetURL:@"FindNearby"];
-//		op.arguments = [[NSMutableDictionary alloc] init];
-//		[op.arguments setObject:[location description] forKey:@"ld"];
-//		[op.arguments setObject:[[UIDevice currentDevice] uniqueIdentifier] forKey:@"uid"];
-//		op.callingDelegate = self;
-//		queue = [[NSOperationQueue alloc] init];
-//		[queue addOperation:op];
-//		[op release];
+	
 	}
 
 }
 
 - (void)pageLoaded:(NSDictionary*)webRequestResults{
-	//NSLog(@"nearby places webrequest returned %@", webRequestResults);
-
 	NSArray *groups = [webRequestResults objectForKey:@"groups"];
-	//NSArray *venues = [groups objectForKey:@"venues"];
-	//NSLog(@"the group item is: %@", groups);
 	NSDictionary *venues = [groups objectAtIndex:0];
 	NSArray *venues1 = [venues objectForKey:@"venues"];
 	NSLog(@"venues1 is: %@", venues1);
 	UserProfile *userProfile = [UserProfile sharedSingleton];
-	//[userProfile newLocationsFromDictionary:webRequestResults];
 	[userProfile setLocations:venues1];
-	
-//	[groups release];
-//	[venues release];
-//	[venues1 release];
-	
-	//NSLog(@"%@", [userProfile getUserName]);
-	//NSLog(@"update with this username %@", [userProfile obje)
-	//NSLog(@"in updateMiniProfile pageLoaded");
-	//[self updateMiniProfile:userProfile];
-	//NSLog(@"out of updateMiniProfile pageLoaded");
 	
 	self.navigationItem.rightBarButtonItem = nil;
 	[self didGetNearbyLocations];
@@ -188,7 +164,8 @@
 
 	//NSArray *places = [NSArray arrayWithContentsOfFile:@"NearbyPlaces.plist"];
 	NSDictionary *venue = (NSDictionary *)[places objectAtIndex:[indexPath row]];
-	cell.text = [venue objectForKey:@"name"];
+	//cell.text = [venue objectForKey:@"name"];
+	[cell.textLabel setText:[venue objectForKey:@"name"]];
 	//cell.text = @"hi";
     return cell;
 }

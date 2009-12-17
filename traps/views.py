@@ -12,61 +12,6 @@ from django.db.models import Count
 from django.core.exceptions import ObjectDoesNotExist
 import urbanairship
 
-
-#def tb(f):
-	#def new_f():
-		#print "entering ", f.__name__
-		#try:
-			#f()
-		#except Exception as e:
-			#print type(e)
-			#print e
-			#print sys.exc_info()[0]
-		#print "exiting ", f.__name__
-	#return new_f
-
-class TooManySearchResultsError(Exception):
-	def __init__(self, value):
-		self.value = value
-	def __str__(self):
-		return repr(self.value)	
-
-def findYelpVenues(lat, lon):
-
-	#If we are online
-	try:
-		api_url = 'http://api.yelp.com/business_review_search?term=yelp&lat='+lat+'&long='+lon+'&radius=.1&num_biz_requested=10&ywsid='+ config.yelp_api_key
-		json_returned = simplejson.load(urllib.urlopen(api_url))
-
-		#foursquare_api_url = 'http://api.foursquare.com/venues?geolat=%s&geolong=%s' %(lat, lon)
-		#foursquare_json_returned = simplejson.load(urllib.urlopen(foursquare_api_url))
-
-		#print json_returned
-		businessList = json_returned['businesses'] 
-		dbBusinessList = []
-		for business in businessList: 
-			dbsearch = Venue.objects.filter(yelpAddress=business['url'])
-			if len(dbsearch) > 1:
-				raise TooManySearchResultsError("Too many search results")
-			if dbsearch:
-				dbBusinessList.append(dbsearch)
-			else:
-				#create this venue
-				business['reviews'] = ''
-				b = business
-				try:
-					v = Venue(name=b['name'], latitude=b['latitude'], longitude=b['longitude'], yelpAddress=b['url'], streetName=b['address1'], city=b['city'], state=b['state'], coinValue=config.startVenueWithCoins, phone=b['phone'])
-					v.save()
-					dbBusinessList.append(v)
-				except:
-					pass
-					
-	except TooManySearchResultsError: 
-		#print "Too Many"
-		raise TooManySearchResultsError(e.value)
-	
-	return dbBusinessList
-
 def noTrapWasHere(uid, venue):
 
 	#potential coin reward - goes up 1 coin per minute to the max of that venue
@@ -75,15 +20,14 @@ def noTrapWasHere(uid, venue):
 	calculatedRewardValue = min(venue.coinValue, minutesSinceSearch)
 	reward = {'coins': calculatedRewardValue}
 
+	if venue.checkinCount == 0:
+		reward['coins'] = 3
+
 	user = TrapsUser.objects.get(id=uid)
 	user.coinCount += calculatedRewardValue
 	user.save()
 	reward['usersCoinTotal'] = user.coinCount
 
-	#Just to activate the "last save timestamp" so there are no coins for a bit
-	if calculatedRewardValue:
-		#only save if we gave away coins
-		venue.save()
 	itemsAtVenue = venue.item.values()
 	
 	return reward
@@ -94,7 +38,7 @@ def notifyTrapSetter(uid, venue):
 	alertNote = 'Someone just hit the trap you left at %s' % (venue.name)
 	theTrapQuery = VenueItem.objects.filter(venue__id__exact=venue.id).filter(dateTimeUsed__isnull=True)
 	token = theTrapQuery[0].user.iphoneDeviceToken
-	## From go.urbanairship.com. This is the App key and the APP MASTER SECRET...not the app secret
+	##TODO: configify this: From go.urbanairship.com. This is the App key and the APP MASTER SECRET...not the app secret
 	airship = urbanairship.Airship('EK_BtrOrSOmo95TTsAb_Fw', 'vAixh-KLT5u0Ay8Xv6cf4Q')
 	
 	#TODO This needs to be deferred for sure
@@ -125,9 +69,6 @@ def getUserInventory(uid):
 		#annotated_inv = TrapsUser.objects.get(id=1).useritem_set.all().values('item').annotate(Count('item')).order_by()
 		annotated_inv = traps.values('item').annotate(Count('item')).order_by()
 	except:
-		#print sys.exc_info()[0]
-		#print type(inst)
-		#print inst
 		raise
 		
 	inventory = [{'name':Item.objects.get(id=i['item']).name, 'id':Item.objects.get(id=i['item']).id, 'count':i['item__count']} for i in annotated_inv]
@@ -142,7 +83,6 @@ def getUserProfile(uid):
 	
 #def SetTrap(request, vid, iid, uid):
 def SetTrap(request):
-	print "SetTrap"
 	request.user.userprofile = get_or_create_profile(request.user)
 	uid = request.user.userprofile.id
 	vid = request.POST['vid']
@@ -170,7 +110,6 @@ def SetTrap(request):
 
 	else:
 		pass
-		print "user has no items"
 	
 	ret = {}
 	request.user.userprofile = get_or_create_profile(request.user)
@@ -195,47 +134,32 @@ def giveItemsAtVenueToUser(user, nonTrapVenueItems):
 
 #@tb
 def SearchVenue(request, vid=None):
-	print "In Search Venue"
-	print request.POST
-	print vid
 	if vid == None:
 		vid = request.POST['vid']
-	print vid
 	
 	request.user.userprofile = get_or_create_profile(request.user)
 	request.user.userprofile.event_set.create(type='SE')
-	print 1
 	uid = request.user.userprofile.id
-	print 2
 	thisUsersTraps = request.user.userprofile.useritem_set.filter(item__type='TP')
 	ret = {}
 	if thisUsersTraps.count() != 0:
-		print 3
 		optionString = "You have %d traps. Would you like to set one?" %(thisUsersTraps.count())
 		ret['hasTraps'] = True 
 	else:
-		print 31
 		ret['hasTraps'] = False 
 		optionString = "You have no traps"
 
-	print 4
 	venueSearch = Venue.objects.filter(foursquareid=vid)
 	if len(venueSearch) == 0:
-		print 5
 		#this venue isn't in the db, create it
 		a = urllib.urlopen("http://api.foursquare.com/v1/venue.json?vid="+vid)
-		print 6
 		json_str = a.read()
-		print 7
 		b = simplejson.loads(json_str)['venue']
-		print 8
 		v = Venue(foursquareid=vid, name=b['name'], 
 					latitude=b['geolat'], longitude=b['geolong'], 
 					streetName=b['address'], city=b['city'], state=b['state'], 
 					coinValue=config.startVenueWithCoins)
-		print 9
 		v.save()
-		print 10
 
 	venue = Venue.objects.get(foursquareid=vid)
 	itemsAtVenue = venue.venueitem_set.filter()
@@ -269,13 +193,14 @@ def SearchVenue(request, vid=None):
 		alertStatement = "There are no traps here. You got %s coins." % ret['reward']['coins'] 
 		ret['alertStatement'] = alertStatement + " " +optionString
 
+	venue.checkinCount += 1;
+	venue.save()
 	ret['venueid'] = vid
 	ret['userid'] = uid
 	
 	#ret['profile'] = request.user.userprofile.objectify()
 	ret['profile'] = request.user.userprofile.objectify()
 	ret['profile']['inventory'] = getUserInventory(uid)
-	print ret
 	return HttpResponse(simplejson.dumps(ret), mimetype='application/json')
 
 
@@ -342,7 +267,6 @@ def IPhoneLogin(request):
 
 	user = authenticate(username=uname, password=password)
 	#user.userprofile = {}
-	print user
 	if user is not None:
 		if user.is_active:
 			login(request, user)
@@ -380,7 +304,6 @@ def Login(request):
 def doLogin(request, uname, password):
 	
 	if request.user.is_anonymous():
-		print "In doLogin, user is anonymous"
 		#create user and profile Create New User
 		user = User.objects.create_user(uname, 'none', password)
 		user = authenticate(username=uname, password=password)
@@ -392,7 +315,6 @@ def doLogin(request, uname, password):
 			starterItem = Item.objects.get(id=1)
 			user.userprofile.useritem_set.create(item=starterItem)
 	else:
-		print "In doLogin, user is not"
 		user = request.user	
 		user.userprofile = get_or_create_profile(user)
 		user.userprofile.event_set.create(type='LI')
@@ -400,42 +322,6 @@ def doLogin(request, uname, password):
 
 	return user.userprofile
 	
-def FindNearby(request):
-
-	try:
-		ld = request.POST.get('ld', 0)
-		if ld:
-			lat, lon = ld[ld.find("<")+1:ld.find(">")].split(", ")
-		else:
-			#yelp address
-			lat = '37.788022'
-			lon = '-122.399797'
-
-			#larkin street
-		lat = "37.791846"
-		lon = "-122.419388"
-
-		#Find all venues near this one
-		venues = Venue.objects.all()
-
-		#Stored Venues
-		sendable_venues = [{'name':v.name, 'phone':v.phone, 'longitude':v.longitude} for v in venues]
-		ret = {'venues':sendable_venues}
-
-		#find all yelp venues near here
-		#new yelp venues
-		dbVenues = findYelpVenues(lat, lon)
-		json = [v[0].objectify() for v in dbVenues]
-		#ret['businessList'] = dbVenues
-		#return HttpResponse(simplejson.dumps({'x':json}), mimetype='application/json')
-		request.user.userprofile = get_or_create_profile(request.user)
-		request.user.userprofile.event_set.create(type='FN')
-	except:
-		print sys.exc_info()[0]
-
-
-	return HttpResponse(simplejson.dumps(json), mimetype='application/json')
-
 def SetDeviceToken(request):
 	ret = {"rc":0}
 	try:

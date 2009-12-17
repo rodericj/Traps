@@ -15,7 +15,7 @@
 	NSObject *callingDelegate;
 }
 @property(retain) NSURL *targetURL;
-@property(retain) NSDictionary *arguments;
+@property(retain) NSMutableDictionary *arguments;
 @property(retain) NSObject *callingDelegate;
 
 @end

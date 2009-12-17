@@ -27,9 +27,11 @@
 	NSLog(@"updating mini profile here %@", profile);
 	[userName setText:[profile getUserName]];
 	NSLog(@"updated username");
-	[userLevel setText:[profile getLevel]];
+	NSString *level = [NSString stringWithFormat:@"%@", [profile getLevel]];
+	NSString *coinCount = [NSString stringWithFormat:@"%@", [profile getCoinCount]];
+	[userLevel setText:level];
 	NSLog(@"updated level");
-	[userCoinCount setText:[profile getCoinCount]];
+	[userCoinCount setText:coinCount];
 	NSLog(@"updated coins");
 }
 
@@ -98,7 +100,7 @@
 
 #pragma mark FB Connect stuff
 
--(void)session:(FBSession *)session willLogout:uid{
+-(void)session:(FBSession *)session willLogout:(FBUID)uid{
 	//Clear profile
 	NSMutableDictionary *emptyProfile = [[NSMutableDictionary alloc] init];
 	[emptyProfile setObject:@"" forKey:@"userName"];
@@ -112,8 +114,6 @@
 	NSLog(@"in updateMiniProfile pageLoaded");
 	[self updateMiniProfile:userProfile];
 	
-	
-	BoobyTrap3AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
 	NetworkRequestOperation *op = [[NetworkRequestOperation alloc] init];
 	op.targetURL = @"Logout";
 	op.callingDelegate = self;
@@ -208,8 +208,8 @@
     
     // Set up the cell...
 	NSUInteger row = [indexPath row];
-	cell.text = [menuArray objectAtIndex:row];	
-    return cell;
+	[cell.textLabel setText:[menuArray objectAtIndex:row]];
+	return cell;
 }
 
 

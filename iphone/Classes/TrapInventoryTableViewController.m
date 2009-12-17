@@ -59,7 +59,8 @@
 	NSArray *inventory = (NSArray *)[profile getInventory];
 
     // Set up the cell...
-	cell.text = [[inventory objectAtIndex:[indexPath row]] objectForKey:@"name"];
+	//cell.text = [[inventory objectAtIndex:[indexPath row]] objectForKey:@"name"];
+	[cell.textLabel setText:[[inventory objectAtIndex:[indexPath row]] objectForKey:@"name"]];
     return cell;
 }
 
@@ -68,8 +69,10 @@
 	UserProfile *profile = [UserProfile sharedSingleton];
 	NSArray *inventory = (NSArray *)[profile getInventory];
 	NSString *trap = [[inventory objectAtIndex:[indexPath row]] objectForKey:@"name"];
-	NSInteger *iid = (NSInteger *)[[inventory objectAtIndex:[indexPath row]] objectForKey:@"id"];
-	[profile setWhichTrap:iid];
+	//NSInteger *iid = (NSInteger *)[[inventory objectAtIndex:[indexPath row]] objectForKey:@"id"];
+	NSString *siid = [NSString stringWithFormat:@"%@", (NSInteger *)[[inventory objectAtIndex:[indexPath row]] objectForKey:@"id"]];
+
+	[profile setWhichTrap:siid];
 
 	NSString *alertStatement = [NSString stringWithFormat:@"Are you sure you wish to drop %@?", trap];
 

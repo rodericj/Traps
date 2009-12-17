@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FBConnect/FBConnect.h"
 
-@interface TrapInventoryTableViewController : UITableViewController <UITableViewDelegate, UITableViewDataSource>{
+@interface TrapInventoryTableViewController : UITableViewController <FBDialogDelegate, UITableViewDelegate, UITableViewDataSource>{
 	NSOperationQueue *queue;
 }
 
