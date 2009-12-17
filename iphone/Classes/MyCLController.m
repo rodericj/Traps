@@ -18,9 +18,10 @@
 	didUpdateToLocation:(CLLocation *)newLocation
 		   fromLocation:(CLLocation *)oldLocation
 {
-	NSLog(@"Got a new location");
-	[self.delegate locationUpdate:newLocation];
-	[self.locationManager stopUpdatingLocation];
+	if (newLocation.horizontalAccuracy >= locationManager.desiredAccuracy || newLocation.verticalAccuracy <= locationManager.desiredAccuracy) {
+		[self.delegate locationUpdate:newLocation];
+		[self.locationManager stopUpdatingLocation];
+	}
 }
 
 

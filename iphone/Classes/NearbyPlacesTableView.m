@@ -40,6 +40,7 @@
 - (void)viewWillAppear:(BOOL)animated {
 	locationController = [[MyCLController alloc] init];
 	locationController.delegate = self;
+	locationController.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
 	[locationController.locationManager startUpdatingLocation];
 	
     [super viewWillAppear:animated];
