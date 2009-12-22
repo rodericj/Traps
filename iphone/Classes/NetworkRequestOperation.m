@@ -8,7 +8,7 @@
 
 #import "NetworkRequestOperation.h"
 #import "BoobyTrap3AppDelegate.h"
-#import "JSON.H"
+#import "SBJSON.H"
 
 @implementation NetworkRequestOperation
 @synthesize targetURL;
@@ -49,7 +49,13 @@
 														error:&error];
 
 	NSString *results = [[NSString alloc] initWithData:urlData encoding:NSUTF8StringEncoding];	
-	NSDictionary *resultsDict = [results JSONValue];
+	//NSDictionary *resultsDict = [results JSONValue];
+	
+	SBJsonParser *parser = [SBJsonParser new];
+	NSDictionary* resultsDict = [parser objectWithString: results];
+	[parser release];
+	
+	
 	NSLog(@"results Dict from Network request %@", resultsDict);
 	[callingDelegate performSelectorOnMainThread:@selector(pageLoaded:)
                                            withObject:resultsDict

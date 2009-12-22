@@ -7,7 +7,7 @@
 //
 
 #import "FoursquareNetworkOperation.h"
-
+#import "SBJSON.h"
 
 @implementation FoursquareNetworkOperation
 //@synthesize arguments;
@@ -52,7 +52,12 @@
 	
 	
 	NSString *results = [[NSString alloc] initWithData:urlData encoding:NSUTF8StringEncoding];	
-	NSDictionary *resultsDict = [results JSONValue];
+	
+	SBJsonParser *parser = [SBJsonParser new];
+	NSDictionary* resultsDict = [parser objectWithString: results];
+	[parser release];
+	
+	//NSDictionary *resultsDict = [results JSONValue];
 	NSLog(@"returned from foursquare: %@", resultsDict);
 	[callingDelegate performSelectorOnMainThread:@selector(pageLoaded:)
 									  withObject:resultsDict

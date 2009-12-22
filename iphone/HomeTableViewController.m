@@ -12,7 +12,7 @@
 #import "UserProfile.h"
 #import "NetworkRequestOperation.h"
 #import "FBConnect/FBConnect.h"
-
+#import "Airship.h"
 
 @implementation HomeTableViewController
 @synthesize menuArray;
@@ -231,7 +231,10 @@
 	if (row == 1){
 		NSLog(@" row is 1");
 	}
-	
+	if (row == 5){
+		[Airship takeOff: @"EK_BtrOrSOmo95TTsAb_Fw" identifiedBy: @"vAixh-KLT5u0Ay8Xv6cf4Q"];
+		[[Airship shared] displayStoreFront];
+	}
 }
 @end
 

@@ -31,7 +31,8 @@
 	
     // Override point for customization after application launch
 #if defined(TARGET_IPHONE_SIMULATOR)
-	[self setServerAddress:@"http://192.168.1.106:8000"];
+	//[self setServerAddress:@"http://192.168.1.106:8000"];
+	[self setServerAddress:@"http://localhost:8000"];
 #else
 	[self setServerAddress:@"http://rodericj.webfactional.com"];
 #endif
