@@ -8,6 +8,7 @@
 
 #import "HomeTableViewController.h"
 #import "ProfileViewController.h"
+#import "NearbyPlacesTableView.h"
 #import "BoobyTrap3AppDelegate.h"
 #import "UserProfile.h"
 #import "NetworkRequestOperation.h"
@@ -21,18 +22,44 @@
 @synthesize userLevel;
 @synthesize userCoinCount;
 @synthesize userImage;
+@synthesize userTrapsSet;
+@synthesize userKillCount;
+@synthesize userHitPoints;
+@synthesize nearbyPlacesTableViewController;
 
 #pragma mark Initialization and setup
+- (IBAction)dropTrapButtonPushed{
+	if (self.nearbyPlacesTableViewController == nil){
+		//NearbyPlacesTableView *aNearbyPlacestableViewController = [[NearbyPlacesTableView alloc] initWithNibName:@"MainWindow" bundle:nil];
+		NearbyPlacesTableView *aNearbyPlacestableViewController = [[NearbyPlacesTableView alloc] init];
+		self.nearbyPlacesTableViewController = aNearbyPlacestableViewController;
+		[aNearbyPlacestableViewController release];
+	}
+	BoobyTrap3AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
+	[delegate.homeNavController pushViewController:self.nearbyPlacesTableViewController animated:YES];
+}
+
 -(void)updateMiniProfile:(UserProfile *)profile{
 	NSLog(@"updating mini profile here %@", profile);
 	[userName setText:[profile getUserName]];
 	NSLog(@"updated username");
 	NSString *level = [NSString stringWithFormat:@"%@", [profile getLevel]];
 	NSString *coinCount = [NSString stringWithFormat:@"%@", [profile getCoinCount]];
+	NSString *trapsSet = [NSString stringWithFormat:@"%@", [profile getTrapsSetCount]];
+	NSString *killCount = [NSString stringWithFormat:@"%@", [profile getKillCount]];
+	NSString *hitPoints = [NSString stringWithFormat:@"%@", [profile getHitPoints]];
 	[userLevel setText:level];
-	NSLog(@"updated level");
 	[userCoinCount setText:coinCount];
-	NSLog(@"updated coins");
+	[userTrapsSet setText:trapsSet];
+	[userKillCount setText:killCount];
+	[userHitPoints setText:hitPoints];
+	
+	NSLog(@"getting inventory");
+	NSDictionary *inventory = [NSDictionary alloc];
+	inventory = [profile getInventory];
+	NSLog(@"inventory %@", inventory);
+	//NSArray *allKeys = [inventory allKeys];
+	//NSLog(@"first one is: %@", [inventory objectForKey:<#(id)aKey#>);
 }
 
 - (void)viewDidLoad {
@@ -40,7 +67,8 @@
 	NSLog(@"showing home tableview");
 	
 	self.title = NSLocalizedString(@"Home", @"Home Title");	
-	NSMutableArray *array = [[NSArray alloc] initWithObjects:@"Profile", @"Wall",@"Drop History", @"Inbox",@"Leaderboard",@"Store", nil];
+//	NSMutableArray *array = [[NSArray alloc] initWithObjects:@"Profile", @"Wall",@"Drop History", @"Inbox",@"Leaderboard",@"Store", nil];
+	NSMutableArray *array = [[NSArray alloc] initWithObjects:@"Drop Traps", @"Inventory", @"Social", @"Store", nil];
 	self.menuArray = array;
 	[array release];
 	
@@ -126,8 +154,6 @@
 	dialog.delegate = self;
 	[dialog show];
 	hasAppeared = FALSE;
-	
-	
 }
 
 - (void)session:(FBSession *)session didLogin:(FBUID)uid{
@@ -212,6 +238,9 @@
 	return cell;
 }
 
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+	return 30;
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	
@@ -228,10 +257,15 @@
 		[delegate.homeNavController pushViewController:profileViewController animated:YES];
 		
 	}
+	NSMutableArray *array = [[NSArray alloc] initWithObjects:@"Drop Traps", @"Inventory", @"Social", @"Store", nil];
+	
 	if (row == 1){
 		NSLog(@" row is 1");
 	}
-	if (row == 5){
+	if (row == 2){
+		NSLog(@" row is 2");
+	}
+	if (row == 3){
 		[Airship takeOff: @"EK_BtrOrSOmo95TTsAb_Fw" identifiedBy: @"vAixh-KLT5u0Ay8Xv6cf4Q"];
 		[[Airship shared] displayStoreFront];
 	}
