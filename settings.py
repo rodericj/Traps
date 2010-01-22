@@ -19,11 +19,11 @@ ADMINS = (
 MANAGERS = ADMINS
 
 if PRODUCTION:
-	DATABASE_ENGINE = 'postgresql_psycopg2'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+	DATABASE_ENGINE = 'mysql'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
 	DATABASE_NAME = 'rodericj_traps'             # Not used with sqlite3.
 	DATABASE_USER = 'rodericj_traps'             # Not used with sqlite3.
 	#DATABASE_PASSWORD = 'bananarama'         # Not used with sqlite3.
-	DATABASE_PASSWORD = '0634b340'         # Not used with sqlite3.
+	DATABASE_PASSWORD = 'ac07551e'         # Not used with sqlite3.
 	DATABASE_HOST = 'web111.webfaction.com'             # Set to empty string for localhost. Not used with sqlite3.
 	DATABASE_PORT = ''             # Set to empty string for default. Not used with sqlite3.
 

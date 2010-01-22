@@ -30,10 +30,19 @@
 	}
 	
     // Override point for customization after application launch
-#if defined(TARGET_IPHONE_SIMULATOR)
-	//[self setServerAddress:@"http://192.168.1.106:8000"];
-	[self setServerAddress:@"http://localhost:8000"];
-#else
+#if defined(TARGET_IPHONE_SIMULATOR) 
+	if(CURRENT_DATA_VERSION == HOST_IS_DEV)
+		NSLog(@"simulator and dev");
+		[self setServerAddress:@"http://localhost:8000"];
+	if(CURRENT_DATA_VERSION == HOST_IS_STAGING)
+		NSLog(@"simulator and staging");
+		[self setServerAddress:@"http://192.168.1.103:8000"];	
+	if(CURRENT_DATA_VERSION == HOST_IS_PROD)
+		NSLog(@"simulator and staging");
+		[self setServerAddress:@"http://rodericj.webfactional.com"];
+
+#else		
+	//We are running on the actual device
 	[self setServerAddress:@"http://rodericj.webfactional.com"];
 #endif
 
@@ -45,6 +54,7 @@
 										 UIRemoteNotificationTypeSound |
 										 UIRemoteNotificationTypeAlert)];
 	NSLog(@"done sending request");
+	
 	[window addSubview:rootController.view];
 	[window makeKeyAndVisible];
 }

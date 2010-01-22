@@ -85,7 +85,9 @@
 		
 	}
 - (void)updateVenueDetails:(NSDictionary *)venue{
+	NSLog(@"This venue is %@", venue);
 	self.venueInfo = venue;
+	NSLog(@"updateVenueDetails worked");
 }
 
 #pragma mark initialization

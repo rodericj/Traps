@@ -8,7 +8,8 @@
 
 #import "HomeTableViewController.h"
 #import "ProfileViewController.h"
-#import "NearbyPlacesTableView.h"
+#import "DropTrapsNavController.h"
+//#import "NearbyPlacesTableView.h"
 #import "BoobyTrap3AppDelegate.h"
 #import "UserProfile.h"
 #import "NetworkRequestOperation.h"
@@ -25,34 +26,39 @@
 @synthesize userTrapsSet;
 @synthesize userKillCount;
 @synthesize userHitPoints;
-@synthesize nearbyPlacesTableViewController;
+@synthesize dropTrapsNavController;
+//@synthesize nearbyPlacesTableViewController;
 
 #pragma mark Initialization and setup
 - (IBAction)dropTrapButtonPushed{
-	if (self.nearbyPlacesTableViewController == nil){
-		//NearbyPlacesTableView *aNearbyPlacestableViewController = [[NearbyPlacesTableView alloc] initWithNibName:@"MainWindow" bundle:nil];
-		NearbyPlacesTableView *aNearbyPlacestableViewController = [[NearbyPlacesTableView alloc] init];
-		self.nearbyPlacesTableViewController = aNearbyPlacestableViewController;
-		[aNearbyPlacestableViewController release];
-	}
 	BoobyTrap3AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
-	[delegate.homeNavController pushViewController:self.nearbyPlacesTableViewController animated:YES];
+	delegate.rootController.selectedIndex = 1;
 }
 
 -(void)updateMiniProfile:(UserProfile *)profile{
 	NSLog(@"updating mini profile here %@", profile);
 	[userName setText:[profile getUserName]];
 	NSLog(@"updated username");
+	
 	NSString *level = [NSString stringWithFormat:@"%@", [profile getLevel]];
 	NSString *coinCount = [NSString stringWithFormat:@"%@", [profile getCoinCount]];
 	NSString *trapsSet = [NSString stringWithFormat:@"%@", [profile getTrapsSetCount]];
 	NSString *killCount = [NSString stringWithFormat:@"%@", [profile getKillCount]];
 	NSString *hitPoints = [NSString stringWithFormat:@"%@", [profile getHitPoints]];
+	
 	[userLevel setText:level];
 	[userCoinCount setText:coinCount];
 	[userTrapsSet setText:trapsSet];
 	[userKillCount setText:killCount];
 	[userHitPoints setText:hitPoints];
+	
+	//TODO
+	//may not actually need this if i can just set the text above from the [profile xxxx]
+//	[level release];
+//	[coinCount release];
+//	[trapsSet release];
+//	[killCount release];
+//	[hitPoints release];
 	
 	NSLog(@"getting inventory");
 	NSDictionary *inventory = [NSDictionary alloc];

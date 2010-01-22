@@ -18,7 +18,8 @@
 	IBOutlet UITableView *homeTableView;
 	NSMutableArray *menuArray;
 	ProfileViewController *profileViewController;
-	NearbyPlacesTableView *nearbyPlacesTableViewController;
+	DropTrapsNavController *dropTrapsNavController;
+	//NearbyPlacesTableView *nearbyPlacesTableViewController;
 	IBOutlet UILabel *userName;
 	IBOutlet UILabel *userLevel;
 	IBOutlet UILabel *userCoinCount;
@@ -38,7 +39,8 @@
 
 @property (nonatomic, retain) NSMutableArray *menuArray;
 @property (nonatomic, retain) ProfileViewController *profileViewController;
-@property (nonatomic, retain) NearbyPlacesTableView *nearbyPlacesTableViewController;
+@property (nonatomic, retain) DropTrapsNavController *dropTrapsNavController;
+//@property (nonatomic, retain) NearbyPlacesTableView *nearbyPlacesTableViewController;
 @property (nonatomic, retain) UILabel *userName;
 @property (nonatomic, retain) UILabel *userLevel;
 @property (nonatomic, retain) UILabel *userCoinCount;

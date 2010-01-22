@@ -11,6 +11,13 @@
 
 @class HomeNavController;
 @class DropTrapsNavController;
+
+#define CURRENT_DATA_VERSION	0
+
+#define HOST_IS_PROD		0
+#define HOST_IS_DEV			1
+#define HOST_IS_STAGING		2
+
 @interface BoobyTrap3AppDelegate : NSObject <UIApplicationDelegate> {
     UIWindow *window;
 	IBOutlet UITabBarController *rootController;
