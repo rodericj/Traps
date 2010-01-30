@@ -18,6 +18,26 @@
 #define HOST_IS_DEV			1
 #define HOST_IS_STAGING		2
 
+#define FB_VIRAL_ON		0
+
+#if defined(TARGET_IPHONE_SIMULATOR) 
+
+#if(CURRENT_DATA_VERSION == HOST_IS_DEV)
+#define REMOTE_SERVER  @"http://localhost:8000"
+#endif
+
+#if(CURRENT_DATA_VERSION == HOST_IS_STAGING)
+#define REMOTE_SERVER  @"http://192.168.1.101:8000"
+#endif
+
+#if(CURRENT_DATA_VERSION == HOST_IS_PROD)
+#define REMOTE_SERVER  @"http://rodericj.webfactional.com"
+#endif
+
+#else
+#define REMOTE_SERVER  @"http://rodericj.webfactional.com"
+#endif
+
 @interface BoobyTrap3AppDelegate : NSObject <UIApplicationDelegate> {
     UIWindow *window;
 	IBOutlet UITabBarController *rootController;

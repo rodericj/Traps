@@ -59,6 +59,10 @@
 		5FA73518109E5D1C00227231 /* DropTrapsNavController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FA73517109E5D1C00227231 /* DropTrapsNavController.m */; };
 		5FA7351F109E653500227231 /* VenueDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FA7351D109E653500227231 /* VenueDetailView.m */; };
 		5FA73520109E653500227231 /* VenueDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5FA7351E109E653500227231 /* VenueDetailView.xib */; };
+		5FB11D7A1109634700456BD6 /* AddressAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FB11D791109634700456BD6 /* AddressAnnotation.m */; };
+		5FB11D851109643400456BD6 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FB11D841109643400456BD6 /* MapKit.framework */; };
+		5FB11E901109924000456BD6 /* red-cross-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FB11E8F1109924000456BD6 /* red-cross-icon.png */; };
+		5FB11EAA11099B3800456BD6 /* Coin-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FB11EA911099B3800456BD6 /* Coin-icon.png */; };
 		5FB2D2AE10ADC4AB0080DB22 /* TrapInventoryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FB2D2AD10ADC4AB0080DB22 /* TrapInventoryTableViewController.m */; };
 		5FB2D2B210ADC4BB0080DB22 /* TrapInventoryTableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5FB2D2B110ADC4BB0080DB22 /* TrapInventoryTableView.xib */; };
 		5FB2D72410B314CF0080DB22 /* UserProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FB2D72310B314CF0080DB22 /* UserProfile.m */; };
@@ -186,6 +190,11 @@
 		5FA7351C109E653500227231 /* VenueDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VenueDetailView.h; path = ../VenueDetailView.h; sourceTree = "<group>"; };
 		5FA7351D109E653500227231 /* VenueDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VenueDetailView.m; path = ../VenueDetailView.m; sourceTree = "<group>"; };
 		5FA7351E109E653500227231 /* VenueDetailView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = VenueDetailView.xib; path = ../VenueDetailView.xib; sourceTree = "<group>"; };
+		5FB11D781109634700456BD6 /* AddressAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressAnnotation.h; sourceTree = "<group>"; };
+		5FB11D791109634700456BD6 /* AddressAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressAnnotation.m; sourceTree = "<group>"; };
+		5FB11D841109643400456BD6 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		5FB11E8F1109924000456BD6 /* red-cross-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "red-cross-icon.png"; sourceTree = "<group>"; };
+		5FB11EA911099B3800456BD6 /* Coin-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Coin-icon.png"; sourceTree = "<group>"; };
 		5FB2D2AC10ADC4AB0080DB22 /* TrapInventoryTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrapInventoryTableViewController.h; sourceTree = "<group>"; };
 		5FB2D2AD10ADC4AB0080DB22 /* TrapInventoryTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrapInventoryTableViewController.m; sourceTree = "<group>"; };
 		5FB2D2B110ADC4BB0080DB22 /* TrapInventoryTableView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TrapInventoryTableView.xib; sourceTree = "<group>"; };
@@ -250,6 +259,7 @@
 				5F4AA09010E0626F007CA1F6 /* CFNetwork.framework in Frameworks */,
 				5F4AA09210E06271007CA1F6 /* SystemConfiguration.framework in Frameworks */,
 				5F4AA09410E06274007CA1F6 /* libz.1.2.3.dylib in Frameworks */,
+				5FB11D851109643400456BD6 /* MapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -312,9 +322,11 @@
 			children = (
 				5FF8C01C11029BD8007AD75A /* Icon.png */,
 				5FB2E18410BC55130080DB22 /* SocialSubviewCell.xib */,
+				5FB11EA911099B3800456BD6 /* Coin-icon.png */,
 				5F43CAE41085720500543ADB /* home.png */,
 				5FD2C62E1082EC3600B8B0E4 /* pin.png */,
 				5FD2C6301082EC4000B8B0E4 /* badge.png */,
+				5FB11E8F1109924000456BD6 /* red-cross-icon.png */,
 				5FD2C62C1082EC2800B8B0E4 /* walk.png */,
 				28AD733E0D9D9553002E5188 /* MainWindow.xib */,
 				8D1107310486CEB800E47090 /* BoobyTrap3-Info.plist */,
@@ -326,6 +338,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5FB11D841109643400456BD6 /* MapKit.framework */,
 				5F946156109970F3004C7CEF /* CoreLocation.framework */,
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
 				1D30AB110D05D00D00671497 /* Foundation.framework */,
@@ -485,6 +498,8 @@
 				5F9461061099682C004C7CEF /* NearbyPlacesTableView.m */,
 				5FA7351C109E653500227231 /* VenueDetailView.h */,
 				5FA7351D109E653500227231 /* VenueDetailView.m */,
+				5FB11D781109634700456BD6 /* AddressAnnotation.h */,
+				5FB11D791109634700456BD6 /* AddressAnnotation.m */,
 				5FA7351E109E653500227231 /* VenueDetailView.xib */,
 				5FA73516109E5D1C00227231 /* DropTrapsNavController.h */,
 				5FA73517109E5D1C00227231 /* DropTrapsNavController.m */,
@@ -632,6 +647,8 @@
 				5FD6A3D610CCD50B00A10065 /* FBConnect.bundle in Resources */,
 				5FF8C01D11029BD8007AD75A /* Icon.png in Resources */,
 				5F524C2C110620A7002A6D66 /* Entitlements.plist in Resources */,
+				5FB11E901109924000456BD6 /* red-cross-icon.png in Resources */,
+				5FB11EAA11099B3800456BD6 /* Coin-icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -701,6 +718,7 @@
 				5F4AA07C10E061D0007CA1F6 /* UAStoreUpdatesViewController.m in Sources */,
 				5F4AA07D10E061D0007CA1F6 /* UATableCell.m in Sources */,
 				5F4AA07E10E061D0007CA1F6 /* UAUpdateCell.m in Sources */,
+				5FB11D7A1109634700456BD6 /* AddressAnnotation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

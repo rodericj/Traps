@@ -19,6 +19,7 @@
 
 #pragma mark initialization
 - (void)viewDidLoad {
+	
 	CGRect frame = CGRectMake(0.0, 0.0, 25.0, 25.0);
 	UIActivityIndicatorView *loading = [[UIActivityIndicatorView alloc] initWithFrame:frame];
 	[loading startAnimating];
@@ -32,7 +33,7 @@
 	UIBarButtonItem *loadingView = [[UIBarButtonItem alloc] initWithCustomView:loading];
 	[loading release];
 	loadingView.target = self;
-	
+	self.title = @"Locations";
 	self.navigationItem.rightBarButtonItem = loadingView;
 }
 

@@ -11,10 +11,12 @@
 #import "TrapInventoryTableViewController.h"
 #import "UserProfile.h"
 #import "NetworkRequestOperation.h"
+#import "AddressAnnotation.h"
 
 @implementation VenueDetailView
 @synthesize venueInfo;
 @synthesize trapInventoryTableViewController;
+@synthesize addAnnotation;
 
 #pragma mark Button clicked to initiate searching venue
 - (IBAction) searchVenue{
@@ -92,16 +94,34 @@
 
 #pragma mark initialization
 - (void)viewWillAppear:(BOOL)animated {
-	NSLog(@"viewWillAppear in VenueDetail");
-	[venueName setText:[self.venueInfo objectForKey:@"name"]];
-	[city setText:[self.venueInfo objectForKey:@"city"]];
-	[coinValue setText:[self.venueInfo objectForKey:@"coinValue"]];
-	[latitude setText:[self.venueInfo objectForKey:@"latitude"]];
-	[longitude setText:[self.venueInfo objectForKey:@"longitude"]];
+	
+	//Handle Map things:
+	MKCoordinateRegion region;
+	MKCoordinateSpan span;
+	span.latitudeDelta=0.0025;
+	span.longitudeDelta=0.0025;
+	
+	CLLocationCoordinate2D location;
+	location.longitude = [[self.venueInfo objectForKey:@"geolong"] doubleValue];
+	location.latitude = [[self.venueInfo objectForKey:@"geolat"] doubleValue];
+	
+	region.center = location;
+	region.span = span;
+	
+	if(self.addAnnotation != nil){
+		[mapView removeAnnotation:addAnnotation];
+		[addAnnotation release];
+		addAnnotation = nil;
+	}
+	addAnnotation = [[AddressAnnotation alloc] initWithCoordinate:location];
+	[mapView addAnnotation:addAnnotation];
+	[mapView setRegion:region animated:TRUE];
+	[mapView regionThatFits:region];
+	
+	NSLog(@"viewWillAppear in VenueDetail %@", self.venueInfo);
+	[venueName setText:[self.venueInfo objectForKey:@"name"]];	
 	[phone setText:[self.venueInfo objectForKey:@"phone"]];
-	[state setText:[self.venueInfo objectForKey:@"state"]];
-	[streetName setText:[self.venueInfo objectForKey:@"streetName"]];
-	[checkinCount setText:[self.venueInfo objectForKey:@"checkinCount"]];
+	[streetName setText:[self.venueInfo objectForKey:@"address"]];
 
 	[super viewWillAppear:animated];
 }

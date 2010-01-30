@@ -33,13 +33,19 @@ def noTrapWasHere(uid, venue):
 	return reward
 
 def notifyTrapSetter(uid, venue):
+	print "notify trap setter"
 	#TODO 
 	#uid is the user who set off the trap
 	alertNote = 'Someone just hit the trap you left at %s' % (venue.name)
 	theTrapQuery = VenueItem.objects.filter(venue__id__exact=venue.id).filter(dateTimeUsed__isnull=True)
 	token = theTrapQuery[0].user.iphoneDeviceToken
+	theTrapQuery[0].user.trapsSetCount -= 1
+	theTrapQuery[0].user.save()
 	##TODO: configify this: From go.urbanairship.com. This is the App key and the APP MASTER SECRET...not the app secret
 	airship = urbanairship.Airship('EK_BtrOrSOmo95TTsAb_Fw', 'vAixh-KLT5u0Ay8Xv6cf4Q')
+
+	#print "registering %s, %s" %(token, uid)
+	#airship.register('valid_token', token)
 	
 	#TODO This needs to be deferred for sure
 	#airship.push({'aps':{'alert':alertNote}}, aliases=['hollabills'])
@@ -88,11 +94,14 @@ def SetTrap(request):
 	vid = request.POST['vid']
 	iid = request.POST['iid']
 	iphonetoken = request.POST['deviceToken']
+	print "Set Trap: token is: " + iphonetoken
 	
 	venue = Venue.objects.get(foursquareid=vid)
 	user = TrapsUser.objects.get(id=uid)
 	user.iphoneDeviceToken = iphonetoken
+	user.trapsSetCount += 1;
 	user.save()
+	#print user
 	
 	#get the item from the user and subtract it
 	alltraps = user.useritem_set.all()
@@ -201,6 +210,7 @@ def SearchVenue(request, vid=None):
 	#ret['profile'] = request.user.userprofile.objectify()
 	ret['profile'] = request.user.userprofile.objectify()
 	ret['profile']['inventory'] = getUserInventory(uid)
+	print ret
 	return HttpResponse(simplejson.dumps(ret), mimetype='application/json')
 
 
@@ -208,6 +218,7 @@ def GetUserProfileFromProfile(userprofile):
 	dir(userprofile)
 	profile = userprofile.objectify()
 	profile['inventory'] = getUserInventory(userprofile.id)
+	print profile
 	return profile
 	
 def GetUserProfile(request):
@@ -261,6 +272,7 @@ def IPhoneLogin(request):
 	#just in case
 	#logout(request)
 	uname = request.POST['uname']
+	print uname
 	password = request.POST['password']
 
 	#profile = doLogin(request, uname, password)
@@ -284,7 +296,9 @@ def IPhoneLogin(request):
 		pass
 
 	jsonprofile = profile.objectify()
+	jsonprofile['inventory'] = getUserInventory(profile.id)
 
+	print jsonprofile
 	return HttpResponse(simplejson.dumps(jsonprofile), mimetype='application/json')
 	
 #@tb
@@ -327,6 +341,7 @@ def SetDeviceToken(request):
 	try:
 		userprofile = get_or_create_profile(request.user)
 		userprofile.iphoneDeviceToken = request.POST['deviceToken']
+		print "Set Device Token: "+userprofile.iphoneDeviceToken
 		userprofile.save()
 		
 	except:

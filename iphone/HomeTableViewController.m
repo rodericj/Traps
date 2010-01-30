@@ -34,7 +34,6 @@
 	BoobyTrap3AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
 	delegate.rootController.selectedIndex = 1;
 }
-
 -(void)updateMiniProfile:(UserProfile *)profile{
 	NSLog(@"updating mini profile here %@", profile);
 	[userName setText:[profile getUserName]];
@@ -64,6 +63,7 @@
 	NSDictionary *inventory = [NSDictionary alloc];
 	inventory = [profile getInventory];
 	NSLog(@"inventory %@", inventory);
+	//[self reloadData];
 	//NSArray *allKeys = [inventory allKeys];
 	//NSLog(@"first one is: %@", [inventory objectForKey:<#(id)aKey#>);
 }
@@ -74,9 +74,19 @@
 	
 	self.title = NSLocalizedString(@"Home", @"Home Title");	
 //	NSMutableArray *array = [[NSArray alloc] initWithObjects:@"Profile", @"Wall",@"Drop History", @"Inbox",@"Leaderboard",@"Store", nil];
-	NSMutableArray *array = [[NSArray alloc] initWithObjects:@"Drop Traps", @"Inventory", @"Social", @"Store", nil];
-	self.menuArray = array;
-	[array release];
+	//NSMutableArray *array = [[NSArray alloc] initWithObjects:@"Drop Traps", @"Inventory", @"Social", @"Store", nil];
+	
+	//NSDictionary *inventory = [NSDictionary alloc];
+	//UserProfile *userProfile = [UserProfile sharedSingleton];
+
+	//NSLog(@"profile returned is: %@", userProfile);
+	//inventory = [userProfile getInventory];
+	//NSLog(@"inventory %@", inventory);
+	//NSDictionary *keys = [inventory allKeys];
+	//self.menuArray = keys;
+	//[keys release];
+	//self.menuArray = array;
+	//[inventory release];
 	
 	mySession = [[FBSession sessionForApplication:@"3243a6e2dd3a0d084480d05f301cba85"
 								secret:@"d8611553a286dce3531353b3de53ef2e"
@@ -214,6 +224,7 @@
 	NSLog(@"in updateMiniProfile pageLoaded");
 	[self updateMiniProfile:userProfile];
 	NSLog(@"out of updateMiniProfile pageLoaded");
+	[homeTableView reloadData];
 
 }
 
@@ -225,23 +236,27 @@
 
 // Customize the number of rows in the table view.
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [menuArray count];
+	UserProfile *profile = [UserProfile sharedSingleton];
+	NSArray *inventory = (NSArray *)[profile getInventory];
+	return [inventory count];
 }
 
 // Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+    NSLog(@"in cellforrowatindexpath for home view for each row. should print the inventory");
     static NSString *CellIdentifier = @"Cell";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     }
-    
+    UserProfile *profile = [UserProfile sharedSingleton];
+	NSArray *inventory = (NSArray *)[profile getInventory];
     // Set up the cell...
-	NSUInteger row = [indexPath row];
-	[cell.textLabel setText:[menuArray objectAtIndex:row]];
-	return cell;
+	NSString *cellText = [NSString stringWithFormat:@"%@ %@",  [[inventory objectAtIndex:[indexPath row]] objectForKey:@"name"], [[inventory objectAtIndex:[indexPath row]] objectForKey:@"count"]];
+	NSLog(@"celltext %@", cellText);
+	[cell.textLabel setText:cellText];
+    return cell;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -250,31 +265,25 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	
-	NSInteger row = [indexPath row];
-	if (row == 0 ){
-		if (self.profileViewController == nil){
-			ProfileViewController *aProfileViewController = [[ProfileViewController alloc] initWithNibName:@"ProfileView" bundle:nil];
-			self.profileViewController = aProfileViewController;
-			[aProfileViewController release];
-		}
-		profileViewController.title = @"TheUserName";
-		
-		BoobyTrap3AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
-		[delegate.homeNavController pushViewController:profileViewController animated:YES];
-		
-	}
-	NSMutableArray *array = [[NSArray alloc] initWithObjects:@"Drop Traps", @"Inventory", @"Social", @"Store", nil];
-	
-	if (row == 1){
-		NSLog(@" row is 1");
-	}
-	if (row == 2){
-		NSLog(@" row is 2");
-	}
-	if (row == 3){
-		[Airship takeOff: @"EK_BtrOrSOmo95TTsAb_Fw" identifiedBy: @"vAixh-KLT5u0Ay8Xv6cf4Q"];
-		[[Airship shared] displayStoreFront];
-	}
+	//NSInteger row = [indexPath row];
+//	if (row == 0 ){
+//		if (self.profileViewController == nil){
+//			ProfileViewController *aProfileViewController = [[ProfileViewController alloc] initWithNibName:@"ProfileView" bundle:nil];
+//			self.profileViewController = aProfileViewController;
+//			[aProfileViewController release];
+//		}
+//		profileViewController.title = @"TheUserName";
+//		
+//		BoobyTrap3AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
+//		[delegate.homeNavController pushViewController:profileViewController animated:YES];
+//		
+//	}
+	//NSMutableArray *array = [[NSArray alloc] initWithObjects:@"Drop Traps", @"Inventory", @"Social", @"Store", nil];
+
+	//if (row == 3){
+//		[Airship takeOff: @"EK_BtrOrSOmo95TTsAb_Fw" identifiedBy: @"vAixh-KLT5u0Ay8Xv6cf4Q"];
+//		[[Airship shared] displayStoreFront];
+//	}
 }
 @end
 

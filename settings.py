@@ -8,7 +8,8 @@ if os.environ.get('HOSTNAME', '') in PRODUCTION_SERVERS:
 else:
 	PRODUCTION = False
 
-DEBUG = True
+#DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (

@@ -92,6 +92,7 @@ class TrapsUser(models.Model):
  				'username':self.user.username,
  				'lastUpdated':str(self.lastUpdated),
  				'level':str(self.level),
+ 				'iphoneDeviceToken':self.iphoneDeviceToken,
 		}
 		#return {'fbid':self.fbid,
  				#'twitterid':self.twitterid,

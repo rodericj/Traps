@@ -7,24 +7,25 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MapKit/MapKit.h>
+#import "AddressAnnotation.h"
 @class TrapInventoryTableViewController;
-@interface VenueDetailView : UIViewController {
+@interface VenueDetailView : UIViewController <MKMapViewDelegate>{
 	NSOperationQueue *queue;
 	NSDictionary *venueInfo;
+	AddressAnnotation *addAnnotation;
+
 	IBOutlet UILabel *venueName;
-	IBOutlet UILabel *checkinCount;
-	IBOutlet UILabel *city;
-	IBOutlet UILabel *coinValue;
 	IBOutlet UILabel *latitude;
 	IBOutlet UILabel *longitude;
 	IBOutlet UILabel *phone;
-	IBOutlet UILabel *state;
 	IBOutlet UILabel *streetName;
+	IBOutlet MKMapView *mapView;
 	TrapInventoryTableViewController *trapInventoryTableViewController;
 }
 @property (nonatomic, retain) NSDictionary *venueInfo;
 @property (nonatomic, retain) TrapInventoryTableViewController *trapInventoryTableViewController;
-
+@property (nonatomic, retain) AddressAnnotation *addAnnotation;
 - (void)updateVenueDetails:(NSDictionary *)venue;
 - (IBAction) searchVenue;
 - (void)doSearchVenue;

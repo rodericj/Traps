@@ -91,7 +91,7 @@
 									<object class="IBUITableView" id="619333338">
 										<reference key="NSNextResponder" ref="841316279"/>
 										<int key="NSvFlags">274</int>
-										<string key="NSFrame">{{20, 165}, {280, 159}}</string>
+										<string key="NSFrame">{{20, 165}, {280, 143}}</string>
 										<reference key="NSSuperview" ref="841316279"/>
 										<object class="NSColor" key="IBUIBackgroundColor" id="388780705">
 											<int key="NSColorSpace">3</int>
@@ -246,7 +246,7 @@
 										<bool key="IBUIOpaque">NO</bool>
 										<bool key="IBUIClipsSubviews">YES</bool>
 										<bool key="IBUIUserInteractionEnabled">NO</bool>
-										<string key="IBUIText">HP Value</string>
+										<string key="IBUIText">HP</string>
 										<reference key="IBUITextColor" ref="321443424"/>
 										<nil key="IBUIHighlightedColor"/>
 										<int key="IBUIBaselineAdjustment">1</int>
@@ -260,7 +260,7 @@
 										<bool key="IBUIOpaque">NO</bool>
 										<bool key="IBUIClipsSubviews">YES</bool>
 										<bool key="IBUIUserInteractionEnabled">NO</bool>
-										<string key="IBUIText">Coin Count</string>
+										<string key="IBUIText">Coin</string>
 										<reference key="IBUIFont" ref="370249024"/>
 										<reference key="IBUITextColor" ref="321443424"/>
 										<nil key="IBUIHighlightedColor"/>
@@ -270,7 +270,7 @@
 									<object class="IBUIButton" id="653205425">
 										<reference key="NSNextResponder" ref="841316279"/>
 										<int key="NSvFlags">292</int>
-										<string key="NSFrame">{{95, 332}, {130, 37}}</string>
+										<string key="NSFrame">{{95, 316}, {130, 37}}</string>
 										<reference key="NSSuperview" ref="841316279"/>
 										<bool key="IBUIOpaque">NO</bool>
 										<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
@@ -291,6 +291,34 @@
 										<object class="NSColor" key="IBUINormalTitleShadowColor">
 											<int key="NSColorSpace">3</int>
 											<bytes key="NSWhite">MC41AA</bytes>
+										</object>
+									</object>
+									<object class="IBUIImageView" id="683356166">
+										<reference key="NSNextResponder" ref="841316279"/>
+										<int key="NSvFlags">292</int>
+										<string key="NSFrame">{{61, 102}, {32, 26}}</string>
+										<reference key="NSSuperview" ref="841316279"/>
+										<bool key="IBUIOpaque">NO</bool>
+										<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
+										<int key="IBUIContentMode">1</int>
+										<bool key="IBUIUserInteractionEnabled">NO</bool>
+										<object class="NSCustomResource" key="IBUIImage">
+											<string key="NSClassName">NSImage</string>
+											<string key="NSResourceName">red-cross-icon.png</string>
+										</object>
+									</object>
+									<object class="IBUIImageView" id="973690605">
+										<reference key="NSNextResponder" ref="841316279"/>
+										<int key="NSvFlags">292</int>
+										<string key="NSFrame">{{63, 75}, {29, 32}}</string>
+										<reference key="NSSuperview" ref="841316279"/>
+										<bool key="IBUIOpaque">NO</bool>
+										<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
+										<int key="IBUIContentMode">1</int>
+										<bool key="IBUIUserInteractionEnabled">NO</bool>
+										<object class="NSCustomResource" key="IBUIImage">
+											<string key="NSClassName">NSImage</string>
+											<string key="NSResourceName">Coin-icon.png</string>
 										</object>
 									</object>
 								</object>
@@ -703,10 +731,8 @@
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="887645595"/>
-							<reference ref="653205425"/>
 							<reference ref="575397305"/>
 							<reference ref="707081966"/>
-							<reference ref="67080668"/>
 							<reference ref="182572822"/>
 							<reference ref="853423593"/>
 							<reference ref="548295445"/>
@@ -715,6 +741,10 @@
 							<reference ref="332142471"/>
 							<reference ref="778283938"/>
 							<reference ref="619333338"/>
+							<reference ref="653205425"/>
+							<reference ref="67080668"/>
+							<reference ref="973690605"/>
+							<reference ref="683356166"/>
 						</object>
 						<reference key="parent" ref="110792852"/>
 					</object>
@@ -832,6 +862,16 @@
 						<reference key="object" ref="575397305"/>
 						<reference key="parent" ref="841316279"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">140</int>
+						<reference key="object" ref="683356166"/>
+						<reference key="parent" ref="841316279"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">141</int>
+						<reference key="object" ref="973690605"/>
+						<reference key="parent" ref="841316279"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -854,6 +894,8 @@
 					<string>125.IBPluginDependency</string>
 					<string>127.IBPluginDependency</string>
 					<string>128.IBPluginDependency</string>
+					<string>140.IBPluginDependency</string>
+					<string>141.IBPluginDependency</string>
 					<string>17.IBPluginDependency</string>
 					<string>19.IBPluginDependency</string>
 					<string>2.IBAttributePlaceholdersKey</string>
@@ -887,6 +929,8 @@
 					<string>DropTrapsNavController</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>NearbyPlacesTableView</string>
+					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -941,7 +985,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">135</int>
+			<int key="maxID">141</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
