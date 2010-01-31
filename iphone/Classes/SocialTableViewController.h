@@ -9,11 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "FBConnect/FBConnect.h"
 
-@interface SocialTableViewController : UITableViewController <FBSessionDelegate>{
+@interface SocialTableViewController : UITableViewController <FBSessionDelegate, FBRequestDelegate>{
 	NSArray *friendsWithApp;
 	FBSession *session;
 }
 @property (nonatomic, retain) NSArray *friendsWithApp;
 
-- (UITableViewCell *) getCellContentView:(NSString *)cellIdentifier;
+//- (UITableViewCell *) getCellContentView:(NSString *)cellIdentifier;
 @end

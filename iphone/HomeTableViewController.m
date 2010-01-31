@@ -59,10 +59,6 @@
 //	[killCount release];
 //	[hitPoints release];
 	
-	NSLog(@"getting inventory");
-	NSDictionary *inventory = [NSDictionary alloc];
-	inventory = [profile getInventory];
-	NSLog(@"inventory %@", inventory);
 	//[self reloadData];
 	//NSArray *allKeys = [inventory allKeys];
 	//NSLog(@"first one is: %@", [inventory objectForKey:<#(id)aKey#>);
@@ -180,7 +176,6 @@
 	NSString *fql = [NSString stringWithFormat:
 					 @"select uid, first_name, last_name, name, pic_square from user where uid= %lld", 
 					 [session uid]];
-	NSLog(fql);
 	NSDictionary *params = [NSDictionary dictionaryWithObject:fql forKey:@"query"];
 	[[FBRequest requestWithDelegate:self] call:@"facebook.fql.query" params:params];
 }
@@ -206,7 +201,6 @@
 	
 	//Set the mini profile image
 	NSURL *photoUrl = [NSURL URLWithString:[user objectForKey:@"pic_square"]];
-	NSLog([user objectForKey:@"pic_square"]);
 	NSData *photoData = [NSData dataWithContentsOfURL:photoUrl];
 	UIImage *profileImage =	[UIImage imageWithData:photoData];
 	userImage.image = profileImage;

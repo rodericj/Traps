@@ -13,7 +13,7 @@
 	NSOperationQueue *queue;
 }
 
-- (void)doDropTrap:(NSString *)trap;
+- (void)doDropTrap;
 - (void)didDropTrap:(NSDictionary *) results;
 
 @end

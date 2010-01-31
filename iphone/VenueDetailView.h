@@ -29,5 +29,6 @@
 - (void)updateVenueDetails:(NSDictionary *)venue;
 - (IBAction) searchVenue;
 - (void)doSearchVenue;
+- (void)didSearchVenue:(NSDictionary *)returnData;
 
 @end

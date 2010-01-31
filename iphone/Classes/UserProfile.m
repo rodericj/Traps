@@ -26,6 +26,7 @@
 		}
 		return sharedSingleton;
 	}
+	return NULL;
 }
 
 -(void)refreshFromFile{

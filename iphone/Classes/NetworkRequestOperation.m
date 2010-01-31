@@ -20,7 +20,7 @@
 	[super dealloc];
 }
 
--(void) main{
+-(void) start{
 	NSLog(@"1 Going to this target %@", targetURL);
 	BoobyTrap3AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
 	NSLog(@"2 Going to this the server address %@", [delegate serverAddress]);
@@ -28,7 +28,7 @@
 	NSLog(@"3 Now Going to this URL %@", target);
 
 	//Set the arguments up
-	NSString *argString = [[NSString alloc] initWithString:@""];
+	NSString *argString = [[[NSString alloc] initWithString:@""] autorelease];
 	for(NSString *argument in arguments){
 		argString = [argString stringByAppendingString:[NSString stringWithFormat:@"%@=%@&", argument, [arguments objectForKey:argument]]];
 	}
@@ -47,19 +47,20 @@
 	NSData *urlData = [NSURLConnection sendSynchronousRequest:request
 											returningResponse:&response
 														error:&error];
+	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
 
-	NSString *results = [[NSString alloc] initWithData:urlData encoding:NSUTF8StringEncoding];	
+	NSString *results = [[[NSString alloc] initWithData:urlData encoding:NSUTF8StringEncoding] autorelease];	
 	//NSDictionary *resultsDict = [results JSONValue];
 	
 	SBJsonParser *parser = [SBJsonParser new];
 	NSDictionary* resultsDict = [parser objectWithString: results];
 	[parser release];
-	
+
 	
 	NSLog(@"results Dict from Network request %@", resultsDict);
 	[callingDelegate performSelectorOnMainThread:@selector(pageLoaded:)
                                            withObject:resultsDict
-                                        waitUntilDone:YES];
+                                        waitUntilDone:NO];
 }
 
 @end

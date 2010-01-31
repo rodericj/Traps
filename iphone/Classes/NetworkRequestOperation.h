@@ -10,11 +10,11 @@
 
 
 @interface NetworkRequestOperation : NSOperation {
-	NSURL *targetURL;
+	NSString *targetURL;
 	NSMutableDictionary *arguments;
 	NSObject *callingDelegate;
 }
-@property(retain) NSURL *targetURL;
+@property(retain) NSString *targetURL;
 @property(retain) NSMutableDictionary *arguments;
 @property(retain) NSObject *callingDelegate;
 

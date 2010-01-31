@@ -124,7 +124,7 @@
 }
 
 - (void)locationError:(NSError *)error {
-	NSLog([error description]);
+	NSLog(@"%@", [error description]);
 }
 
 

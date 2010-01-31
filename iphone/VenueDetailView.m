@@ -50,7 +50,7 @@
 	[profile newProfileFromDictionary:profileDict];
 
 	UIAlertView *alert;
-	Boolean *hasTraps = [returnData objectForKey:@"hasTraps"];
+	NSNumber *hasTraps = (NSNumber *)[returnData objectForKey:@"hasTraps"];
 	if([hasTraps boolValue]== YES){
 		alert = [[UIAlertView alloc] initWithTitle:@"Venue has been Searched" message:alertStatement delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil]; 
 	}

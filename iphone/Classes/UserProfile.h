@@ -40,5 +40,6 @@
 -(NSInteger *)getTrapsSetCount;
 -(NSDictionary *)getInventory;
 -(NSString *)getPicture;
+-(void)printUserProfile;
 
 @end

@@ -36,11 +36,11 @@
 	[session resume];
 }
 
-- (void)session:(FBSession *)session didLogin:(FBUID)uid{
+- (void)session:(FBSession *)localSession didLogin:(FBUID)uid{
 	NSLog(@"did log in from facebook in socialtablview");
 	NSString *fql = [NSString stringWithFormat:
 					 @"select uid, first_name, last_name, name, pic_square from user where uid in (select uid from user where is_app_user = 1 and uid in (SELECT uid2 FROM friend WHERE uid1= %lld))", 
-					 [session uid]];
+					 [localSession uid]];
 	NSDictionary *params = [NSDictionary dictionaryWithObject:fql forKey:@"query"];
 	[[FBRequest requestWithDelegate:self] call:@"facebook.fql.query" params:params];
 	

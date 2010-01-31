@@ -13,10 +13,10 @@
 //@synthesize arguments;
 
 
--(void)main{
+-(void)start{
 	NSString *target = [NSString stringWithFormat:@"%@/%@", @"http://api.foursquare.com/v1", targetURL];
 	NSLog(@"length of arguments: %d", [arguments count]);
-	NSString *argString = [[NSString alloc] initWithString:@""];
+	NSString *argString = [[[NSString alloc] initWithString:@""] autorelease];
 	for(NSString *argument in arguments){
 		argString = [argString stringByAppendingString:[NSString stringWithFormat:@"%@=%@&", argument, [arguments objectForKey:argument]]];
 	}
@@ -51,7 +51,7 @@
 	}
 	
 	
-	NSString *results = [[NSString alloc] initWithData:urlData encoding:NSUTF8StringEncoding];	
+	NSString *results = [[[NSString alloc] initWithData:urlData encoding:NSUTF8StringEncoding] autorelease];	
 	
 	SBJsonParser *parser = [SBJsonParser new];
 	NSDictionary* resultsDict = [parser objectWithString: results];
@@ -61,7 +61,7 @@
 	NSLog(@"returned from foursquare: %@", resultsDict);
 	[callingDelegate performSelectorOnMainThread:@selector(pageLoaded:)
 									  withObject:resultsDict
-								   waitUntilDone:YES];
+								   waitUntilDone:NO];
 	//NSLog(@"returned the thing to the main thread");
 	
 }
