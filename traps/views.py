@@ -33,7 +33,6 @@ def noTrapWasHere(uid, venue):
 	return reward
 
 def notifyTrapSetter(uid, venue):
-	print "notify trap setter"
 	#TODO 
 	#uid is the user who set off the trap
 	alertNote = 'Someone just hit the trap you left at %s' % (venue.name)
@@ -94,7 +93,6 @@ def SetTrap(request):
 	vid = request.POST['vid']
 	iid = request.POST['iid']
 	iphonetoken = request.POST['deviceToken']
-	print "Set Trap: token is: " + iphonetoken
 	
 	venue = Venue.objects.get(foursquareid=vid)
 	user = TrapsUser.objects.get(id=uid)
@@ -210,7 +208,6 @@ def SearchVenue(request, vid=None):
 	#ret['profile'] = request.user.userprofile.objectify()
 	ret['profile'] = request.user.userprofile.objectify()
 	ret['profile']['inventory'] = getUserInventory(uid)
-	print ret
 	return HttpResponse(simplejson.dumps(ret), mimetype='application/json')
 
 
@@ -218,7 +215,6 @@ def GetUserProfileFromProfile(userprofile):
 	dir(userprofile)
 	profile = userprofile.objectify()
 	profile['inventory'] = getUserInventory(userprofile.id)
-	print profile
 	return profile
 	
 def GetUserProfile(request):
@@ -272,7 +268,6 @@ def IPhoneLogin(request):
 	#just in case
 	#logout(request)
 	uname = request.POST['uname']
-	print uname
 	password = request.POST['password']
 
 	#profile = doLogin(request, uname, password)
@@ -298,7 +293,6 @@ def IPhoneLogin(request):
 	jsonprofile = profile.objectify()
 	jsonprofile['inventory'] = getUserInventory(profile.id)
 
-	print jsonprofile
 	return HttpResponse(simplejson.dumps(jsonprofile), mimetype='application/json')
 	
 #@tb
@@ -341,7 +335,6 @@ def SetDeviceToken(request):
 	try:
 		userprofile = get_or_create_profile(request.user)
 		userprofile.iphoneDeviceToken = request.POST['deviceToken']
-		print "Set Device Token: "+userprofile.iphoneDeviceToken
 		userprofile.save()
 		
 	except:
