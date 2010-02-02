@@ -41,14 +41,19 @@ def notifyTrapSetter(uid, venue):
 	theTrapQuery[0].user.trapsSetCount -= 1
 	theTrapQuery[0].user.save()
 	##TODO: configify this: From go.urbanairship.com. This is the App key and the APP MASTER SECRET...not the app secret
-	airship = urbanairship.Airship('EK_BtrOrSOmo95TTsAb_Fw', 'vAixh-KLT5u0Ay8Xv6cf4Q')
+
+	#development urban airship values
+	#airship = urbanairship.Airship('EK_BtrOrSOmo95TTsAb_Fw', 'vAixh-KLT5u0Ay8Xv6cf4Q')
+
+	#production urbain airship values
+    airship = urbanairship.Airship('VsK3ssUxRzCQJ6Rs_Sf7wg', 'c_JO0OFcSNKPFhyM-3Jq2A')
 
 	#print "registering %s, %s" %(token, uid)
-	#airship.register('valid_token', token)
+	airship.register(token)
 	
 	#TODO This needs to be deferred for sure
-	#airship.push({'aps':{'alert':alertNote}}, aliases=['hollabills'])
-	airship.push({'aps':{'alert':alertNote}, 'device_tokens':[token]})
+	airship.push({'aps':{'alert':alertNote}}, 'device_tokens':[token])
+	#airship.push({'aps':{'alert':alertNote}, aliases=[uid])
 
 def trapWasHere(uid, venue, itemsThatAreTraps):
 	notifyTrapSetter(uid, venue)	

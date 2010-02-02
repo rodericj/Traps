@@ -45,7 +45,7 @@
 }
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)_deviceToken {
-	NSLog(@"we did register for remote notifications");
+	NSLog(@"we did register for remote notifications %@", _deviceToken);
 	// Get a hex string from the device token with no spaces or < >
 	self.deviceToken = [[[[_deviceToken description] stringByReplacingOccurrencesOfString:@"<"withString:@""] 
 						 stringByReplacingOccurrencesOfString:@">" withString:@""] 
