@@ -46,13 +46,13 @@ def notifyTrapSetter(uid, venue):
 	#airship = urbanairship.Airship('EK_BtrOrSOmo95TTsAb_Fw', 'vAixh-KLT5u0Ay8Xv6cf4Q')
 
 	#production urbain airship values
-    airship = urbanairship.Airship('VsK3ssUxRzCQJ6Rs_Sf7wg', 'c_JO0OFcSNKPFhyM-3Jq2A')
+	airship = urbanairship.Airship('VsK3ssUxRzCQJ6Rs_Sf7wg', 'c_JO0OFcSNKPFhyM-3Jq2A')
 
 	#print "registering %s, %s" %(token, uid)
 	airship.register(token)
 	
 	#TODO This needs to be deferred for sure
-	airship.push({'aps':{'alert':alertNote}}, 'device_tokens':[token])
+	airship.push({'aps':{'alert':alertNote}}, device_tokens=[token])
 	#airship.push({'aps':{'alert':alertNote}, aliases=[uid])
 
 def trapWasHere(uid, venue, itemsThatAreTraps):
