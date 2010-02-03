@@ -21,11 +21,15 @@
 	IBOutlet UILabel *phone;
 	IBOutlet UILabel *streetName;
 	IBOutlet MKMapView *mapView;
+	
+	IBOutlet UIButton *searchButton;
+	
 	TrapInventoryTableViewController *trapInventoryTableViewController;
 }
 @property (nonatomic, retain) NSDictionary *venueInfo;
 @property (nonatomic, retain) TrapInventoryTableViewController *trapInventoryTableViewController;
 @property (nonatomic, retain) AddressAnnotation *addAnnotation;
+@property (nonatomic, retain) UIButton *searchButton;
 - (void)updateVenueDetails:(NSDictionary *)venue;
 - (IBAction) searchVenue;
 - (void)doSearchVenue;

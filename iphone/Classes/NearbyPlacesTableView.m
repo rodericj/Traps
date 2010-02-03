@@ -79,8 +79,10 @@
 							 stringByReplacingOccurrencesOfString:@">" withString:@""];
 		NSLog(@"new lat long %@", latlong);
 		NSArray *chunks = [latlong componentsSeparatedByString:@" "];
-		NSString *lat =[chunks objectAtIndex:0];// @"37.331689";//
-		NSString *lon = [chunks objectAtIndex:1];//@"-122.030731";[chunks objectAtIndex:1];
+		NSString *lat =[chunks objectAtIndex:0];
+		//NSString *lat = @"37.331689";//
+		NSString *lon = [chunks objectAtIndex:1];
+		//NSString *lon = @"-122.030731";[chunks objectAtIndex:1];
 		//[chunks release];
 		//[latlong release];
 		

@@ -17,9 +17,10 @@
 @synthesize venueInfo;
 @synthesize trapInventoryTableViewController;
 @synthesize addAnnotation;
-
+@synthesize searchButton;
 #pragma mark Button clicked to initiate searching venue
 - (IBAction) searchVenue{
+	[searchButton setEnabled:NO];
 	[self doSearchVenue];
 }
 
@@ -59,6 +60,7 @@
 	}
 	[alert show]; 
 	[alert release]; 
+	[searchButton setEnabled:YES];
 
 }
 - (void)alertView:(UIAlertView *)alertView  clickedButtonAtIndex:(NSInteger)buttonIndex {
