@@ -1,4 +1,4 @@
-from django.shortcuts import HttpResponse, HttpResponseRedirect
+from django.shortcuts import HttpResponse, HttpResponseRedirect, render_to_response
 from django.contrib.auth import authenticate, login, logout
 from Traps.traps.models import Venue, Item, TrapsUser, VenueItem
 import urllib
@@ -322,3 +322,6 @@ def FindNearby(request):
 		print sys.exc_info()[0]
 		
 	return HttpResponse(simplejson.dumps(json), mimetype='application/json')
+
+def holding(request):
+	return render_to_response('holding_page.html')
