@@ -4,6 +4,7 @@ from Traps.traps.models import Venue, Item, TrapsUser, VenueItem
 import urllib
 import sys
 import config
+import operator
 from datetime import datetime
 import test
 from django.utils import simplejson
@@ -39,6 +40,7 @@ def notifyTrapSetter(uid, venue):
 	theTrapQuery = VenueItem.objects.filter(venue__id__exact=venue.id).filter(dateTimeUsed__isnull=True)
 	token = theTrapQuery[0].user.iphoneDeviceToken
 	theTrapQuery[0].user.trapsSetCount -= 1
+	theTrapQuery[0].user.killCount += 1
 	theTrapQuery[0].user.save()
 	##TODO: configify this: From go.urbanairship.com. This is the App key and the APP MASTER SECRET...not the app secret
 
@@ -216,6 +218,27 @@ def SearchVenue(request, vid=None):
 	return HttpResponse(simplejson.dumps(ret), mimetype='application/json')
 
 
+def GetFriends(request):
+	#get the string argument
+	friendString = request.POST['friends']
+
+	#convert the string to an array of dicts
+	friendArray = simplejson.loads(str(friendString))
+	
+	#get a list of the friend ids
+	friendIds = [int(friend['uid']) for friend in friendArray]
+	friendsHere = TrapsUser.objects.filter(user__username__in=friendIds)
+
+	#make a mapping of fbids to kill count
+	idKcMap = dict([(str(trapuser.user.username),trapuser.killCount) for trapuser in friendsHere])
+	
+	for i in friendArray:
+		i['killCount'] = idKcMap.get(i['uid'], 0)
+	
+	#sort by kill count
+	friendArray.sort(lambda x,y:cmp(y['killCount'],x['killCount']))
+	return HttpResponse(simplejson.dumps(friendArray), mimetype='application/json')
+	
 def GetUserProfileFromProfile(userprofile):
 	dir(userprofile)
 	profile = userprofile.objectify()

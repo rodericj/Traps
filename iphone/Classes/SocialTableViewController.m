@@ -9,7 +9,8 @@
 #import "SocialTableViewController.h"
 #import "FBConnect/FBConnect.h"
 #import "CompositeSubviewBasedApplicationCell.h"
-
+#import "NetworkRequestOperation.h"
+#import "SBJSON.H"
 @implementation SocialTableViewController
 @synthesize friendsWithApp;
 //@synthesize session;
@@ -20,6 +21,26 @@
 - (void) request:(FBRequest *)request didLoad:(id)result {
 	NSArray *users = result;
 	self.friendsWithApp = [[NSArray alloc] initWithArray:users];
+	[self loadView];
+	
+	SBJsonWriter *writer = [SBJsonWriter new];
+	NSString *friendListString = [writer stringWithObject:self.friendsWithApp];
+	//NSString *friendList = [[[SBJSON alloc] init] stringWithObject:self.friendsWithApp];
+	NSLog(@"friendList %@", friendListString);
+	//Now send this list over to the server and get their rankings
+	NetworkRequestOperation *op = [[NetworkRequestOperation alloc] init];
+	[op setTargetURL:@"GetFriends"];
+	op.arguments = [[[NSMutableDictionary alloc] init] autorelease];
+	[op.arguments setObject:friendListString forKey:@"friends"];
+	op.callingDelegate = self;
+	queue = [[[NSOperationQueue alloc] init] autorelease];
+	[queue addOperation:op];
+	[op release];
+}
+
+- (void)pageLoaded:(NSArray*)webRequestResults{
+	NSLog(@"results of friend stuff: %@", webRequestResults);
+	self.friendsWithApp = webRequestResults;
 	[self loadView];
 }
 
@@ -87,13 +108,17 @@
 	//First get the dictionary object
 	NSDictionary *friend = [friendsWithApp objectAtIndex:indexPath.row];
 	NSString *friendName = [friend objectForKey:@"name"];
+	NSString *killCount = [friend objectForKey:@"killCount"];
+	NSLog(@"kill count: %@", killCount);
 	NSURL *photoUrl = [NSURL URLWithString:[friend objectForKey:@"pic_square"]];
 	NSData *photoData = [NSData dataWithContentsOfURL:photoUrl];
 	UIImage *profileImage =	[UIImage imageWithData:photoData];
 	cell.icon = profileImage;
 	
 	cell.name = friendName;
+	cell.killCount = [NSString stringWithFormat:@"%@", killCount];
 	[friendName release];
+	[killCount release];
 	
 	return cell;
 }

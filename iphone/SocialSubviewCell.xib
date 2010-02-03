@@ -87,7 +87,7 @@
 							<object class="IBUILabel" id="1058917816">
 								<reference key="NSNextResponder" ref="806442696"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{81, 6}, {168, 21}}</string>
+								<string key="NSFrame">{{122, 20}, {168, 21}}</string>
 								<reference key="NSSuperview" ref="806442696"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -203,7 +203,7 @@
 					<string>RootViewController</string>
 					<string>UIResponder</string>
 					<string>IndividualSubviewsBasedApplicationCell</string>
-					<string>{{692, 305}, {320, 73}}</string>
+					<string>{{668, 309}, {320, 73}}</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>

@@ -12,6 +12,8 @@
 @interface SocialTableViewController : UITableViewController <FBSessionDelegate, FBRequestDelegate>{
 	NSArray *friendsWithApp;
 	FBSession *session;
+	NSOperationQueue *queue;
+
 }
 @property (nonatomic, retain) NSArray *friendsWithApp;
 

@@ -202,7 +202,7 @@
 		5FB2D72310B314CF0080DB22 /* UserProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserProfile.m; sourceTree = "<group>"; };
 		5FB2E11310BBB9330080DB22 /* SocialTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocialTableViewController.h; sourceTree = "<group>"; };
 		5FB2E11410BBB9330080DB22 /* SocialTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SocialTableViewController.m; sourceTree = "<group>"; };
-		5FB2E18410BC55130080DB22 /* SocialSubviewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SocialSubviewCell.xib; sourceTree = "<group>"; };
+		5FB2E18410BC55130080DB22 /* SocialSubviewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = SocialSubviewCell.xib; path = ../SocialSubviewCell.xib; sourceTree = "<group>"; };
 		5FB2E22110BCE4320080DB22 /* CompositeSubviewBasedApplicationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompositeSubviewBasedApplicationCell.h; sourceTree = "<group>"; };
 		5FB2E22210BCE4320080DB22 /* CompositeSubviewBasedApplicationCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CompositeSubviewBasedApplicationCell.m; sourceTree = "<group>"; };
 		5FB2E22610BCE54C0080DB22 /* ApplicationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApplicationCell.h; sourceTree = "<group>"; };
@@ -321,7 +321,6 @@
 			isa = PBXGroup;
 			children = (
 				5FF8C01C11029BD8007AD75A /* Icon.png */,
-				5FB2E18410BC55130080DB22 /* SocialSubviewCell.xib */,
 				5FB11EA911099B3800456BD6 /* Coin-icon.png */,
 				5F43CAE41085720500543ADB /* home.png */,
 				5FD2C62E1082EC3600B8B0E4 /* pin.png */,
@@ -536,6 +535,7 @@
 				5FB2E22010BCE4320080DB22 /* Composite Subview */,
 				5FB2E11310BBB9330080DB22 /* SocialTableViewController.h */,
 				5FB2E11410BBB9330080DB22 /* SocialTableViewController.m */,
+				5FB2E18410BC55130080DB22 /* SocialSubviewCell.xib */,
 			);
 			name = SocialViews;
 			sourceTree = "<group>";

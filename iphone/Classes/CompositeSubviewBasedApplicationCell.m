@@ -77,7 +77,8 @@
 
     //_highlighted ? [[UIColor whiteColor] set] : [[UIColor blackColor] set];
     [_cell.name drawAtPoint:CGPointMake(81.0, 10.0) withFont:[UIFont boldSystemFontOfSize:17.0]];
-    
+	[_cell.killCount drawAtPoint:CGPointMake(81.0, 25.0) withFont:[UIFont boldSystemFontOfSize:17.0]];
+
     //_highlighted ? [[UIColor whiteColor] set] : [[UIColor colorWithWhite:0.23 alpha:1.0] set];
     //[_cell.publisher drawAtPoint:CGPointMake(81.0, 8.0) withFont:[UIFont boldSystemFontOfSize:11.0]];
     

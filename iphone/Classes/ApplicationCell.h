@@ -52,7 +52,7 @@
     BOOL useDarkBackground;
 
     UIImage *icon;
-    NSString *publisher;
+    NSString *killCount;
     NSString *name;
     float rating;
     NSInteger numRatings;
@@ -62,7 +62,7 @@
 @property BOOL useDarkBackground;
 
 @property(retain) UIImage *icon;
-@property(retain) NSString *publisher;
+@property(retain) NSString *killCount;
 @property(retain) NSString *name;
 @property float rating;
 @property NSInteger numRatings;
