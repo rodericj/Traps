@@ -1,4 +1,4 @@
-from django.shortcuts import HttpResponse, HttpResponseRedirect
+from django.shortcuts import HttpResponse, HttpResponseRedirect, render_to_response
 from django.contrib.auth import authenticate, login, logout
 from Traps.traps.models import Venue, Item, TrapsUser, VenueItem
 import urllib
@@ -329,6 +329,16 @@ def Logout(request):
 	return HttpResponse({'status':'success'}, mimetype='application/json')
 	#return HttpResponseRedirect('/loggedOut/')
 
+def ProfileRefresh(request):
+	print "refreshing profile"
+	user = request.user
+	user.userprofile = get_or_create_profile(user)
+	user.userprofile.event_set.create(type='LI')
+	return HttpResponse(simplejson.dumps(profileRefresh(user.userprofile)), mimetype='application/json')
+
+def profileRefresh(userprofile):
+	return userprofile.objectify()
+
 def Login(request):
 	uname = request.GET['uname']
 	password = request.GET['email']
@@ -355,7 +365,6 @@ def doLogin(request, uname, password):
 		user.userprofile = get_or_create_profile(user)
 		user.userprofile.event_set.create(type='LI')
 	
-
 	return user.userprofile
 	
 def SetDeviceToken(request):
@@ -370,3 +379,6 @@ def SetDeviceToken(request):
 		
 	
 	return HttpResponse(simplejson.dumps(ret), mimetype='application/json')
+
+def holding(request):
+	return render_to_response('holding_page.html')

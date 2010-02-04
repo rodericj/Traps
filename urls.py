@@ -28,6 +28,8 @@ urlpatterns = patterns('',
     (r'^SearchVenue/', 'Traps.traps.views.SearchVenue'),
     (r'^SearchVenue/(?P<vid>\d+)/', 'Traps.traps.views.SearchVenue'),
 	(r'^site_media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': os.getcwd()+'/site_media'}),
+	(r'^$', 'Traps.traps.views.holding'),
+
 
     # Uncomment the admin/doc line below and add 'django.contrib.admindocs' 
     # to INSTALLED_APPS to enable admin documentation:
@@ -35,4 +37,5 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
      (r'^admin/', include(admin.site.urls)),
+	     
 )
