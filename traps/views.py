@@ -330,7 +330,6 @@ def Logout(request):
 	#return HttpResponseRedirect('/loggedOut/')
 
 def ProfileRefresh(request):
-	print "refreshing profile"
 	user = request.user
 	user.userprofile = get_or_create_profile(user)
 	user.userprofile.event_set.create(type='LI')
