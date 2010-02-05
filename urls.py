@@ -5,6 +5,13 @@ import os
 from django.contrib import admin
 admin.autodiscover()
 
+#TODO there has to be a better way to do this...
+PRODUCTION_SERVERS = ['web111.webfaction.com']
+if os.environ.get('HOSTNAME', '') in PRODUCTION_SERVERS:
+	doc_root = '/home/rodericj/webapps/django/Traps/site_media'
+else: 
+	doc_root = os.getcwd()+'/site_media'
+
 urlpatterns = patterns('',
     # Example:
     # (r'^Traps/', include('Traps.foo.urls')),
@@ -28,10 +35,7 @@ urlpatterns = patterns('',
     (r'^SearchVenue/', 'Traps.traps.views.SearchVenue'),
     (r'^SearchVenue/(?P<vid>\d+)/', 'Traps.traps.views.SearchVenue'),
     (r'^ShowAllTrapsSet/', 'Traps.traps.views.ShowAllTrapsSet'),
-	if PRODUCTION:
-		(r'^site_media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': '/home/rodericj/webapps/django/Traps/site_media'}),
-	else:
-		(r'^site_media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': os.getcwd()+'/site_media'}),
+    (r'^site_media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': doc_root}),
 	(r'^$', 'Traps.traps.views.holding'),
 
 

@@ -98,16 +98,18 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'Traps.urls'
 
-TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
-	if PRODUCTION:
+if PRODUCTION:
+	TEMPLATE_DIRS = (
+    	# Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
+    	# Always use forward slashes, even on Windows.
+    	# Don't forget to use absolute paths, not relative paths.
 		'/home/rodericj/webapps/django/Traps/templates'
-	else:
-		os.getcwd()+'/templates',
-)
+	)
 
+else:
+	TEMPLATE_DIRS = (
+		os.getcwd()+'/templates',
+	)
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
