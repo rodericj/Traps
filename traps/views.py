@@ -217,6 +217,10 @@ def SearchVenue(request, vid=None):
 	ret['profile']['inventory'] = getUserInventory(uid)
 	return HttpResponse(simplejson.dumps(ret), mimetype='application/json')
 
+def ShowAllTrapsSet(request):
+	items = VenueItem.objects.all()
+	VenueList = [i.objectify() for i in items]	
+	return render_to_response('ShowAllTrapsSet.html', {'VenueList':items})
 
 def GetFriends(request):
 	#get the string argument

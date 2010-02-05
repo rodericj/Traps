@@ -1,0 +1,18 @@
+<ul>
+hi
+{% if VenueList %}
+{% for venueobj in VenueList %}
+<li>
+	<form action="/SearchVenue/" method="post">
+	{{venueobj.item.name}} at {{venueobj.venue.name}}:{{venueobj.venue.foursquareid}}
+	<input type="hidden" name="vid" value="{{venueobj.venue.foursquareid}}">
+	<input type="submit" value="Set Trap" />
+	</form>
+
+</li>
+{% endfor %}
+{% else %}
+none	
+{% endif %}
+</ul>
+

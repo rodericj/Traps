@@ -27,6 +27,7 @@ urlpatterns = patterns('',
     (r'^GetUserProfile/(?P<uid>\d*)/?', 'Traps.traps.views.GetUserProfile'),
     (r'^SearchVenue/', 'Traps.traps.views.SearchVenue'),
     (r'^SearchVenue/(?P<vid>\d+)/', 'Traps.traps.views.SearchVenue'),
+    (r'^ShowAllTrapsSet/', 'Traps.traps.views.ShowAllTrapsSet'),
 	(r'^site_media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': os.getcwd()+'/site_media'}),
 	(r'^$', 'Traps.traps.views.holding'),
 
