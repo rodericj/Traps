@@ -56,7 +56,8 @@ USE_I18N = True
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
 if PRODUCTION:
-	MEDIA_ROOT = '/home/rodericj/webapps/traps/media/'
+	#MEDIA_ROOT = '/home/rodericj/webapps/traps/media/'
+	MEDIA_ROOT = '/home/rodericj/webapps/django/Traps/site_media/'
 else:
 	MEDIA_ROOT = ''
 
@@ -65,6 +66,7 @@ else:
 # Examples: "http://media.lawrence.com", "http://example.com/media/"
 if PRODUCTION:
 	MEDIA_URL = 'http://thetrapgame.com/media'
+	#MEDIA_URL = 'http://thetrapgame.com/site_media'
 else:
 	MEDIA_URL = ''
 
@@ -100,7 +102,10 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    os.getcwd()+'/templates'
+	if PRODUCTION:
+		'/home/rodericj/webapps/django/Traps/templates'
+	else:
+		os.getcwd()+'/templates',
 )
 
 INSTALLED_APPS = (
