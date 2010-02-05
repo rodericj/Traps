@@ -38,10 +38,13 @@ def notifyTrapSetter(uid, venue):
 	#uid is the user who set off the trap
 	alertNote = 'Someone just hit the trap you left at %s' % (venue.name)
 	theTrapQuery = VenueItem.objects.filter(venue__id__exact=venue.id).filter(dateTimeUsed__isnull=True)
-	token = theTrapQuery[0].user.iphoneDeviceToken
-	theTrapQuery[0].user.trapsSetCount -= 1
-	theTrapQuery[0].user.killCount += 1
-	theTrapQuery[0].user.save()
+	trapSetter = theTrapQuery[0].user
+	token = trapSetter.iphoneDeviceToken
+	
+	trapSetter.trapsSetCount -= 1
+
+	trapSetter.killCount += 1
+	trapSetter.save()
 	##TODO: configify this: From go.urbanairship.com. This is the App key and the APP MASTER SECRET...not the app secret
 
 	#development urban airship values
@@ -51,11 +54,15 @@ def notifyTrapSetter(uid, venue):
 	airship = urbanairship.Airship('VsK3ssUxRzCQJ6Rs_Sf7wg', 'c_JO0OFcSNKPFhyM-3Jq2A')
 
 	#print "registering %s, %s" %(token, uid)
-	airship.register(token)
+	try:
+		airship.register(token)
+
+		#TODO This needs to be deferred for sure
+		airship.push({'aps':{'alert':alertNote}}, device_tokens=[token])
+		#airship.push({'aps':{'alert':alertNote}, aliases=[uid])
+	except:
+		pass
 	
-	#TODO This needs to be deferred for sure
-	airship.push({'aps':{'alert':alertNote}}, device_tokens=[token])
-	#airship.push({'aps':{'alert':alertNote}, aliases=[uid])
 
 def trapWasHere(uid, venue, itemsThatAreTraps):
 	notifyTrapSetter(uid, venue)	
