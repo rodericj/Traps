@@ -28,7 +28,10 @@ urlpatterns = patterns('',
     (r'^SearchVenue/', 'Traps.traps.views.SearchVenue'),
     (r'^SearchVenue/(?P<vid>\d+)/', 'Traps.traps.views.SearchVenue'),
     (r'^ShowAllTrapsSet/', 'Traps.traps.views.ShowAllTrapsSet'),
-	(r'^site_media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': os.getcwd()+'/site_media'}),
+	if PRODUCTION:
+		(r'^site_media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': '/home/rodericj/webapps/django/Traps/site_media'}),
+	else:
+		(r'^site_media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': os.getcwd()+'/site_media'}),
 	(r'^$', 'Traps.traps.views.holding'),
 
 
