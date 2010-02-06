@@ -776,7 +776,7 @@
 				HEADER_SEARCH_PATHS = "../../facebook-iphone-sdk/src";
 				INFOPLIST_FILE = "BoobyTrap3-Info.plist";
 				PRODUCT_NAME = BoobyTrap3;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C8A659AF-B5E0-4FBB-B958-3775270CF13B";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "BD6E7B21-427C-44B3-9C0D-8856A0DCCB0D";
 			};
 			name = Distribution;
 		};
