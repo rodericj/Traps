@@ -225,7 +225,8 @@ def SearchVenue(request, vid=None):
 	return HttpResponse(simplejson.dumps(ret), mimetype='application/json')
 
 def ShowAllTrapsSet(request):
-	items = VenueItem.objects.all()
+	#items = VenueItem.objects.all()
+	items = VenueItem.objects.filter(dateTimeUsed__exact=None)
 	VenueList = [i.objectify() for i in items]	
 	return render_to_response('ShowAllTrapsSet.html', {'VenueList':items})
 
