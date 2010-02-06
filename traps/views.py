@@ -299,7 +299,6 @@ def get_or_create_profile(user):
 	return profile
 
 def IPhoneLogin(request):
-	print request.POST
 	jsonprofile = {}
 	profile=None
 
