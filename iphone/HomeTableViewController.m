@@ -194,6 +194,9 @@
 	op.arguments = [[NSMutableDictionary alloc] init];
 	[op.arguments setObject:[user objectForKey:@"uid"] forKey:@"uname"];
 	[op.arguments setObject:(NSString *)[user objectForKey:@"uid"] forKey:@"password"];
+	[op.arguments setObject:(NSString *)[user objectForKey:@"last_name"] forKey:@"last_name"];
+	[op.arguments setObject:(NSString *)[user objectForKey:@"first_name"] forKey:@"first_name"];
+
 	op.callingDelegate = self;
 	queue = [[NSOperationQueue alloc] init];
 	[queue addOperation:op];

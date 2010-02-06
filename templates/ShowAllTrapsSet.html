@@ -4,7 +4,7 @@ hi
 {% for venueobj in VenueList %}
 <li>
 	<form action="/SearchVenue/" method="post">
-	{{venueobj.item.name}} at {{venueobj.venue.name}}:{{venueobj.venue.foursquareid}}
+	{{venueobj.user.user.first_name}} {{venueobj.user.user.last_name}} left a {{venueobj.item.name}} at {{venueobj.venue.name}}:{{venueobj.venue.foursquareid}}
 	<input type="hidden" name="vid" value="{{venueobj.venue.foursquareid}}">
 	<input type="submit" value="Trigger the Trap" />
 	</form>

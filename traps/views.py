@@ -299,6 +299,7 @@ def get_or_create_profile(user):
 	return profile
 
 def IPhoneLogin(request):
+	print request.POST
 	jsonprofile = {}
 	profile=None
 
@@ -308,6 +309,8 @@ def IPhoneLogin(request):
 	#logout(request)
 	uname = request.POST['uname']
 	password = request.POST['password']
+	first_name = request.POST.get('first_name', '')
+	last_name = request.POST.get('last_name', '')
 
 	#profile = doLogin(request, uname, password)
 
@@ -319,6 +322,10 @@ def IPhoneLogin(request):
 			user.userprofile = get_or_create_profile(user)
 			user.userprofile.event_set.create(type='LI')
 			profile = user.userprofile
+			#TODO check and set???
+			profile.user.first_name = first_name
+			profile.user.last_name = last_name
+			profile.user.save()
 			
 		else:
 			#return a disabled account error message
