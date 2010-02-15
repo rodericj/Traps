@@ -27,7 +27,6 @@
 @synthesize userKillCount;
 @synthesize userHitPoints;
 @synthesize dropTrapsNavController;
-//@synthesize nearbyPlacesTableViewController;
 
 #pragma mark Initialization and setup
 - (IBAction)dropTrapButtonPushed{
@@ -196,6 +195,7 @@
 	[op.arguments setObject:(NSString *)[user objectForKey:@"uid"] forKey:@"password"];
 	[op.arguments setObject:(NSString *)[user objectForKey:@"last_name"] forKey:@"last_name"];
 	[op.arguments setObject:(NSString *)[user objectForKey:@"first_name"] forKey:@"first_name"];
+	[op.arguments setObject:(NSString *)@"1" forKey:@"tutorial"];
 
 	op.callingDelegate = self;
 	queue = [[NSOperationQueue alloc] init];
@@ -213,16 +213,27 @@
 }
 
 - (void)pageLoaded:(NSDictionary*)webRequestResults{
-	NSLog(@"home table view webrequest returned %@", webRequestResults);
 	UserProfile *userProfile = [UserProfile sharedSingleton];
 	[userProfile newProfileFromDictionary:webRequestResults];
-	NSLog(@"%@", [userProfile getUserName]);
-	//NSLog(@"update with this username %@", [userProfile obje)
-	NSLog(@"in updateMiniProfile pageLoaded");
 	[self updateMiniProfile:userProfile];
-	NSLog(@"out of updateMiniProfile pageLoaded");
 	[homeTableView reloadData];
+	
+	NSNumber *tutorialValue = (NSNumber *)[webRequestResults objectForKey:@"tutorialValue"];
 
+	if([tutorialValue intValue] == 1){
+		NSLog(@"looking in tutorial 1 %@", webRequestResults);
+		[userProfile setTutorial:2];
+		NSLog(@"tutorial after setting: %d", [userProfile getTutorial]);
+		UIAlertView *alert;
+		NSString *tutorialText = [webRequestResults objectForKey:@"tutorialText"];
+		alert = [[UIAlertView alloc] initWithTitle:@"Tutorial" 
+										   message:tutorialText
+										  delegate:self 
+								 cancelButtonTitle:@"Ok" 
+								 otherButtonTitles:nil];
+		[alert show]; 
+		[alert release]; 
+	}
 }
 
 #pragma mark Table view methods

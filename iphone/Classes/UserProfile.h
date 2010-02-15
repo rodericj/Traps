@@ -15,12 +15,14 @@
 	NSArray *locations;
 	NSString *whichTrap;
 	NSString *whichVenue;
+	int tutorial;
 }
 @property (nonatomic, retain) NSDictionary *profile;
 @property (nonatomic, retain) NSArray *locations;
 @property (nonatomic, retain) NSDictionary *fbprofile;
 @property (retain) NSString *whichTrap;
 @property (retain) NSString *whichVenue;
+//@property int tutorial;
 
 
 +(UserProfile *)sharedSingleton;
@@ -40,6 +42,8 @@
 -(NSInteger *)getTrapsSetCount;
 -(NSDictionary *)getInventory;
 -(NSString *)getPicture;
+-(int)getTutorial;
+-(void)setTutorial:(int)tutorial;
 -(void)printUserProfile;
 
 @end

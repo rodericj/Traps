@@ -13,6 +13,26 @@ from django.db.models import Count
 from django.core.exceptions import ObjectDoesNotExist
 import urbanairship
 
+
+def setTutorial(user_id, json):
+	u = TrapsUser.objects.get(id=user_id)
+	if u.tutorial == 1:
+		json['tutorialText'] = config.tutorial1
+		json['tutorialValue'] = 1
+
+	if u.tutorial == 2:
+		json['tutorialText'] = config.tutorial2
+		json['tutorialValue'] = 2
+
+	if u.tutorial == 3:
+		json['tutorialText'] = config.tutorial3
+		json['tutorialValue'] = 3
+
+	if u.tutorial == 4:
+		json['tutorialText'] = config.tutorial4
+		json['tutorialValue'] = 4
+	return json
+
 def noTrapWasHere(uid, venue):
 
 	#potential coin reward - goes up 1 coin per minute to the max of that venue
@@ -158,8 +178,12 @@ def SearchVenue(request, vid=None):
 	if vid == None:
 		vid = request.POST['vid']
 	
+	tutorial = request.POST.get('tutorial', None)
+
 	request.user.userprofile = get_or_create_profile(request.user)
 	request.user.userprofile.event_set.create(type='SE')
+
+
 	uid = request.user.userprofile.id
 	thisUsersTraps = request.user.userprofile.useritem_set.filter(item__type='TP')
 	ret = {}
@@ -222,6 +246,32 @@ def SearchVenue(request, vid=None):
 	#ret['profile'] = request.user.userprofile.objectify()
 	ret['profile'] = request.user.userprofile.objectify()
 	ret['profile']['inventory'] = getUserInventory(uid)
+
+	#if this user is in tutorial mode, we'll have to return a different result
+	if tutorial and request.user.userprofile.tutorial == 2:
+
+		#If they hit a trap during the tutorial, I wanna make it up to them
+		damage = ret.get('damage', {'hitpointslost':0})
+		request.user.userprofile.hitPoints += damage['hitpointslost']
+
+		#must give the guy the egg/newbie badge
+		golden_egg = Item.objects.get(id=config.golden_egg_iid)
+		banana_trap = Item.objects.get(id=config.banana_iid)
+		request.user.userprofile.useritem_set.create(item=golden_egg)
+		request.user.userprofile.useritem_set.create(item=banana_trap)
+
+		#fabricate a return statement
+		ret = {'alertStatement':config.tutorial3,
+				'hasTraps':thisUsersTraps.count() != 0 and 1 or 2,
+				'isTrapSet':0,
+				'userid':request.user.id,
+				'venueid':vid}
+		ret['profile'] = request.user.userprofile.objectify()
+		ret['profile']['inventory'] = getUserInventory(request.user.userprofile.id)
+		request.user.userprofile.tutorial += 1
+		request.user.userprofile.save()
+		return HttpResponse(simplejson.dumps(ret), mimetype='application/json')
+
 	return HttpResponse(simplejson.dumps(ret), mimetype='application/json')
 
 def ShowAllTrapsSet(request):
@@ -311,9 +361,9 @@ def IPhoneLogin(request):
 	password = request.POST['password']
 	first_name = request.POST.get('first_name', '')
 	last_name = request.POST.get('last_name', '')
+	tutorial = request.POST.get('tutorial', None)
 
 	#profile = doLogin(request, uname, password)
-
 	user = authenticate(username=uname, password=password)
 	#user.userprofile = {}
 	if user is not None:
@@ -333,12 +383,13 @@ def IPhoneLogin(request):
 	else:
 		profile = doLogin(request, uname, password)
 		
-		#return "invalid login error message
-		pass
-
+	if tutorial and profile.tutorial < 2:
+		profile.tutorial = tutorial
+		profile.save()
 	jsonprofile = profile.objectify()
 	jsonprofile['inventory'] = getUserInventory(profile.id)
 
+	jsonprofile = setTutorial(profile.id, jsonprofile)
 	return HttpResponse(simplejson.dumps(jsonprofile), mimetype='application/json')
 	
 #@tb

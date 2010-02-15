@@ -14,6 +14,7 @@
 @class NearbyPlacesTableView;
 @class FBSessionDelegate;
 @class UserProfile;
+
 @interface HomeTableViewController : UITableViewController <FBRequestDelegate, FBDialogDelegate, FBSessionDelegate, UITableViewDelegate, UITableViewDataSource>{
 	IBOutlet UITableView *homeTableView;
 	NSMutableArray *menuArray;

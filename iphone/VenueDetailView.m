@@ -31,6 +31,7 @@
 	op.arguments = [[NSMutableDictionary alloc] init];
 	[op.arguments setObject:[venueInfo objectForKey:@"id"] forKey:@"vid"];
 	[op.arguments setObject:[[UIDevice currentDevice] uniqueIdentifier] forKey:@"uid"];
+	[op.arguments setObject:@"2" forKey:@"tutorial"];
 	op.callingDelegate = self;
 	queue = [[NSOperationQueue alloc] init];
 	[queue addOperation:op];
@@ -41,6 +42,8 @@
 - (void)pageLoaded:(NSDictionary*)webRequestResults{
 	NSLog(@"venue detail webrequest returned %@", webRequestResults);
 	[self didSearchVenue:webRequestResults];
+
+		
 }
 
 - (void)didSearchVenue:(NSDictionary *)returnData{
@@ -51,15 +54,29 @@
 	[profile newProfileFromDictionary:profileDict];
 
 	UIAlertView *alert;
+	NSLog(@"hasTraps");
+	NSLog(@"hasTraps is %@", (NSNumber *)[returnData objectForKey:@"hasTraps"]);
 	NSNumber *hasTraps = (NSNumber *)[returnData objectForKey:@"hasTraps"];
+	NSLog(@"hasTraps1");
+
 	if([hasTraps boolValue]== YES){
+		NSLog(@"hasTraps2");
+
 		alert = [[UIAlertView alloc] initWithTitle:@"Venue has been Searched" message:alertStatement delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil]; 
 	}
 	else{
+		NSLog(@"hasTraps3");
+
 		alert = [[UIAlertView alloc] initWithTitle:@"Venue has been Searched" message:alertStatement delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil]; 
 	}
+	NSLog(@"hasTraps4");
+
 	[alert show]; 
+	NSLog(@"hasTraps5");
+
 	[alert release]; 
+	NSLog(@"hasTraps6");
+
 	[searchButton setEnabled:YES];
 
 }
@@ -126,6 +143,19 @@
 	[streetName setText:[self.venueInfo objectForKey:@"address"]];
 
 	[super viewWillAppear:animated];
+	
+	UserProfile *userProfile = [UserProfile sharedSingleton];
+	NSLog(@"tutorial value %d", [userProfile getTutorial]);
+	
+	if([userProfile getTutorial] == 3){
+		UIAlertView *alert;
+		//NSLog(@"I see you found a nice new venue. You should try searching for stuff here. That's the easiest way to find cool things");
+		NSString *alertStatement = @"So this is the place. Take a look around (Click the search button). You might find something that you like.";
+		alert = [[UIAlertView alloc] initWithTitle:@"Tutorial" message:alertStatement delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil]; 
+		[alert show];
+		[alert release];
+		[userProfile setTutorial:4];
+	}
 }
 
 - (void)didReceiveMemoryWarning {

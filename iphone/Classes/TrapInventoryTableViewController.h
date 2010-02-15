@@ -11,6 +11,7 @@
 
 @interface TrapInventoryTableViewController : UITableViewController <FBDialogDelegate, UITableViewDelegate, UITableViewDataSource>{
 	NSOperationQueue *queue;
+	IBOutlet UITableView *inventoryTableView;
 }
 
 - (void)doDropTrap;

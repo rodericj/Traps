@@ -14,6 +14,7 @@
 @synthesize fbprofile;
 @synthesize whichTrap;
 @synthesize whichVenue;
+//@synthesize tutorial;
 + (UserProfile *)sharedSingleton
 {
 	static UserProfile *sharedSingleton;
@@ -62,6 +63,13 @@
 -(NSString *)getPicture{
 	return [fbprofile objectForKey:@"pic_square"];
 }
+-(int)getTutorial{
+	return tutorial;
+}
+-(void)setTutorial:(int) newTutorial{
+	tutorial = newTutorial;
+}
+
 -(void)clear{
 	//FBProfile.p list
 	//Profile.p list

@@ -16,6 +16,7 @@ urlpatterns = patterns('',
     # Example:
     # (r'^Traps/', include('Traps.foo.urls')),
     (r'^startup/', 'django.views.generic.simple.direct_to_template', {'template':'nearbyplaces.html'}),
+    (r'^testViews/', 'django.views.generic.simple.direct_to_template', {'template':'testviews.html'}),
     (r'^history/', 'django.views.generic.simple.direct_to_template', {'template':'history.html'}),
     (r'^profile/', 'django.views.generic.simple.direct_to_template', {'template':'profile.html'}),
     (r'^dropHistory/', 'django.views.generic.simple.direct_to_template', {'template':'dropHistory.html'}),

@@ -9,7 +9,7 @@ else:
 	PRODUCTION = False
 
 DEBUG = True
-#DEBUG = False
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
@@ -122,5 +122,5 @@ INSTALLED_APPS = (
 EMAIL_HOST = 'smtp.webfaction.com'
 EMAIL_HOST_USER = 'rodericj'
 EMAIL_HOST_PASSWORD = 'emailpass'
-DEFAULT_FROM_EMAIL = 'roderic+webfaction@gmail.com'
-SERVER_EMAIL = 'roderic+webfactionserveremail@gmail.com'
+DEFAULT_FROM_EMAIL = 'roderic@gmail.com'
+SERVER_EMAIL = 'roderic@gmail.com'

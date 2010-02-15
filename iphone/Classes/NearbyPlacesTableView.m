@@ -44,6 +44,20 @@
 	locationController.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
 	[locationController.locationManager startUpdatingLocation];
 	
+	UserProfile *userProfile = [UserProfile sharedSingleton];
+	NSLog(@"tutorial value:");
+	NSLog(@"tutorial value %d", [userProfile getTutorial]);
+	//NSLog(@"tutorial compare %@", [[userProfile tutorial] compare:@"2"]);
+	if([userProfile getTutorial] == 2){
+		UIAlertView *alert;
+		//NSLog(@"I see you found a nice new venue. You should try searching for stuff here. That's the easiest way to find cool things");
+		NSString *alertStatement = @"Great, this is where you'll find all the nearby locations. Why don't you go ahead and select one. From there we can search and lay traps";
+		[userProfile setTutorial:3];
+		alert = [[UIAlertView alloc] initWithTitle:@"Tutorial" message:alertStatement delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil]; 
+		[alert show];
+		[alert release];
+	}
+	
     [super viewWillAppear:animated];
 }
 
