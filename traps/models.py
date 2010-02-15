@@ -25,13 +25,15 @@ class Item(models.Model):
 		return str(self.id) + " " + self.name
 
 class Venue(models.Model):
+	foursquareid = models.IntegerField(blank=False, null=False)
 	name = models.CharField(max_length=50)
 	latitude = models.FloatField()
 	longitude = models.FloatField()
-	yelpAddress = models.CharField(max_length=100)
+	#yelpAddress = models.CharField(max_length=100)
 	streetName = models.CharField(max_length=100)
 	city = models.CharField(max_length=30)
 	state = models.CharField(max_length=30)
+	zip = models.CharField(max_length=10)
 	coinValue = models.IntegerField(default=config.startVenueWithCoins)
 	phone = models.CharField(max_length=11)
 	item = models.ManyToManyField(Item, blank=True, null=True)
@@ -41,18 +43,19 @@ class Venue(models.Model):
 	def objectify(self): 
 		return {'id':self.id,
 				 'name':self.name,
-				 'latitude':self.latitude,
-				 'longitude':self.longitude,
+				 'latitude':str(self.latitude),
+				 'longitude':str(self.longitude),
 				 'streetName':self.streetName,
 				 'city':self.city,
 				 'state':self.state,
-				 'coinValue':self.coinValue,
+				 'coinValue':str(self.coinValue),
 				 'phone':self.phone,
-				 'checkinCount':self.checkinCount
+				 'checkinCount':str(self.checkinCount)
 				}
 
 	def __unicode__(self):
-		return self.name
+		#return "%d, %s" % (self.id, self.name)
+		return "%s, id:%s" % (self.name, self.foursquareid)
 
 #class ItemAtVenue(models.Model):
 	#venue = models.ForeignKey(Venue)
@@ -78,20 +81,32 @@ class TrapsUser(models.Model):
 	#events = models.ManyToManyField(Event)
 	user = models.ForeignKey(User, unique=True)
 	lastUpdated = models.DateTimeField(auto_now=True, auto_now_add=True)
+	iphoneDeviceToken = models.CharField(max_length=64, null=True, blank=True)
+	tutorial = models.IntegerField(default=1)
 
 	def objectify(self):
-		return {'fbid':self.fbid,
- 				'twitterid':self.twitterid,
- 				'photo':self.photo,
- 				'gender':self.gender,
- 				'coinCount':self.coinCount,
- 				'hitPoints':self.hitPoints,
- 				'level':self.level,
- 				'killCount':self.killCount,
- 				'trapsSetCount':self.trapsSetCount,
+		return {
+ 				'coinCount':str(self.coinCount),
+ 				'hitPoints':str(self.hitPoints),
+ 				'killCount':str(self.killCount),
+ 				'trapsSetCount':str(self.trapsSetCount),
  				'username':self.user.username,
- 				'lastUpdated':str(self.lastUpdated)
-				}
+ 				'lastUpdated':str(self.lastUpdated),
+ 				'level':str(self.level),
+ 				'iphoneDeviceToken':self.iphoneDeviceToken,
+		}
+		#return {'fbid':self.fbid,
+ 				#'twitterid':self.twitterid,
+ 				#'photo':self.photo,
+ 				#'gender':self.gender,
+ 				#'coinCount':self.coinCount,
+ 				#'hitPoints':self.hitPoints,
+ 				#'level':self.level,
+ 				#'killCount':self.killCount,
+ 				#'trapsSetCount':self.trapsSetCount,
+ 				#'username':self.user.username,
+ 				#'lastUpdated':str(self.lastUpdated)
+				#}
 
 	def __unicode__(self):
 		#return self.user.username+" coins: "+ str(self.coinCount) + " coins, " + str(self.killCount) + " kills"
@@ -173,4 +188,4 @@ class UserItem(models.Model):
 	#count = models.IntegerField(default=0)
 
 	def __unicode__(self):
-		return str(self.user) + " owns a " + str(self.item)
+		return str(self.user) + " " + str(self.item)

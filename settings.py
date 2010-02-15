@@ -1,21 +1,40 @@
 # Django settings for Traps project.
 import os
 
+PRODUCTION_SERVERS = ['web111.webfaction.com']
+
+if os.environ.get('HOSTNAME', '') in PRODUCTION_SERVERS:
+	PRODUCTION = True
+else:
+	PRODUCTION = False
+
 DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
     # ('Your Name', 'your_email@domain.com'),
+     ('roderic', 'roderic@gmail.com'),
 )
 
 MANAGERS = ADMINS
 
-DATABASE_ENGINE = 'sqlite3'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-DATABASE_NAME = '/tmp/traps.db'             # Or path to database file if using sqlite3.
-DATABASE_USER = ''             # Not used with sqlite3.
-DATABASE_PASSWORD = ''         # Not used with sqlite3.
-DATABASE_HOST = ''             # Set to empty string for localhost. Not used with sqlite3.
-DATABASE_PORT = ''             # Set to empty string for default. Not used with sqlite3.
+if PRODUCTION:
+	DATABASE_ENGINE = 'mysql'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+	DATABASE_NAME = 'rodericj_traps'             # Not used with sqlite3.
+	DATABASE_USER = 'rodericj_traps'             # Not used with sqlite3.
+	#DATABASE_PASSWORD = 'bananarama'         # Not used with sqlite3.
+	DATABASE_PASSWORD = 'ac07551e'         # Not used with sqlite3.
+	DATABASE_HOST = 'web111.webfaction.com'             # Set to empty string for localhost. Not used with sqlite3.
+	DATABASE_PORT = ''             # Set to empty string for default. Not used with sqlite3.
+
+else:
+	DATABASE_ENGINE = 'sqlite3'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+	DATABASE_NAME = '/tmp/traps.db'             # Or path to database file if using sqlite3.
+	DATABASE_USER = ''             # Not used with sqlite3.
+	DATABASE_PASSWORD = ''         # Not used with sqlite3.
+	DATABASE_HOST = ''             # Set to empty string for localhost. Not used with sqlite3.
+	DATABASE_PORT = ''             # Set to empty string for default. Not used with sqlite3.
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -36,17 +55,28 @@ USE_I18N = True
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = ''
+if PRODUCTION:
+	#MEDIA_ROOT = '/home/rodericj/webapps/traps/media/'
+	MEDIA_ROOT = '/home/rodericj/webapps/django/Traps/site_media/'
+else:
+	MEDIA_ROOT = ''
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
 # Examples: "http://media.lawrence.com", "http://example.com/media/"
-MEDIA_URL = ''
+if PRODUCTION:
+	MEDIA_URL = 'http://thetrapgame.com/media'
+	#MEDIA_URL = 'http://thetrapgame.com/site_media'
+else:
+	MEDIA_URL = ''
 
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
 # Examples: "http://foo.com/media/", "/media/".
-ADMIN_MEDIA_PREFIX = '/media/'
+if PRODUCTION:
+	ADMIN_MEDIA_PREFIX = 'http://thetrapgame.com/media/admin/'
+else:
+	ADMIN_MEDIA_PREFIX = '/media/'
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'yd_9ogfx_!&0$qk^l(_3gcemx8r81d))4tab1xs98d_dhkf0z#'
@@ -68,13 +98,18 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'Traps.urls'
 
-TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
-    os.getcwd()+'/templates'
-)
+if PRODUCTION:
+	TEMPLATE_DIRS = (
+    	# Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
+    	# Always use forward slashes, even on Windows.
+    	# Don't forget to use absolute paths, not relative paths.
+		'/home/rodericj/webapps/django/Traps/templates'
+	)
 
+else:
+	TEMPLATE_DIRS = (
+		os.getcwd()+'/templates',
+	)
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -83,3 +118,9 @@ INSTALLED_APPS = (
 	'django.contrib.admin',
 	'Traps.traps',
 )
+
+EMAIL_HOST = 'smtp.webfaction.com'
+EMAIL_HOST_USER = 'rodericj'
+EMAIL_HOST_PASSWORD = 'emailpass'
+DEFAULT_FROM_EMAIL = 'roderic@gmail.com'
+SERVER_EMAIL = 'roderic@gmail.com'

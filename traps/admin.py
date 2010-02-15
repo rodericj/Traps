@@ -8,3 +8,4 @@ admin.site.register(Event)
 admin.site.register(TrapsUser)
 admin.site.register(VenueItem)
 admin.site.register(UserItem)
+
