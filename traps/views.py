@@ -11,8 +11,10 @@ from django.utils import simplejson
 from django.contrib.auth.models import User
 from django.db.models import Count
 from django.core.exceptions import ObjectDoesNotExist
-import urbanairship
-
+try:
+	import urbanairship
+except:
+	pass
 
 def setTutorial(user_id, json):
 	u = TrapsUser.objects.get(id=user_id)
