@@ -205,6 +205,8 @@
 	//Set the mini profile image
 	NSURL *photoUrl = [NSURL URLWithString:[user objectForKey:@"pic_square"]];
 	NSData *photoData = [NSData dataWithContentsOfURL:photoUrl];
+	[sharedSingleton setUserImage:photoData];
+	
 	UIImage *profileImage =	[UIImage imageWithData:photoData];
 	userImage.image = profileImage;
 	

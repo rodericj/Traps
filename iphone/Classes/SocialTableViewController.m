@@ -11,6 +11,8 @@
 #import "CompositeSubviewBasedApplicationCell.h"
 #import "NetworkRequestOperation.h"
 #import "SBJSON.H"
+#import "UserProfile.h"
+
 @implementation SocialTableViewController
 @synthesize friendsWithApp;
 //@synthesize session;
@@ -109,9 +111,20 @@
 	NSDictionary *friend = [friendsWithApp objectAtIndex:indexPath.row];
 	NSString *friendName = [friend objectForKey:@"name"];
 	NSString *killCount = [friend objectForKey:@"killCount"];
+	NSString *is_self = [friend objectForKey:@"is_self"];
 	NSLog(@"kill count: %@", killCount);
+	NSLog(@"is_self: %@", is_self);
+
+	NSData *photoData;
+	if([is_self intValue] == 1){
+		NSLog(@"this one is self");
+		UserProfile *sharedSingleton = [UserProfile sharedSingleton];
+		photoData = [sharedSingleton userImage];
+	}
+	else{
 	NSURL *photoUrl = [NSURL URLWithString:[friend objectForKey:@"pic_square"]];
-	NSData *photoData = [NSData dataWithContentsOfURL:photoUrl];
+	photoData = [NSData dataWithContentsOfURL:photoUrl];
+	}
 	UIImage *profileImage =	[UIImage imageWithData:photoData];
 	cell.icon = profileImage;
 	

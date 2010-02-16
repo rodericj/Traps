@@ -283,12 +283,16 @@ def ShowAllTrapsSet(request):
 	return render_to_response('ShowAllTrapsSet.html', {'VenueList':items})
 
 def GetFriends(request):
+
+	u = request.user
 	#get the string argument
 	friendString = request.POST['friends']
 
 	#convert the string to an array of dicts
 	friendArray = simplejson.loads(str(friendString))
+	myself = {'is_self':True, u'first_name':u.first_name, u'last_name': u.last_name, u'uid': u.username, u'name': u.first_name+" " +u.last_name+" (you)"}
 	
+	friendArray.append(myself)
 	#get a list of the friend ids
 	friendIds = [int(friend['uid']) for friend in friendArray]
 	friendsHere = TrapsUser.objects.filter(user__username__in=friendIds)
@@ -426,6 +430,13 @@ def doLogin(request, uname, password):
 		login(request, user)
 		user.userprofile = get_or_create_profile(user)
 		user.userprofile.event_set.create(type='LI')
+
+		last_name = request.POST.get('last_name', '')
+		first_name = request.POST.get('first_name', '')
+
+		user.first_name = first_name
+		user.last_name = last_name
+		user.save()
 		#create a whole bunch of bananas	
 		for i in range(config.numStarterItems):
 			starterItem = Item.objects.get(id=1)

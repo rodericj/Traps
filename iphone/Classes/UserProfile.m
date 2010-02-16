@@ -14,6 +14,7 @@
 @synthesize fbprofile;
 @synthesize whichTrap;
 @synthesize whichVenue;
+@synthesize userImage;
 //@synthesize tutorial;
 + (UserProfile *)sharedSingleton
 {

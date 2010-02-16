@@ -15,11 +15,13 @@
 	NSArray *locations;
 	NSString *whichTrap;
 	NSString *whichVenue;
+	NSData *userImage;
 	int tutorial;
 }
 @property (nonatomic, retain) NSDictionary *profile;
 @property (nonatomic, retain) NSArray *locations;
 @property (nonatomic, retain) NSDictionary *fbprofile;
+@property (nonatomic, retain) NSData *userImage;
 @property (retain) NSString *whichTrap;
 @property (retain) NSString *whichVenue;
 //@property int tutorial;
