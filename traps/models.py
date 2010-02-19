@@ -78,7 +78,6 @@ class TrapsUser(models.Model):
 	killCount = models.IntegerField(default=0)
 	trapsSetCount = models.IntegerField(default=0)
 	friends = models.ManyToManyField("self")
-	#events = models.ManyToManyField(Event)
 	user = models.ForeignKey(User, unique=True)
 	lastUpdated = models.DateTimeField(auto_now=True, auto_now_add=True)
 	iphoneDeviceToken = models.CharField(max_length=64, null=True, blank=True)
@@ -95,23 +94,10 @@ class TrapsUser(models.Model):
  				'level':str(self.level),
  				'iphoneDeviceToken':self.iphoneDeviceToken,
 		}
-		#return {'fbid':self.fbid,
- 				#'twitterid':self.twitterid,
- 				#'photo':self.photo,
- 				#'gender':self.gender,
- 				#'coinCount':self.coinCount,
- 				#'hitPoints':self.hitPoints,
- 				#'level':self.level,
- 				#'killCount':self.killCount,
- 				#'trapsSetCount':self.trapsSetCount,
- 				#'username':self.user.username,
- 				#'lastUpdated':str(self.lastUpdated)
-				#}
 
 	def __unicode__(self):
-		#return self.user.username+" coins: "+ str(self.coinCount) + " coins, " + str(self.killCount) + " kills"
-		return "%d, %s"% (self.id, self.user.username)
-		#return self.id + self.user.username
+		u = self.user
+		return "%d, %s, %s %s"% (self.id, u.username, u.first_name, u.last_name)
 
 class Message(models.Model):
 	#From #django:
@@ -138,11 +124,6 @@ class Event(models.Model):
 		('UI', 'Used Item'),
 		('GC', 'Got Coins'),
 		('PC', 'Purchase'),
-		('RF', 'Request Friend'),
-		('AF', 'Accept Friend'),
-		('DF', 'Deny Friend'),
-		('SM', 'Send Message'),
-		('RM', 'Receive Message'),
 		('LI', 'Log In'),
 	)
 	type = models.CharField(max_length=2, choices=EVENT_CHOICES)
@@ -154,12 +135,20 @@ class Event(models.Model):
 	def objectify(self): 
 		return {'id':self.id,
 				'type':dict(self.EVENT_CHOICES)[self.type],
+				'data1':self.data1,
+				'data2':self.data2,
 				'datetime':str(self.dateTime)
 				}
 
 	def __unicode__(self):
 		longtype = [i for i in self.EVENT_CHOICES if self.type in i][0][1]		
-		return str(self.user) + " "+longtype + " at " + str(self.dateTime) + " " + self.data1 + " " + self.data2
+		ret =  str(self.user) + " "+longtype + " at " + str(self.dateTime) 
+		if self.data1:
+			ret += " data1 "+self.data1
+		if self.data2:
+			ret += " data2 "+self.data2
+
+		return ret
 
 class VenueItem(models.Model):
 	venue = models.ForeignKey(Venue)

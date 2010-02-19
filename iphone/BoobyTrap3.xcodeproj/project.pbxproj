@@ -13,6 +13,8 @@
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
 		28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD733E0D9D9553002E5188 /* MainWindow.xib */; };
+		5F011AAC112DAC2B0063F5CB /* ProfileViewNavController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F011AAA112DAC2B0063F5CB /* ProfileViewNavController.m */; };
+		5F011AAD112DAC2B0063F5CB /* ProfileViewNavController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F011AAB112DAC2B0063F5CB /* ProfileViewNavController.xib */; };
 		5F43CAE51085720500543ADB /* home.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F43CAE41085720500543ADB /* home.png */; };
 		5F4AA05E10E061D0007CA1F6 /* Airship.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F4AA01410E061D0007CA1F6 /* Airship.m */; };
 		5F4AA05F10E061D0007CA1F6 /* UADateUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F4AA01610E061D0007CA1F6 /* UADateUtils.m */; };
@@ -73,8 +75,6 @@
 		5FD2C5A01082B88100B8B0E4 /* HomeNavController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD2C59F1082B88100B8B0E4 /* HomeNavController.m */; };
 		5FD2C5B51082B92200B8B0E4 /* HomeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD2C5B41082B92200B8B0E4 /* HomeTableViewController.m */; };
 		5FD2C5CD1082E4D300B8B0E4 /* HomeTable.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5FD2C5CC1082E4D300B8B0E4 /* HomeTable.xib */; };
-		5FD2C5D91082E8D900B8B0E4 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD2C5D81082E8D900B8B0E4 /* ProfileViewController.m */; };
-		5FD2C5DD1082E90B00B8B0E4 /* ProfileView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5FD2C5DC1082E90B00B8B0E4 /* ProfileView.xib */; };
 		5FD2C62D1082EC2800B8B0E4 /* walk.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FD2C62C1082EC2800B8B0E4 /* walk.png */; };
 		5FD2C62F1082EC3600B8B0E4 /* pin.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FD2C62E1082EC3600B8B0E4 /* pin.png */; };
 		5FD2C6311082EC4000B8B0E4 /* badge.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FD2C6301082EC4000B8B0E4 /* badge.png */; };
@@ -103,6 +103,9 @@
 		28AD733E0D9D9553002E5188 /* MainWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* BoobyTrap3_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BoobyTrap3_Prefix.pch; sourceTree = "<group>"; };
+		5F011AA9112DAC2B0063F5CB /* ProfileViewNavController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewNavController.h; sourceTree = "<group>"; };
+		5F011AAA112DAC2B0063F5CB /* ProfileViewNavController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewNavController.m; sourceTree = "<group>"; };
+		5F011AAB112DAC2B0063F5CB /* ProfileViewNavController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileViewNavController.xib; sourceTree = "<group>"; };
 		5F43CAE41085720500543ADB /* home.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = home.png; sourceTree = "<group>"; };
 		5F4AA01310E061D0007CA1F6 /* Airship.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Airship.h; sourceTree = "<group>"; };
 		5F4AA01410E061D0007CA1F6 /* Airship.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Airship.m; sourceTree = "<group>"; };
@@ -212,9 +215,6 @@
 		5FD2C5B31082B92200B8B0E4 /* HomeTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeTableViewController.h; sourceTree = "<group>"; };
 		5FD2C5B41082B92200B8B0E4 /* HomeTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeTableViewController.m; sourceTree = "<group>"; };
 		5FD2C5CC1082E4D300B8B0E4 /* HomeTable.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeTable.xib; sourceTree = "<group>"; };
-		5FD2C5D71082E8D900B8B0E4 /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProfileViewController.h; path = ../ProfileViewController.h; sourceTree = "<group>"; };
-		5FD2C5D81082E8D900B8B0E4 /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProfileViewController.m; path = ../ProfileViewController.m; sourceTree = "<group>"; };
-		5FD2C5DC1082E90B00B8B0E4 /* ProfileView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ProfileView.xib; path = ../ProfileView.xib; sourceTree = "<group>"; };
 		5FD2C62C1082EC2800B8B0E4 /* walk.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = walk.png; sourceTree = "<group>"; };
 		5FD2C62E1082EC3600B8B0E4 /* pin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pin.png; sourceTree = "<group>"; };
 		5FD2C6301082EC4000B8B0E4 /* badge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = badge.png; sourceTree = "<group>"; };
@@ -274,8 +274,8 @@
 				5FB2E11110BBB9160080DB22 /* SocialViews */,
 				5FB2D96410B50D6B0080DB22 /* Net */,
 				5FB2D72110B314A80080DB22 /* Model */,
+				5F011AB4112DAC540063F5CB /* ProfileView */,
 				5F94610210996812004C7CEF /* DropTrapViews */,
-				5F2155A0108D8C7B006FA8F2 /* ProfileView */,
 				5FD2C5A31082B90500B8B0E4 /* HomeView */,
 				1D3623240D0F684500981E51 /* BoobyTrap3AppDelegate.h */,
 				1D3623250D0F684500981E51 /* BoobyTrap3AppDelegate.m */,
@@ -346,12 +346,12 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		5F2155A0108D8C7B006FA8F2 /* ProfileView */ = {
+		5F011AB4112DAC540063F5CB /* ProfileView */ = {
 			isa = PBXGroup;
 			children = (
-				5FD2C5D71082E8D900B8B0E4 /* ProfileViewController.h */,
-				5FD2C5D81082E8D900B8B0E4 /* ProfileViewController.m */,
-				5FD2C5DC1082E90B00B8B0E4 /* ProfileView.xib */,
+				5F011AA9112DAC2B0063F5CB /* ProfileViewNavController.h */,
+				5F011AAA112DAC2B0063F5CB /* ProfileViewNavController.m */,
+				5F011AAB112DAC2B0063F5CB /* ProfileViewNavController.xib */,
 			);
 			name = ProfileView;
 			sourceTree = "<group>";
@@ -636,7 +636,6 @@
 			files = (
 				28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */,
 				5FD2C5CD1082E4D300B8B0E4 /* HomeTable.xib in Resources */,
-				5FD2C5DD1082E90B00B8B0E4 /* ProfileView.xib in Resources */,
 				5FD2C62D1082EC2800B8B0E4 /* walk.png in Resources */,
 				5FD2C62F1082EC3600B8B0E4 /* pin.png in Resources */,
 				5FD2C6311082EC4000B8B0E4 /* badge.png in Resources */,
@@ -649,6 +648,7 @@
 				5F524C2C110620A7002A6D66 /* Entitlements.plist in Resources */,
 				5FB11E901109924000456BD6 /* red-cross-icon.png in Resources */,
 				5FB11EAA11099B3800456BD6 /* Coin-icon.png in Resources */,
+				5F011AAD112DAC2B0063F5CB /* ProfileViewNavController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -663,7 +663,6 @@
 				1D3623260D0F684500981E51 /* BoobyTrap3AppDelegate.m in Sources */,
 				5FD2C5A01082B88100B8B0E4 /* HomeNavController.m in Sources */,
 				5FD2C5B51082B92200B8B0E4 /* HomeTableViewController.m in Sources */,
-				5FD2C5D91082E8D900B8B0E4 /* ProfileViewController.m in Sources */,
 				5F9461071099682C004C7CEF /* NearbyPlacesTableView.m in Sources */,
 				5F94618D109A9E4F004C7CEF /* MyCLController.m in Sources */,
 				5FA73518109E5D1C00227231 /* DropTrapsNavController.m in Sources */,
@@ -719,6 +718,7 @@
 				5F4AA07D10E061D0007CA1F6 /* UATableCell.m in Sources */,
 				5F4AA07E10E061D0007CA1F6 /* UAUpdateCell.m in Sources */,
 				5FB11D7A1109634700456BD6 /* AddressAnnotation.m in Sources */,
+				5F011AAC112DAC2B0063F5CB /* ProfileViewNavController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

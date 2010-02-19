@@ -6,7 +6,6 @@ import sys
 import config
 import operator
 from datetime import datetime
-import test
 from django.utils import simplejson
 from django.contrib.auth.models import User
 from django.db.models import Count
@@ -55,9 +54,18 @@ def noTrapWasHere(uid, venue):
 	
 	return reward
 
+def GetUserFeed(request):
+	userProfile = get_or_create_profile(request.user)
+	#events = a.event_set.filter(type__in=['SE', 'ST', 'HT', 'FI', 'GC']).filter(data1=userProfile.id)
+	myActions = ['SE', 'ST', 'HT', 'FI', 'GC']
+	othersActions = ['HT']
+	events = Event.objects.filter(type__in=myActions, user__id__exact=userProfile.id) | Event.objects.filter(type__in=othersActions, data1__exact=userProfile.id)
+	ret = [e.objectify() for e in events]
+	ret = [i.update({'venuename':Venue.objects.get(id=i['id']).name}) for i in ret]
+	print ret
+	return HttpResponse(simplejson.dumps(ret), mimetype='application/json')
+
 def notifyTrapSetter(uid, venue):
-	#TODO 
-	#uid is the user who set off the trap
 	alertNote = 'Someone just hit the trap you left at %s' % (venue.name)
 	theTrapQuery = VenueItem.objects.filter(venue__id__exact=venue.id).filter(dateTimeUsed__isnull=True)
 	trapSetter = theTrapQuery[0].user
@@ -67,6 +75,7 @@ def notifyTrapSetter(uid, venue):
 
 	trapSetter.killCount += 1
 	trapSetter.save()
+	trapSetter.event_set.create(type='HT', data1=uid)
 	##TODO: configify this: From go.urbanairship.com. This is the App key and the APP MASTER SECRET...not the app secret
 
 	#development urban airship values
@@ -156,7 +165,7 @@ def SetTrap(request):
 	
 	ret = {}
 	request.user.userprofile = get_or_create_profile(request.user)
-	request.user.userprofile.event_set.create(type='ST')
+	request.user.userprofile.event_set.create(type='ST', data1=venue.id)
 	userInfo = getUserProfile(uid)
 	return HttpResponse(simplejson.dumps(ret), mimetype='application/json')
 
@@ -183,7 +192,7 @@ def SearchVenue(request, vid=None):
 	tutorial = request.POST.get('tutorial', None)
 
 	request.user.userprofile = get_or_create_profile(request.user)
-	request.user.userprofile.event_set.create(type='SE')
+	request.user.userprofile.event_set.create(type='SE', data1=vid)
 
 
 	uid = request.user.userprofile.id
@@ -217,7 +226,6 @@ def SearchVenue(request, vid=None):
 		#There are traps, take action	
 		ret['isTrapSet'] = True
 		#request.user.userprofile = get_or_create_profile(request.user)
-		request.user.userprofile.event_set.create(type='HT')
 		ret['damage'] = trapWasHere(uid, venue, itemsThatAreTraps)
 		ret['alertStatement'] = "There are traps at this venue. You took %s damage. %s" % (str(ret['damage']['hitpointslost']), optionString)
 	else:
@@ -226,7 +234,7 @@ def SearchVenue(request, vid=None):
 		ret['isTrapSet'] = False
 
 		#request.user.userprofile = get_or_create_profile(request.user)
-		request.user.userprofile.event_set.create(type='NT')
+		request.user.userprofile.event_set.create(type='NT', data1=venue.id)
 
 		if len(itemsThatAreTraps) < len(itemsAtVenue):
 			nonTraps = [i for i in itemsAtVenue if i.item.type !='TP']
