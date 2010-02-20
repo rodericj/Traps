@@ -47,8 +47,6 @@
 
 #import "CompositeSubviewBasedApplicationCell.h"
 
-#define MAX_RATING 5.0
-
 @interface CompositeSubviewBasedApplicationCellContentView : UIView
 {
     ApplicationCell *_cell;

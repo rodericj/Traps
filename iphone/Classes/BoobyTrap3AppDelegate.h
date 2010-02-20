@@ -12,13 +12,16 @@
 @class HomeNavController;
 @class DropTrapsNavController;
 
-#define CURRENT_DATA_VERSION	1
+#define CURRENT_DATA_VERSION	0
 
 #define HOST_IS_PROD		0
 #define HOST_IS_DEV			1
 #define HOST_IS_STAGING		2
 
 #define FB_VIRAL_ON		0
+
+#define INVENTORYSEGMENT 1
+#define USERFEEDSEGMENT 0
 
 #if defined(TARGET_IPHONE_SIMULATOR) 
 

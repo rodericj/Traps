@@ -13,8 +13,7 @@
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
 		28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD733E0D9D9553002E5188 /* MainWindow.xib */; };
-		5F011AAC112DAC2B0063F5CB /* ProfileViewNavController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F011AAA112DAC2B0063F5CB /* ProfileViewNavController.m */; };
-		5F011AAD112DAC2B0063F5CB /* ProfileViewNavController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F011AAB112DAC2B0063F5CB /* ProfileViewNavController.xib */; };
+		5F011B26112E6ADD0063F5CB /* SegmentedTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F011B25112E6ADD0063F5CB /* SegmentedTableViewController.m */; };
 		5F43CAE51085720500543ADB /* home.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F43CAE41085720500543ADB /* home.png */; };
 		5F4AA05E10E061D0007CA1F6 /* Airship.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F4AA01410E061D0007CA1F6 /* Airship.m */; };
 		5F4AA05F10E061D0007CA1F6 /* UADateUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F4AA01610E061D0007CA1F6 /* UADateUtils.m */; };
@@ -69,7 +68,6 @@
 		5FB2D2B210ADC4BB0080DB22 /* TrapInventoryTableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5FB2D2B110ADC4BB0080DB22 /* TrapInventoryTableView.xib */; };
 		5FB2D72410B314CF0080DB22 /* UserProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FB2D72310B314CF0080DB22 /* UserProfile.m */; };
 		5FB2E11510BBB9330080DB22 /* SocialTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FB2E11410BBB9330080DB22 /* SocialTableViewController.m */; };
-		5FB2E18510BC55130080DB22 /* SocialSubviewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5FB2E18410BC55130080DB22 /* SocialSubviewCell.xib */; };
 		5FB2E22310BCE4320080DB22 /* CompositeSubviewBasedApplicationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FB2E22210BCE4320080DB22 /* CompositeSubviewBasedApplicationCell.m */; };
 		5FB2E22810BCE54C0080DB22 /* ApplicationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FB2E22710BCE54C0080DB22 /* ApplicationCell.m */; };
 		5FD2C5A01082B88100B8B0E4 /* HomeNavController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD2C59F1082B88100B8B0E4 /* HomeNavController.m */; };
@@ -103,9 +101,8 @@
 		28AD733E0D9D9553002E5188 /* MainWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* BoobyTrap3_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BoobyTrap3_Prefix.pch; sourceTree = "<group>"; };
-		5F011AA9112DAC2B0063F5CB /* ProfileViewNavController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewNavController.h; sourceTree = "<group>"; };
-		5F011AAA112DAC2B0063F5CB /* ProfileViewNavController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewNavController.m; sourceTree = "<group>"; };
-		5F011AAB112DAC2B0063F5CB /* ProfileViewNavController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileViewNavController.xib; sourceTree = "<group>"; };
+		5F011B24112E6ADD0063F5CB /* SegmentedTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SegmentedTableViewController.h; sourceTree = "<group>"; };
+		5F011B25112E6ADD0063F5CB /* SegmentedTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SegmentedTableViewController.m; sourceTree = "<group>"; };
 		5F43CAE41085720500543ADB /* home.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = home.png; sourceTree = "<group>"; };
 		5F4AA01310E061D0007CA1F6 /* Airship.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Airship.h; sourceTree = "<group>"; };
 		5F4AA01410E061D0007CA1F6 /* Airship.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Airship.m; sourceTree = "<group>"; };
@@ -205,7 +202,6 @@
 		5FB2D72310B314CF0080DB22 /* UserProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserProfile.m; sourceTree = "<group>"; };
 		5FB2E11310BBB9330080DB22 /* SocialTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocialTableViewController.h; sourceTree = "<group>"; };
 		5FB2E11410BBB9330080DB22 /* SocialTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SocialTableViewController.m; sourceTree = "<group>"; };
-		5FB2E18410BC55130080DB22 /* SocialSubviewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = SocialSubviewCell.xib; path = ../SocialSubviewCell.xib; sourceTree = "<group>"; };
 		5FB2E22110BCE4320080DB22 /* CompositeSubviewBasedApplicationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompositeSubviewBasedApplicationCell.h; sourceTree = "<group>"; };
 		5FB2E22210BCE4320080DB22 /* CompositeSubviewBasedApplicationCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CompositeSubviewBasedApplicationCell.m; sourceTree = "<group>"; };
 		5FB2E22610BCE54C0080DB22 /* ApplicationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApplicationCell.h; sourceTree = "<group>"; };
@@ -349,9 +345,8 @@
 		5F011AB4112DAC540063F5CB /* ProfileView */ = {
 			isa = PBXGroup;
 			children = (
-				5F011AA9112DAC2B0063F5CB /* ProfileViewNavController.h */,
-				5F011AAA112DAC2B0063F5CB /* ProfileViewNavController.m */,
-				5F011AAB112DAC2B0063F5CB /* ProfileViewNavController.xib */,
+				5F011B24112E6ADD0063F5CB /* SegmentedTableViewController.h */,
+				5F011B25112E6ADD0063F5CB /* SegmentedTableViewController.m */,
 			);
 			name = ProfileView;
 			sourceTree = "<group>";
@@ -535,7 +530,6 @@
 				5FB2E22010BCE4320080DB22 /* Composite Subview */,
 				5FB2E11310BBB9330080DB22 /* SocialTableViewController.h */,
 				5FB2E11410BBB9330080DB22 /* SocialTableViewController.m */,
-				5FB2E18410BC55130080DB22 /* SocialSubviewCell.xib */,
 			);
 			name = SocialViews;
 			sourceTree = "<group>";
@@ -642,13 +636,11 @@
 				5F43CAE51085720500543ADB /* home.png in Resources */,
 				5FA73520109E653500227231 /* VenueDetailView.xib in Resources */,
 				5FB2D2B210ADC4BB0080DB22 /* TrapInventoryTableView.xib in Resources */,
-				5FB2E18510BC55130080DB22 /* SocialSubviewCell.xib in Resources */,
 				5FD6A3D610CCD50B00A10065 /* FBConnect.bundle in Resources */,
 				5FF8C01D11029BD8007AD75A /* Icon.png in Resources */,
 				5F524C2C110620A7002A6D66 /* Entitlements.plist in Resources */,
 				5FB11E901109924000456BD6 /* red-cross-icon.png in Resources */,
 				5FB11EAA11099B3800456BD6 /* Coin-icon.png in Resources */,
-				5F011AAD112DAC2B0063F5CB /* ProfileViewNavController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -718,7 +710,7 @@
 				5F4AA07D10E061D0007CA1F6 /* UATableCell.m in Sources */,
 				5F4AA07E10E061D0007CA1F6 /* UAUpdateCell.m in Sources */,
 				5FB11D7A1109634700456BD6 /* AddressAnnotation.m in Sources */,
-				5F011AAC112DAC2B0063F5CB /* ProfileViewNavController.m in Sources */,
+				5F011B26112E6ADD0063F5CB /* SegmentedTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

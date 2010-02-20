@@ -114,10 +114,10 @@ class Message(models.Model):
 
 class Event(models.Model):
 	EVENT_CHOICES = (
-		('SE', 'Search'),
+		('SE', 'Searched'),
 		('GV', 'Get Venue'),
 		('FN', 'Find Nearby Venues'),
-		('ST', 'Set Trap'),
+		('ST', 'Set a Trap at'),
 		('NT', 'No Trap'),
 		('HT', 'Hit Trap'),
 		('FI', 'Found Item'),

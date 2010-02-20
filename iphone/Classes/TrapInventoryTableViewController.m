@@ -41,7 +41,7 @@
 // Customize the number of rows in the table view.
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 	UserProfile *profile = [UserProfile sharedSingleton];
-	NSArray *inventory = (NSArray *)[profile getInventory];
+	NSArray *inventory = [profile getInventory];
 	return [inventory count];
 }
 
@@ -56,7 +56,7 @@
     }
     
 	UserProfile *profile = [UserProfile sharedSingleton];
-	NSArray *inventory = (NSArray *)[profile getInventory];
+	NSArray *inventory = [profile getInventory];
 
     // Set up the cell...
 	//cell.text = [[inventory objectAtIndex:[indexPath row]] objectForKey:@"name"];
@@ -67,7 +67,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	UserProfile *profile = [UserProfile sharedSingleton];
-	NSArray *inventory = (NSArray *)[profile getInventory];
+	NSArray *inventory = [profile getInventory];
 	NSString *trap = [[inventory objectAtIndex:[indexPath row]] objectForKey:@"name"];
 	//NSInteger *iid = (NSInteger *)[[inventory objectAtIndex:[indexPath row]] objectForKey:@"id"];
 	NSString *siid = [NSString stringWithFormat:@"%@", (NSInteger *)[[inventory objectAtIndex:[indexPath row]] objectForKey:@"id"]];

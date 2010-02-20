@@ -15,6 +15,8 @@
 @synthesize whichTrap;
 @synthesize whichVenue;
 @synthesize userImage;
+@synthesize userFeed;
+
 //@synthesize tutorial;
 + (UserProfile *)sharedSingleton
 {
@@ -58,11 +60,14 @@
 -(NSInteger *)getTrapsSetCount{
 	return (NSInteger *)[profile objectForKey:@"trapsSetCount"];
 }
--(NSDictionary *)getInventory{
+-(NSArray *)getInventory{
 	return [profile objectForKey:@"inventory"];
 }
 -(NSString *)getPicture{
 	return [fbprofile objectForKey:@"pic_square"];
+}
+-(NSArray *)getUserFeed{
+	return userFeed;
 }
 -(int)getTutorial{
 	return tutorial;

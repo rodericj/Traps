@@ -1,6 +1,6 @@
 from django.shortcuts import HttpResponse, HttpResponseRedirect, render_to_response
 from django.contrib.auth import authenticate, login, logout
-from Traps.traps.models import Venue, Item, TrapsUser, VenueItem
+from Traps.traps.models import Venue, Item, TrapsUser, VenueItem, Event
 import urllib
 import sys
 import config
@@ -56,13 +56,14 @@ def noTrapWasHere(uid, venue):
 
 def GetUserFeed(request):
 	userProfile = get_or_create_profile(request.user)
-	#events = a.event_set.filter(type__in=['SE', 'ST', 'HT', 'FI', 'GC']).filter(data1=userProfile.id)
 	myActions = ['SE', 'ST', 'HT', 'FI', 'GC']
 	othersActions = ['HT']
 	events = Event.objects.filter(type__in=myActions, user__id__exact=userProfile.id) | Event.objects.filter(type__in=othersActions, data1__exact=userProfile.id)
 	ret = [e.objectify() for e in events]
-	ret = [i.update({'venuename':Venue.objects.get(id=i['id']).name}) for i in ret]
-	print ret
+	#don't update, must do something else
+	for i in ret:
+		i['name']=i['type'] + " " +Venue.objects.get(id=i['data1']).name
+
 	return HttpResponse(simplejson.dumps(ret), mimetype='application/json')
 
 def notifyTrapSetter(uid, venue):
@@ -192,7 +193,6 @@ def SearchVenue(request, vid=None):
 	tutorial = request.POST.get('tutorial', None)
 
 	request.user.userprofile = get_or_create_profile(request.user)
-	request.user.userprofile.event_set.create(type='SE', data1=vid)
 
 
 	uid = request.user.userprofile.id
@@ -218,6 +218,7 @@ def SearchVenue(request, vid=None):
 		v.save()
 
 	venue = Venue.objects.get(foursquareid=vid)
+	request.user.userprofile.event_set.create(type='SE', data1=venue.id)
 	itemsAtVenue = venue.venueitem_set.filter()
 	itemsThatAreTraps = [i for i in itemsAtVenue if i.item.type =='TP' and i.dateTimeUsed==None]
 	

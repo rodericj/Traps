@@ -16,12 +16,15 @@
 	NSString *whichTrap;
 	NSString *whichVenue;
 	NSData *userImage;
+	NSArray *userFeed;
+	
 	int tutorial;
 }
 @property (nonatomic, retain) NSDictionary *profile;
 @property (nonatomic, retain) NSArray *locations;
 @property (nonatomic, retain) NSDictionary *fbprofile;
 @property (nonatomic, retain) NSData *userImage;
+@property (nonatomic, retain) NSArray *userFeed;
 @property (retain) NSString *whichTrap;
 @property (retain) NSString *whichVenue;
 //@property int tutorial;
@@ -42,7 +45,8 @@
 -(NSInteger *)getKillCount;
 -(NSInteger *)getLevel;
 -(NSInteger *)getTrapsSetCount;
--(NSDictionary *)getInventory;
+-(NSArray *)getInventory;
+//-(NSArray *)getUserFeed;
 -(NSString *)getPicture;
 -(int)getTutorial;
 -(void)setTutorial:(int)tutorial;
