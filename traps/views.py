@@ -62,7 +62,8 @@ def GetUserFeed(request):
 	ret = [e.objectify() for e in events]
 	#don't update, must do something else
 	for i in ret:
-		i['name']=i['type'] + " " +Venue.objects.get(id=i['data1']).name
+		#TODO Boooooo default to the first venue? Ghetto
+		i['name']=i['type'] + " " +Venue.objects.get(id=i.get('data1', 1)).name
 
 	return HttpResponse(simplejson.dumps(ret), mimetype='application/json')
 
