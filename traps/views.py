@@ -63,6 +63,7 @@ def GetUserFeed(request):
 	#don't update, must do something else
 	for i in ret:
 		#TODO Boooooo default to the first venue? Ghetto
+		Venue.objects.get(id=i.get('data1', 1)).name
 		i['name']=i['type'] + " " +Venue.objects.get(id=i.get('data1', 1)).name
 
 	return HttpResponse(simplejson.dumps(ret), mimetype='application/json')
