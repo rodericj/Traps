@@ -63,7 +63,7 @@ def GetUserFeed(request):
 	#don't update, must do something else
 	for i in ret:
 		#TODO Boooooo default to the first venue? Ghetto
-		if len(i) > 0:	
+		if len(i['data']) > 0:	
 			name = Venue.objects.get(id=i['data1']).name
 		else:
 			name = ""
