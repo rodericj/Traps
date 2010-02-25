@@ -123,7 +123,6 @@ def getUserInventory(uid):
 	traps = TrapsUser.objects.get(id=uid).useritem_set.all()
 	
 	try:
-		#annotated_inv = TrapsUser.objects.get(id=1).useritem_set.all().values('item').annotate(Count('item')).order_by()
 		annotated_inv = traps.values('item').annotate(Count('item')).order_by()
 	except:
 		raise
@@ -151,7 +150,6 @@ def SetTrap(request):
 	user.iphoneDeviceToken = iphonetoken
 	user.trapsSetCount += 1;
 	user.save()
-	#print user
 	
 	#get the item from the user and subtract it
 	alltraps = user.useritem_set.all()
@@ -266,7 +264,7 @@ def SearchVenue(request, vid=None):
 
 	#if this user is in tutorial mode, we'll have to return a different result
 	#if tutorial and request.user.userprofile.tutorial == 2:
-	if int(tutorial) == 2:
+	if int(tutorial) == 4:
 
 		#If they hit a trap during the tutorial, I wanna make it up to them
 		damage = ret.get('damage', {'hitpointslost':0})

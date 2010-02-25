@@ -51,7 +51,7 @@
 	if([userProfile getTutorial] == 2){
 		UIAlertView *alert;
 		//NSLog(@"I see you found a nice new venue. You should try searching for stuff here. That's the easiest way to find cool things");
-		NSString *alertStatement = @"Great, this is where you'll find all the nearby locations. Why don't you go ahead and select one. From there we can search and lay traps";
+		NSString *alertStatement = @"Great! This is where you'll find all the nearby locations. Why don't you go ahead and select one. From there you can search and lay traps";
 		[userProfile setTutorial:3];
 		alert = [[UIAlertView alloc] initWithTitle:@"Tutorial" message:alertStatement delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil]; 
 		[alert show];
