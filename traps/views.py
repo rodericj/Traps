@@ -60,6 +60,7 @@ def GetUserFeed(request):
 	othersActions = ['HT']
 	events = Event.objects.filter(type__in=myActions, user__id__exact=userProfile.id) | Event.objects.filter(type__in=othersActions, data1__exact=userProfile.id)
 	ret = [e.objectify() for e in events]
+	ret.sort(lambda x,y:cmp(y['datetime'],x['datetime']))
 	#ret = [i for i in ret if 
 	#don't update, must do something else
 	for i in ret:
