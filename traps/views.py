@@ -60,6 +60,7 @@ def GetUserFeed(request):
 	othersActions = ['HT']
 	events = Event.objects.filter(type__in=myActions, user__id__exact=userProfile.id) | Event.objects.filter(type__in=othersActions, data1__exact=userProfile.id)
 	ret = [e.objectify() for e in events]
+	#ret = [i for i in ret if 
 	#don't update, must do something else
 	for i in ret:
 		#TODO Boooooo default to the first venue? Ghetto
@@ -127,7 +128,7 @@ def getUserInventory(uid):
 	except:
 		raise
 		
-	inventory = [{'name':Item.objects.get(id=i['item']).name, 'id':Item.objects.get(id=i['item']).id, 'count':i['item__count']} for i in annotated_inv]
+	inventory = [{'name':Item.objects.get(id=i['item']).name, 'id':Item.objects.get(id=i['item']).id, 'count':i['item__count'], 'type':Item.objects.get(id=i['item']).type} for i in annotated_inv]
 	return inventory
 
 def getUserProfile(uid):
@@ -195,7 +196,7 @@ def SearchVenue(request, vid=None):
 	if vid == None:
 		vid = request.POST['vid']
 	
-	tutorial = request.POST.get('tutorial', None)
+	tutorial = request.POST.get('tutorial', 3)
 
 	request.user.userprofile = get_or_create_profile(request.user)
 
@@ -264,7 +265,8 @@ def SearchVenue(request, vid=None):
 	ret['profile']['inventory'] = getUserInventory(uid)
 
 	#if this user is in tutorial mode, we'll have to return a different result
-	if tutorial and request.user.userprofile.tutorial == 2:
+	#if tutorial and request.user.userprofile.tutorial == 2:
+	if int(tutorial) == 2:
 
 		#If they hit a trap during the tutorial, I wanna make it up to them
 		damage = ret.get('damage', {'hitpointslost':0})

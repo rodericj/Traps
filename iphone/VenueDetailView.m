@@ -26,12 +26,13 @@
 
 - (void)doSearchVenue{
 	NSLog(@"venue that we clicked on: %@", venueInfo);
+	UserProfile *profile = [UserProfile sharedSingleton];
 	NetworkRequestOperation *op = [[NetworkRequestOperation alloc] init];
 	[op setTargetURL:@"SearchVenue"];
 	op.arguments = [[NSMutableDictionary alloc] init];
 	[op.arguments setObject:[venueInfo objectForKey:@"id"] forKey:@"vid"];
 	[op.arguments setObject:[[UIDevice currentDevice] uniqueIdentifier] forKey:@"uid"];
-	[op.arguments setObject:@"2" forKey:@"tutorial"];
+	[op.arguments setObject:[NSString stringWithFormat:@"%d", [profile getTutorial]] forKey:@"tutorial"];
 	op.callingDelegate = self;
 	queue = [[NSOperationQueue alloc] init];
 	[queue addOperation:op];
@@ -54,28 +55,16 @@
 	[profile newProfileFromDictionary:profileDict];
 
 	UIAlertView *alert;
-	NSLog(@"hasTraps");
-	NSLog(@"hasTraps is %@", (NSNumber *)[returnData objectForKey:@"hasTraps"]);
 	NSNumber *hasTraps = (NSNumber *)[returnData objectForKey:@"hasTraps"];
-	NSLog(@"hasTraps1");
 
 	if([hasTraps boolValue]== YES){
-		NSLog(@"hasTraps2");
-
 		alert = [[UIAlertView alloc] initWithTitle:@"Venue has been Searched" message:alertStatement delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil]; 
 	}
 	else{
-		NSLog(@"hasTraps3");
-
 		alert = [[UIAlertView alloc] initWithTitle:@"Venue has been Searched" message:alertStatement delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil]; 
 	}
-	NSLog(@"hasTraps4");
-
 	[alert show]; 
-	NSLog(@"hasTraps5");
-
 	[alert release]; 
-	NSLog(@"hasTraps6");
 
 	[searchButton setEnabled:YES];
 
