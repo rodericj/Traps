@@ -271,7 +271,7 @@ def SearchVenue(request, vid=None):
 		request.user.userprofile.hitPoints += damage['hitpointslost']
 
 		#must give the guy the egg/newbie badge
-		golden_egg = Item.objects.get(id=config.golden_egg_iid)
+		#golden_egg = Item.objects.get(id=config.golden_egg_iid)
 		banana_trap = Item.objects.get(id=config.banana_iid)
 		#request.user.userprofile.useritem_set.create(item=golden_egg)
 		request.user.userprofile.useritem_set.create(item=banana_trap)
