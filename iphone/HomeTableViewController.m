@@ -34,9 +34,10 @@
 	delegate.rootController.selectedIndex = 1;
 }
 -(void)updateMiniProfile:(UserProfile *)profile{
-	NSLog(@"updating mini profile here %@", profile);
+	NSLog(@"updating mini profile here %@ %@", profile, [profile getCoinCount]);
+	UserProfile *userProfile = [UserProfile sharedSingleton];
+	NSLog(@"the stored mini profile here %@", [userProfile getCoinCount]);
 	[userName setText:[profile getUserName]];
-	NSLog(@"updated username");
 	
 	NSString *level = [NSString stringWithFormat:@"%@", [profile getLevel]];
 	NSString *coinCount = [NSString stringWithFormat:@"%@", [profile getCoinCount]];
@@ -49,18 +50,6 @@
 	[userTrapsSet setText:trapsSet];
 	[userKillCount setText:killCount];
 	[userHitPoints setText:hitPoints];
-	
-	//TODO
-	//may not actually need this if i can just set the text above from the [profile xxxx]
-//	[level release];
-//	[coinCount release];
-//	[trapsSet release];
-//	[killCount release];
-//	[hitPoints release];
-	
-	//[self reloadData];
-	//NSArray *allKeys = [inventory allKeys];
-	//NSLog(@"first one is: %@", [inventory objectForKey:<#(id)aKey#>);
 }
 
 - (void)viewDidLoad {
@@ -68,25 +57,9 @@
 	NSLog(@"showing home tableview");
 	
 	self.title = NSLocalizedString(@"Home", @"Home Title");	
-//	NSMutableArray *array = [[NSArray alloc] initWithObjects:@"Profile", @"Wall",@"Drop History", @"Inbox",@"Leaderboard",@"Store", nil];
-	//NSMutableArray *array = [[NSArray alloc] initWithObjects:@"Drop Traps", @"Inventory", @"Social", @"Store", nil];
-	
-	//NSDictionary *inventory = [NSDictionary alloc];
-	//UserProfile *userProfile = [UserProfile sharedSingleton];
-
-	//NSLog(@"profile returned is: %@", userProfile);
-	//inventory = [userProfile getInventory];
-	//NSLog(@"inventory %@", inventory);
-	//NSDictionary *keys = [inventory allKeys];
-	//self.menuArray = keys;
-	//[keys release];
-	//self.menuArray = array;
-	//[inventory release];
-	
 	mySession = [[FBSession sessionForApplication:@"3243a6e2dd3a0d084480d05f301cba85"
 								secret:@"d8611553a286dce3531353b3de53ef2e"
 								delegate:self] retain];
-
 	hasAppeared = FALSE;
 }
 
@@ -107,12 +80,9 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-	NSLog(@"viewWillAppear in home table view controller");
 	//[self updateMiniProfile:[NSDictionary dictionaryWithContentsOfFile:@"Profile.p list"]];
 	UserProfile *userProfile = [UserProfile sharedSingleton];
-	NSLog(@"in updateMiniProfile viewWillAppear");
 	[self updateMiniProfile:userProfile];
-	NSLog(@"out of updateMiniProfile viewWillAppear");
 	FBLoginButton *button = [[[FBLoginButton alloc] init] autorelease];
 	[self.view addSubview:button];
 	[super viewWillAppear:animated];
@@ -148,9 +118,7 @@
 	UserProfile *userProfile = [UserProfile sharedSingleton];
 	[userProfile newProfileFromDictionary:emptyProfile];
 	[emptyProfile release];
-	NSLog(@"%@", [userProfile getUserName]);
 	//NSLog(@"update with this username %@", [userProfile obje)
-	NSLog(@"in updateMiniProfile pageLoaded");
 	[self updateMiniProfile:userProfile];
 	
 	NetworkRequestOperation *op = [[NetworkRequestOperation alloc] init];
@@ -169,8 +137,7 @@
 
 - (void)session:(FBSession *)session didLogin:(FBUID)uid{
 	
-	NSLog(@"did log in from facebook here and the session is %@ %d", 
-		  [session description], uid);
+	[session description], uid);
 	//Do fb query
 	NSString *fql = [NSString stringWithFormat:
 					 @"select uid, first_name, last_name, name, pic_square from user where uid= %lld", 
@@ -180,9 +147,7 @@
 }
 
 - (void) request:(FBRequest *)request didLoad:(id)result {
-	NSLog(@"Request has returned %@", request);
 	NSArray *users = result;
-	NSLog(@"users returned is %@", users);
 	NSDictionary *user = [users objectAtIndex:0];
 	
 	UserProfile *sharedSingleton = [UserProfile sharedSingleton];
@@ -223,9 +188,7 @@
 	NSNumber *tutorialValue = (NSNumber *)[webRequestResults objectForKey:@"tutorialValue"];
 
 	if([tutorialValue intValue] == 1){
-		NSLog(@"looking in tutorial 1 %@", webRequestResults);
 		[userProfile setTutorial:2];
-		NSLog(@"tutorial after setting: %d", [userProfile getTutorial]);
 		UIAlertView *alert;
 		NSString *tutorialText = [webRequestResults objectForKey:@"tutorialText"];
 		alert = [[UIAlertView alloc] initWithTitle:@"Tutorial" 
@@ -253,7 +216,6 @@
 
 // Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"in cellforrowatindexpath for home view for each row. should print the inventory");
     static NSString *CellIdentifier = @"Cell";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -264,7 +226,6 @@
 	NSArray *inventory = [profile getInventory];
     // Set up the cell...
 	NSString *cellText = [NSString stringWithFormat:@"%@ %@",  [[inventory objectAtIndex:[indexPath row]] objectForKey:@"name"], [[inventory objectAtIndex:[indexPath row]] objectForKey:@"count"]];
-	NSLog(@"celltext %@", cellText);
 	[cell.textLabel setText:cellText];
     return cell;
 }

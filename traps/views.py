@@ -34,7 +34,7 @@ def setTutorial(user_id, json):
 		json['tutorialValue'] = 4
 	return json
 
-def noTrapWasHere(uid, venue):
+def noTrapWasHere(user, venue):
 
 	#potential coin reward - goes up 1 coin per minute to the max of that venue
 	timeDelta = datetime.now()-venue.lastUpdated
@@ -45,7 +45,7 @@ def noTrapWasHere(uid, venue):
 	if venue.checkinCount == 0:
 		reward['coins'] = 3
 
-	user = TrapsUser.objects.get(id=uid)
+	#user = TrapsUser.objects.get(id=uid)
 	user.coinCount += calculatedRewardValue
 	user.save()
 	reward['usersCoinTotal'] = user.coinCount
@@ -58,7 +58,7 @@ def GetUserFeed(request):
 	userProfile = get_or_create_profile(request.user)
 	myActions = ['SE', 'ST', 'HT', 'FI', 'GC']
 	othersActions = ['HT']
-	events = Event.objects.filter(type__in=myActions, user__id__exact=userProfile.id) | Event.objects.filter(type__in=othersActions, data1__exact=userProfile.id)
+	events = Event.objects.filter(type__in=myActions, user__id__exact=userProfile.id) | Event.objects.filter(type__in=othersActions, data1__exact=userProfile.id)[:10]
 	ret = [e.objectify() for e in events]
 	ret.sort(lambda x,y:cmp(y['datetime'],x['datetime']))
 	#ret = [i for i in ret if 
@@ -103,8 +103,8 @@ def notifyTrapSetter(uid, venue):
 		pass
 	
 
-def trapWasHere(uid, venue, itemsThatAreTraps):
-	notifyTrapSetter(uid, venue)	
+def trapWasHere(user, venue, itemsThatAreTraps):
+	#notifyTrapSetter(uid, venue)	
 	totalDamage = 0
 	trapData = [] 
 	for trap in itemsThatAreTraps:
@@ -114,7 +114,7 @@ def trapWasHere(uid, venue, itemsThatAreTraps):
 		trapData.append({'trapname':trap.item.name,'trapvalue':trap.item.value, 'trapperid':trap.user_id, 'trappername':trap.user.user.username})
 		trap.dateTimeUsed = datetime.now() 
 		trap.save()
-	user = TrapsUser.objects.get(id=uid)
+	#user = TrapsUser.objects.get(id=uid)
 	user.hitPoints = max(user.hitPoints - totalDamage, 0)
 	user.save()
 	return {'traps':trapData, 'hitpointslost':totalDamage , 'hitpointsleft': user.hitPoints}
@@ -172,7 +172,9 @@ def SetTrap(request):
 	ret = {}
 	request.user.userprofile = get_or_create_profile(request.user)
 	request.user.userprofile.event_set.create(type='ST', data1=venue.id)
-	userInfo = getUserProfile(uid)
+	#ret = getUserProfile(uid)
+	user = TrapsUser.objects.get(id=uid)
+	ret['profile'] = user.objectify()
 	return HttpResponse(simplejson.dumps(ret), mimetype='application/json')
 
 def giveItemsAtVenueToUser(user, nonTrapVenueItems):
@@ -232,10 +234,10 @@ def SearchVenue(request, vid=None):
 		#There are traps, take action	
 		ret['isTrapSet'] = True
 		#request.user.userprofile = get_or_create_profile(request.user)
-		ret['damage'] = trapWasHere(uid, venue, itemsThatAreTraps)
+		notifyTrapSetter(uid, venue)	
+		ret['damage'] = trapWasHere(request.user.userprofile, venue, itemsThatAreTraps)
 		ret['alertStatement'] = "There are traps at this venue. You took %s damage. %s" % (str(ret['damage']['hitpointslost']), optionString)
 	else:
-		#There are traps, take action	
 		#no traps here, give the go ahead to get coins and whatever
 		ret['isTrapSet'] = False
 
@@ -248,7 +250,7 @@ def SearchVenue(request, vid=None):
 			#The assumption here is that if it is not a trap, I should get it
 			giveItemsAtVenueToUser(request.user.userprofile, nonTraps)
 
-		ret['reward'] = noTrapWasHere(uid, venue)
+		ret['reward'] = noTrapWasHere(request.user.userprofile, venue)
 		ret['alertStatement'] = ""
 		
 		alertStatement = "There are no traps here. You got %s coins." % ret['reward']['coins'] 
@@ -262,6 +264,7 @@ def SearchVenue(request, vid=None):
 	#ret['profile'] = request.user.userprofile.objectify()
 	ret['profile'] = request.user.userprofile.objectify()
 	ret['profile']['inventory'] = getUserInventory(uid)
+	
 
 	#if this user is in tutorial mode, we'll have to return a different result
 	#if tutorial and request.user.userprofile.tutorial == 2:

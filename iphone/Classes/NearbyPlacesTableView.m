@@ -119,7 +119,7 @@
 	NSArray *groups = [webRequestResults objectForKey:@"groups"];
 	NSDictionary *venues = [groups objectAtIndex:0];
 	NSArray *venues1 = [venues objectForKey:@"venues"];
-	NSLog(@"venues1 is: %@", venues1);
+	//NSLog(@"venues1 is: %@", venues1);
 	UserProfile *userProfile = [UserProfile sharedSingleton];
 	[userProfile setLocations:venues1];
 	
@@ -155,7 +155,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 	UserProfile *userProfile = [UserProfile sharedSingleton];
 	NSArray *places = [userProfile locations];
-	NSLog(@"places at this point is: %@", places);
+	//NSLog(@"places at this point is: %@", places);
 	NSLog(@"reloading the tableView for nearby places %d", [places count]);
 
 	//NSArray *places = [NSArray arrayWithContentsOfFile:@"NearbyPlaces.plist"];

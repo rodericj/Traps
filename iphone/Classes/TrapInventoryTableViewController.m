@@ -124,6 +124,13 @@
 	[alert show]; 
 	[alert release]; 
 	
+	//Use the new data to set the profile
+	UserProfile *profile = [UserProfile sharedSingleton];
+	NSLog(@"old profile1 ");
+	[profile printUserProfile];
+	NSDictionary *profileDict = [results objectForKey:@"profile"];
+	[profile newProfileFromDictionary:profileDict];
+	
 	if (FB_VIRAL_ON){
 		FBStreamDialog* dialog = [[[FBStreamDialog alloc] init] autorelease]; 
 		dialog.delegate = self; 

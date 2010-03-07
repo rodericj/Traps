@@ -92,22 +92,14 @@
 	[prefs setObject:newFBProfile forKey:@"fbprofile"];
 	self.fbprofile = newFBProfile;
 	NSLog(@"writing the fbprofile to fbprofile.p list");
-	//[newFBProfile writeToFile:@"FBProfile.plist" atomically:TRUE];
-//	if(fbprofile != newFBProfile){
-//		[fbprofile release];
-//		fbprofile = [newFBProfile copy];
-//	}
+
 }
 
 -(void)newProfileFromDictionary:(NSDictionary *)newProfile{
 	NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
 	[prefs setObject:newProfile forKey:@"profile"];
+	NSLog(@"profiles: 1 %@ %@", self.profile, newProfile);
 	self.profile = newProfile;
-	
-	//[newProfile writeToFile:@"Profile.plist" atomically:TRUE];
-//	if(profile != newProfile){
-//		[profile release];
-//		profile = [newProfile copy];
-//	}
+	NSLog(@"profiles: 2 %@ %@", self.profile, newProfile);
 }
 @end

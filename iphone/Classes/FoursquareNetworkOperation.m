@@ -58,7 +58,7 @@
 	[parser release];
 	
 	//NSDictionary *resultsDict = [results JSONValue];
-	NSLog(@"returned from foursquare: %@", resultsDict);
+	//NSLog(@"returned from foursquare: %@", resultsDict);
 	[callingDelegate performSelectorOnMainThread:@selector(pageLoaded:)
 									  withObject:resultsDict
 								   waitUntilDone:NO];
