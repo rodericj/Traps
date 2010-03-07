@@ -37,7 +37,7 @@ def setTutorial(user_id, json):
 def noTrapWasHere(user, venue):
 
 	#potential coin reward - goes up 1 coin per minute to the max of that venue
-	timeDelta = datetime.now()-venue.lastUpdated
+	timeDelta = datetime.now() - venue.lastUpdated
 	minutesSinceSearch = timeDelta.seconds/60
 	calculatedRewardValue = min(venue.coinValue, minutesSinceSearch)
 	reward = {'coins': calculatedRewardValue}
@@ -69,7 +69,7 @@ def GetUserFeed(request):
 			name = Venue.objects.get(id=i['data1']).name
 		else:
 			name = ""
-		i['name']=i['type'] + " " +name
+		i['name'] = i['type'] + " " +name
 
 	return HttpResponse(simplejson.dumps(ret), mimetype='application/json')
 
@@ -128,7 +128,7 @@ def getUserInventory(uid):
 	except:
 		raise
 		
-	inventory = [{'name':Item.objects.get(id=i['item']).name, 'id':Item.objects.get(id=i['item']).id, 'count':i['item__count'], 'type':Item.objects.get(id=i['item']).type} for i in annotated_inv]
+	inventory = [{'name':Item.objects.get(id = i['item']).name, 'id':Item.objects.get(id = i['item']).id, 'count':i['item__count'], 'type':Item.objects.get(id = i['item']).type} for i in annotated_inv]
 	return inventory
 
 def getUserProfile(uid):
@@ -227,7 +227,7 @@ def SearchVenue(request, vid=None):
 	venue = Venue.objects.get(foursquareid=vid)
 	request.user.userprofile.event_set.create(type='SE', data1=venue.id)
 	itemsAtVenue = venue.venueitem_set.filter()
-	itemsThatAreTraps = [i for i in itemsAtVenue if i.item.type =='TP' and i.dateTimeUsed==None]
+	itemsThatAreTraps = [i for i in itemsAtVenue if i.item.type == 'TP' and i.dateTimeUsed == None]
 	
 	alertStatement = ''
 	if len(itemsThatAreTraps) > 0:
@@ -245,7 +245,7 @@ def SearchVenue(request, vid=None):
 		request.user.userprofile.event_set.create(type='NT', data1=venue.id)
 
 		if len(itemsThatAreTraps) < len(itemsAtVenue):
-			nonTraps = [i for i in itemsAtVenue if i.item.type !='TP']
+			nonTraps = [i for i in itemsAtVenue if i.item.type != 'TP']
 
 			#The assumption here is that if it is not a trap, I should get it
 			giveItemsAtVenueToUser(request.user.userprofile, nonTraps)
@@ -308,7 +308,7 @@ def GetFriends(request):
 
 	#convert the string to an array of dicts
 	friendArray = simplejson.loads(str(friendString))
-	myself = {'is_self':True, u'first_name':u.first_name, u'last_name': u.last_name, u'uid': u.username, u'name': u.first_name+" " +u.last_name+" (you)"}
+	myself = {'is_self':True, u'first_name':u.first_name, u'last_name': u.last_name, u'uid': u.username, u'name': u.first_name + " " +u.last_name + " (you)"}
 	
 	friendArray.append(myself)
 	#get a list of the friend ids
@@ -345,7 +345,7 @@ def GetUserDropHistory(request):
 	userprofile = get_or_create_profile(request.user)
 	#relevantHistoryItems = ['LI', 'PC', 'SE', 'UI', 'HT', 'ST']
 	#history=userprofile.event_set.filter(type__in=relevantHistoryItems)	
-	history=VenueItem.objects.filter(user__id__exact=userprofile.id)
+	history = VenueItem.objects.filter(user__id__exact=userprofile.id)
 	jsonHistory = [h.objectify() for h in history]
 		
 	return HttpResponse(simplejson.dumps(jsonHistory), mimetype='application/json')
@@ -353,7 +353,7 @@ def GetUserDropHistory(request):
 def GetUserHistory(request):
 	userprofile = get_or_create_profile(request.user)
 	relevantHistoryItems = ['LI', 'PC', 'SE', 'UI', 'HT', 'ST']
-	history=userprofile.event_set.filter(type__in=relevantHistoryItems)	
+	history = userprofile.event_set.filter(type__in=relevantHistoryItems)	
 	jsonHistory = [h.objectify() for h in history]
 		
 	return HttpResponse(simplejson.dumps(jsonHistory), mimetype='application/json')
@@ -375,7 +375,7 @@ def get_or_create_profile(user):
 
 def IPhoneLogin(request):
 	jsonprofile = {}
-	profile=None
+	profile = None
 
 	#TODO error case and feed it back to the iphone
 	#1. user name already exists does not work
