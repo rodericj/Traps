@@ -80,6 +80,7 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+	NSLog(@"viewWillAppear in home table view controller");
 	//[self updateMiniProfile:[NSDictionary dictionaryWithContentsOfFile:@"Profile.p list"]];
 	UserProfile *userProfile = [UserProfile sharedSingleton];
 	[self updateMiniProfile:userProfile];
@@ -137,7 +138,6 @@
 
 - (void)session:(FBSession *)session didLogin:(FBUID)uid{
 	
-	[session description], uid);
 	//Do fb query
 	NSString *fql = [NSString stringWithFormat:
 					 @"select uid, first_name, last_name, name, pic_square from user where uid= %lld", 

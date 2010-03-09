@@ -47,7 +47,7 @@
 	NSData *urlData = [NSURLConnection sendSynchronousRequest:request
 											returningResponse:&response
 														error:&error];
-	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
 
 	NSString *results = [[[NSString alloc] initWithData:urlData encoding:NSUTF8StringEncoding] autorelease];	
 	//NSDictionary *resultsDict = [results JSONValue];
@@ -58,6 +58,8 @@
 
 	
 	NSLog(@"results Dict from Network request %@", resultsDict);
+	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+
 	[callingDelegate performSelectorOnMainThread:@selector(pageLoaded:)
                                            withObject:resultsDict
                                         waitUntilDone:NO];
