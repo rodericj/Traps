@@ -115,7 +115,6 @@
 }
 
 - (void)pageLoaded:(NSDictionary*)webRequestResults{
-	NSLog(@"trap inventory table webrequest returned %@", webRequestResults);
 	[self didDropTrap:webRequestResults];
 }
 
@@ -123,6 +122,12 @@
 	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Boom" message:@"You've just set a trap." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil]; 
 	[alert show]; 
 	[alert release]; 
+	
+	//Use the new data to set the profile
+	UserProfile *profile = [UserProfile sharedSingleton];
+	[profile printUserProfile];
+	NSDictionary *profileDict = [results objectForKey:@"profile"];
+	[profile newProfileFromDictionary:profileDict];
 	
 	if (FB_VIRAL_ON){
 		FBStreamDialog* dialog = [[[FBStreamDialog alloc] init] autorelease]; 

@@ -25,7 +25,6 @@
 }
 
 - (void)doSearchVenue{
-	NSLog(@"venue that we clicked on: %@", venueInfo);
 	UserProfile *profile = [UserProfile sharedSingleton];
 	NetworkRequestOperation *op = [[NetworkRequestOperation alloc] init];
 	[op setTargetURL:@"SearchVenue"];
@@ -41,18 +40,17 @@
 }
 
 - (void)pageLoaded:(NSDictionary*)webRequestResults{
-	NSLog(@"venue detail webrequest returned %@", webRequestResults);
 	[self didSearchVenue:webRequestResults];
-
-		
 }
 
 - (void)didSearchVenue:(NSDictionary *)returnData{
 	NSString *alertStatement = [returnData objectForKey:@"alertStatement"];
 
 	UserProfile *profile = [UserProfile sharedSingleton];
+	[profile printUserProfile];
 	NSDictionary *profileDict = [returnData objectForKey:@"profile"];
 	[profile newProfileFromDictionary:profileDict];
+	[profile printUserProfile];
 
 	UIAlertView *alert;
 	NSNumber *hasTraps = (NSNumber *)[returnData objectForKey:@"hasTraps"];
@@ -71,11 +69,9 @@
 }
 - (void)alertView:(UIAlertView *)alertView  clickedButtonAtIndex:(NSInteger)buttonIndex {
 	if(buttonIndex == 0){
-		NSLog(@"no");
 		//Do nothing I guess
 	}
 	else{
-		NSLog(@"Yes");
 		//Need to load the UITableView which shows what kind of traps we have to set
 		if (self.trapInventoryTableViewController == nil){
 			TrapInventoryTableViewController *titvc = [[TrapInventoryTableViewController alloc] initWithNibName:@"TrapInventoryTableView" bundle:nil];
@@ -95,9 +91,7 @@
 		
 	}
 - (void)updateVenueDetails:(NSDictionary *)venue{
-	NSLog(@"This venue is %@", venue);
 	self.venueInfo = venue;
-	NSLog(@"updateVenueDetails worked");
 }
 
 #pragma mark initialization
@@ -126,7 +120,6 @@
 	[mapView setRegion:region animated:TRUE];
 	[mapView regionThatFits:region];
 	
-	NSLog(@"viewWillAppear in VenueDetail %@", self.venueInfo);
 	[venueName setText:[self.venueInfo objectForKey:@"name"]];	
 	[phone setText:[self.venueInfo objectForKey:@"phone"]];
 	[streetName setText:[self.venueInfo objectForKey:@"address"]];
@@ -134,11 +127,9 @@
 	[super viewWillAppear:animated];
 	
 	UserProfile *userProfile = [UserProfile sharedSingleton];
-	NSLog(@"tutorial value %d", [userProfile getTutorial]);
 	
 	if([userProfile getTutorial] == 3){
 		UIAlertView *alert;
-		//NSLog(@"I see you found a nice new venue. You should try searching for stuff here. That's the easiest way to find cool things");
 		NSString *alertStatement = @"So this is the place. Take a look around (Click the search button). You might find something that you like.";
 		alert = [[UIAlertView alloc] initWithTitle:@"Tutorial" message:alertStatement delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil]; 
 		[alert show];
