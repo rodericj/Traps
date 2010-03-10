@@ -110,10 +110,10 @@
 	//First get the dictionary object
 	NSDictionary *friend = [friendsWithApp objectAtIndex:indexPath.row];
 	NSString *friendName = [friend objectForKey:@"name"];
-	NSString *killCount = [friend objectForKey:@"killCount"];
+	NSString *killCount = [[friend objectForKey:@"killCount"] autorelease];
 	NSString *is_self = [friend objectForKey:@"is_self"];
-	NSLog(@"kill count: %@", killCount);
-	NSLog(@"is_self: %@", is_self);
+	//NSLog(@"kill count: %@", killCount);
+//	NSLog(@"is_self: %@", is_self);
 
 	NSData *photoData;
 	if([is_self intValue] == 1){
@@ -130,8 +130,9 @@
 	
 	cell.name = friendName;
 	cell.killCount = [NSString stringWithFormat:@"%@", killCount];
+	//cell.killCount = killCount;
 	[friendName release];
-	[killCount release];
+	//[killCount release];
 	
 	return cell;
 }

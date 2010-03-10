@@ -73,6 +73,34 @@
 
 }
 
+- (NSDictionary *)parseQueryString:(NSString *)query {
+    NSMutableDictionary *dict = [[[NSMutableDictionary alloc] initWithCapacity:6] autorelease];
+    NSArray *pairs = [query componentsSeparatedByString:@"&"];
+    
+    for (NSString *pair in pairs) {
+        NSArray *elements = [pair componentsSeparatedByString:@"="];
+        NSString *key = [[elements objectAtIndex:0] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        NSString *val = [[elements objectAtIndex:1] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        
+        [dict setObject:val forKey:key];
+    }
+    return dict;
+}
+
+
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
+    NSLog(@"handle url recieved: %@", url);
+    NSLog(@"handle query string: %@", [url query]);
+    NSLog(@"handle host: %@", [url host]);
+    NSLog(@"handle url path: %@", [url path]);
+    NSDictionary *dict = [self parseQueryString:[url query]];
+    NSLog(@"handle query dict: %@", dict);
+    return YES;
+	
+
+}
+
+
 - (void)pageLoaded:(NSDictionary*)webRequestResults{
 	NSLog(@"call to SetDeviceToken Returned %@", webRequestResults);
 }

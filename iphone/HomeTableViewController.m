@@ -168,13 +168,19 @@
 	[op release];
 	
 	//Set the mini profile image
-	NSURL *photoUrl = [NSURL URLWithString:[user objectForKey:@"pic_square"]];
-	NSData *photoData = [NSData dataWithContentsOfURL:photoUrl];
-	[sharedSingleton setUserImage:photoData];
+	NSLog(@"the pic_square is %@", [user objectForKey:@"pic_square"]);
+	BOOL containsKey = ([user objectForKey:@"pic_square"] == @"<null>");
+	NSLog(@"pic_square contains key %d", containsKey);
+	//if (containsKey) {
+	if ([[user objectForKey:@"pic_square"] length] > 5){	
+		
+		NSURL *photoUrl = [NSURL URLWithString:[user objectForKey:@"pic_square"]];
+		NSData *photoData = [NSData dataWithContentsOfURL:photoUrl];
+		[sharedSingleton setUserImage:photoData];
 	
-	UIImage *profileImage =	[UIImage imageWithData:photoData];
-	userImage.image = profileImage;
-	
+		UIImage *profileImage =	[UIImage imageWithData:photoData];
+		userImage.image = profileImage;
+	}
 	//Set the mini porofile name
 	userName.text = [user objectForKey:@"name"];
 }
