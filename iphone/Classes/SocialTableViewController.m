@@ -16,6 +16,7 @@
 @implementation SocialTableViewController
 @synthesize friendsWithApp;
 //@synthesize session;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
   }
@@ -25,19 +26,18 @@
 	self.friendsWithApp = [[NSArray alloc] initWithArray:users];
 	[self loadView];
 	
-	SBJsonWriter *writer = [SBJsonWriter new];
+	SBJsonWriter *writer = [[[SBJsonWriter alloc] init] autorelease];
 	NSString *friendListString = [writer stringWithObject:self.friendsWithApp];
 	//NSString *friendList = [[[SBJSON alloc] init] stringWithObject:self.friendsWithApp];
 	NSLog(@"friendList %@", friendListString);
 	//Now send this list over to the server and get their rankings
-	NetworkRequestOperation *op = [[NetworkRequestOperation alloc] init];
+	NetworkRequestOperation *op = [[[NetworkRequestOperation alloc] init] autorelease];
 	[op setTargetURL:@"GetFriends"];
-	op.arguments = [[[NSMutableDictionary alloc] init] autorelease];
+	op.arguments = [NSMutableDictionary dictionary];
 	[op.arguments setObject:friendListString forKey:@"friends"];
 	op.callingDelegate = self;
-	queue = [[[NSOperationQueue alloc] init] autorelease];
+	
 	[queue addOperation:op];
-	[op release];
 }
 
 - (void)pageLoaded:(NSArray*)webRequestResults{
@@ -52,6 +52,8 @@
 	session = [[FBSession sessionForApplication:@"3243a6e2dd3a0d084480d05f301cba85"
  													secret:@"d8611553a286dce3531353b3de53ef2e" 
  												  delegate:self] retain];
+	
+	queue = [[NSOperationQueue alloc] init];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -79,6 +81,8 @@
 - (void)viewDidUnload {
 	// Release any retained subviews of the main view.
 	// e.g. self.myOutlet = nil;
+	
+	[queue release];
 }
 
 #pragma mark Table view methods
@@ -110,7 +114,7 @@
 	//First get the dictionary object
 	NSDictionary *friend = [friendsWithApp objectAtIndex:indexPath.row];
 	NSString *friendName = [friend objectForKey:@"name"];
-	NSString *killCount = [[friend objectForKey:@"killCount"] autorelease];
+	NSString *killCount = [friend objectForKey:@"killCount"];
 	NSString *is_self = [friend objectForKey:@"is_self"];
 	//NSLog(@"kill count: %@", killCount);
 //	NSLog(@"is_self: %@", is_self);
@@ -131,8 +135,6 @@
 	cell.name = friendName;
 	cell.killCount = [NSString stringWithFormat:@"%@", killCount];
 	//cell.killCount = killCount;
-	[friendName release];
-	//[killCount release];
 	
 	return cell;
 }

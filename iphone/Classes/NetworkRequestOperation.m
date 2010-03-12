@@ -21,6 +21,8 @@
 }
 
 -(void) start{
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	
 	NSLog(@"1 Going to this target %@", targetURL);
 	BoobyTrap3AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
 	NSLog(@"2 Going to this the server address %@", [delegate serverAddress]);
@@ -63,6 +65,8 @@
 	[callingDelegate performSelectorOnMainThread:@selector(pageLoaded:)
                                            withObject:resultsDict
                                         waitUntilDone:NO];
+	
+	[pool release];
 }
 
 @end
