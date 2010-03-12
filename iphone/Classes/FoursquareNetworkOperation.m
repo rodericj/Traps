@@ -14,6 +14,9 @@
 
 
 -(void)start{
+	
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+
 	NSString *target = [NSString stringWithFormat:@"%@/%@", @"http://api.foursquare.com/v1", targetURL];
 	NSLog(@"length of arguments: %d", [arguments count]);
 	NSString *argString = [[[NSString alloc] initWithString:@""] autorelease];
@@ -63,6 +66,6 @@
 									  withObject:resultsDict
 								   waitUntilDone:NO];
 	//NSLog(@"returned the thing to the main thread");
-	
+	[pool release];
 }
 @end
