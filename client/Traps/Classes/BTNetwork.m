@@ -8,13 +8,17 @@
 
 #import "BTNetwork.h"
 
+#import "BTInvocationMaker.h"
+#import "BTNetworkHttp.h"
+
 static BTNetwork *sharedBTNetwork = nil;
 
 @implementation BTNetwork
+
 #pragma mark -
 #pragma mark Singleton
 
-+ (id)sharedBTNetwork {
++ (id)sharedNetwork {
 	@synchronized(self) {
 		if (sharedBTNetwork == nil) {
 			[[self alloc] init]; // assignment not done here
@@ -57,7 +61,8 @@ static BTNetwork *sharedBTNetwork = nil;
 }
 
 #pragma mark -
-#pragma mark initialization
+#pragma mark Initialization
+
 -(id) init{
 	if ((self=[super init]) == nil) {
 		return nil;
@@ -70,5 +75,32 @@ static BTNetwork *sharedBTNetwork = nil;
 	return self;
 }
 
+#pragma mark -
+#pragma mark Network
+
+- (oneway void)performHttpOperationWithResponseObject:(id)responseObject
+									  methodSignature:(NSString *)methodSignature
+											   method:(NSString *)method
+										  relativeURL:(NSString *)relativeURL
+											   params:(NSDictionary *)params {
+	// Create an invocation for the operation queue
+	BTNetworkHttp *networkHTTP = [BTNetworkHttp networkHttpWithResponseObject:responseObject
+															  methodSignature:methodSignature];
+	BTInvocationMaker *makeNetworkHTTP = [[BTInvocationMaker alloc]
+										  initWithTarget:networkHTTP];
+	
+	// Setup the invocation
+	[(BTNetworkHttp *)makeNetworkHTTP performHTTPRequestWithMethod:method
+													   relativeURL:relativeURL
+															params:params];
+	
+	// Add the invocation onto the operation queue
+	NSInvocationOperation *httpOperation = [[NSInvocationOperation alloc]
+											initWithInvocation:makeNetworkHTTP.invocation];
+	[httpOperationQueue addOperation:httpOperation];
+	[httpOperation release];
+	
+	[makeNetworkHTTP release];
+}
 
 @end

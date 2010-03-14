@@ -35,6 +35,8 @@
 		CD885E72114D80D40002DFAF /* FBPermissionDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = CD885E67114D80D40002DFAF /* FBPermissionDialog.m */; };
 		CD885E73114D80D40002DFAF /* FBStreamDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = CD885E69114D80D40002DFAF /* FBStreamDialog.m */; };
 		CD885E74114D80D40002DFAF /* FBConnect.bundle in Resources */ = {isa = PBXBuildFile; fileRef = CD885E6A114D80D40002DFAF /* FBConnect.bundle */; };
+		CD885F13114D9F950002DFAF /* NSString+URLAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = CD885F12114D9F950002DFAF /* NSString+URLAdditions.m */; };
+		CD885F43114DA38F0002DFAF /* BTInvocationMaker.m in Sources */ = {isa = PBXBuildFile; fileRef = CD885F42114DA38F0002DFAF /* BTInvocationMaker.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -93,6 +95,10 @@
 		CD885E68114D80D40002DFAF /* FBStreamDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBStreamDialog.h; path = "lib/facebook-iphone-sdk/src/FBConnect/FBStreamDialog.h"; sourceTree = SOURCE_ROOT; };
 		CD885E69114D80D40002DFAF /* FBStreamDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FBStreamDialog.m; path = "lib/facebook-iphone-sdk/src/FBStreamDialog.m"; sourceTree = SOURCE_ROOT; };
 		CD885E6A114D80D40002DFAF /* FBConnect.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = FBConnect.bundle; path = "lib/facebook-iphone-sdk/src/FBConnect.bundle"; sourceTree = SOURCE_ROOT; };
+		CD885F11114D9F950002DFAF /* NSString+URLAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+URLAdditions.h"; sourceTree = "<group>"; };
+		CD885F12114D9F950002DFAF /* NSString+URLAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+URLAdditions.m"; sourceTree = "<group>"; };
+		CD885F41114DA38F0002DFAF /* BTInvocationMaker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTInvocationMaker.h; sourceTree = "<group>"; };
+		CD885F42114DA38F0002DFAF /* BTInvocationMaker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTInvocationMaker.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,11 +118,11 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				5F7487B2114D9A4900A48653 /* Network */,
 				CD885DAA114D5FA70002DFAF /* BTConstants.h */,
 				1D3623240D0F684500981E51 /* TrapsAppDelegate.h */,
 				1D3623250D0F684500981E51 /* TrapsAppDelegate.m */,
 				CD885E97114D84C10002DFAF /* Model */,
+				5F7487B2114D9A4900A48653 /* Network */,
 				CD885E56114D80D40002DFAF /* FBConnect */,
 				CD885DA1114D5E5C0002DFAF /* Views + Controllers */,
 			);
@@ -174,10 +180,14 @@
 		5F7487B2114D9A4900A48653 /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				5F7487C4114D9CC900A48653 /* BTNetworkHttp.h */,
-				5F7487C5114D9CC900A48653 /* BTNetworkHttp.m */,
+				CD885F11114D9F950002DFAF /* NSString+URLAdditions.h */,
+				CD885F12114D9F950002DFAF /* NSString+URLAdditions.m */,
+				CD885F41114DA38F0002DFAF /* BTInvocationMaker.h */,
+				CD885F42114DA38F0002DFAF /* BTInvocationMaker.m */,
 				5F7487B3114D9A5700A48653 /* BTNetwork.h */,
 				5F7487B4114D9A5700A48653 /* BTNetwork.m */,
+				5F7487C4114D9CC900A48653 /* BTNetworkHttp.h */,
+				5F7487C5114D9CC900A48653 /* BTNetworkHttp.m */,
 			);
 			name = Network;
 			sourceTree = "<group>";
@@ -352,6 +362,8 @@
 				5F748783114D938D00A48653 /* BTUserProfile.m in Sources */,
 				5F7487B5114D9A5700A48653 /* BTNetwork.m in Sources */,
 				5F7487C6114D9CC900A48653 /* BTNetworkHttp.m in Sources */,
+				CD885F13114D9F950002DFAF /* NSString+URLAdditions.m in Sources */,
+				CD885F43114DA38F0002DFAF /* BTInvocationMaker.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

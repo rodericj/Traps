@@ -8,10 +8,21 @@
 
 #import <UIKit/UIKit.h>
 
+#import "BTConstants.h"
 
 @interface BTNetwork : NSObject {
+	// one-off http operations
 	NSOperationQueue *httpOperationQueue;
 }
 
-+ (id) sharedBTNetwork;
+// Singleton
++ (id) sharedNetwork;
+
+// Network
+- (oneway void)performHttpOperationWithResponseObject:(id)responseObject
+									  methodSignature:(NSString *)methodSignature
+											   method:(NSString *)method
+										  relativeURL:(NSString *)relativeURL
+											   params:(NSDictionary *)params;
+
 @end

@@ -22,3 +22,8 @@
 #define kSearchTitle		@"Search"
 #define kProfileTitle		@"Profile"
 #define kLeaderboardTitle	@"Leaderboard"
+
+#pragma mark -
+#pragma mark HTTP
+
+#define kHTTPHost	@"rodericj.webfactional.com"
