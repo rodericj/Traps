@@ -7,7 +7,7 @@
 //
 
 #import "BTSearchNavigationController.h"
-
+#import "BTSearchInternalViewController.h"
 
 @implementation BTSearchNavigationController
 
@@ -22,6 +22,13 @@
 													 image:nil 
 													   tag:0]
 					   autorelease];
+	BTSearchInternalViewController *internalViewController = [[BTSearchInternalViewController alloc] init];
+	[self pushViewController:internalViewController animated:YES];
+
+	internalViewController.tabBarItem = self.tabBarItem;
+	
+	[internalViewController release];
+	
 	return self;
 }
 

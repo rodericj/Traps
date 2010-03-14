@@ -7,7 +7,7 @@
 //
 
 #import "BTLeaderBoardNavigationController.h"
-
+#import "BTLeaderboardInternalViewController.h"
 
 @implementation BTLeaderBoardNavigationController
 
@@ -22,6 +22,13 @@
 													 image:nil 
 													   tag:0]
 					   autorelease];
+	
+	BTLeaderboardInternalViewController *internalViewController = [[BTLeaderboardInternalViewController alloc] init];
+	[self pushViewController:internalViewController animated:YES];
+	
+	internalViewController.tabBarItem = self.tabBarItem;
+	
+	[internalViewController release];	
 	return self;
 }
 

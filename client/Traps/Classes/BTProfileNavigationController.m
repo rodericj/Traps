@@ -7,7 +7,7 @@
 //
 
 #import "BTProfileNavigationController.h"
-
+#import "BTProfileInternalViewController.h"
 
 @implementation BTProfileNavigationController
 
@@ -22,6 +22,14 @@
 													 image:nil 
 													   tag:0]
 					   autorelease];
+	
+	BTProfileInternalViewController *internalViewController = [[BTProfileInternalViewController alloc] init];
+	[self pushViewController:internalViewController animated:YES];
+	
+	internalViewController.tabBarItem = self.tabBarItem;
+	
+	[internalViewController release];	
+	
 	return self;
 }
 

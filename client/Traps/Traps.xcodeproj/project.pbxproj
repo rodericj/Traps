@@ -18,6 +18,9 @@
 		5F74866F114D65ED00A48653 /* BTSearchNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F74866E114D65ED00A48653 /* BTSearchNavigationController.m */; };
 		5F748680114D675800A48653 /* BTProfileNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F74867F114D675800A48653 /* BTProfileNavigationController.m */; };
 		5F74868D114D67C300A48653 /* BTLeaderBoardNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F74868C114D67C300A48653 /* BTLeaderBoardNavigationController.m */; };
+		5F7486BB114D6F9C00A48653 /* BTSearchInternalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F7486BA114D6F9C00A48653 /* BTSearchInternalViewController.m */; };
+		5F7486CF114D719100A48653 /* BTProfileInternalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F7486CE114D719100A48653 /* BTProfileInternalViewController.m */; };
+		5F7486D9114D721500A48653 /* BTLeaderboardInternalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F7486D8114D721500A48653 /* BTLeaderboardInternalViewController.m */; };
 		CD885DA4114D5EAD0002DFAF /* BTTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD885DA3114D5EAD0002DFAF /* BTTabBarController.m */; };
 		CD885DCD114D62D80002DFAF /* BTHomeNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD885DCC114D62D80002DFAF /* BTHomeNavigationController.m */; };
 		CD885E0D114D68E00002DFAF /* BTHomeInternalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD885E0C114D68E00002DFAF /* BTHomeInternalViewController.m */; };
@@ -41,6 +44,12 @@
 		5F74867F114D675800A48653 /* BTProfileNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTProfileNavigationController.m; sourceTree = "<group>"; };
 		5F74868B114D67C300A48653 /* BTLeaderBoardNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTLeaderBoardNavigationController.h; sourceTree = "<group>"; };
 		5F74868C114D67C300A48653 /* BTLeaderBoardNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTLeaderBoardNavigationController.m; sourceTree = "<group>"; };
+		5F7486B9114D6F9C00A48653 /* BTSearchInternalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTSearchInternalViewController.h; sourceTree = "<group>"; };
+		5F7486BA114D6F9C00A48653 /* BTSearchInternalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTSearchInternalViewController.m; sourceTree = "<group>"; };
+		5F7486CD114D719100A48653 /* BTProfileInternalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTProfileInternalViewController.h; sourceTree = "<group>"; };
+		5F7486CE114D719100A48653 /* BTProfileInternalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTProfileInternalViewController.m; sourceTree = "<group>"; };
+		5F7486D7114D721500A48653 /* BTLeaderboardInternalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTLeaderboardInternalViewController.h; sourceTree = "<group>"; };
+		5F7486D8114D721500A48653 /* BTLeaderboardInternalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTLeaderboardInternalViewController.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Traps-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Traps-Info.plist"; sourceTree = "<group>"; };
 		CD885DA2114D5EAD0002DFAF /* BTTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTTabBarController.h; sourceTree = "<group>"; };
 		CD885DA3114D5EAD0002DFAF /* BTTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTTabBarController.m; sourceTree = "<group>"; };
@@ -156,6 +165,8 @@
 			children = (
 				5F74866D114D65ED00A48653 /* BTSearchNavigationController.h */,
 				5F74866E114D65ED00A48653 /* BTSearchNavigationController.m */,
+				5F7486B9114D6F9C00A48653 /* BTSearchInternalViewController.h */,
+				5F7486BA114D6F9C00A48653 /* BTSearchInternalViewController.m */,
 			);
 			name = Search;
 			sourceTree = "<group>";
@@ -165,6 +176,8 @@
 			children = (
 				5F74867E114D675800A48653 /* BTProfileNavigationController.h */,
 				5F74867F114D675800A48653 /* BTProfileNavigationController.m */,
+				5F7486CD114D719100A48653 /* BTProfileInternalViewController.h */,
+				5F7486CE114D719100A48653 /* BTProfileInternalViewController.m */,
 			);
 			name = Profile;
 			sourceTree = "<group>";
@@ -174,6 +187,8 @@
 			children = (
 				5F74868B114D67C300A48653 /* BTLeaderBoardNavigationController.h */,
 				5F74868C114D67C300A48653 /* BTLeaderBoardNavigationController.m */,
+				5F7486D7114D721500A48653 /* BTLeaderboardInternalViewController.h */,
+				5F7486D8114D721500A48653 /* BTLeaderboardInternalViewController.m */,
 			);
 			name = Leaderboard;
 			sourceTree = "<group>";
@@ -240,6 +255,9 @@
 				5F748680114D675800A48653 /* BTProfileNavigationController.m in Sources */,
 				5F74868D114D67C300A48653 /* BTLeaderBoardNavigationController.m in Sources */,
 				CD885E0D114D68E00002DFAF /* BTHomeInternalViewController.m in Sources */,
+				5F7486BB114D6F9C00A48653 /* BTSearchInternalViewController.m in Sources */,
+				5F7486CF114D719100A48653 /* BTProfileInternalViewController.m in Sources */,
+				5F7486D9114D721500A48653 /* BTLeaderboardInternalViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
