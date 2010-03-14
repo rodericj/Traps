@@ -8,7 +8,6 @@
 
 #import "BTHomeInternalViewController.h"
 
-
 @implementation BTHomeInternalViewController
 
 #pragma mark -
