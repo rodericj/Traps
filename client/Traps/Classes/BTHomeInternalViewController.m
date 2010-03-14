@@ -8,6 +8,9 @@
 
 #import "BTHomeInternalViewController.h"
 
+//TODO: REMOVE
+#import "BTNetwork.h"
+
 @implementation BTHomeInternalViewController
 
 #pragma mark -
@@ -19,6 +22,15 @@
     }
 	
 	self.title = kHomeTitle;
+	
+//TODO: REMOVE
+	[[BTNetwork sharedNetwork] performHttpOperationWithResponseObject:self
+													  methodSignature:NSStringFromSelector(@selector(test:))
+															   method:@"GET"
+														  relativeURL:@"test/"
+															   params:[NSDictionary dictionaryWithObjectsAndKeys:
+																	   @"test_key", @"test_value",
+																	   nil]];
 	
     return self;
 }
@@ -80,6 +92,22 @@
 
 #pragma mark -
 #pragma mark BTHomeInternalViewController
+
+//TODO: REMOVE
+- (void)test:(id)response {
+	
+NSLog(@"inside: @selector(test:)");
+	
+	if ([response isKindOfClass:[NSError class]]) {
+NSLog(@"test: response: error!!!");
+NSLog(@"test: error: %@", response);
+		
+		return;
+	}
+	
+NSLog(@"test: response!!");
+NSLog(@"test: response: %@", response);
+}
 
 @end
 

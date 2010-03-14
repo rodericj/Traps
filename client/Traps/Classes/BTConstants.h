@@ -26,4 +26,4 @@
 #pragma mark -
 #pragma mark HTTP
 
-#define kHTTPHost	@"rodericj.webfactional.com"
+#define kHTTPHost	@"192.168.2.46:8000"

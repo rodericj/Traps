@@ -34,8 +34,8 @@ NSString *const kHTTPRequestError = @"HTTPRequestError";
 		return nil;
 	}
 	
-	_responseObject = responseObject;
-	_responseMethodSignature = methodSignature;
+	_responseObject = [responseObject retain];
+	_responseMethodSignature = [methodSignature retain];
 	
 	return self;
 }
@@ -66,6 +66,9 @@ NSString *const kHTTPRequestError = @"HTTPRequestError";
 
 - (void)resetState {
 	RELEASE_SAFELY(_data);
+	
+	RELEASE_SAFELY(_responseObject);
+	RELEASE_SAFELY(_responseMethodSignature);
 }
 
 #pragma mark -
@@ -78,7 +81,8 @@ NSString *const kHTTPRequestError = @"HTTPRequestError";
 	
 	NSString *keyValuePairs = [self createKeyValuePairs:params];
 	NSMutableURLRequest *request;
-	NSString *urlString = [NSString stringWithFormat:@"https://%@%@", kHTTPHost, relativeURL];
+	NSString *urlString = [NSString stringWithFormat:@"http://%@/%@", kHTTPHost, relativeURL];
+	
 	if ([method compare:@"GET" options:NSCaseInsensitiveSearch] == NSOrderedSame) {
 		if ([keyValuePairs length] > 0) {
 			urlString = [NSString stringWithFormat:@"%@?%@", urlString, keyValuePairs];
@@ -106,7 +110,7 @@ NSString *const kHTTPRequestError = @"HTTPRequestError";
 	}
 	
 	//XXX: finished http request
-	[connection release];	
+	[connection release];
 }
 
 # pragma mark -
