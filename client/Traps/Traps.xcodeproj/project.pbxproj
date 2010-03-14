@@ -20,6 +20,7 @@
 		5F74868D114D67C300A48653 /* BTLeaderBoardNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F74868C114D67C300A48653 /* BTLeaderBoardNavigationController.m */; };
 		CD885DA4114D5EAD0002DFAF /* BTTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD885DA3114D5EAD0002DFAF /* BTTabBarController.m */; };
 		CD885DCD114D62D80002DFAF /* BTHomeNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD885DCC114D62D80002DFAF /* BTHomeNavigationController.m */; };
+		CD885E0D114D68E00002DFAF /* BTHomeInternalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD885E0C114D68E00002DFAF /* BTHomeInternalViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +47,8 @@
 		CD885DAA114D5FA70002DFAF /* BTConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTConstants.h; sourceTree = "<group>"; };
 		CD885DCB114D62D80002DFAF /* BTHomeNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTHomeNavigationController.h; sourceTree = "<group>"; };
 		CD885DCC114D62D80002DFAF /* BTHomeNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTHomeNavigationController.m; sourceTree = "<group>"; };
+		CD885E0B114D68E00002DFAF /* BTHomeInternalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTHomeInternalViewController.h; sourceTree = "<group>"; };
+		CD885E0C114D68E00002DFAF /* BTHomeInternalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTHomeInternalViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,6 +145,8 @@
 			children = (
 				CD885DCB114D62D80002DFAF /* BTHomeNavigationController.h */,
 				CD885DCC114D62D80002DFAF /* BTHomeNavigationController.m */,
+				CD885E0B114D68E00002DFAF /* BTHomeInternalViewController.h */,
+				CD885E0C114D68E00002DFAF /* BTHomeInternalViewController.m */,
 			);
 			name = Home;
 			sourceTree = "<group>";
@@ -234,6 +239,7 @@
 				5F74866F114D65ED00A48653 /* BTSearchNavigationController.m in Sources */,
 				5F748680114D675800A48653 /* BTProfileNavigationController.m in Sources */,
 				5F74868D114D67C300A48653 /* BTLeaderBoardNavigationController.m in Sources */,
+				CD885E0D114D68E00002DFAF /* BTHomeInternalViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

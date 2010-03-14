@@ -8,6 +8,7 @@
 
 #import "BTHomeNavigationController.h"
 
+#import "BTHomeInternalViewController.h"
 
 @implementation BTHomeNavigationController
 
@@ -19,10 +20,18 @@
 		return nil;
 	}
 	
+	BTHomeInternalViewController *internalViewController = [[BTHomeInternalViewController alloc] init];
+	
+	[self pushViewController:internalViewController animated:NO];
+	
 	self.tabBarItem = [[[UITabBarItem alloc] initWithTitle:@"Home"
 													 image:nil
 													   tag:0]
 					   autorelease];
+	
+	internalViewController.tabBarItem = self.tabBarItem;
+	
+	[internalViewController release];
 	
 	return self;
 }

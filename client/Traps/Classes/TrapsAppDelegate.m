@@ -61,6 +61,27 @@
     }
 }
 
+#pragma mark -
+#pragma mark Memory management
+
+- (void)dealloc {
+	RELEASE_SAFELY(managedObjectContext);
+	RELEASE_SAFELY(managedObjectModel);
+	RELEASE_SAFELY(persistentStoreCoordinator);
+	
+	RELEASE_SAFELY(window);
+	[super dealloc];
+}
+
+#pragma mark -
+#pragma mark Application's Documents directory
+
+/**
+ Returns the path to the application's Documents directory.
+ */
+- (NSString *)applicationDocumentsDirectory {
+	return [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+}
 
 #pragma mark -
 #pragma mark Core Data stack
@@ -129,31 +150,6 @@
 	
     return persistentStoreCoordinator;
 }
-
-
-#pragma mark -
-#pragma mark Application's Documents directory
-
-/**
- Returns the path to the application's Documents directory.
- */
-- (NSString *)applicationDocumentsDirectory {
-	return [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-}
-
-
-#pragma mark -
-#pragma mark Memory management
-
-- (void)dealloc {
-	RELEASE_SAFELY(managedObjectContext);
-	RELEASE_SAFELY(managedObjectModel);
-	RELEASE_SAFELY(persistentStoreCoordinator);
-	
-	RELEASE_SAFELY(window);
-	[super dealloc];
-}
-
 
 @end
 
