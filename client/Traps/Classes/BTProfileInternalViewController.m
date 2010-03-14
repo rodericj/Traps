@@ -18,7 +18,7 @@
 		return nil;
     }
 	
-	self.title = @"Profile";
+	self.title = kProfileTitle;
 	
     return self;
 }

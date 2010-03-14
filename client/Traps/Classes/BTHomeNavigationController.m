@@ -24,7 +24,7 @@
 	
 	[self pushViewController:internalViewController animated:NO];
 	
-	self.tabBarItem = [[[UITabBarItem alloc] initWithTitle:@"Home"
+	self.tabBarItem = [[[UITabBarItem alloc] initWithTitle:kHomeTitle
 													 image:nil
 													   tag:0]
 					   autorelease];

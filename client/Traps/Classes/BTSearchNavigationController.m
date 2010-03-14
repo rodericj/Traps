@@ -18,7 +18,7 @@
 	if((self = [super init]) == nil){
 		return nil;
 	}
-	self.tabBarItem = [[[UITabBarItem alloc] initWithTitle:@"Search"
+	self.tabBarItem = [[[UITabBarItem alloc] initWithTitle:kSearchTitle
 													 image:nil 
 													   tag:0]
 					   autorelease];

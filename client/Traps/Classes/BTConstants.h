@@ -14,3 +14,11 @@
 #define AUTORELEASE_SAFELY(__POINTER) { [__POINTER autorelease]; __POINTER = nil; }
 #define INVALIDATE_TIMER(__TIMER) { [__TIMER invalidate]; __TIMER = nil; }
 #define RELEASE_TIMER(__TIMER) { [__TIMER invalidate]; [__TIMER release]; __TIMER = nil; }
+
+#pragma mark -
+#pragma mark Application Sections
+
+#define kHomeTitle			@"Home"
+#define kSearchTitle		@"Search"
+#define kProfileTitle		@"Profile"
+#define kLeaderboardTitle	@"Leaderboard"

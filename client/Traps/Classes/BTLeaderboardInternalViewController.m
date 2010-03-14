@@ -18,7 +18,7 @@
 		return nil;
     }
 	
-	self.title = @"Leaderboard";
+	self.title = kLeaderboardTitle;
 	
     return self;
 }

@@ -19,7 +19,7 @@
 		return nil;
     }
 	
-	self.title = @"Home";
+	self.title = kHomeTitle;
 	
     return self;
 }

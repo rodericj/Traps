@@ -18,7 +18,7 @@
 	if((self = [super init]) == nil){
 		return nil;
 	}
-	self.tabBarItem = [[[UITabBarItem alloc] initWithTitle:@"Leaderboard"
+	self.tabBarItem = [[[UITabBarItem alloc] initWithTitle:kLeaderboardTitle
 													 image:nil 
 													   tag:0]
 					   autorelease];

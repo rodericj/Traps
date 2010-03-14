@@ -24,6 +24,16 @@
 		CD885DA4114D5EAD0002DFAF /* BTTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD885DA3114D5EAD0002DFAF /* BTTabBarController.m */; };
 		CD885DCD114D62D80002DFAF /* BTHomeNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD885DCC114D62D80002DFAF /* BTHomeNavigationController.m */; };
 		CD885E0D114D68E00002DFAF /* BTHomeInternalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD885E0C114D68E00002DFAF /* BTHomeInternalViewController.m */; };
+		CD885E6B114D80D40002DFAF /* FBConnectGlobal.m in Sources */ = {isa = PBXBuildFile; fileRef = CD885E59114D80D40002DFAF /* FBConnectGlobal.m */; };
+		CD885E6C114D80D40002DFAF /* FBSession.m in Sources */ = {isa = PBXBuildFile; fileRef = CD885E5B114D80D40002DFAF /* FBSession.m */; };
+		CD885E6D114D80D40002DFAF /* FBRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = CD885E5D114D80D40002DFAF /* FBRequest.m */; };
+		CD885E6E114D80D40002DFAF /* FBXMLHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = CD885E5F114D80D40002DFAF /* FBXMLHandler.m */; };
+		CD885E6F114D80D40002DFAF /* FBLoginButton.m in Sources */ = {isa = PBXBuildFile; fileRef = CD885E61114D80D40002DFAF /* FBLoginButton.m */; };
+		CD885E70114D80D40002DFAF /* FBDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = CD885E63114D80D40002DFAF /* FBDialog.m */; };
+		CD885E71114D80D40002DFAF /* FBLoginDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = CD885E65114D80D40002DFAF /* FBLoginDialog.m */; };
+		CD885E72114D80D40002DFAF /* FBPermissionDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = CD885E67114D80D40002DFAF /* FBPermissionDialog.m */; };
+		CD885E73114D80D40002DFAF /* FBStreamDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = CD885E69114D80D40002DFAF /* FBStreamDialog.m */; };
+		CD885E74114D80D40002DFAF /* FBConnect.bundle in Resources */ = {isa = PBXBuildFile; fileRef = CD885E6A114D80D40002DFAF /* FBConnect.bundle */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +68,26 @@
 		CD885DCC114D62D80002DFAF /* BTHomeNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTHomeNavigationController.m; sourceTree = "<group>"; };
 		CD885E0B114D68E00002DFAF /* BTHomeInternalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTHomeInternalViewController.h; sourceTree = "<group>"; };
 		CD885E0C114D68E00002DFAF /* BTHomeInternalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTHomeInternalViewController.m; sourceTree = "<group>"; };
+		CD885E57114D80D40002DFAF /* FBConnect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBConnect.h; path = "lib/facebook-iphone-sdk/src/FBConnect/FBConnect.h"; sourceTree = SOURCE_ROOT; };
+		CD885E58114D80D40002DFAF /* FBConnectGlobal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBConnectGlobal.h; path = "lib/facebook-iphone-sdk/src/FBConnect/FBConnectGlobal.h"; sourceTree = SOURCE_ROOT; };
+		CD885E59114D80D40002DFAF /* FBConnectGlobal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FBConnectGlobal.m; path = "lib/facebook-iphone-sdk/src/FBConnectGlobal.m"; sourceTree = SOURCE_ROOT; };
+		CD885E5A114D80D40002DFAF /* FBSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBSession.h; path = "lib/facebook-iphone-sdk/src/FBConnect/FBSession.h"; sourceTree = SOURCE_ROOT; };
+		CD885E5B114D80D40002DFAF /* FBSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FBSession.m; path = "lib/facebook-iphone-sdk/src/FBSession.m"; sourceTree = SOURCE_ROOT; };
+		CD885E5C114D80D40002DFAF /* FBRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBRequest.h; path = "lib/facebook-iphone-sdk/src/FBConnect/FBRequest.h"; sourceTree = SOURCE_ROOT; };
+		CD885E5D114D80D40002DFAF /* FBRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FBRequest.m; path = "lib/facebook-iphone-sdk/src/FBRequest.m"; sourceTree = SOURCE_ROOT; };
+		CD885E5E114D80D40002DFAF /* FBXMLHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBXMLHandler.h; path = "lib/facebook-iphone-sdk/src/FBXMLHandler.h"; sourceTree = SOURCE_ROOT; };
+		CD885E5F114D80D40002DFAF /* FBXMLHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FBXMLHandler.m; path = "lib/facebook-iphone-sdk/src/FBXMLHandler.m"; sourceTree = SOURCE_ROOT; };
+		CD885E60114D80D40002DFAF /* FBLoginButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBLoginButton.h; path = "lib/facebook-iphone-sdk/src/FBConnect/FBLoginButton.h"; sourceTree = SOURCE_ROOT; };
+		CD885E61114D80D40002DFAF /* FBLoginButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FBLoginButton.m; path = "lib/facebook-iphone-sdk/src/FBLoginButton.m"; sourceTree = SOURCE_ROOT; };
+		CD885E62114D80D40002DFAF /* FBDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBDialog.h; path = "lib/facebook-iphone-sdk/src/FBConnect/FBDialog.h"; sourceTree = SOURCE_ROOT; };
+		CD885E63114D80D40002DFAF /* FBDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FBDialog.m; path = "lib/facebook-iphone-sdk/src/FBDialog.m"; sourceTree = SOURCE_ROOT; };
+		CD885E64114D80D40002DFAF /* FBLoginDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBLoginDialog.h; path = "lib/facebook-iphone-sdk/src/FBConnect/FBLoginDialog.h"; sourceTree = SOURCE_ROOT; };
+		CD885E65114D80D40002DFAF /* FBLoginDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FBLoginDialog.m; path = "lib/facebook-iphone-sdk/src/FBLoginDialog.m"; sourceTree = SOURCE_ROOT; };
+		CD885E66114D80D40002DFAF /* FBPermissionDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBPermissionDialog.h; path = "lib/facebook-iphone-sdk/src/FBConnect/FBPermissionDialog.h"; sourceTree = SOURCE_ROOT; };
+		CD885E67114D80D40002DFAF /* FBPermissionDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FBPermissionDialog.m; path = "lib/facebook-iphone-sdk/src/FBPermissionDialog.m"; sourceTree = SOURCE_ROOT; };
+		CD885E68114D80D40002DFAF /* FBStreamDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBStreamDialog.h; path = "lib/facebook-iphone-sdk/src/FBConnect/FBStreamDialog.h"; sourceTree = SOURCE_ROOT; };
+		CD885E69114D80D40002DFAF /* FBStreamDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FBStreamDialog.m; path = "lib/facebook-iphone-sdk/src/FBStreamDialog.m"; sourceTree = SOURCE_ROOT; };
+		CD885E6A114D80D40002DFAF /* FBConnect.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = FBConnect.bundle; path = "lib/facebook-iphone-sdk/src/FBConnect.bundle"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +111,7 @@
 				CD885DAA114D5FA70002DFAF /* BTConstants.h */,
 				1D3623240D0F684500981E51 /* TrapsAppDelegate.h */,
 				1D3623250D0F684500981E51 /* TrapsAppDelegate.m */,
+				CD885E56114D80D40002DFAF /* FBConnect */,
 				CD885DA1114D5E5C0002DFAF /* Views + Controllers */,
 			);
 			path = Classes;
@@ -193,6 +224,33 @@
 			name = Leaderboard;
 			sourceTree = "<group>";
 		};
+		CD885E56114D80D40002DFAF /* FBConnect */ = {
+			isa = PBXGroup;
+			children = (
+				CD885E57114D80D40002DFAF /* FBConnect.h */,
+				CD885E58114D80D40002DFAF /* FBConnectGlobal.h */,
+				CD885E59114D80D40002DFAF /* FBConnectGlobal.m */,
+				CD885E5A114D80D40002DFAF /* FBSession.h */,
+				CD885E5B114D80D40002DFAF /* FBSession.m */,
+				CD885E5C114D80D40002DFAF /* FBRequest.h */,
+				CD885E5D114D80D40002DFAF /* FBRequest.m */,
+				CD885E5E114D80D40002DFAF /* FBXMLHandler.h */,
+				CD885E5F114D80D40002DFAF /* FBXMLHandler.m */,
+				CD885E60114D80D40002DFAF /* FBLoginButton.h */,
+				CD885E61114D80D40002DFAF /* FBLoginButton.m */,
+				CD885E62114D80D40002DFAF /* FBDialog.h */,
+				CD885E63114D80D40002DFAF /* FBDialog.m */,
+				CD885E64114D80D40002DFAF /* FBLoginDialog.h */,
+				CD885E65114D80D40002DFAF /* FBLoginDialog.m */,
+				CD885E66114D80D40002DFAF /* FBPermissionDialog.h */,
+				CD885E67114D80D40002DFAF /* FBPermissionDialog.m */,
+				CD885E68114D80D40002DFAF /* FBStreamDialog.h */,
+				CD885E69114D80D40002DFAF /* FBStreamDialog.m */,
+				CD885E6A114D80D40002DFAF /* FBConnect.bundle */,
+			);
+			name = FBConnect;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -236,6 +294,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */,
+				CD885E74114D80D40002DFAF /* FBConnect.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -258,6 +317,15 @@
 				5F7486BB114D6F9C00A48653 /* BTSearchInternalViewController.m in Sources */,
 				5F7486CF114D719100A48653 /* BTProfileInternalViewController.m in Sources */,
 				5F7486D9114D721500A48653 /* BTLeaderboardInternalViewController.m in Sources */,
+				CD885E6B114D80D40002DFAF /* FBConnectGlobal.m in Sources */,
+				CD885E6C114D80D40002DFAF /* FBSession.m in Sources */,
+				CD885E6D114D80D40002DFAF /* FBRequest.m in Sources */,
+				CD885E6E114D80D40002DFAF /* FBXMLHandler.m in Sources */,
+				CD885E6F114D80D40002DFAF /* FBLoginButton.m in Sources */,
+				CD885E70114D80D40002DFAF /* FBDialog.m in Sources */,
+				CD885E71114D80D40002DFAF /* FBLoginDialog.m in Sources */,
+				CD885E72114D80D40002DFAF /* FBPermissionDialog.m in Sources */,
+				CD885E73114D80D40002DFAF /* FBStreamDialog.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -299,6 +367,7 @@
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "./lib/facebook-iphone-sdk/src";
 				PREBINDING = NO;
 				SDKROOT = iphoneos3.0;
 			};

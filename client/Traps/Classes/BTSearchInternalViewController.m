@@ -19,7 +19,7 @@
 		return nil;
     }
 	
-	self.title = @"Search";
+	self.title = kSearchTitle;
 	
     return self;
 }

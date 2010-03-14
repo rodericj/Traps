@@ -8,11 +8,14 @@
 
 #import "TrapsAppDelegate.h"
 
+#import "FBConnect/FBConnect.h"
+
 #import "BTHomeNavigationController.h"
-#import "BTSearchNavigationController.h"
 #import "BTLeaderBoardNavigationController.h"
-#import "BTTabBarController.h"
 #import "BTProfileNavigationController.h"
+#import "BTSearchNavigationController.h"
+#import "BTTabBarController.h"
+
 @implementation TrapsAppDelegate
 
 @synthesize window;
