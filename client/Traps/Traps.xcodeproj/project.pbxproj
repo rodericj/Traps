@@ -19,6 +19,9 @@
 		5F7486BB114D6F9C00A48653 /* BTSearchInternalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F7486BA114D6F9C00A48653 /* BTSearchInternalViewController.m */; };
 		5F7486CF114D719100A48653 /* BTProfileInternalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F7486CE114D719100A48653 /* BTProfileInternalViewController.m */; };
 		5F7486D9114D721500A48653 /* BTLeaderboardInternalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F7486D8114D721500A48653 /* BTLeaderboardInternalViewController.m */; };
+		5F748783114D938D00A48653 /* BTUserProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F748782114D938D00A48653 /* BTUserProfile.m */; };
+		5F7487B5114D9A5700A48653 /* BTNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F7487B4114D9A5700A48653 /* BTNetwork.m */; };
+		5F7487C6114D9CC900A48653 /* BTNetworkHttp.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F7487C5114D9CC900A48653 /* BTNetworkHttp.m */; };
 		CD885DA4114D5EAD0002DFAF /* BTTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD885DA3114D5EAD0002DFAF /* BTTabBarController.m */; };
 		CD885DCD114D62D80002DFAF /* BTHomeNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD885DCC114D62D80002DFAF /* BTHomeNavigationController.m */; };
 		CD885E0D114D68E00002DFAF /* BTHomeInternalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD885E0C114D68E00002DFAF /* BTHomeInternalViewController.m */; };
@@ -56,6 +59,12 @@
 		5F7486CE114D719100A48653 /* BTProfileInternalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTProfileInternalViewController.m; sourceTree = "<group>"; };
 		5F7486D7114D721500A48653 /* BTLeaderboardInternalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTLeaderboardInternalViewController.h; sourceTree = "<group>"; };
 		5F7486D8114D721500A48653 /* BTLeaderboardInternalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTLeaderboardInternalViewController.m; sourceTree = "<group>"; };
+		5F748781114D938D00A48653 /* BTUserProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTUserProfile.h; sourceTree = "<group>"; };
+		5F748782114D938D00A48653 /* BTUserProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTUserProfile.m; sourceTree = "<group>"; };
+		5F7487B3114D9A5700A48653 /* BTNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTNetwork.h; sourceTree = "<group>"; };
+		5F7487B4114D9A5700A48653 /* BTNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTNetwork.m; sourceTree = "<group>"; };
+		5F7487C4114D9CC900A48653 /* BTNetworkHttp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTNetworkHttp.h; sourceTree = "<group>"; };
+		5F7487C5114D9CC900A48653 /* BTNetworkHttp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTNetworkHttp.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Traps-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Traps-Info.plist"; sourceTree = "<group>"; };
 		CD885DA2114D5EAD0002DFAF /* BTTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTTabBarController.h; sourceTree = "<group>"; };
 		CD885DA3114D5EAD0002DFAF /* BTTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTTabBarController.m; sourceTree = "<group>"; };
@@ -103,6 +112,7 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				5F7487B2114D9A4900A48653 /* Network */,
 				CD885DAA114D5FA70002DFAF /* BTConstants.h */,
 				1D3623240D0F684500981E51 /* TrapsAppDelegate.h */,
 				1D3623250D0F684500981E51 /* TrapsAppDelegate.m */,
@@ -159,6 +169,17 @@
 				288765A40DF7441C002DB57D /* CoreGraphics.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		5F7487B2114D9A4900A48653 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				5F7487C4114D9CC900A48653 /* BTNetworkHttp.h */,
+				5F7487C5114D9CC900A48653 /* BTNetworkHttp.m */,
+				5F7487B3114D9A5700A48653 /* BTNetwork.h */,
+				5F7487B4114D9A5700A48653 /* BTNetwork.m */,
+			);
+			name = Network;
 			sourceTree = "<group>";
 		};
 		CD885DA1114D5E5C0002DFAF /* Views + Controllers */ = {
@@ -248,6 +269,8 @@
 		CD885E97114D84C10002DFAF /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				5F748781114D938D00A48653 /* BTUserProfile.h */,
+				5F748782114D938D00A48653 /* BTUserProfile.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -326,6 +349,9 @@
 				CD885E71114D80D40002DFAF /* FBLoginDialog.m in Sources */,
 				CD885E72114D80D40002DFAF /* FBPermissionDialog.m in Sources */,
 				CD885E73114D80D40002DFAF /* FBStreamDialog.m in Sources */,
+				5F748783114D938D00A48653 /* BTUserProfile.m in Sources */,
+				5F7487B5114D9A5700A48653 /* BTNetwork.m in Sources */,
+				5F7487C6114D9CC900A48653 /* BTNetworkHttp.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
