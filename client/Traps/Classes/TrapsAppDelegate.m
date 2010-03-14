@@ -9,8 +9,10 @@
 #import "TrapsAppDelegate.h"
 
 #import "BTHomeNavigationController.h"
+#import "BTSearchNavigationController.h"
+#import "BTLeaderBoardNavigationController.h"
 #import "BTTabBarController.h"
-
+#import "BTProfileNavigationController.h"
 @implementation TrapsAppDelegate
 
 @synthesize window;
@@ -27,6 +29,9 @@
 	// add view controllers to tab bar
 	[tabBarController setViewControllers:[NSArray arrayWithObjects:
 										  [[[BTHomeNavigationController alloc] init] autorelease],
+										  [[[BTSearchNavigationController alloc] init] autorelease],
+										  [[[BTProfileNavigationController alloc] init] autorelease],
+										  [[[BTLeaderBoardNavigationController alloc] init] autorelease],
 										  nil]
 								animated:NO];
 	
