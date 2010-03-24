@@ -22,6 +22,16 @@
 		5F748783114D938D00A48653 /* BTUserProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F748782114D938D00A48653 /* BTUserProfile.m */; };
 		5F7487B5114D9A5700A48653 /* BTNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F7487B4114D9A5700A48653 /* BTNetwork.m */; };
 		5F7487C6114D9CC900A48653 /* BTNetworkHttp.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F7487C5114D9CC900A48653 /* BTNetworkHttp.m */; };
+		5F7489BB11586DDE00A48653 /* homeViewTopBanner.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F7489BA11586DDE00A48653 /* homeViewTopBanner.png */; };
+		5F748A2E11588BD200A48653 /* BTNavBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F748A2D11588BD200A48653 /* BTNavBarController.m */; };
+		5F748A9B115919FD00A48653 /* user.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F748A9A115919FD00A48653 /* user.png */; };
+		5FF933D61159D86700159ECA /* profilebar.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FF933D51159D86700159ECA /* profilebar.png */; };
+		5FF934081159E01A00159ECA /* health.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FF934041159E01A00159ECA /* health.png */; };
+		5FF934091159E01A00159ECA /* kills.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FF934051159E01A00159ECA /* kills.png */; };
+		5FF9340A1159E01A00159ECA /* traps.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FF934061159E01A00159ECA /* traps.png */; };
+		5FF9340B1159E01A00159ECA /* value.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FF934071159E01A00159ECA /* value.png */; };
+		5FF9348C1159F3EE00159ECA /* MyCLController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF9348B1159F3EE00159ECA /* MyCLController.m */; };
+		5FF9349B1159F70300159ECA /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FF9349A1159F70300159ECA /* CoreLocation.framework */; };
 		CD885DA4114D5EAD0002DFAF /* BTTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD885DA3114D5EAD0002DFAF /* BTTabBarController.m */; };
 		CD885DCD114D62D80002DFAF /* BTHomeNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD885DCC114D62D80002DFAF /* BTHomeNavigationController.m */; };
 		CD885E0D114D68E00002DFAF /* BTHomeInternalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD885E0C114D68E00002DFAF /* BTHomeInternalViewController.m */; };
@@ -67,6 +77,18 @@
 		5F7487B4114D9A5700A48653 /* BTNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTNetwork.m; sourceTree = "<group>"; };
 		5F7487C4114D9CC900A48653 /* BTNetworkHttp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTNetworkHttp.h; sourceTree = "<group>"; };
 		5F7487C5114D9CC900A48653 /* BTNetworkHttp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTNetworkHttp.m; sourceTree = "<group>"; };
+		5F7489BA11586DDE00A48653 /* homeViewTopBanner.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = homeViewTopBanner.png; sourceTree = "<group>"; };
+		5F748A2C11588BD200A48653 /* BTNavBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTNavBarController.h; sourceTree = "<group>"; };
+		5F748A2D11588BD200A48653 /* BTNavBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTNavBarController.m; sourceTree = "<group>"; };
+		5F748A9A115919FD00A48653 /* user.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = user.png; sourceTree = "<group>"; };
+		5FF933D51159D86700159ECA /* profilebar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = profilebar.png; sourceTree = "<group>"; };
+		5FF934041159E01A00159ECA /* health.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = health.png; sourceTree = "<group>"; };
+		5FF934051159E01A00159ECA /* kills.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kills.png; sourceTree = "<group>"; };
+		5FF934061159E01A00159ECA /* traps.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = traps.png; sourceTree = "<group>"; };
+		5FF934071159E01A00159ECA /* value.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = value.png; sourceTree = "<group>"; };
+		5FF9348A1159F3EE00159ECA /* MyCLController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyCLController.h; sourceTree = "<group>"; };
+		5FF9348B1159F3EE00159ECA /* MyCLController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyCLController.m; sourceTree = "<group>"; };
+		5FF9349A1159F70300159ECA /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		8D1107310486CEB800E47090 /* Traps-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Traps-Info.plist"; sourceTree = "<group>"; };
 		CD885DA2114D5EAD0002DFAF /* BTTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTTabBarController.h; sourceTree = "<group>"; };
 		CD885DA3114D5EAD0002DFAF /* BTTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTTabBarController.m; sourceTree = "<group>"; };
@@ -109,6 +131,7 @@
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
 				288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */,
+				5FF9349B1159F70300159ECA /* CoreLocation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -161,6 +184,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources-iPhone */ = {
 			isa = PBXGroup;
 			children = (
+				5F7489B611586DB500A48653 /* images */,
 				28AD733E0D9D9553002E5188 /* MainWindow.xib */,
 				8D1107310486CEB800E47090 /* Traps-Info.plist */,
 			);
@@ -173,6 +197,7 @@
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
 				1D30AB110D05D00D00671497 /* Foundation.framework */,
 				288765A40DF7441C002DB57D /* CoreGraphics.framework */,
+				5FF9349A1159F70300159ECA /* CoreLocation.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -192,9 +217,33 @@
 			name = Network;
 			sourceTree = "<group>";
 		};
+		5F7489B611586DB500A48653 /* images */ = {
+			isa = PBXGroup;
+			children = (
+				5F7489B711586DBC00A48653 /* HomeViewImages */,
+			);
+			name = images;
+			sourceTree = "<group>";
+		};
+		5F7489B711586DBC00A48653 /* HomeViewImages */ = {
+			isa = PBXGroup;
+			children = (
+				5FF934041159E01A00159ECA /* health.png */,
+				5FF934051159E01A00159ECA /* kills.png */,
+				5FF934061159E01A00159ECA /* traps.png */,
+				5FF934071159E01A00159ECA /* value.png */,
+				5F748A9A115919FD00A48653 /* user.png */,
+				5FF933D51159D86700159ECA /* profilebar.png */,
+				5F7489BA11586DDE00A48653 /* homeViewTopBanner.png */,
+			);
+			name = HomeViewImages;
+			sourceTree = "<group>";
+		};
 		CD885DA1114D5E5C0002DFAF /* Views + Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				5F748A2C11588BD200A48653 /* BTNavBarController.h */,
+				5F748A2D11588BD200A48653 /* BTNavBarController.m */,
 				CD885DA2114D5EAD0002DFAF /* BTTabBarController.h */,
 				CD885DA3114D5EAD0002DFAF /* BTTabBarController.m */,
 				CD885DC7114D623F0002DFAF /* Home */,
@@ -219,6 +268,8 @@
 		CD885DC8114D62450002DFAF /* Search */ = {
 			isa = PBXGroup;
 			children = (
+				5FF9348A1159F3EE00159ECA /* MyCLController.h */,
+				5FF9348B1159F3EE00159ECA /* MyCLController.m */,
 				5F74866D114D65ED00A48653 /* BTSearchNavigationController.h */,
 				5F74866E114D65ED00A48653 /* BTSearchNavigationController.m */,
 				5F7486B9114D6F9C00A48653 /* BTSearchInternalViewController.h */,
@@ -329,6 +380,13 @@
 			files = (
 				28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */,
 				CD885E74114D80D40002DFAF /* FBConnect.bundle in Resources */,
+				5F7489BB11586DDE00A48653 /* homeViewTopBanner.png in Resources */,
+				5F748A9B115919FD00A48653 /* user.png in Resources */,
+				5FF933D61159D86700159ECA /* profilebar.png in Resources */,
+				5FF934081159E01A00159ECA /* health.png in Resources */,
+				5FF934091159E01A00159ECA /* kills.png in Resources */,
+				5FF9340A1159E01A00159ECA /* traps.png in Resources */,
+				5FF9340B1159E01A00159ECA /* value.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -364,6 +422,8 @@
 				5F7487C6114D9CC900A48653 /* BTNetworkHttp.m in Sources */,
 				CD885F13114D9F950002DFAF /* NSString+URLAdditions.m in Sources */,
 				CD885F43114DA38F0002DFAF /* BTInvocationMaker.m in Sources */,
+				5F748A2E11588BD200A48653 /* BTNavBarController.m in Sources */,
+				5FF9348C1159F3EE00159ECA /* MyCLController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -373,6 +433,7 @@
 		1D6058940D05DD3E006BFB54 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ADDITIONAL_SDKS = "$HOME/Library/SDKs/JSON/$(PLATFORM_NAME).sdk";
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -380,6 +441,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Traps_Prefix.pch;
 				INFOPLIST_FILE = "Traps-Info.plist";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-ljson",
+				);
 				PRODUCT_NAME = Traps;
 			};
 			name = Debug;
@@ -387,11 +452,16 @@
 		1D6058950D05DD3E006BFB54 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ADDITIONAL_SDKS = "$HOME/Library/SDKs/JSON/$(PLATFORM_NAME).sdk";
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Traps_Prefix.pch;
 				INFOPLIST_FILE = "Traps-Info.plist";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-ljson",
+				);
 				PRODUCT_NAME = Traps;
 				VALIDATE_PRODUCT = YES;
 			};

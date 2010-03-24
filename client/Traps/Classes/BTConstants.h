@@ -26,4 +26,9 @@
 #pragma mark -
 #pragma mark HTTP
 
-#define kHTTPHost	@"192.168.2.46:8000"
+#define kHTTPHost	@"192.168.1.110:8000"
+
+#pragma mark -
+#pragma mark FB
+#define fbAppId  @"3243a6e2dd3a0d084480d05f301cba85"
+#define fbSecret	 @"d8611553a286dce3531353b3de53ef2e"

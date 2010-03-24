@@ -9,8 +9,19 @@
 #import <UIKit/UIKit.h>
 #import "BTConstants.h"
 
-@interface BTSearchInternalViewController : UITableViewController {
+#import "MyCLController.h"
 
+@interface BTSearchInternalViewController : UITableViewController <MyCLControllerDelegate, UITableViewDataSource, UITableViewDelegate>{
+	MyCLController *locationController;
+	NSDictionary *foundVenues;
+	VenueDetailView *VenueDetailView;
 }
+
+@property (nonatomic, retain) NSDictionary *foundVenues;
+@property (nonatomic, retain) VenueDetailView *venueDetailView;
+- (void)didGetNearbyLocations;
+- (void)getNearbyLocations:(CLLocation *)location;
+- (void)locationUpdate:(CLLocation *)location; 
+- (void)locationError:(NSError *)error;
 
 @end

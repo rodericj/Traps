@@ -7,14 +7,27 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "FBConnect.h"
 #import "BTConstants.h"
 
-@interface BTHomeInternalViewController : UITableViewController {
+@interface BTHomeInternalViewController : UITableViewController <UITableViewDataSource, FBRequestDelegate, FBSessionDelegate, FBDialogDelegate> {
+	FBSession *mySession;
 
 }
 
-//TODO: REMOVE
-- (void)test:(id)response;
+#pragma mark -
+#pragma mark Network Response
+- (void)ProfileLoaded:(id)response;
+
+#pragma mark -
+#pragma mark Button Pushers
+- (void)dropTrapButtonPushed;
+
+
+//Cell Builders
+- (UITableViewCell *) getButtonCell:(NSString *)cellIdentifier;
+- (UITableViewCell *) getFBUserInfoCell:(NSString *)cellIdentifier;
+- (UITableViewCell *) getUserProfileCell:(NSString *)cellIdentifier leftSide:(NSString *) left rightSide:(NSString *) right;
+
 
 @end

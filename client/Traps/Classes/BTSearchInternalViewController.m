@@ -43,14 +43,36 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
-	//XXX: add code here
+	CGRect frame = CGRectMake(0.0, 0.0, 25.0, 25.0);
+	UIActivityIndicatorView *loading = [[UIActivityIndicatorView alloc] initWithFrame:frame];
+	[loading startAnimating];
+	[loading sizeToFit];
+	loading.autoresizingMask = (UIViewAutoresizingFlexibleLeftMargin |
+								UIViewAutoresizingFlexibleRightMargin |
+								UIViewAutoresizingFlexibleTopMargin |
+								UIViewAutoresizingFlexibleBottomMargin);
+	
+	// initing the bar button
+	UIBarButtonItem *loadingView = [[UIBarButtonItem alloc] initWithCustomView:loading];
+	[loading release];
+	loadingView.target = self;
+	self.title = @"Locations";
+	self.navigationItem.rightBarButtonItem = loadingView;
+
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 	
-	//XXX: add code here
+	locationController = [[MyCLController alloc] init];
+	locationController.delegate = self;
+	locationController.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
+	[locationController.locationManager startUpdatingLocation];
+
+
 }
+
+
 
 - (void)viewDidDisappear:(BOOL)animated {
 	[super viewDidDisappear:animated];
@@ -77,6 +99,17 @@
 	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"default"];
 	
     return cell;
+}
+
+#pragma mark -
+#pragma mark Location
+
+- (void)locationUpdate:(CLLocation *)location {
+	NSLog(@"got a location");
+	[self getNearbyLocations:location];
+	locationController = [[MyCLController alloc] init];
+	locationController.delegate = self;
+	[locationController.locationManager stopUpdatingLocation];
 }
 
 
