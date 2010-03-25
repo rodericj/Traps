@@ -39,7 +39,6 @@
 										 UIRemoteNotificationTypeSound |
 										 UIRemoteNotificationTypeAlert)];
 	NSLog(@"done sending request");
-	
 	[window addSubview:rootController.view];
 	[window makeKeyAndVisible];
 }

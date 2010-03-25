@@ -28,15 +28,42 @@
 	BTTabBarController *tabBarController = [BTTabBarController sharedTabBarController];
 	[window addSubview:tabBarController.view];
 	
+	
+	BTHomeNavigationController *home = [[[BTHomeNavigationController alloc] init] autorelease];
+	UIImage *homeImage = [UIImage imageNamed:@"homeicon.png"];
+	UITabBarItem *homeItem = [[UITabBarItem alloc] initWithTitle:@"Home" image:homeImage tag:0];
+	[home setTabBarItem:homeItem];
+	
+	BTSearchNavigationController *search = [[[BTSearchNavigationController alloc] init] autorelease];
+	UIImage *searchImage = [UIImage imageNamed:@"searchicon.png"];
+	UITabBarItem *searchItem = [[UITabBarItem alloc] initWithTitle:@"Search" image:searchImage tag:0];
+	[search setTabBarItem:searchItem];
+	
+	BTProfileNavigationController *profile = [[[BTProfileNavigationController alloc] init] autorelease];
+	UIImage *profileImage = [UIImage imageNamed:@"profileicon.png"];
+	UITabBarItem *profileItem = [[UITabBarItem alloc] initWithTitle:@"Profile" image:profileImage tag:0];
+	[profile setTabBarItem:profileItem];
+	
+	BTLeaderBoardNavigationController *leaderboard = [[[BTLeaderBoardNavigationController alloc] init] autorelease];
+	UIImage *leaderboardImage = [UIImage imageNamed:@"leaderboardicon.png"];
+	UITabBarItem *leaderboardItem = [[UITabBarItem alloc] initWithTitle:@"Leaderboard" image:leaderboardImage tag:0];
+	[leaderboard setTabBarItem:leaderboardItem];
+	
 	// add view controllers to tab bar
 	[tabBarController setViewControllers:[NSArray arrayWithObjects:
-										  [[[BTHomeNavigationController alloc] init] autorelease],
-										  [[[BTSearchNavigationController alloc] init] autorelease],
-										  [[[BTProfileNavigationController alloc] init] autorelease],
-										  [[[BTLeaderBoardNavigationController alloc] init] autorelease],
+										  home,
+										  search,
+										  profile,
+										  leaderboard,
 										  nil]
 								animated:NO];
-	
+	UIBarButtonItem *selfButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"homeicon.png"] 
+																   style:UIBarButtonItemStylePlain 
+																  target:self 
+																  action:Nil];
+	[tabBarController setToolbarItems:[NSArray arrayWithObjects:selfButton,selfButton,selfButton,selfButton,
+									   nil]
+													   animated:YES];
 	// finish window setup
     [window makeKeyAndVisible];
 	

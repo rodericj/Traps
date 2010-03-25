@@ -12,7 +12,7 @@
 
 - (void)drawRect:(CGRect)rect {
 		UIImage *image = [UIImage imageNamed: @"homeViewTopBanner.png"];
-	[image drawInRect:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
+		[image drawInRect:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
 }
 @end
 

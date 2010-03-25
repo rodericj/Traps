@@ -106,11 +106,44 @@
 
 - (void)locationUpdate:(CLLocation *)location {
 	NSLog(@"got a location");
-	[self getNearbyLocations:location];
+	NSLog(@"getNearbyLocations Called %@. Accuracy: %d, %d", [location description], location.verticalAccuracy, location.horizontalAccuracy);
+
+	//[self getNearbyLocations:location];
 	locationController = [[MyCLController alloc] init];
 	locationController.delegate = self;
-	[locationController.locationManager stopUpdatingLocation];
+	//[locationController.locationManager stopUpdatingLocation];
 }
+
+- (void)getNearbyLocations:(CLLocation *)location {
+	NSLog(@"getNearbyLocations Called %@. Accuracy: %@, %@", [location description], location.verticalAccuracy, location.horizontalAccuracy);
+	
+	if (location == NULL){
+		NSLog(@"the location was null which means that the thread is doing something intersting. Lets send this back.");
+	}
+	else{
+		//Make location string 2 separate lat/long
+		NSString *latlong = [[[location description] stringByReplacingOccurrencesOfString:@"<" withString:@""] 
+							 stringByReplacingOccurrencesOfString:@">" withString:@""];
+		NSLog(@"new lat long %@", latlong);
+		NSArray *chunks = [latlong componentsSeparatedByString:@" "];
+		NSString *lat =[chunks objectAtIndex:0];
+		NSString *lon = [chunks objectAtIndex:1];
+		
+		NSLog(@"now we've split them up into %@ and %@", lat, lon);
+		//FoursquareNetworkOperation *op = [[FoursquareNetworkOperation alloc] init];
+//		[op setTargetURL:@"venues.json"];
+//		op.arguments = [[NSMutableDictionary alloc] init];
+//		[op.arguments setObject:[lat stringByReplacingOccurrencesOfString:@"," withString:@""] forKey:@"geolat"];
+//		[op.arguments setObject:lon forKey:@"geolong"];
+//		op.callingDelegate = self;
+//		queue = [[NSOperationQueue alloc] init];
+//		[queue addOperation:op];
+//		[op release];
+		
+	}
+	
+}
+
 
 
 @end

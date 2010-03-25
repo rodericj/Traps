@@ -8,17 +8,18 @@
 
 #import <UIKit/UIKit.h>
 #import "BTConstants.h"
+//#import "VenueDetailViewController.h"
 
 #import "MyCLController.h"
 
 @interface BTSearchInternalViewController : UITableViewController <MyCLControllerDelegate, UITableViewDataSource, UITableViewDelegate>{
 	MyCLController *locationController;
 	NSDictionary *foundVenues;
-	VenueDetailView *VenueDetailView;
+//	VenueDetailView *VenueDetailView;
 }
 
 @property (nonatomic, retain) NSDictionary *foundVenues;
-@property (nonatomic, retain) VenueDetailView *venueDetailView;
+//@property (nonatomic, retain) VenueDetailView *venueDetailView;
 - (void)didGetNearbyLocations;
 - (void)getNearbyLocations:(CLLocation *)location;
 - (void)locationUpdate:(CLLocation *)location; 

@@ -21,7 +21,6 @@
 	}
 	
 	BTHomeInternalViewController *internalViewController = [[BTHomeInternalViewController alloc] init];
-	
 	[self pushViewController:internalViewController animated:NO];
 	
 	self.tabBarItem = [[[UITabBarItem alloc] initWithTitle:kHomeTitle

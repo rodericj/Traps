@@ -131,7 +131,8 @@
 	[self getNearbyLocations:location];
 	locationController = [[MyCLController alloc] init];
 	locationController.delegate = self;
-	[locationController.locationManager stopUpdatingLocation];
+	NSLog(@"got a new location %@, %@", [location horizontalAccuracy], [location verticalAccuracy]);
+	//[locationController.locationManager stopUpdatingLocation];
 }
 
 - (void)didGetNearbyLocations{

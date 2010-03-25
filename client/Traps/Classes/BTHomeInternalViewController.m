@@ -26,8 +26,7 @@
     }
 	
 	self.title = @"";//kHomeTitle;
-	
-	
+														
 	mySession = [[FBSession sessionForApplication:fbAppId
 										   secret:fbSecret
 										 delegate:self] retain];
@@ -108,14 +107,19 @@
 #pragma mark UITableView
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+	//TODO There is no way this is the most appropriate place to put this. C'mon!!
+	[tableView setSeparatorColor:[UIColor blackColor]];
+	[tableView setScrollEnabled:NO];
     return 1;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 	if ([indexPath row] == 0) {
-		return 60;
+		return fbprofileinforowheight;
 	}
-	return 110;
+	NSLog(@"our row heights: %d", (iphonescreenheight - (navbarheight*2) - fbprofileinforowheight)/3);
+
+	return (iphonescreenheight - (navbarheight*2) - fbprofileinforowheight)/3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -128,7 +132,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"default"];
-	
+
 	NSInteger row = [indexPath row];
 	NSString *reuseId = [NSString stringWithFormat:@"home%d", row];
 	[cell setText:[NSString stringWithFormat:@"%d", row]];
@@ -159,20 +163,30 @@
 		}
 	}
 	
+	//disable clicks
+	cell.selectionStyle = UITableViewCellSelectionStyleNone;
+
     return cell;
 }
 
 - (UITableViewCell *) getButtonCell:(NSString *)cellIdentifier {
-	CGRect CellFrame = CGRectMake(0, 0, 320, 110);
+	CGRect CellFrame = CGRectMake(0, 0, iphonescreenwidth, 110);
 	CGRect ButtonFrame = CGRectMake(110, 30, 120, 40);
 
 	UITableViewCell	*cell = [[[UITableViewCell alloc] initWithFrame:CellFrame 
 														reuseIdentifier:cellIdentifier] autorelease];
+	//Make it black
+	UIView* backgroundView = [ [ [ UIView alloc ] initWithFrame:CGRectZero ] autorelease ];
+	backgroundView.backgroundColor = [ UIColor blackColor ];
+	cell.backgroundView = backgroundView;
 	
 	//UIButton
 	UIButton *searchButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+	
 	searchButton.frame = ButtonFrame;
-	[searchButton setTitle:@"Start Searching" forState:UIControlStateNormal];
+
+	//Set Background image
+	[searchButton setBackgroundImage:[UIImage imageNamed:@"searchnow.png"] forState:UIControlStateNormal];
 	
 	//listen for clicks
 	[searchButton addTarget:self action:@selector(dropTrapButtonPushed) 
@@ -189,12 +203,22 @@
 }
 
 - (UITableViewCell *) getUserProfileCell:(NSString *)cellIdentifier leftSide:(NSString *)left rightSide:(NSString *)right{
-	CGRect CellFrame = CGRectMake(0, 0, 320, 110);
+	CGRect CellFrame = CGRectMake(0, 0, iphonescreenwidth, 110);
 	UITableViewCell *cell = [[[UITableViewCell alloc] initWithFrame:CellFrame 
 													reuseIdentifier:cellIdentifier] autorelease];
 	
-	CGRect LeftPicFrame = CGRectMake(0, 0, 160, 110);
-	CGRect RightPicFrame = CGRectMake(160, 0, 160, 110);
+	//Make it black
+	UIView* backgroundView = [ [ [ UIView alloc ] initWithFrame:CGRectZero ] autorelease ];
+	backgroundView.backgroundColor = [ UIColor blackColor ];
+	cell.backgroundView = backgroundView;
+	
+	
+	//Set up the frames for the individual columns
+	CGRect LeftPicFrame = CGRectMake(64, 0, 64, 53);
+	CGRect RightPicFrame = CGRectMake(192, 0, 64, 53);
+	
+	CGRect LeftLabelFrame = CGRectMake(90, 50, 64, 53);
+	CGRect RightLabelFrame = CGRectMake(220, 50, 64, 53);
 
 	//Left
 	UIImageView *LeftPicTmp;
@@ -206,6 +230,18 @@
 	[cell.contentView addSubview:LeftPicTmp];
 	[LeftPicTmp release];
 	
+	//Set up the actual score
+	UILabel *lblTemp;
+	lblTemp = [[UILabel alloc] initWithFrame:LeftLabelFrame];
+	lblTemp.tag = 1;
+	[lblTemp setBackgroundColor:[UIColor clearColor]];
+	[lblTemp setText:@"0"];
+	[lblTemp setFont:[UIFont fontWithName:@"Helvetica" size:28]];
+	[lblTemp setTextColor:[UIColor whiteColor]];
+	[cell.contentView addSubview:lblTemp];
+	[lblTemp release];
+	
+	
 	//Right
 	UIImageView *RightPicTmp;
 	RightPicTmp = [[UIImageView alloc] initWithFrame:RightPicFrame];
@@ -216,24 +252,31 @@
 	[cell.contentView addSubview:RightPicTmp];
 	[RightPicTmp release];
 	
+	//Set up the actual score
+	lblTemp = [[UILabel alloc] initWithFrame:RightLabelFrame];
+	lblTemp.tag = 1;
+	[lblTemp setBackgroundColor:[UIColor clearColor]];
+	[lblTemp setText:@"0"];
+	[lblTemp setFont:[UIFont fontWithName:@"Helvetica" size:28]];
+	[lblTemp setTextColor:[UIColor whiteColor]];
+	[cell.contentView addSubview:lblTemp];
+	[lblTemp release];
+	
 	return cell;
 }
 - (UITableViewCell *) getFBUserInfoCell:(NSString *)cellIdentifier{
 	//UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
 	
-	CGRect CellFrame = CGRectMake(0, 0, 320, 60);
+	CGRect CellFrame = CGRectMake(0, 0, iphonescreenwidth, fbprofileinforowheight);
 	UITableViewCell *cell = [[[UITableViewCell alloc] initWithFrame:CellFrame 
 													reuseIdentifier:cellIdentifier] autorelease];
 	CGRect NameLabelFrame = CGRectMake(90, 20, 290, 25);
-	CGRect ProfilePicFrame = CGRectMake(40, 5, 50, 50);
-	CGRect ProfileBarFrame = CGRectMake(0, 0, 320, 60);
-
-	UILabel *lblTemp;
-	lblTemp = [[UILabel alloc] initWithFrame:NameLabelFrame];
-	lblTemp.tag = 1;
-	[cell.contentView addSubview:lblTemp];
-	[lblTemp release];
+	int picTopLeft = (fbprofileinforowheight - 50)/2;
+	CGRect ProfilePicFrame = CGRectMake(30, picTopLeft, 50, 50);
+	CGRect ProfileBarFrame = CGRectMake(0, 0, iphonescreenwidth, fbprofileinforowheight);
 	
+	int buttonTopLeft = (fbprofileinforowheight - fblogoutbuttonheight)/2;
+	CGRect LogoutButtonFrame = CGRectMake(200, buttonTopLeft, fblogoutbuttonwidth, fblogoutbuttonheight);
 	
 	UIImageView *ProfileBarTmp;
 	ProfileBarTmp = [[UIImageView alloc] initWithFrame:ProfileBarFrame];
@@ -242,8 +285,15 @@
 	UIImage *BarImage = [UIImage imageNamed:@"profilebar.png"];
 	[ProfileBarTmp setImage:BarImage];
 	[cell.contentView addSubview:ProfileBarTmp];
-	[ProfileBarTmp release];
 	
+	UILabel *lblTemp;
+	lblTemp = [[UILabel alloc] initWithFrame:NameLabelFrame];
+	lblTemp.tag = 1;
+	[lblTemp setBackgroundColor:[UIColor clearColor]];
+	[lblTemp setText:@"Joey Boots"];
+	[lblTemp setTextColor:[UIColor whiteColor]];
+	[cell.contentView addSubview:lblTemp];
+	[lblTemp release];
 	
 	UIImageView *picTemp;
 	picTemp = [[UIImageView alloc] initWithFrame:ProfilePicFrame];
@@ -254,20 +304,13 @@
 	[cell.contentView addSubview:picTemp];
 	[picTemp release];
 
+	FBLoginButton *button = [[[FBLoginButton alloc] init] autorelease];
+	[button setFrame:LogoutButtonFrame];
+	[ProfileBarTmp addSubview:button];
+	[ProfileBarTmp release];
 
-	//[UserImage drawAtPoint:CGPointMake(15, 45)];
-	//[cell setImage:UserImage];
 	return cell;
 }
-
-//- (UITableViewCell *) getUserProfileCell:(NSString *)cellIdentifier tableView:(UITableView *) tableView{
-//	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-//	if (cell == nil) {
-//		cell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:cellIdentifier] autorelease];
-//	}
-//	[cell setText:@"sup2"];
-//	return cell;
-//}
 
 #pragma mark -
 #pragma mark BTHomeInternalViewController
