@@ -7,6 +7,8 @@
 //
 
 #import "BTSearchInternalViewController.h"
+#import "BTNetwork.h"
+#import <JSON/JSON.h>
 
 
 @implementation BTSearchInternalViewController
@@ -106,16 +108,16 @@
 
 - (void)locationUpdate:(CLLocation *)location {
 	NSLog(@"got a location");
-	NSLog(@"getNearbyLocations Called %@. Accuracy: %d, %d", [location description], location.verticalAccuracy, location.horizontalAccuracy);
+	//NSLog(@"getNearbyLocations Called %@. Accuracy: %d, %d", [location description], location.verticalAccuracy, location.horizontalAccuracy);
 
-	//[self getNearbyLocations:location];
+	[self getNearbyLocations:location];
 	locationController = [[MyCLController alloc] init];
 	locationController.delegate = self;
 	//[locationController.locationManager stopUpdatingLocation];
 }
 
 - (void)getNearbyLocations:(CLLocation *)location {
-	NSLog(@"getNearbyLocations Called %@. Accuracy: %@, %@", [location description], location.verticalAccuracy, location.horizontalAccuracy);
+	NSLog(@"getNearbyLocations Called %@. Accuracy: %d, %d", [location description], location.verticalAccuracy, location.horizontalAccuracy);
 	
 	if (location == NULL){
 		NSLog(@"the location was null which means that the thread is doing something intersting. Lets send this back.");
@@ -130,18 +132,37 @@
 		NSString *lon = [chunks objectAtIndex:1];
 		
 		NSLog(@"now we've split them up into %@ and %@", lat, lon);
-		//FoursquareNetworkOperation *op = [[FoursquareNetworkOperation alloc] init];
-//		[op setTargetURL:@"venues.json"];
-//		op.arguments = [[NSMutableDictionary alloc] init];
-//		[op.arguments setObject:[lat stringByReplacingOccurrencesOfString:@"," withString:@""] forKey:@"geolat"];
-//		[op.arguments setObject:lon forKey:@"geolong"];
-//		op.callingDelegate = self;
-//		queue = [[NSOperationQueue alloc] init];
-//		[queue addOperation:op];
-//		[op release];
 		
+		
+		//Call to foursquare's location api
+		[[BTNetwork sharedNetwork] performHttpOperationWithResponseObject:self
+														  methodSignature:NSStringFromSelector(@selector(didGetNearbyLocations:))
+																   method:@"GET"
+																   domain:foursquareApi
+															  relativeURL:@"v1/venues"
+																   params:[NSDictionary dictionaryWithObjectsAndKeys:
+																		   lat, @"geolat",
+																		   lon, @"geolong", 
+																		   nil]];
 	}
 	
+}
+
+- (void)didGetNearbyLocations:(id)responseString{
+	NSLog(@"did get nearby locations %@", responseString);
+
+	SBJSON *parser = [SBJSON new];
+	NSDictionary* webRequestResults = [parser objectWithString:responseString error:NULL];
+	
+	NSArray *groups = [webRequestResults objectForKey:@"groups"];
+	NSDictionary *venues = [groups objectAtIndex:0];
+	NSArray *venues1 = [venues objectForKey:@"venues"];
+	NSLog(@"venues1 is: %@", venues1);
+	//UserProfile *userProfile = [UserProfile sharedSingleton];
+//	[userProfile setLocations:venues1];
+	
+	self.navigationItem.rightBarButtonItem = nil;
+	//[self didGetNearbyLocations];
 }
 
 

@@ -75,13 +75,14 @@ NSString *const kHTTPRequestError = @"HTTPRequestError";
 #pragma mark Network
 
 - (void)performHTTPRequestWithMethod:(NSString *)method
+						  hostDomain:(NSString *)domain
 						 relativeURL:(NSString *)relativeURL
 							  params:(NSDictionary *)params {
 	_data		= [[NSMutableData alloc] init];
 	
 	NSString *keyValuePairs = [self createKeyValuePairs:params];
 	NSMutableURLRequest *request;
-	NSString *urlString = [NSString stringWithFormat:@"http://%@/%@", kHTTPHost, relativeURL];
+	NSString *urlString = [NSString stringWithFormat:@"http://%@/%@", domain, relativeURL];
 	
 	if ([method compare:@"GET" options:NSCaseInsensitiveSearch] == NSOrderedSame) {
 		if ([keyValuePairs length] > 0) {

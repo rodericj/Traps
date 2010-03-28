@@ -30,6 +30,7 @@ extern NSString *const kHTTPRequestError;
 
 // Network
 - (void)performHTTPRequestWithMethod:(NSString *)method
+						  hostDomain:(NSString *)domain
 						 relativeURL:(NSString *)relativeURL
 							  params:(NSDictionary *)params;
 

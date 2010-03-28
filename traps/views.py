@@ -376,7 +376,6 @@ def get_or_create_profile(user):
 def IPhoneLogin(request):
 	jsonprofile = {}
 	profile = None
-
 	#TODO error case and feed it back to the iphone
 	#1. user name already exists does not work
 	#just in case

@@ -20,7 +20,9 @@
 
 @property (nonatomic, retain) NSDictionary *foundVenues;
 //@property (nonatomic, retain) VenueDetailView *venueDetailView;
-- (void)didGetNearbyLocations;
+//- (void)didGetNearbyLocations;
+- (void)didGetNearbyLocations:(id)responseString;
+
 - (void)getNearbyLocations:(CLLocation *)location;
 - (void)locationUpdate:(CLLocation *)location; 
 - (void)locationError:(NSError *)error;

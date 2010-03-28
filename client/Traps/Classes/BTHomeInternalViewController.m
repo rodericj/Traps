@@ -10,6 +10,8 @@
 #import "TrapsAppDelegate.h"
 #import "BTNetwork.h"
 #import "FBConnect/FBConnect.h"
+#import "BTUserProfile.h"
+#import "BTConstants.h"
 
 //From: from http://iphonedevelopertips.com/cocoa/json-framework-for-iphone-part-2.html
 //#import "SBJSON.h"   //Included in ~/Library/SDKs 
@@ -53,11 +55,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	//#TODO put the fb back in
-	//FBLoginDialog* dialog = [[[FBLoginDialog alloc] initWithSession:mySession] autorelease];
-//    [dialog show];
-	
-	//XXX: add code here
+	FBLoginDialog* dialog = [[[FBLoginDialog alloc] initWithSession:mySession] autorelease];
+    [dialog show];
 }
+
 - (void)session:(FBSession *)session didLogin:(FBUID)uid{
 
 	NSString *fql = [NSString stringWithFormat:
@@ -71,11 +72,28 @@
 - (void) request:(FBRequest *)request didLoad:(id)result {
 	NSArray *users = result;
 	NSDictionary *user = [users objectAtIndex:0];
-	NSLog(@"the user returned was %@", [user objectForKey:@"last_name"]);
+	NSLog(@"the user returned was %@", user);
 	
+	BTUserProfile *profile = [BTUserProfile sharedBTUserProfile];
+	[profile setLastName:(NSString *)[user objectForKey:@"last_name"]];
+	[profile setFirstName:(NSString *)[user objectForKey:@"first_name"]];
+	
+	//This doesn't seem like the best way to do this, but what is returned from 
+	//   fb is a NSNull object. So I'm comparing it's class type to an NSNull's class type
+	if(![[user objectForKey:@"pic_square"] isKindOfClass:[NSNull class]] ){
+		NSURL *photoUrl = [NSURL URLWithString:[user objectForKey:@"pic_square"]];
+		//TODO Very bad, need to thread this. The issue is that it's not going to khttphost
+		NSData *photoData = [NSData dataWithContentsOfURL:photoUrl];
+		UIImage *profileImage =	[UIImage imageWithData:photoData];
+		[profile setUserImage:profileImage];
+	}
+	
+	[self loadView];
+
 	[[BTNetwork sharedNetwork] performHttpOperationWithResponseObject:self
 								methodSignature:NSStringFromSelector(@selector(ProfileLoaded:))
 								method:@"POST"
+								domain:kHTTPHost
 								relativeURL:@"IPhoneLogin/"
 								params:[NSDictionary dictionaryWithObjectsAndKeys:
 								(NSString *)[user objectForKey:@"uid"], @"uname",
@@ -117,8 +135,6 @@
 	if ([indexPath row] == 0) {
 		return fbprofileinforowheight;
 	}
-	NSLog(@"our row heights: %d", (iphonescreenheight - (navbarheight*2) - fbprofileinforowheight)/3);
-
 	return (iphonescreenheight - (navbarheight*2) - fbprofileinforowheight)/3;
 }
 
@@ -145,12 +161,12 @@
 	}else if (row == 2) {
 		//cell = [self getBannerCell:reuseId tableView:tableView];
 		if (cell == nil) {
-			cell = [self getUserProfileCell:reuseId leftSide:@"health" rightSide:@"kills"];
+			cell = [self getUserProfileCell:reuseId leftSide:@"hitPoints" rightSide:@"killCount"];
 		}
 	}else if (row == 1) {
 		//cell = [self getBannerCell:reuseId tableView:tableView];
 		if (cell == nil) {
-			cell = [self getUserProfileCell:reuseId leftSide:@"traps" rightSide:@"value"];
+			cell = [self getUserProfileCell:reuseId leftSide:@"trapsSetCount" rightSide:@"coinCount"];
 		}
 	}else if (row == 0) {
 		if (cell == nil){
@@ -203,22 +219,56 @@
 }
 
 - (UITableViewCell *) getUserProfileCell:(NSString *)cellIdentifier leftSide:(NSString *)left rightSide:(NSString *)right{
+	BTUserProfile *profile = [BTUserProfile sharedBTUserProfile];
 	CGRect CellFrame = CGRectMake(0, 0, iphonescreenwidth, 110);
 	UITableViewCell *cell = [[[UITableViewCell alloc] initWithFrame:CellFrame 
 													reuseIdentifier:cellIdentifier] autorelease];
+	NSString *leftText;
+	NSString *rightText;
 	
+	if(right == @"coinCount"){
+		rightText = [NSString stringWithFormat:@"%d", [profile coinCount]];
+	}	
+
+	if(right == @"killCount"){
+		rightText = [NSString stringWithFormat:@"%d", [profile damageCaused]];
+	}		
+
+	if(right == @"trapsSetCount"){
+		rightText = [NSString stringWithFormat:@"%d", [profile numTrapsSet]];
+	}		
+
+	if(right == @"hitPoints"){
+		rightText = [NSString stringWithFormat:@"%d", [profile hitPoints]];
+	}	
+
+	if(left == @"coinCount"){
+		leftText = [NSString stringWithFormat:@"%d", [profile coinCount]];
+	}		
+
+	if(left == @"killCount"){
+		leftText = [NSString stringWithFormat:@"%d", [profile damageCaused]];
+	}		
+
+	if(left == @"trapsSetCount"){
+		leftText = [NSString stringWithFormat:@"%d", [profile numTrapsSet]];
+	}		
+
+	if(left == @"hitPoints"){
+		leftText = [NSString stringWithFormat:@"%d", [profile hitPoints]];
+	}	
+
 	//Make it black
-	UIView* backgroundView = [ [ [ UIView alloc ] initWithFrame:CGRectZero ] autorelease ];
+	UIView* backgroundView = [[[UIView alloc]initWithFrame:CGRectZero] autorelease];
 	backgroundView.backgroundColor = [ UIColor blackColor ];
 	cell.backgroundView = backgroundView;
 	
-	
 	//Set up the frames for the individual columns
-	CGRect LeftPicFrame = CGRectMake(64, 0, 64, 53);
-	CGRect RightPicFrame = CGRectMake(192, 0, 64, 53);
+	CGRect LeftPicFrame = CGRectMake(0, 0, 160, 104);
+	CGRect RightPicFrame = CGRectMake(160, 0, 160, 104);
 	
-	CGRect LeftLabelFrame = CGRectMake(90, 50, 64, 53);
-	CGRect RightLabelFrame = CGRectMake(220, 50, 64, 53);
+	CGRect LeftLabelFrame = CGRectMake(100, 15, 64, 53);
+	CGRect RightLabelFrame = CGRectMake(260, 15, 64, 53);
 
 	//Left
 	UIImageView *LeftPicTmp;
@@ -235,7 +285,15 @@
 	lblTemp = [[UILabel alloc] initWithFrame:LeftLabelFrame];
 	lblTemp.tag = 1;
 	[lblTemp setBackgroundColor:[UIColor clearColor]];
-	[lblTemp setText:@"0"];
+	
+	//NSLog(@"left %@", [kvPair objectForKey:left] );
+	//if([kvPair objectForKey:left]!=nil){
+//		//NSLog(@"went in %@", [kvPair objectForKey:left] );
+//		
+	[lblTemp setText:leftText];
+//	}
+	//NSLog(@"got past left %@", [kvPair objectForKey:left] );
+
 	[lblTemp setFont:[UIFont fontWithName:@"Helvetica" size:28]];
 	[lblTemp setTextColor:[UIColor whiteColor]];
 	[cell.contentView addSubview:lblTemp];
@@ -256,7 +314,9 @@
 	lblTemp = [[UILabel alloc] initWithFrame:RightLabelFrame];
 	lblTemp.tag = 1;
 	[lblTemp setBackgroundColor:[UIColor clearColor]];
-	[lblTemp setText:@"0"];
+	
+	[lblTemp setText:leftText];
+	
 	[lblTemp setFont:[UIFont fontWithName:@"Helvetica" size:28]];
 	[lblTemp setTextColor:[UIColor whiteColor]];
 	[cell.contentView addSubview:lblTemp];
@@ -265,17 +325,37 @@
 	return cell;
 }
 - (UITableViewCell *) getFBUserInfoCell:(NSString *)cellIdentifier{
-	//UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+
+	//Get the user's profile
+	BTUserProfile *profile = [BTUserProfile sharedBTUserProfile];
 	
+	//name
+	NSString *lastName = [profile lastName];
+	NSString *firstName = [profile firstName];
+	UIImage *userImage = [profile userImage];
+	
+	if(lastName == nil){
+		lastName = @"_";
+	}
+	if(firstName == nil){
+		firstName =@"_";
+	}
+	if(userImage == nil){
+		userImage = [UIImage imageNamed:@"user.png"];
+	}
+	
+	
+	int buttonTopLeft = (fbprofileinforowheight - fblogoutbuttonheight)/2;
 	CGRect CellFrame = CGRectMake(0, 0, iphonescreenwidth, fbprofileinforowheight);
 	UITableViewCell *cell = [[[UITableViewCell alloc] initWithFrame:CellFrame 
 													reuseIdentifier:cellIdentifier] autorelease];
-	CGRect NameLabelFrame = CGRectMake(90, 20, 290, 25);
+	CGRect FirstNameLabelFrame = CGRectMake(90, 15, 120, 25);
+	CGRect LastNameLabelFrame = CGRectMake(90, 35, 120, 25);
 	int picTopLeft = (fbprofileinforowheight - 50)/2;
 	CGRect ProfilePicFrame = CGRectMake(30, picTopLeft, 50, 50);
 	CGRect ProfileBarFrame = CGRectMake(0, 0, iphonescreenwidth, fbprofileinforowheight);
 	
-	int buttonTopLeft = (fbprofileinforowheight - fblogoutbuttonheight)/2;
+	//int buttonTopLeft = (fbprofileinforowheight - fblogoutbuttonheight)/2;
 	CGRect LogoutButtonFrame = CGRectMake(200, buttonTopLeft, fblogoutbuttonwidth, fblogoutbuttonheight);
 	
 	UIImageView *ProfileBarTmp;
@@ -287,20 +367,29 @@
 	[cell.contentView addSubview:ProfileBarTmp];
 	
 	UILabel *lblTemp;
-	lblTemp = [[UILabel alloc] initWithFrame:NameLabelFrame];
+	lblTemp = [[UILabel alloc] initWithFrame:FirstNameLabelFrame];
 	lblTemp.tag = 1;
 	[lblTemp setBackgroundColor:[UIColor clearColor]];
-	[lblTemp setText:@"Joey Boots"];
+	[lblTemp setText:firstName];
 	[lblTemp setTextColor:[UIColor whiteColor]];
 	[cell.contentView addSubview:lblTemp];
+	[lblTemp release];
+
+	lblTemp = [[UILabel alloc] initWithFrame:LastNameLabelFrame];
+	lblTemp.tag = 2;
+	[lblTemp setBackgroundColor:[UIColor clearColor]];
+	[lblTemp setText:lastName];
+	[lblTemp setTextColor:[UIColor whiteColor]];
+	[cell.contentView addSubview:lblTemp];
+	
 	[lblTemp release];
 	
 	UIImageView *picTemp;
 	picTemp = [[UIImageView alloc] initWithFrame:ProfilePicFrame];
-	picTemp.tag = 2;
+	picTemp.tag = 3;
 	
-	UIImage *UserImage = [UIImage imageNamed:@"user.png"];
-	[picTemp setImage:UserImage];
+	//UIImage *UserImage = [UIImage imageNamed:@"user.png"];
+	[picTemp setImage:userImage];
 	[cell.contentView addSubview:picTemp];
 	[picTemp release];
 
@@ -325,10 +414,16 @@
 	SBJSON *parser = [SBJSON new];
 	NSDictionary* responseAsDictionary = [parser objectWithString:responseString error:NULL];
 	
+	BTUserProfile *profile = [BTUserProfile sharedBTUserProfile];
+	 [profile setCoinCount:[[responseAsDictionary objectForKey:@"coinCount"] intValue]];
+	[profile setHitPoints:[[responseAsDictionary objectForKey:@"hitPoints"] intValue]];
+	[profile setDamageCaused:[[responseAsDictionary objectForKey:@"killCount"] intValue]];
+	[profile setNumTrapsSet:[[responseAsDictionary objectForKey:@"trapsSetCount"] intValue]];
+
 	[responseString release];
 	[parser release];
 	
-	NSLog(@"What was returned was %@", responseAsDictionary);
+	[self loadView];
 }
 
 @end

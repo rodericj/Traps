@@ -27,6 +27,8 @@
 #pragma mark HTTP
 
 #define kHTTPHost	@"192.168.1.110:8000"
+#define foursquareApi @"api.foursquare.com"
+
 
 #pragma mark -
 #pragma mark FB

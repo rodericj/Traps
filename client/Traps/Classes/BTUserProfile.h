@@ -11,19 +11,28 @@
 
 @interface BTUserProfile : NSObject {
 
-	NSString *userName;
-	int *coinCount;
-	int *hitPoints;
-	int *damageCaused;  //formerly kill Count
-	int *numTrapsSet;
-	int *numTrapsTriggered;
+	NSString *firstName;
+	NSString *lastName;
+
+	int coinCount;
+	int hitPoints;
+	int damageCaused;  //formerly kill Count
+	int numTrapsSet;
+	int numTrapsTriggered;
 	
 	UIImage *userImage;
 	
 }
 
-@property (nonatomic, retain) NSString *userName;
+@property (nonatomic, retain) NSString *firstName;
+@property (nonatomic, retain) NSString *lastName;
 @property (nonatomic, retain) UIImage *userImage;
+
+@property (nonatomic) int coinCount;
+@property (nonatomic) int hitPoints;
+@property (nonatomic) int damageCaused;
+@property (nonatomic) int numTrapsSet;
+@property (nonatomic) int numTrapsTriggered;
 
 
 

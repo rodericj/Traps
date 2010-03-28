@@ -12,8 +12,15 @@ static BTUserProfile *sharedBTUserProfile = nil;
 
 @implementation BTUserProfile
 
-@synthesize userName;
+@synthesize firstName;
+@synthesize lastName;
 @synthesize userImage;
+
+@synthesize coinCount;
+@synthesize hitPoints;
+@synthesize damageCaused;
+@synthesize numTrapsSet;
+@synthesize numTrapsTriggered;
 
 #pragma mark -
 #pragma mark Singleton

@@ -22,6 +22,7 @@
 - (oneway void)performHttpOperationWithResponseObject:(id)responseObject
 									  methodSignature:(NSString *)methodSignature
 											   method:(NSString *)method
+											   domain:(NSString *)domain
 										  relativeURL:(NSString *)relativeURL
 											   params:(NSDictionary *)params;
 

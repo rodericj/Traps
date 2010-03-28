@@ -126,8 +126,8 @@
 		photoData = [sharedSingleton userImage];
 	}
 	else{
-	NSURL *photoUrl = [NSURL URLWithString:[friend objectForKey:@"pic_square"]];
-	photoData = [NSData dataWithContentsOfURL:photoUrl];
+		NSURL *photoUrl = [NSURL URLWithString:[friend objectForKey:@"pic_square"]];
+		photoData = [NSData dataWithContentsOfURL:photoUrl];
 	}
 	UIImage *profileImage =	[UIImage imageWithData:photoData];
 	cell.icon = profileImage;
