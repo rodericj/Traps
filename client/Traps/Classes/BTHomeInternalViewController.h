@@ -12,8 +12,8 @@
 
 @interface BTHomeInternalViewController : UITableViewController <UITableViewDataSource, FBRequestDelegate, FBSessionDelegate, FBDialogDelegate> {
 	FBSession *mySession;
-
 }
+
 
 #pragma mark -
 #pragma mark Network Response

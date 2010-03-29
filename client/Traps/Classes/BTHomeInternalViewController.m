@@ -55,8 +55,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	//#TODO put the fb back in
-	FBLoginDialog* dialog = [[[FBLoginDialog alloc] initWithSession:mySession] autorelease];
-    [dialog show];
+	//FBLoginDialog* dialog = [[[FBLoginDialog alloc] initWithSession:mySession] autorelease];
+//    [dialog show];
 }
 
 - (void)session:(FBSession *)session didLogin:(FBUID)uid{
@@ -109,6 +109,18 @@
     [super viewWillAppear:animated];
 	
 	//XXX: add code here
+}
+
+-(void)viewDidAppear:(BOOL)animated{
+	if([mySession resume] == YES){
+		NSLog(@"session resumed");
+	}
+	else{
+		NSLog(@"should show dialog?");
+		FBDialog *dialog = [[[FBLoginDialog alloc] initWithSession:mySession] autorelease];
+		dialog.delegate = self;
+		[dialog show];
+	}
 }
 
 - (void)viewDidDisappear:(BOOL)animated {

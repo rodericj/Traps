@@ -302,9 +302,11 @@ def ShowAllTrapsSet(request):
 
 def GetFriends(request):
 
+	print request
 	u = request.user
 	#get the string argument
-	friendString = request.POST['friends']
+	#friendString = request.POST['friends']
+	friendString = request.GET['friends']
 
 	#convert the string to an array of dicts
 	friendArray = simplejson.loads(str(friendString))

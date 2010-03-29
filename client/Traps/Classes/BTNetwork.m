@@ -85,7 +85,6 @@ static BTNetwork *sharedBTNetwork = nil;
 										  relativeURL:(NSString *)relativeURL
 											   params:(NSDictionary *)params {
 	
-	NSLog(@"Going to %@, %@", domain, relativeURL);
 	// Create an invocation for the operation queue
 	BTNetworkHttp *networkHTTP = [BTNetworkHttp networkHttpWithResponseObject:responseObject
 															  methodSignature:methodSignature];
