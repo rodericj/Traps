@@ -7,9 +7,13 @@
 //
 
 #import "BTProfileInternalViewController.h"
-
+#import "BTUserHistoryTableViewController.h"
+#import "BTUserInventoryTableView.h"
 
 @implementation BTProfileInternalViewController
+
+@synthesize segmentedControl;
+@synthesize segmentViews;
 #pragma mark -
 #pragma mark Initialization
 
@@ -18,8 +22,18 @@
 		return nil;
     }
 	
-	self.title = kProfileTitle;
+	self.title = @"";//kProfileTitle;
+	segmentedControl = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"Activity",
+																  @"Inventory",
+																  nil]];
+	//set up the segment control
+	[segmentedControl setSelectedSegmentIndex:0];
+	[segmentedControl addTarget:self 
+						 action:@selector(segmentedControlChanged) 
+			   forControlEvents:UIControlEventValueChanged];
 	
+		NSLog(@"done init");
+
     return self;
 }
 
@@ -33,6 +47,17 @@
 }
 
 - (void)dealloc {	
+	
+	//Let's get rid of each of the views in our segmentedview
+	UITableView *current;
+	for(int i = 0; i < [segmentViews count]; i++){
+		current = [segmentViews objectAtIndex:i];
+		[current release];
+	}
+	
+	//get rid of the segmentViews Array
+	[segmentViews release];
+	
     [super dealloc];
 }
 
@@ -42,19 +67,21 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
-	//XXX: add code here
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+	NSLog(@"view will appear so we are making a new segmented views array");
 	
-	//XXX: add code here
+	//set up each of the views that the segment controls
+	segmentViews = [[NSArray arrayWithObjects:[[BTUserHistoryTableViewController alloc] init],
+					[[BTUserInventoryTableView alloc] init], nil] retain];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
 	[super viewDidDisappear:animated];
 	
-	//XXX: add code here
+
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -62,19 +89,57 @@
 }
 
 #pragma mark -
+#pragma mark Segmente Control
+-(void) segmentedControlChanged{
+	NSLog(@"when the segment changes. it changes to %d", [segmentedControl selectedSegmentIndex]);
+	[self loadView];
+}
+
+#pragma mark -
 #pragma mark UITableView
 
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+	if([indexPath row] == 0){
+		return 60;
+	}
+	return iphonescreenheight - 60 - navbarheight;
+}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+	[tableView setScrollEnabled:NO];
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-	return 0;
+	return 2;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"default"];
 	
+	NSString *reuseIdentifier = [NSString stringWithFormat:@"%d", [indexPath row]];
+	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
+	
+	if (cell == nil) {
+        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier] autorelease];
+	}
+	
+	switch ([indexPath row]) {
+		case 0:
+			
+			[segmentedControl setFrame:CGRectMake((iphonescreenwidth-200)/2, 10, 200, 40)];
+			[cell addSubview:segmentedControl];
+			break;
+		case 1:
+			NSLog(@"%d", 1);
+			UITableViewController *current = [segmentViews objectAtIndex:[segmentedControl selectedSegmentIndex]];
+			[cell addSubview:[current view]];
+			//}
+			break;
+		default:
+			break;
+	}
+	cell.selectionStyle = UITableViewCellSelectionStyleNone;
+
     return cell;
 }
 

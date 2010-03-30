@@ -83,7 +83,7 @@ NSString *const kHTTPRequestError = @"HTTPRequestError";
 	NSString *keyValuePairs = [self createKeyValuePairs:params];
 	NSMutableURLRequest *request;
 	NSString *urlString = [NSString stringWithFormat:@"http://%@/%@", domain, relativeURL];
-	
+	NSLog(@"urlString %@", urlString);
 	if ([method compare:@"GET" options:NSCaseInsensitiveSearch] == NSOrderedSame) {
 		if ([keyValuePairs length] > 0) {
 			urlString = [NSString stringWithFormat:@"%@?%@", urlString, keyValuePairs];

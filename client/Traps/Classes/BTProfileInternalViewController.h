@@ -10,7 +10,13 @@
 #import "BTConstants.h"
 
 @interface BTProfileInternalViewController : UITableViewController {
-
+	UISegmentedControl *segmentedControl;
+	NSArray *segmentViews;
 }
+
+@property (nonatomic, retain) UISegmentedControl *segmentedControl;
+@property (nonatomic, retain) NSArray *segmentViews;
+
+-(void) segmentedControlChanged;
 
 @end

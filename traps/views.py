@@ -302,7 +302,6 @@ def ShowAllTrapsSet(request):
 
 def GetFriends(request):
 
-	print request
 	u = request.user
 	#get the string argument
 	#friendString = request.POST['friends']

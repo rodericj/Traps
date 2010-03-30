@@ -59,6 +59,7 @@
 	[session resume];
 }
 - (void)viewDidDisappear:(BOOL)animated {
+	[self.friendsWithApp release];
 	[super viewDidDisappear:animated];
 	
 	//XXX: add code here
@@ -76,7 +77,9 @@
 	SBJSON *parser = [SBJSON new];
 	NSDictionary* webRequestResults = [parser objectWithString:responseString error:NULL];
 	
-	self.friendsWithApp = webRequestResults;
+	//self.friendsWithApp = [NSDictionary alloc];
+	self.friendsWithApp = [webRequestResults copy];
+
 	self.navigationItem.rightBarButtonItem = nil;
 	[self loadView];
 }
@@ -99,10 +102,9 @@
 	NSString *friendListString = [writer stringWithObject:friendsWithAppArray];
 	
 	[friendsWithAppArray release];
-	NSLog(@"friendList %@ %@", friendListString, [friendListString class]);
+	//NSLog(@"friendList %@ %@", friendListString, [friendListString class]);
 	//Now send this list over to the server and get their rankings
 	
-	//Call to foursquare's location api
 	[[BTNetwork sharedNetwork] performHttpOperationWithResponseObject:self
 													  methodSignature:NSStringFromSelector(@selector(didGetFriends:))
 															   method:@"GET"
@@ -126,6 +128,10 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+	if (friendsWithApp == nil) {
+		return 0;
+	}
+
 	return [friendsWithApp count];
 
 }
@@ -136,13 +142,18 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	NSString *reuseId = [NSString stringWithFormat:@"home%d", [indexPath row]];
-	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"default"];
-	cell = [self getFriendCell:reuseId friend:[friendsWithApp objectAtIndex:[indexPath row]]];
-	
+	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseId];
+	NSLog(@"cell for row at %d", [indexPath row]);
+	if(cell == nil){
+		cell = [self getFriendCell:reuseId friend:[friendsWithApp objectAtIndex:[indexPath row]]];
+	}
 	
     return cell;
 }
 
+- (void) gotFriendImage:(id)data{
+	NSLog(@"data %@", data);
+}
 							
 #pragma mark -
 #pragma mark Cell Description
@@ -150,7 +161,20 @@
 	//name
 	NSString *lastName = [friend objectForKey:@"last_name"];
 	NSString *firstName = [friend objectForKey:@"first_name"];
-	UIImage *userImage = [UIImage imageNamed:@"user.png"];
+	NSString *killCount = [NSString stringWithFormat:@"Kills: %@", [friend objectForKey:@"killCount"]];
+
+	//TODO This needs to use CoreData or some type of local storage.
+	UIImage *userImage;
+	userImage = [UIImage imageNamed:@"user.png"];
+	
+
+	//nil;// = [UIImage imageNamed:@"user.png"];
+
+	UIColor *textColor = [UIColor whiteColor];
+
+	if([friend objectForKey:@"is_self"]){
+		textColor = [UIColor blueColor];
+	}
 	
 	if(lastName == nil){
 		lastName = @"_";
@@ -158,20 +182,30 @@
 	if(firstName == nil){
 		firstName =@"_";
 	}
-	if(userImage == nil){
-		userImage = [UIImage imageNamed:@"user.png"];
+	
+		
+	
+	
+	
+	if(![friend objectForKey:@"imagedata"]){
+		NSLog(@"there is no image data for %@", lastName);
 	}
 	
-	
-	int buttonTopLeft = (fbprofileinforowheight - fblogoutbuttonheight)/2;
+	NSLog(@"getting the friend Cell %@", lastName);
 	CGRect CellFrame = CGRectMake(0, 0, iphonescreenwidth, fbprofileinforowheight);
 	UITableViewCell *cell = [[[UITableViewCell alloc] initWithFrame:CellFrame 
 													reuseIdentifier:cellIdentifier] autorelease];
+	
 	CGRect FirstNameLabelFrame = CGRectMake(90, 15, 120, 25);
 	CGRect LastNameLabelFrame = CGRectMake(90, 35, 120, 25);
 	int picTopLeft = (fbprofileinforowheight - 50)/2;
 	CGRect ProfilePicFrame = CGRectMake(30, picTopLeft, 50, 50);
 	CGRect ProfileBarFrame = CGRectMake(0, 0, iphonescreenwidth, fbprofileinforowheight);
+	CGRect KillsLabelFrame = CGRectMake(200, 15, 120, 25);
+	//CGRect TrapsSetLabelFrame = CGRectMake(160, fbprofileinforowheight-15, 120, 25);
+//	CGRect KillsLabelFrame = CGRectMake(200, 15, 120, 25);
+
+	
 	
 	UIImageView *ProfileBarTmp;
 	ProfileBarTmp = [[UIImageView alloc] initWithFrame:ProfileBarFrame];
@@ -185,9 +219,10 @@
 	UILabel *lblTemp;
 	lblTemp = [[UILabel alloc] initWithFrame:FirstNameLabelFrame];
 	lblTemp.tag = 1;
+
 	[lblTemp setBackgroundColor:[UIColor clearColor]];
 	[lblTemp setText:firstName];
-	[lblTemp setTextColor:[UIColor whiteColor]];
+	[lblTemp setTextColor:textColor];
 	[cell.contentView addSubview:lblTemp];
 	[lblTemp release];
 	
@@ -195,9 +230,16 @@
 	lblTemp.tag = 2;
 	[lblTemp setBackgroundColor:[UIColor clearColor]];
 	[lblTemp setText:lastName];
+	[lblTemp setTextColor:textColor];
+	[cell.contentView addSubview:lblTemp];
+	[lblTemp release];
+	
+	lblTemp = [[UILabel alloc] initWithFrame:KillsLabelFrame];
+	lblTemp.tag = 4;
+	[lblTemp setBackgroundColor:[UIColor clearColor]];
+	[lblTemp setText:killCount];
 	[lblTemp setTextColor:[UIColor whiteColor]];
 	[cell.contentView addSubview:lblTemp];
-	
 	[lblTemp release];
 	
 	UIImageView *picTemp;
