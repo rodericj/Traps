@@ -18,6 +18,10 @@
 #pragma mark -
 #pragma mark Application Sections
 
+//#define kHTTPHost	@"thetrapgame.com"
+#define kHTTPHost	@"192.168.1.110:8000"
+//#define kHTTPHost	@"10.0.1.182:8000"
+
 #define kHomeTitle			@"Home"
 #define kSearchTitle		@"Search"
 #define kProfileTitle		@"Profile"
@@ -26,8 +30,7 @@
 #pragma mark -
 #pragma mark HTTP
 
-#define kHTTPHost	@"192.168.1.110:8000"
-//#define kHTTPHost	@"10.0.1.182:8000"
+
 
 #define foursquareApi @"api.foursquare.com"
 

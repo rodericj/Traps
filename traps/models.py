@@ -17,7 +17,7 @@ class Item(models.Model):
 	limit = models.IntegerField(default=0)
 	note = models.CharField(max_length=100)
 	timeToLive = models.IntegerField(default=0)
-	assetPath = models.FilePathField(path=settings.MEDIA_ROOT+"/images/")
+	assetPath = models.FilePathField(path=settings.MEDIA_ROOT+"images/")
 	type = models.CharField(max_length=2, choices=TYPE_CHOICES)
 	level = models.IntegerField(default=1)
 	value = models.IntegerField(default=1)

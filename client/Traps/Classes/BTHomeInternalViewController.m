@@ -407,7 +407,7 @@
 
 	FBLoginButton *button = [[[FBLoginButton alloc] init] autorelease];
 	[button setFrame:LogoutButtonFrame];
-	[ProfileBarTmp addSubview:button];
+	[cell.contentView addSubview:button];
 	[ProfileBarTmp release];
 
 	return cell;

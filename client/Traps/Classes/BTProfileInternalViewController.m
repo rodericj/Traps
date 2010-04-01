@@ -91,7 +91,6 @@
 #pragma mark -
 #pragma mark Segmente Control
 -(void) segmentedControlChanged{
-	NSLog(@"when the segment changes. it changes to %d", [segmentedControl selectedSegmentIndex]);
 	[self loadView];
 }
 
@@ -130,7 +129,7 @@
 			[cell addSubview:segmentedControl];
 			break;
 		case 1:
-			NSLog(@"%d", 1);
+			NSLog(@"");
 			UITableViewController *current = [segmentViews objectAtIndex:[segmentedControl selectedSegmentIndex]];
 			[cell addSubview:[current view]];
 			//}

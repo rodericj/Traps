@@ -2,7 +2,6 @@ from django.shortcuts import HttpResponse, HttpResponseRedirect, render_to_respo
 from django.contrib.auth import authenticate, login, logout
 from Traps.traps.models import Venue, Item, TrapsUser, VenueItem, Event
 import urllib
-import sys
 import config
 import operator
 from datetime import datetime
@@ -128,7 +127,7 @@ def getUserInventory(uid):
 	except:
 		raise
 		
-	inventory = [{'name':Item.objects.get(id = i['item']).name, 'id':Item.objects.get(id = i['item']).id, 'count':i['item__count'], 'path':Item.objects.get(id=i['item']).assetPath, 'type':Item.objects.get(id = i['item']).type} for i in annotated_inv]
+	inventory = [{'name':Item.objects.get(id = i['item']).name, 'id':Item.objects.get(id = i['item']).id, 'count':i['item__count'], 'path':'site_media'+Item.objects.get(id=i['item']).assetPath.split('site_media/')[1], 'type':Item.objects.get(id = i['item']).type} for i in annotated_inv]
 	return inventory
 
 def getUserProfile(uid):
