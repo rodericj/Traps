@@ -128,7 +128,7 @@ def getUserInventory(uid):
 	except:
 		raise
 		
-	inventory = [{'name':Item.objects.get(id = i['item']).name, 'id':Item.objects.get(id = i['item']).id, 'count':i['item__count'], 'type':Item.objects.get(id = i['item']).type} for i in annotated_inv]
+	inventory = [{'name':Item.objects.get(id = i['item']).name, 'id':Item.objects.get(id = i['item']).id, 'count':i['item__count'], 'path':Item.objects.get(id=i['item']).assetPath, 'type':Item.objects.get(id = i['item']).type} for i in annotated_inv]
 	return inventory
 
 def getUserProfile(uid):
@@ -309,9 +309,8 @@ def GetFriends(request):
 
 	#convert the string to an array of dicts
 	friendArray = simplejson.loads(str(friendString))
-	myself = {'is_self':True, u'first_name':u.first_name, u'last_name': u.last_name, u'uid': u.username, u'name': u.first_name + " " +u.last_name + " (you)"}
-	
-	friendArray.append(myself)
+	friendArray[0]['is_self']=True
+
 	#get a list of the friend ids
 	friendIds = [int(friend['uid']) for friend in friendArray]
 	friendsHere = TrapsUser.objects.filter(user__username__in=friendIds)
@@ -332,7 +331,7 @@ def GetUserProfileFromProfile(userprofile):
 	profile['inventory'] = getUserInventory(userprofile.id)
 	return profile
 	
-def GetUserProfile(request):
+def GetMyUserProfile(request):
 	userprofile = get_or_create_profile(request.user)
 	return GetUserProfile(request, userprofile.id)
 

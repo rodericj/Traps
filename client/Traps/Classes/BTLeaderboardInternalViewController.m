@@ -9,6 +9,7 @@
 #import "BTLeaderboardInternalViewController.h"
 #import <JSON/JSON.h>
 #import "BTNetwork.h"
+#import "asyncimageview.h"
 
 @implementation BTLeaderboardInternalViewController
 
@@ -86,8 +87,9 @@
 
 - (void)session:(FBSession *)localSession didLogin:(FBUID)uid{
 	NSString *fql = [NSString stringWithFormat:
-					 @"select uid, first_name, last_name, name, pic_square from user where uid in (select uid from user where is_app_user = 1 and uid in (SELECT uid2 FROM friend WHERE uid1= %lld))", 
-					 [localSession uid]];
+					 @"select uid, first_name, last_name, name, pic_square from user where uid = %lld or uid in (select uid from user where is_app_user = 1 and uid in (SELECT uid2 FROM friend WHERE uid1= %lld))", 
+					 [localSession uid], [localSession uid]];
+	
 	NSDictionary *params = [NSDictionary dictionaryWithObject:fql forKey:@"query"];
 	[[FBRequest requestWithDelegate:self] call:@"facebook.fql.query" params:params];
 
@@ -113,7 +115,6 @@
 															   params:[NSDictionary dictionaryWithObjectsAndKeys:
 																	   friendListString, @"friends",
 																	   nil]];
-
 }
 	
 
@@ -150,10 +151,6 @@
 	
     return cell;
 }
-
-- (void) gotFriendImage:(id)data{
-	NSLog(@"data %@", data);
-}
 							
 #pragma mark -
 #pragma mark Cell Description
@@ -162,30 +159,14 @@
 	NSString *lastName = [friend objectForKey:@"last_name"];
 	NSString *firstName = [friend objectForKey:@"first_name"];
 	NSString *killCount = [NSString stringWithFormat:@"Kills: %@", [friend objectForKey:@"killCount"]];
-
-	//TODO This needs to use CoreData or some type of local storage.
-	UIImage *userImage;
-	userImage = [UIImage imageNamed:@"user.png"];
 	
 
-	//nil;// = [UIImage imageNamed:@"user.png"];
-
-	UIColor *textColor = [UIColor whiteColor];
-
-	if([friend objectForKey:@"is_self"]){
-		textColor = [UIColor blueColor];
-	}
-	
 	if(lastName == nil){
 		lastName = @"_";
 	}
 	if(firstName == nil){
 		firstName =@"_";
 	}
-	
-		
-	
-	
 	
 	if(![friend objectForKey:@"imagedata"]){
 		NSLog(@"there is no image data for %@", lastName);
@@ -202,11 +183,11 @@
 	CGRect ProfilePicFrame = CGRectMake(30, picTopLeft, 50, 50);
 	CGRect ProfileBarFrame = CGRectMake(0, 0, iphonescreenwidth, fbprofileinforowheight);
 	CGRect KillsLabelFrame = CGRectMake(200, 15, 120, 25);
-	//CGRect TrapsSetLabelFrame = CGRectMake(160, fbprofileinforowheight-15, 120, 25);
-//	CGRect KillsLabelFrame = CGRectMake(200, 15, 120, 25);
+	
+	UIImage *userImage;
+	userImage = [UIImage imageNamed:@"user.png"];
 
-	
-	
+
 	UIImageView *ProfileBarTmp;
 	ProfileBarTmp = [[UIImageView alloc] initWithFrame:ProfileBarFrame];
 	ProfileBarTmp.tag = 3;
@@ -216,6 +197,12 @@
 	[cell.contentView addSubview:ProfileBarTmp];
 	[ProfileBarTmp release];
 
+	//For the upcoming text, pick a color
+	UIColor *textColor = [UIColor whiteColor];	
+	if([friend objectForKey:@"is_self"]){
+		textColor = [UIColor blueColor];
+	}
+	
 	UILabel *lblTemp;
 	lblTemp = [[UILabel alloc] initWithFrame:FirstNameLabelFrame];
 	lblTemp.tag = 1;
@@ -242,15 +229,26 @@
 	[cell.contentView addSubview:lblTemp];
 	[lblTemp release];
 	
-	UIImageView *picTemp;
-	picTemp = [[UIImageView alloc] initWithFrame:ProfilePicFrame];
-	picTemp.tag = 3;
 	
-	//UIImage *UserImage = [UIImage imageNamed:@"user.png"];
-	[picTemp setImage:userImage];
-	[cell.contentView addSubview:picTemp];
-	[picTemp release];
-	
+	if([friend objectForKey:@"pic_square"] != nil){
+		AsyncImageView *asyncImage = [[AsyncImageView alloc] initWithFrame:ProfilePicFrame];
+		asyncImage.tag = 999;
+		NSURL *url = [NSURL URLWithString:[friend objectForKey:@"pic_square"]];
+		[asyncImage loadImageFromURL:url];
+		//userImage = (UIImage *)asyncImage;
+		[cell.contentView addSubview:asyncImage];
+
+	}
+	else{
+		UIImageView *picTemp;
+		picTemp = [[UIImageView alloc] initWithFrame:ProfilePicFrame];
+		picTemp.tag = 3;
+		
+		//UIImage *UserImage = [UIImage imageNamed:@"user.png"];
+		[picTemp setImage:userImage];
+		[cell.contentView addSubview:picTemp];
+		[picTemp release];
+	}
 	
 	return cell;
 	

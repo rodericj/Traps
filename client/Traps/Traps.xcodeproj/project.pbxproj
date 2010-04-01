@@ -15,6 +15,7 @@
 		28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD733E0D9D9553002E5188 /* MainWindow.xib */; };
 		5F606D711161C107003625A1 /* BTUserHistoryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F606D701161C107003625A1 /* BTUserHistoryTableViewController.m */; };
 		5F606DCA1161CBC9003625A1 /* BTUserInventoryTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F606DC91161CBC9003625A1 /* BTUserInventoryTableView.m */; };
+		5F606FA81162E31E003625A1 /* asyncimageview.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F606FA71162E31E003625A1 /* asyncimageview.m */; };
 		5F74866F114D65ED00A48653 /* BTSearchNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F74866E114D65ED00A48653 /* BTSearchNavigationController.m */; };
 		5F748680114D675800A48653 /* BTProfileNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F74867F114D675800A48653 /* BTProfileNavigationController.m */; };
 		5F74868D114D67C300A48653 /* BTLeaderBoardNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F74868C114D67C300A48653 /* BTLeaderBoardNavigationController.m */; };
@@ -71,6 +72,8 @@
 		5F606D701161C107003625A1 /* BTUserHistoryTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTUserHistoryTableViewController.m; sourceTree = "<group>"; };
 		5F606DC81161CBC9003625A1 /* BTUserInventoryTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTUserInventoryTableView.h; sourceTree = "<group>"; };
 		5F606DC91161CBC9003625A1 /* BTUserInventoryTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTUserInventoryTableView.m; sourceTree = "<group>"; };
+		5F606FA61162E31E003625A1 /* asyncimageview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = asyncimageview.h; sourceTree = "<group>"; };
+		5F606FA71162E31E003625A1 /* asyncimageview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = asyncimageview.m; sourceTree = "<group>"; };
 		5F74866D114D65ED00A48653 /* BTSearchNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTSearchNavigationController.h; sourceTree = "<group>"; };
 		5F74866E114D65ED00A48653 /* BTSearchNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTSearchNavigationController.m; sourceTree = "<group>"; };
 		5F74867E114D675800A48653 /* BTProfileNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTProfileNavigationController.h; sourceTree = "<group>"; };
@@ -336,6 +339,8 @@
 		CD885DCA114D62550002DFAF /* Leaderboard */ = {
 			isa = PBXGroup;
 			children = (
+				5F606FA61162E31E003625A1 /* asyncimageview.h */,
+				5F606FA71162E31E003625A1 /* asyncimageview.m */,
 				5F74868B114D67C300A48653 /* BTLeaderBoardNavigationController.h */,
 				5F74868C114D67C300A48653 /* BTLeaderBoardNavigationController.m */,
 				5F7486D7114D721500A48653 /* BTLeaderboardInternalViewController.h */,
@@ -476,6 +481,7 @@
 				5FF9348C1159F3EE00159ECA /* MyCLController.m in Sources */,
 				5F606D711161C107003625A1 /* BTUserHistoryTableViewController.m in Sources */,
 				5F606DCA1161CBC9003625A1 /* BTUserInventoryTableView.m in Sources */,
+				5F606FA81162E31E003625A1 /* asyncimageview.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

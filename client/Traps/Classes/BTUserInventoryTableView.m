@@ -7,10 +7,12 @@
 //
 
 #import "BTUserInventoryTableView.h"
-
+#import <JSON/JSON.h>
+#import "BTNetwork.h"
 
 @implementation BTUserInventoryTableView
 
+//TODO get rid of all of the unused / commented out code
 /*
 - (id)initWithStyle:(UITableViewStyle)style {
     // Override initWithStyle: if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
@@ -20,20 +22,43 @@
 }
 */
 
-/*
+
 - (void)viewDidLoad {
+	NSLog(@"getting the user inventory");
+	[[BTNetwork sharedNetwork] performHttpOperationWithResponseObject:self
+													  methodSignature:NSStringFromSelector(@selector(ProfileLoaded:))
+															   method:@"POST"
+															   domain:kHTTPHost
+														  relativeURL:@"GetMyUserProfile/"
+															   params:nil];
     [super viewDidLoad];
 
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
-*/
 
-/*
+
+
 - (void)viewWillAppear:(BOOL)animated {
+	
     [super viewWillAppear:animated];
 }
-*/
+
+#pragma mark -
+#pragma mark networking
+-(void)ProfileLoaded:(id)response{
+	if ([response isKindOfClass:[NSError class]]) {
+		NSLog(@"test: response: error!!!: %@", response);		
+		return;
+	}
+	NSString *responseString = [[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding];
+	
+	SBJSON *parser = [SBJSON new];
+	NSDictionary* responseAsDictionary = [parser objectWithString:responseString error:NULL];
+	NSLog(@"returned from the server for inventory %@", responseAsDictionary);
+}
+
+
 /*
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];

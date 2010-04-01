@@ -19,7 +19,6 @@
 
 - (UITableViewCell *) getFriendCell:(NSString *)cellIdentifier friend:(NSDictionary *)friend;
 
-- (void) gotFriendImage:(id)data;
 - (void)didGetFriends:(id)responseString;
 
 @end
