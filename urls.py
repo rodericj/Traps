@@ -13,7 +13,8 @@ if os.environ.get('HOSTNAME', '') in PRODUCTION_SERVERS:
 else: 
 	#http://192.168.1.110:8000/site_media/bananapeel.png
 	#doc_root = os.getcwd()+'/site_media'
-	doc_root = os.getcwd()+'/images'
+	#doc_root = os.getcwd()+'/images'
+	doc_root = os.getcwd()
 
 urlpatterns = patterns('',
     # Example:
