@@ -168,13 +168,19 @@
 	[op release];
 	
 	//Set the mini profile image
-	NSURL *photoUrl = [NSURL URLWithString:[user objectForKey:@"pic_square"]];
-	NSData *photoData = [NSData dataWithContentsOfURL:photoUrl];
-	[sharedSingleton setUserImage:photoData];
+	NSLog(@"the pic_square is %@", [user objectForKey:@"pic_square"]);
+	BOOL containsKey = ([user objectForKey:@"pic_square"] == @"<null>");
+	NSLog(@"pic_square contains key %d", containsKey);
+	//if (containsKey) {
+	if ([[user objectForKey:@"pic_square"] length] > 5){	
+		
+		NSURL *photoUrl = [NSURL URLWithString:[user objectForKey:@"pic_square"]];
+		NSData *photoData = [NSData dataWithContentsOfURL:photoUrl];
+		[sharedSingleton setUserImage:photoData];
 	
-	UIImage *profileImage =	[UIImage imageWithData:photoData];
-	userImage.image = profileImage;
-	
+		UIImage *profileImage =	[UIImage imageWithData:photoData];
+		userImage.image = profileImage;
+	}
 	//Set the mini porofile name
 	userName.text = [user objectForKey:@"name"];
 }
@@ -183,7 +189,6 @@
 	UserProfile *userProfile = [UserProfile sharedSingleton];
 	[userProfile newProfileFromDictionary:webRequestResults];
 	[self updateMiniProfile:userProfile];
-	[homeTableView reloadData];
 	
 	NSNumber *tutorialValue = (NSNumber *)[webRequestResults objectForKey:@"tutorialValue"];
 
@@ -199,62 +204,6 @@
 		[alert show]; 
 		[alert release]; 
 	}
-}
-
-#pragma mark Table view methods
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
-}
-
-// Customize the number of rows in the table view.
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-	UserProfile *profile = [UserProfile sharedSingleton];
-	NSArray *inventory = [profile getInventory];
-	return [inventory count];
-}
-
-// Customize the appearance of table view cells.
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *CellIdentifier = @"Cell";
-    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
-    }
-    UserProfile *profile = [UserProfile sharedSingleton];
-	NSArray *inventory = [profile getInventory];
-    // Set up the cell...
-	NSString *cellText = [NSString stringWithFormat:@"%@ %@",  [[inventory objectAtIndex:[indexPath row]] objectForKey:@"name"], [[inventory objectAtIndex:[indexPath row]] objectForKey:@"count"]];
-	[cell.textLabel setText:cellText];
-    return cell;
-}
-
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-	return 30;
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-	
-	//NSInteger row = [indexPath row];
-//	if (row == 0 ){
-//		if (self.profileViewController == nil){
-//			ProfileViewController *aProfileViewController = [[ProfileViewController alloc] initWithNibName:@"ProfileView" bundle:nil];
-//			self.profileViewController = aProfileViewController;
-//			[aProfileViewController release];
-//		}
-//		profileViewController.title = @"TheUserName";
-//		
-//		BoobyTrap3AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
-//		[delegate.homeNavController pushViewController:profileViewController animated:YES];
-//		
-//	}
-	//NSMutableArray *array = [[NSArray alloc] initWithObjects:@"Drop Traps", @"Inventory", @"Social", @"Store", nil];
-
-	//if (row == 3){
-//		[Airship takeOff: @"EK_BtrOrSOmo95TTsAb_Fw" identifiedBy: @"vAixh-KLT5u0Ay8Xv6cf4Q"];
-//		[[Airship shared] displayStoreFront];
-//	}
 }
 @end
 

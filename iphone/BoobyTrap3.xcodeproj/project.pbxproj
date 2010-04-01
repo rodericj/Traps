@@ -721,13 +721,20 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: roderic campbell";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos3.0]" = "iPhone Distribution: roderic campbell";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = BoobyTrap3_Prefix.pch;
 				INFOPLIST_FILE = "BoobyTrap3-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 3.1;
 				PRODUCT_NAME = BoobyTrap3;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "BD6E7B21-427C-44B3-9C0D-8856A0DCCB0D";
+				"PROVISIONING_PROFILE[sdk=iphoneos3.0]" = "BD6E7B21-427C-44B3-9C0D-8856A0DCCB0D";
+				SDKROOT = iphoneos3.1;
 			};
 			name = Debug;
 		};
@@ -735,11 +742,18 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: roderic campbell";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos3.0]" = "iPhone Distribution: roderic campbell";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = BoobyTrap3_Prefix.pch;
 				INFOPLIST_FILE = "BoobyTrap3-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 3.1;
 				PRODUCT_NAME = BoobyTrap3;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "BD6E7B21-427C-44B3-9C0D-8856A0DCCB0D";
+				"PROVISIONING_PROFILE[sdk=iphoneos3.0]" = "BD6E7B21-427C-44B3-9C0D-8856A0DCCB0D";
+				SDKROOT = iphoneos3.1;
 			};
 			name = Release;
 		};
@@ -764,13 +778,17 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: roderic campbell";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos3.0]" = "iPhone Distribution: roderic campbell";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = BoobyTrap3_Prefix.pch;
 				HEADER_SEARCH_PATHS = "../../facebook-iphone-sdk/src";
 				INFOPLIST_FILE = "BoobyTrap3-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 3.1;
 				PRODUCT_NAME = BoobyTrap3;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "BD6E7B21-427C-44B3-9C0D-8856A0DCCB0D";
+				"PROVISIONING_PROFILE[sdk=iphoneos3.0]" = "BD6E7B21-427C-44B3-9C0D-8856A0DCCB0D";
+				SDKROOT = iphoneos3.1;
 			};
 			name = Distribution;
 		};

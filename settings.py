@@ -56,8 +56,10 @@ USE_I18N = True
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
 if PRODUCTION:
+	#http://thetrapgame.com/site_media/banana.png
 	#MEDIA_ROOT = '/home/rodericj/webapps/traps/media/'
 	MEDIA_ROOT = '/home/rodericj/webapps/django/Traps/site_media/'
+	MEDIA_ROOT = '/home/rodericj/webapps/traps_media/'
 else:
 	MEDIA_ROOT = ''
 
@@ -65,8 +67,8 @@ else:
 # trailing slash if there is a path component (optional in other cases).
 # Examples: "http://media.lawrence.com", "http://example.com/media/"
 if PRODUCTION:
-	MEDIA_URL = 'http://thetrapgame.com/media'
-	#MEDIA_URL = 'http://thetrapgame.com/site_media'
+	#MEDIA_URL = 'http://thetrapgame.com/media'
+	MEDIA_URL = 'http://thetrapgame.com/site_media'
 else:
 	MEDIA_URL = ''
 

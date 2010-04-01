@@ -8,9 +8,12 @@ admin.autodiscover()
 #TODO there has to be a better way to do this...
 PRODUCTION_SERVERS = ['web111.webfaction.com']
 if os.environ.get('HOSTNAME', '') in PRODUCTION_SERVERS:
-	doc_root = '/home/rodericj/webapps/django/Traps/site_media'
+	#doc_root = '/home/rodericj/webapps/django/Traps/site_media'
+	doc_root = '/home/rodericj/webapps/traps_media/images'
 else: 
-	doc_root = os.getcwd()+'/site_media'
+	#http://192.168.1.110:8000/site_media/bananapeel.png
+	#doc_root = os.getcwd()+'/site_media'
+	doc_root = os.getcwd()+'/images'
 
 urlpatterns = patterns('',
     # Example:
@@ -34,6 +37,7 @@ urlpatterns = patterns('',
     (r'^GetUserDropHistory/', 'Traps.traps.views.GetUserDropHistory'),
     (r'^GetVenue/(?P<vid>\d+)/', 'Traps.traps.views.GetVenue'),
     (r'^GetUserProfile/(?P<uid>\d*)/?', 'Traps.traps.views.GetUserProfile'),
+    (r'^GetMyUserProfile/', 'Traps.traps.views.GetMyUserProfile'),
     (r'^SearchVenue/', 'Traps.traps.views.SearchVenue'),
     (r'^SearchVenue/(?P<vid>\d+)/', 'Traps.traps.views.SearchVenue'),
     (r'^ShowAllTrapsSet/', 'Traps.traps.views.ShowAllTrapsSet'),

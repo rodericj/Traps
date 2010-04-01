@@ -85,13 +85,13 @@ class TrapsUser(models.Model):
 
 	def objectify(self):
 		return {
- 				'coinCount':str(self.coinCount),
- 				'hitPoints':str(self.hitPoints),
- 				'killCount':str(self.killCount),
- 				'trapsSetCount':str(self.trapsSetCount),
+ 				'coinCount':self.coinCount,
+ 				'hitPoints':self.hitPoints,
+ 				'killCount':self.killCount,
+ 				'trapsSetCount':self.trapsSetCount,
  				'username':self.user.username,
  				'lastUpdated':str(self.lastUpdated),
- 				'level':str(self.level),
+ 				'level':self.level,
  				'iphoneDeviceToken':self.iphoneDeviceToken,
 		}
 

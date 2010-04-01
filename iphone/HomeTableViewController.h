@@ -15,8 +15,7 @@
 @class FBSessionDelegate;
 @class UserProfile;
 
-@interface HomeTableViewController : UITableViewController <FBRequestDelegate, FBDialogDelegate, FBSessionDelegate, UITableViewDelegate, UITableViewDataSource>{
-	IBOutlet UITableView *homeTableView;
+@interface HomeTableViewController : UIViewController <FBRequestDelegate, FBDialogDelegate, FBSessionDelegate>{
 	NSMutableArray *menuArray;
 	ProfileViewController *profileViewController;
 	DropTrapsNavController *dropTrapsNavController;
