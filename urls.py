@@ -9,7 +9,7 @@ admin.autodiscover()
 PRODUCTION_SERVERS = ['web111.webfaction.com']
 if os.environ.get('HOSTNAME', '') in PRODUCTION_SERVERS:
 	#doc_root = '/home/rodericj/webapps/django/Traps/site_media'
-	doc_root = '/home/rodericj/webapps/traps_media/images'
+	doc_root = '/home/rodericj/webapps/traps_media/site_media/'
 else: 
 	#http://192.168.1.110:8000/site_media/bananapeel.png
 	doc_root = os.getcwd()+'/site_media/'

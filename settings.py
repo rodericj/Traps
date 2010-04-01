@@ -58,8 +58,9 @@ USE_I18N = True
 if PRODUCTION:
 	#http://thetrapgame.com/site_media/banana.png
 	#MEDIA_ROOT = '/home/rodericj/webapps/traps/media/'
-	MEDIA_ROOT = '/home/rodericj/webapps/django/Traps/site_media/'
 	#MEDIA_ROOT = '/home/rodericj/webapps/traps_media/'
+	#MEDIA_ROOT = '/home/rodericj/webapps/django/Traps/site_media/'
+	MEDIA_ROOT = '/home/rodericj/webapps/traps_media/site_media/'
 else:
 	MEDIA_ROOT = os.getcwd()+'/site_media/'
 
