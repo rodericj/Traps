@@ -12,13 +12,10 @@ if os.environ.get('HOSTNAME', '') in PRODUCTION_SERVERS:
 	doc_root = '/home/rodericj/webapps/traps_media/images'
 else: 
 	#http://192.168.1.110:8000/site_media/bananapeel.png
-	#doc_root = os.getcwd()+'/site_media'
-	#doc_root = os.getcwd()+'/images'
-	doc_root = os.getcwd()
+	doc_root = os.getcwd()+'/site_media/'
 
 urlpatterns = patterns('',
     # Example:
-    # (r'^Traps/', include('Traps.foo.urls')),
     (r'^startup/', 'django.views.generic.simple.direct_to_template', {'template':'nearbyplaces.html'}),
     (r'^testViews/', 'django.views.generic.simple.direct_to_template', {'template':'testviews.html'}),
     (r'^history/', 'django.views.generic.simple.direct_to_template', {'template':'history.html'}),

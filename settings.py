@@ -61,7 +61,7 @@ if PRODUCTION:
 	MEDIA_ROOT = '/home/rodericj/webapps/django/Traps/site_media/'
 	#MEDIA_ROOT = '/home/rodericj/webapps/traps_media/'
 else:
-	MEDIA_ROOT = ''
+	MEDIA_ROOT = os.getcwd()+'/site_media/'
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
@@ -70,7 +70,7 @@ if PRODUCTION:
 	#MEDIA_URL = 'http://thetrapgame.com/media'
 	MEDIA_URL = 'http://thetrapgame.com/site_media'
 else:
-	MEDIA_URL = ''
+	MEDIA_URL = '/site_media/'
 
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
