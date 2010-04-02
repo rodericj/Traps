@@ -226,6 +226,8 @@
 		5F7487B2114D9A4900A48653 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				5F606FA61162E31E003625A1 /* asyncimageview.h */,
+				5F606FA71162E31E003625A1 /* asyncimageview.m */,
 				CD885F11114D9F950002DFAF /* NSString+URLAdditions.h */,
 				CD885F12114D9F950002DFAF /* NSString+URLAdditions.m */,
 				CD885F41114DA38F0002DFAF /* BTInvocationMaker.h */,
@@ -339,8 +341,6 @@
 		CD885DCA114D62550002DFAF /* Leaderboard */ = {
 			isa = PBXGroup;
 			children = (
-				5F606FA61162E31E003625A1 /* asyncimageview.h */,
-				5F606FA71162E31E003625A1 /* asyncimageview.m */,
 				5F74868B114D67C300A48653 /* BTLeaderBoardNavigationController.h */,
 				5F74868C114D67C300A48653 /* BTLeaderBoardNavigationController.m */,
 				5F7486D7114D721500A48653 /* BTLeaderboardInternalViewController.h */,

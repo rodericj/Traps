@@ -9,8 +9,14 @@
 #import <UIKit/UIKit.h>
 
 
-@interface BTUserInventoryTableView : UITableViewController {
 
+@interface BTUserInventoryTableView : UITableViewController {
+	NSArray *userInventory;
 }
 
+@property (nonatomic, retain) NSArray *userInventory;
+
+- (UITableViewCell *) getInventoryItemCell:(NSString *)cellIdentifier item:(NSDictionary *)item;
+
+	
 @end

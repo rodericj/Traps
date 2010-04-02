@@ -9,8 +9,11 @@
 #import "BTUserInventoryTableView.h"
 #import <JSON/JSON.h>
 #import "BTNetwork.h"
+#import "asyncimageview.h"
 
 @implementation BTUserInventoryTableView
+
+@synthesize userInventory;
 
 //TODO get rid of all of the unused / commented out code
 /*
@@ -24,7 +27,6 @@
 
 
 - (void)viewDidLoad {
-	NSLog(@"getting the user inventory");
 	[[BTNetwork sharedNetwork] performHttpOperationWithResponseObject:self
 													  methodSignature:NSStringFromSelector(@selector(ProfileLoaded:))
 															   method:@"POST"
@@ -47,6 +49,7 @@
 #pragma mark -
 #pragma mark networking
 -(void)ProfileLoaded:(id)response{
+	NSLog(@"in the inventory we got the response");
 	if ([response isKindOfClass:[NSError class]]) {
 		NSLog(@"test: response: error!!!: %@", response);		
 		return;
@@ -56,32 +59,11 @@
 	SBJSON *parser = [SBJSON new];
 	NSDictionary* responseAsDictionary = [parser objectWithString:responseString error:NULL];
 	NSLog(@"returned from the server for inventory %@", responseAsDictionary);
+	userInventory = [[responseAsDictionary objectForKey:@"inventory"] copy];
+	NSLog(@"the inventory is %@", userInventory);
+	[self.tableView reloadData];
 }
 
-
-/*
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-}
-*/
-/*
-- (void)viewWillDisappear:(BOOL)animated {
-	[super viewWillDisappear:animated];
-}
-*/
-/*
-- (void)viewDidDisappear:(BOOL)animated {
-	[super viewDidDisappear:animated];
-}
-*/
-
-/*
-// Override to allow orientations other than the default portrait orientation.
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-*/
 
 - (void)didReceiveMemoryWarning {
 	// Releases the view if it doesn't have a superview.
@@ -105,73 +87,82 @@
 
 // Customize the number of rows in the table view.
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 4;
+	if (userInventory == nil) {
+		return 0;
+	}
+    return [userInventory count];
 }
 
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+	return inventoryitemheight;
+}
 
 // Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    static NSString *CellIdentifier = @"Cell";
-    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    //static NSString *CellIdentifier = @"Cell";
+	NSString *reuseId = [NSString stringWithFormat:@"home%d", [indexPath row]];
+
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseId];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
-    }
-    
-    // Set up the cell...
-	[cell setText:@"the inventory"];
+       // cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+		cell = [self getInventoryItemCell:reuseId item:[userInventory objectAtIndex:[indexPath row]]];
+	}
+        
+	// Set up the cell...
     return cell;
 }
 
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Navigation logic may go here. Create and push another view controller.
-	// AnotherViewController *anotherViewController = [[AnotherViewController alloc] initWithNibName:@"AnotherView" bundle:nil];
-	// [self.navigationController pushViewController:anotherViewController];
-	// [anotherViewController release];
+- (UITableViewCell *) getInventoryItemCell:(NSString *)cellIdentifier item:(NSDictionary *)item{
+	//name
+	NSString *itemName = [item objectForKey:@"name"];
+	NSString *itemDescription = [item objectForKey:@"note"];
+	
+	NSLog(@"getting the item Cell %@", itemName);
+	CGRect CellFrame = CGRectMake(0, 0, iphonescreenwidth, inventoryitemheight);
+	UITableViewCell *cell = [[[UITableViewCell alloc] initWithFrame:CellFrame 
+													reuseIdentifier:cellIdentifier] autorelease];
+	
+	CGRect ItemNameLabelFrame = CGRectMake(inventoryitemwidth, 0, iphonescreenwidth - inventoryitemwidth, 25);
+	CGRect ItemDescriptionFrame = CGRectMake(inventoryitemwidth, 20, iphonescreenwidth - inventoryitemwidth, 25);
+	CGRect ItemImageFrame = CGRectMake(0, 0, inventoryitemwidth, inventoryitemheight);
+	
+	UIImage *userImage;
+	userImage = [UIImage imageNamed:@"user.png"];
+	
+	//For the upcoming text, pick a color
+	UIColor *textColor = [UIColor blackColor];	
+	
+	UILabel *lblTemp;
+	lblTemp = [[UILabel alloc] initWithFrame:ItemNameLabelFrame];
+	lblTemp.tag = 1;
+	[lblTemp setBackgroundColor:[UIColor clearColor]];
+	[lblTemp setText:itemName];
+	[lblTemp setTextColor:[UIColor blueColor]];
+	[cell.contentView addSubview:lblTemp];
+	[lblTemp release];
+	
+	lblTemp = [[UILabel alloc] initWithFrame:ItemDescriptionFrame];
+	lblTemp.tag = 1;
+	[lblTemp setBackgroundColor:[UIColor clearColor]];
+	[lblTemp setText:itemDescription];
+	[lblTemp setAdjustsFontSizeToFitWidth:TRUE];
+	[lblTemp setTextColor:textColor];
+	[cell.contentView addSubview:lblTemp];
+	[lblTemp release];
+	
+	
+	AsyncImageView *asyncImage = [[AsyncImageView alloc] initWithFrame:ItemImageFrame];
+	asyncImage.tag = 999;
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@/%@", kHTTPHost, [item objectForKey:@"path"]]];
+	[asyncImage loadImageFromURL:url];
+	//userImage = (UIImage *)asyncImage;
+	[cell.contentView addSubview:asyncImage];
+	
+	return cell;
+	
 }
-
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:YES];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
 
 - (void)dealloc {
     [super dealloc];
