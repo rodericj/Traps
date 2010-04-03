@@ -59,6 +59,12 @@
 //    [dialog show];
 }
 
+- (void)dialogDidCancel:(FBDialog *)dialog{
+	NSLog(@"we  cancelled. show the cancel flow");
+	FBDialog *newdialog = [[[FBLoginDialog alloc] initWithSession:mySession] autorelease];
+	newdialog.delegate = self;
+	[newdialog show];
+}
 - (void)session:(FBSession *)session didLogin:(FBUID)uid{
 
 	NSString *fql = [NSString stringWithFormat:
@@ -436,6 +442,25 @@
 	[parser release];
 	
 	[self loadView];
+}
+
+
+-(void)session:(FBSession *)session willLogout:(FBUID)uid{
+	//Clear profile
+	//update image and name on cell
+	//call logout
+	
+	[[BTNetwork sharedNetwork] performHttpOperationWithResponseObject:self
+													  methodSignature:NSStringFromSelector(@selector(ProfileLoaded:))
+															   method:@"POST"
+															   domain:kHTTPHost
+														  relativeURL:@"Logout/"
+															   params:nil];
+	
+		
+	FBDialog *dialog = [[[FBLoginDialog alloc] initWithSession:session] autorelease];
+	dialog.delegate = self;
+	[dialog show];
 }
 
 @end
