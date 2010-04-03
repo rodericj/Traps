@@ -13,6 +13,8 @@
 
 @implementation BTSearchInternalViewController
 
+@synthesize venues;
+
 #pragma mark -
 #pragma mark Initialization
 
@@ -25,6 +27,7 @@
 	
     return self;
 }
+
 
 #pragma mark -
 #pragma mark Cleanup
@@ -71,7 +74,6 @@
 	locationController.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
 	[locationController.locationManager startUpdatingLocation];
 
-
 }
 
 
@@ -90,25 +92,40 @@
 #pragma mark UITableView
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+	return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-	return 0;
+	if(venues == nil){
+		return 0;
+	}
+    return [venues count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"default"];
+	NSString *reuseId = [NSString stringWithFormat:@"venue%d", [indexPath row]];
+	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseId];
+
+	if(cell == nil){
+		cell = [self getVenueCell:reuseId venue:[venues objectAtIndex:[indexPath row]]];
+	}
 	
+	NSDictionary *currentVenue = [venues objectAtIndex:[indexPath row]];
+	
+	[cell setText:[currentVenue objectForKey:@"name"]];
     return cell;
 }
 
+- (UITableViewCell *) getVenueCell:(NSString *)cellIdentifier venue:(NSDictionary *)venue{
+	UITableViewCell *cell = [[[UITableViewCell alloc] initWithFrame:CGRectMake(90, 15, 120, 25) 
+													reuseIdentifier:cellIdentifier] autorelease];
+
+	return cell;
+}
 #pragma mark -
 #pragma mark Location
 
 - (void)locationUpdate:(CLLocation *)location {
-	NSLog(@"got a location");
-	//NSLog(@"getNearbyLocations Called %@. Accuracy: %d, %d", [location description], location.verticalAccuracy, location.horizontalAccuracy);
 
 	[self getNearbyLocations:location];
 	locationController = [[MyCLController alloc] init];
@@ -126,12 +143,10 @@
 		//Make location string 2 separate lat/long
 		NSString *latlong = [[[location description] stringByReplacingOccurrencesOfString:@"<" withString:@""] 
 							 stringByReplacingOccurrencesOfString:@">" withString:@""];
-		NSLog(@"new lat long %@", latlong);
 		NSArray *chunks = [latlong componentsSeparatedByString:@" "];
 		NSString *lat =[chunks objectAtIndex:0];
 		NSString *lon = [chunks objectAtIndex:1];
 		
-		NSLog(@"now we've split them up into %@ and %@", lat, lon);
 		
 		
 		//Call to foursquare's location api
@@ -147,19 +162,31 @@
 	}
 	
 }
-
 - (void)didGetNearbyLocations:(id)responseString{
 	NSLog(@"did get nearby locations %@", responseString);
 
+	
+	if ([responseString isKindOfClass:[NSError class]]) {
+		NSLog(@"default to jackson street because there was an error");
+		responseString = @"{\"groups\":[{\"type\":\"Nearby\",\"venues\":[{\"id\":86638,\"name\":\"Joe Greenstein's\",\"address\":\"1740 Jackson St.\",\"city\":\"San Francisco\",\"state\":\"CA\",\"geolat\":37.7938,\"geolong\":-122.424,\"stats\":{\"herenow\":\"0\"},\"distance\":31},{\"id\":1235744,\"name\":\"1800 Washington Street\",\"address\":\"1800 Washington Street\",\"city\":\"San Francisco\",\"state\":\"CA\",\"geolat\":37.793433,\"geolong\":-122.423426,\"stats\":{\"herenow\":\"0\"},\"distance\":36}]}]}";
+	}
+	
 	SBJSON *parser = [SBJSON new];
 	NSDictionary* webRequestResults = [parser objectWithString:responseString error:NULL];
-	
+	NSLog(@"dictionary of venues %@", webRequestResults);
 	NSArray *groups = [webRequestResults objectForKey:@"groups"];
-	NSDictionary *venues = [groups objectAtIndex:0];
-	NSArray *venues1 = [venues objectForKey:@"venues"];
-	NSLog(@"venues1 is: %@", venues1);
+	
+	NSLog(@"array of groups %@", groups);
+		  
+	NSDictionary *venueDict = [groups objectAtIndex:0];
+	NSLog(@"1");
+	venues = [[venueDict objectForKey:@"venues"] copy];
+	NSLog(@"1");
+
+	[self.tableView reloadData];
+	//NSLog(@"venueArray is: %@", venueArray);
 	//UserProfile *userProfile = [UserProfile sharedSingleton];
-//	[userProfile setLocations:venues1];
+//	[userProfile setLocations:venueArray];
 	
 	self.navigationItem.rightBarButtonItem = nil;
 	//[self didGetNearbyLocations];

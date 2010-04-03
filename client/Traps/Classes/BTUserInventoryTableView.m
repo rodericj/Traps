@@ -119,7 +119,6 @@
 	NSString *itemName = [item objectForKey:@"name"];
 	NSString *itemDescription = [item objectForKey:@"note"];
 	
-	NSLog(@"getting the item Cell %@", itemName);
 	CGRect CellFrame = CGRectMake(0, 0, iphonescreenwidth, inventoryitemheight);
 	UITableViewCell *cell = [[[UITableViewCell alloc] initWithFrame:CellFrame 
 													reuseIdentifier:cellIdentifier] autorelease];
@@ -151,13 +150,11 @@
 	[lblTemp setTextColor:textColor];
 	[cell.contentView addSubview:lblTemp];
 	[lblTemp release];
-	
-	
+		
 	AsyncImageView *asyncImage = [[AsyncImageView alloc] initWithFrame:ItemImageFrame];
 	asyncImage.tag = 999;
 	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@/%@", kHTTPHost, [item objectForKey:@"path"]]];
 	[asyncImage loadImageFromURL:url];
-	//userImage = (UIImage *)asyncImage;
 	[cell.contentView addSubview:asyncImage];
 	
 	return cell;

@@ -14,11 +14,13 @@
 
 @interface BTSearchInternalViewController : UITableViewController <MyCLControllerDelegate, UITableViewDataSource, UITableViewDelegate>{
 	MyCLController *locationController;
-	NSDictionary *foundVenues;
+	NSArray *venues;
+	//NSDictionary *foundVenues;
 //	VenueDetailView *VenueDetailView;
 }
 
-@property (nonatomic, retain) NSDictionary *foundVenues;
+@property (nonatomic, retain) NSArray *venues;
+//@property (nonatomic, retain) NSDictionary *foundVenues;
 //@property (nonatomic, retain) VenueDetailView *venueDetailView;
 //- (void)didGetNearbyLocations;
 - (void)didGetNearbyLocations:(id)responseString;
