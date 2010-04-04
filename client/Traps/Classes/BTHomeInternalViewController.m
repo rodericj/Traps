@@ -156,6 +156,8 @@
 	return (iphonescreenheight - (navbarheight*2) - fbprofileinforowheight)/3;
 }
 
+
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 	//Game Banner
 	//User Identification and logout
@@ -168,32 +170,26 @@
 	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"default"];
 
 	NSInteger row = [indexPath row];
-	NSString *reuseId = [NSString stringWithFormat:@"home%d", row];
+	NSString *CellIdentifier = [NSString stringWithFormat:@"home%d", row];
 	[cell setText:[NSString stringWithFormat:@"%d", row]];
 
-	if (row == 3) {
-		//cell = [self getBannerCell:reuseId tableView:tableView];
-		if (cell == nil) {
-			cell = [self getButtonCell:reuseId];
-		}
-	}else if (row == 2) {
-		//cell = [self getBannerCell:reuseId tableView:tableView];
-		if (cell == nil) {
-			cell = [self getUserProfileCell:reuseId leftSide:@"hitPoints" rightSide:@"killCount"];
-		}
-	}else if (row == 1) {
-		//cell = [self getBannerCell:reuseId tableView:tableView];
-		if (cell == nil) {
-			cell = [self getUserProfileCell:reuseId leftSide:@"trapsSetCount" rightSide:@"coinCount"];
-		}
-	}else if (row == 0) {
-		if (cell == nil){
-			cell = [self getFBUserInfoCell:reuseId];
-		}
-	}else {
-		//[self getUserProfileCell:reuseId tableView];
-		if (cell == nil) {
-			cell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"HomeCell"] autorelease];
+	if (cell == nil){
+		switch (row) {
+			case 0:
+				cell = [self getFBUserInfoCell:CellIdentifier];
+				break;
+			case 1:
+				cell = [self getUserProfileCell:CellIdentifier leftSide:@"trapsSetCount" rightSide:@"coinCount"];
+				break;
+			case 2:
+				cell = [self getUserProfileCell:CellIdentifier leftSide:@"hitPoints" rightSide:@"killCount"];
+				break;
+			case 3:
+				cell = [self getButtonCell:CellIdentifier];
+				break;
+			default:
+				cell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"HomeCell"] autorelease];
+				break;
 		}
 	}
 	
