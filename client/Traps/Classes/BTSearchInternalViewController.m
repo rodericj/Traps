@@ -10,9 +10,9 @@
 #import "BTNetwork.h"
 #import <JSON/JSON.h>
 
-
 @implementation BTSearchInternalViewController
 
+@synthesize venueDetailView;
 @synthesize venues;
 
 #pragma mark -
@@ -102,6 +102,29 @@
     return [venues count];
 }
 
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+	
+	NSInteger row = [indexPath row];
+	if (venueDetailView == nil){
+		BTVenueDetailView *aVenueDetail = [[BTVenueDetailView alloc] init];
+		venueDetailView = aVenueDetail;
+		//[aVenueDetail release];
+	}
+	NSDictionary *venue = [venues objectAtIndex:row];
+	NSLog(@"selected %d", [indexPath row]);
+	//venueDetailView.title = [venue objectForKey:@"name"];
+	
+	NSLog(@"loading each row %@", venueDetailView.title);
+	
+	
+	[venueDetailView updateVenueDetails:venue];
+	
+	[self.navigationController pushViewController:venueDetailView animated:TRUE];
+	//BoobyTrap3AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
+	//[delegate.dropTrapsNavController pushViewController:venueDetailView animated:YES];
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	NSString *reuseId = [NSString stringWithFormat:@"venue%d", [indexPath row]];
 	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseId];
@@ -173,15 +196,10 @@
 	
 	SBJSON *parser = [SBJSON new];
 	NSDictionary* webRequestResults = [parser objectWithString:responseString error:NULL];
-	NSLog(@"dictionary of venues %@", webRequestResults);
 	NSArray *groups = [webRequestResults objectForKey:@"groups"];
-	
-	NSLog(@"array of groups %@", groups);
-		  
+			  
 	NSDictionary *venueDict = [groups objectAtIndex:0];
-	NSLog(@"1");
 	venues = [[venueDict objectForKey:@"venues"] copy];
-	NSLog(@"1");
 
 	[self.tableView reloadData];
 	//NSLog(@"venueArray is: %@", venueArray);

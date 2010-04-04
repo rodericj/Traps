@@ -101,7 +101,6 @@
 	if([indexPath row] == 0){
 		return 60;
 	}
-		  
 	return iphonescreenheight - 60 - navbarheight;
 }
 

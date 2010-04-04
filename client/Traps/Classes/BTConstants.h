@@ -51,3 +51,5 @@
 #define inventoryitemheight 100
 #define inventoryitemwidth 100
 
+#define venuerowheight 100
+
