@@ -1,4 +1,4 @@
-from django.shortcuts import HttpResponse, HttpResponseRedirect, render_to_response
+from django.shortcuts import HttpResponse, HttpResponseRedirect, render_to_response, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from Traps.traps.models import Venue, Item, TrapsUser, VenueItem, Event
 import urllib
@@ -496,4 +496,7 @@ def google_maps_items(events):
 	
 def qr_code(request, code):
 	return render_to_response("qr_code.html")
-		
+
+def venue(request, eid):
+	v = get_object_or_404(Venue, pk=eid)
+	return render_to_response('venue.html', {'venue' : v})		

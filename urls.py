@@ -40,8 +40,10 @@ urlpatterns = patterns('',
     (r'^SearchVenue/(?P<vid>\d+)/', 'Traps.traps.views.SearchVenue'),
     (r'^ShowAllTrapsSet/', 'Traps.traps.views.ShowAllTrapsSet'),
     (r'^site_media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': doc_root}),
+	
 	#(r'^qr/(?P<code>\d*)$', 'Traps.traps.views.qr_code'),
 	(r'^$', 'Traps.traps.views.home_page'),
+	(r'^venue/(?P<eid>\w*)$', 'Traps.traps.views.venue'),
 
 
     # Uncomment the admin/doc line below and add 'django.contrib.admindocs' 
