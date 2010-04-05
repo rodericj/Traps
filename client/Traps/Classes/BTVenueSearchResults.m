@@ -1,27 +1,20 @@
 //
-//  BTVenueDetailView.m
+//  BTVenueSearchResults.m
 //  Traps
 //
-//  Created by Roderic Campbell on 4/3/10.
+//  Created by Roderic Campbell on 4/4/10.
 //  Copyright 2010 __MyCompanyName__. All rights reserved.
 //
 
-#import "BTVenueDetailView.h"
+#import "BTVenueSearchResults.h"
 #import "BTConstants.h"
-#import "BTNetwork.h"
-#import "BTUserProfile.h"
 
-#import <JSON/JSON.h>
+@implementation BTVenueSearchResults
 
-@implementation BTVenueDetailView
-
-@synthesize venueInfo;	
+@synthesize searchResults;
 @synthesize mapView;
-@synthesize searchResultsView;
-
-- (void)updateVenueDetails:(NSDictionary *)venue{
-	venueInfo = venue;
-}
+@synthesize venueInfo;	
+@synthesize inventoryView;
 
 - (void)didReceiveMemoryWarning {
 	// Releases the view if it doesn't have a superview.
@@ -30,9 +23,6 @@
 	// Release any cached data, images, etc that aren't in use.
 }
 
--(void)viewWillAppear:(BOOL)animated{
-	//NSLog(@"view will appear %d", [[BTUserProfile sharedBTUserProfile] selectedTrap]);
-}
 - (void)viewDidUnload {
 	// Release any retained subviews of the main view.
 	// e.g. self.myOutlet = nil;
@@ -45,15 +35,14 @@
     return 1;
 }
 
+
 // Customize the number of rows in the table view.
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-	[self.tableView setScrollEnabled:FALSE];
-	return 2;
+    return 2;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 	int height;
-	NSLog(@"%d", [indexPath row]);
 	switch ([indexPath row]) {
 		case 0:
 			height = venuerowheight;
@@ -98,20 +87,21 @@
 }
 
 - (UITableViewCell *) getMapCell:(NSString *)cellIdentifier{
-	
+	NSLog(@"get the map in the search results");
 	CGRect mapFrame = CGRectMake(0, 0, 
 								 iphonescreenwidth, 
 								 iphonescreenheight - venuerowheight - navbarheight - 69);
-
+	
 	UITableViewCell *cell = [[[UITableViewCell alloc] initWithFrame:mapFrame 
 													reuseIdentifier:cellIdentifier] autorelease];
-
+	
 	//Handle Map things:
 	MKCoordinateRegion region;
 	MKCoordinateSpan span;
 	span.latitudeDelta=0.0025;
 	span.longitudeDelta=0.0025;
 	
+	NSLog(@"venue info is %@", venueInfo);
 	CLLocationCoordinate2D location;
 	location.longitude = [[venueInfo objectForKey:@"geolong"] doubleValue];
 	location.latitude = [[venueInfo objectForKey:@"geolat"] doubleValue];
@@ -126,22 +116,22 @@
 	[cell.contentView addSubview:mapView];
 	return cell;
 }
-	
-	
+
 - (UITableViewCell *) getTitleCell:(NSString *)cellIdentifier{
-	
+	NSLog(@"Search Results and Venue Detail: %@, \n\n\n\%@", searchResults, venueInfo);
 	CGRect titleHalfCellFrame = CGRectMake(0, 0, iphonescreenwidth, venuerowheight/2);
 	CGRect titleCellFrame = CGRectMake(0, 0, iphonescreenwidth, venuerowheight);
 	CGRect titleTextFrame = CGRectMake(25, 3, iphonescreenwidth, venuerowheight/4);
 	CGRect addressTextFrame = CGRectMake(25, venuerowheight/4 - 7, iphonescreenwidth, venuerowheight/4);
-	CGRect checkinButtonFrame = CGRectMake(iphonescreenwidth/4, venuerowheight/2, iphonescreenwidth/2, venuerowheight/2);
-	CGRect chanceOfDropFrame = CGRectMake(iphonescreenwidth/2, 0, iphonescreenwidth/2, venuerowheight/2);
+	CGRect alertStatmentFrame = CGRectMake(0, venuerowheight/2, iphonescreenwidth, venuerowheight/2);
+	CGRect dropTrapsButtonFrame = CGRectMake(iphonescreenwidth/4*3, venuerowheight/2, iphonescreenwidth/4, venuerowheight/2);
+	
 	NSLog(@"venue here in this cell should be %@", venueInfo);
 	UITableViewCell *cell = [[[UITableViewCell alloc] initWithFrame:titleCellFrame 
 													reuseIdentifier:cellIdentifier] autorelease];
 	NSString *venueName = [venueInfo objectForKey:@"name"];
 	NSString *venueAddress = [venueInfo objectForKey:@"address"];
-
+	
 	[cell setBackgroundColor:[UIColor blackColor]];
 	
 	UIImageView *ProfileBarTmp;
@@ -171,76 +161,41 @@
 	[cell.contentView addSubview:lblTemp];
 	[lblTemp release];
 	
-	lblTemp = [[UILabel alloc] initWithFrame:chanceOfDropFrame];
+	lblTemp = [[UILabel alloc] initWithFrame:alertStatmentFrame];
 	lblTemp.tag = 3;
 	[lblTemp setBackgroundColor:[UIColor clearColor]];
-	[lblTemp setText:@"chance of drop: 10%"];
+	[lblTemp setText:[searchResults objectForKey:@"alertStatement"]];
 	[lblTemp setAdjustsFontSizeToFitWidth:TRUE];
 	[lblTemp setTextColor:[UIColor grayColor]];
 	[cell.contentView addSubview:lblTemp];
 	[lblTemp release];
 	
-
-	
-	UIButton *searchButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-	
-	searchButton.frame = checkinButtonFrame;
-	[searchButton setTitle:@"Search this Venue" forState:UIControlStateNormal];
-	[searchButton setBackgroundColor:[UIColor blackColor]];
-	//Set Background image
-	//[searchButton setBackgroundImage:[UIImage imageNamed:@"searchnow.png"] forState:UIControlStateNormal];
-	
-	//listen for clicks
-	[searchButton addTarget:self action:@selector(searchVenue) 
-		   forControlEvents:UIControlEventTouchUpInside];	
-	
-	//put button on View
-	[cell.contentView addSubview:searchButton];
-	
+	UIButton *dropTrapsButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+	[dropTrapsButton setFrame:dropTrapsButtonFrame];
+	[dropTrapsButton setTitle:@"drop" forState:UIControlStateNormal];
+	NSLog(@"%@", [[searchResults objectForKey:@"hasTraps"] class]);
+	if([searchResults objectForKey:@"hasTraps"]){
+		[cell.contentView addSubview:dropTrapsButton];
+		//listen for clicks
+		[dropTrapsButton addTarget:self action:@selector(dropTrapButtonPushed) 
+			   forControlEvents:UIControlEventTouchUpInside];
+		
+	}
 	return cell;
 }
 
--(void)searchVenue{
-
-	//TODO start the loading scroller thing
-	NSString *vid = [NSString stringWithFormat:@"%@", [venueInfo objectForKey:@"id"]];
-	[[BTNetwork sharedNetwork] performHttpOperationWithResponseObject:self
-													  methodSignature:NSStringFromSelector(@selector(didSearchVenue:))
-															   method:@"POST"
-															   domain:kHTTPHost
-														  relativeURL:@"SearchVenue/"
-															   params:[NSDictionary dictionaryWithObjectsAndKeys:
-																	   vid, @"vid",
-																	   nil]];
-}
-
-- (void)didSearchVenue:(id)returnData{
-	//TODO stop the loading scroller thing
-	//TODO the button is pushable 2x. boooo
-	
-	NSString *responseString = [[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding];
-	
-	SBJSON *parser = [SBJSON new];
-	NSDictionary* responseAsDictionary = [parser objectWithString:responseString error:NULL];
-	
-	//Create the new View
-	if(searchResultsView != nil){
-		[searchResultsView release];
+- (void)dropTrapButtonPushed{
+	if(inventoryView == nil){
+		inventoryView = [[BTUserInventoryTableView alloc] init];
 	}
-	BTVenueSearchResults *aResultsView = [[BTVenueSearchResults alloc] init];
-	searchResultsView = aResultsView;
-	
-	//set the values of the view
-	[searchResultsView setSearchResults:responseAsDictionary];
-	[searchResultsView setVenueInfo:venueInfo];
-	
-	//push the view controller
-	[self.navigationController pushViewController:searchResultsView animated:TRUE];
-	[searchResultsView release];
+	[inventoryView setUserInventory:[searchResults objectForKey:@"inventory"]];
+	[self.navigationController pushViewController:inventoryView animated:TRUE];
+	[inventoryView release];
 }
 
 - (void)dealloc {
 	[mapView release];
+	[inventoryView release];
     [super dealloc];
 }
 

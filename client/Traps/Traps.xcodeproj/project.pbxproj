@@ -18,6 +18,7 @@
 		5F606FA81162E31E003625A1 /* asyncimageview.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F606FA71162E31E003625A1 /* asyncimageview.m */; };
 		5F6071FF1167D710003625A1 /* BTVenueDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F6071FE1167D710003625A1 /* BTVenueDetailView.m */; };
 		5F6072D61167F7DA003625A1 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F6072D51167F7DA003625A1 /* MapKit.framework */; };
+		5F6074651169A789003625A1 /* BTVenueSearchResults.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F6074641169A789003625A1 /* BTVenueSearchResults.m */; };
 		5F74866F114D65ED00A48653 /* BTSearchNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F74866E114D65ED00A48653 /* BTSearchNavigationController.m */; };
 		5F748680114D675800A48653 /* BTProfileNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F74867F114D675800A48653 /* BTProfileNavigationController.m */; };
 		5F74868D114D67C300A48653 /* BTLeaderBoardNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F74868C114D67C300A48653 /* BTLeaderBoardNavigationController.m */; };
@@ -79,6 +80,8 @@
 		5F6071FD1167D710003625A1 /* BTVenueDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTVenueDetailView.h; sourceTree = "<group>"; };
 		5F6071FE1167D710003625A1 /* BTVenueDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTVenueDetailView.m; sourceTree = "<group>"; };
 		5F6072D51167F7DA003625A1 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		5F6074631169A789003625A1 /* BTVenueSearchResults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTVenueSearchResults.h; sourceTree = "<group>"; };
+		5F6074641169A789003625A1 /* BTVenueSearchResults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTVenueSearchResults.m; sourceTree = "<group>"; };
 		5F74866D114D65ED00A48653 /* BTSearchNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTSearchNavigationController.h; sourceTree = "<group>"; };
 		5F74866E114D65ED00A48653 /* BTSearchNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTSearchNavigationController.m; sourceTree = "<group>"; };
 		5F74867E114D675800A48653 /* BTProfileNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTProfileNavigationController.h; sourceTree = "<group>"; };
@@ -328,6 +331,8 @@
 				5F7486BA114D6F9C00A48653 /* BTSearchInternalViewController.m */,
 				5F6071FD1167D710003625A1 /* BTVenueDetailView.h */,
 				5F6071FE1167D710003625A1 /* BTVenueDetailView.m */,
+				5F6074631169A789003625A1 /* BTVenueSearchResults.h */,
+				5F6074641169A789003625A1 /* BTVenueSearchResults.m */,
 			);
 			name = Search;
 			sourceTree = "<group>";
@@ -492,6 +497,7 @@
 				5F606DCA1161CBC9003625A1 /* BTUserInventoryTableView.m in Sources */,
 				5F606FA81162E31E003625A1 /* asyncimageview.m in Sources */,
 				5F6071FF1167D710003625A1 /* BTVenueDetailView.m in Sources */,
+				5F6074651169A789003625A1 /* BTVenueSearchResults.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

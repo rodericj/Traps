@@ -12,7 +12,7 @@
 @class HomeNavController;
 @class DropTrapsNavController;
 
-#define CURRENT_DATA_VERSION	0
+#define CURRENT_DATA_VERSION	2
 
 #define HOST_IS_PROD		0
 #define HOST_IS_DEV			1
@@ -30,7 +30,7 @@
 #endif
 
 #if(CURRENT_DATA_VERSION == HOST_IS_STAGING)
-#define REMOTE_SERVER  @"http://192.168.1.101:8000"
+#define REMOTE_SERVER  @"http://192.168.1.110:8000"
 #endif
 
 #if(CURRENT_DATA_VERSION == HOST_IS_PROD)
