@@ -4,4 +4,5 @@
 
 	<h2>{{ venue.name }}</h2>
 	{{ venue.streetName }}, {{ venue.city }}
+	<img src = "http://maps.google.com/maps/api/staticmap?zoom=12&size=512x512&maptype=roadmap&center={{ venue.latitude }},{{ venue.longitude }}&markers={{ venue.latitude }},{{ venue.longitude }}&sensor=false" />
 {% endblock %}
