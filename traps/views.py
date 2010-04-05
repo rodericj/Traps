@@ -483,4 +483,12 @@ def holding(request):
 	return render_to_response('holding_page.html')
 
 def home_page(request):
-	return render_to_response('homepage.html')
+	recent = google_maps_items([(37.7935,-122.4243), (37.745,-122.414), (37.79,-122.42), (37.794,-122.424)])
+	return render_to_response('homepage.html',{'recent' : recent})
+
+def google_maps_items(events):
+	out = []
+	out.append("icon:http://imgur.com/BRyp5.png")
+	for e in events:
+		out.append("%s,%s" % e )	
+	return "|".join(out)
