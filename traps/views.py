@@ -481,3 +481,6 @@ def SetDeviceToken(request):
 
 def holding(request):
 	return render_to_response('holding_page.html')
+
+def home_page(request):
+	return render_to_response('homepage.html')
