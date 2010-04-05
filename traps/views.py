@@ -493,3 +493,7 @@ def google_maps_items(events):
 	for e in events:
 		out.append("%s,%s" % e )	
 	return "|".join(out)
+	
+def qr_code(request, code):
+	return render_to_response("qr_code.html")
+		
