@@ -127,7 +127,7 @@ class Event(models.Model):
 		('PC', 'Purchase'),
 		('LI', 'Log In'),
 	)
-	type = models.CharField(max_length=2, choices=EVENT_CHOICES)
+	type = models.CharField(max_length=2, choices=EVENT_CHOICES)#TODO type is a reserved word
 	data1 = models.CharField(max_length=20)
 	data2 = models.CharField(max_length=20)
 	dateTime = models.DateTimeField(auto_now_add=True)

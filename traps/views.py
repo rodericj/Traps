@@ -483,7 +483,8 @@ def holding(request):
 	return render_to_response('holding_page.html')
 
 def home_page(request):
-	recent = google_maps_items([(37.7935,-122.4243), (37.745,-122.414), (37.79,-122.42), (37.794,-122.424)])
+	objs = Venue.objects.order_by('lastUpdated')[:15]
+	recent = google_maps_items([(x.latitude, x.longitude) for x in objs])
 	return render_to_response('homepage.html',{'recent' : recent})
 
 def google_maps_items(events):
