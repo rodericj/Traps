@@ -22,6 +22,16 @@
 #define kHTTPHost	@"192.168.1.110:8000"
 //#define kHTTPHost	@"10.0.1.182:8000"
 
+#pragma mark -
+#pragma mark Foursquare api
+#define oauth_request_token_url @"http://foursquare.com/oauth/request_token"
+#define oauth_access_token_url @"http://foursquare.com/oauth/access_token"
+#define oauth_authorize_url @"http://foursquare.com/oauth/authorize"
+
+#define oauth_key @"JL4SJUD5VDGKSXSNAJNTM5D12VELWCEVYXWZDI4CYGJ1HGBI"
+#define oauth_secret @"NFZME0GFKF3LM5EF3PO55BBNMB4ZLAE0K1T5K3AQ1JMZI3PW"
+
+
 #define kHomeTitle			@"Home"
 #define kSearchTitle		@"Search"
 #define kProfileTitle		@"Profile"
@@ -29,8 +39,6 @@
 
 #pragma mark -
 #pragma mark HTTP
-
-
 
 #define foursquareApi @"api.foursquare.com"
 
@@ -52,4 +60,5 @@
 #define inventoryitemwidth 100
 
 #define venuerowheight 100
+
 

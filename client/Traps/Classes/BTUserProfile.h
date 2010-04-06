@@ -19,7 +19,7 @@
 	int damageCaused;  //formerly kill Count
 	int numTrapsSet;
 	int numTrapsTriggered;
-	
+	int selectedTrap;
 	UIImage *userImage;
 	
 }
@@ -28,6 +28,7 @@
 @property (nonatomic, retain) NSString *lastName;
 @property (nonatomic, retain) UIImage *userImage;
 
+@property (nonatomic) int selectedTrap;
 @property (nonatomic) int coinCount;
 @property (nonatomic) int hitPoints;
 @property (nonatomic) int damageCaused;

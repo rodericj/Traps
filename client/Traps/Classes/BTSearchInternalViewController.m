@@ -106,11 +106,12 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	
 	NSInteger row = [indexPath row];
-	if (venueDetailView == nil){
-		BTVenueDetailView *aVenueDetail = [[BTVenueDetailView alloc] init];
-		venueDetailView = aVenueDetail;
-		//[aVenueDetail release];
+	if(venueDetailView != nil){
+		[venueDetailView release];
 	}
+	BTVenueDetailView *aVenueDetail = [[BTVenueDetailView alloc] init];
+	venueDetailView = aVenueDetail;
+	
 	NSDictionary *venue = [venues objectAtIndex:row];
 	NSLog(@"selected %d", [indexPath row]);
 	//venueDetailView.title = [venue objectForKey:@"name"];

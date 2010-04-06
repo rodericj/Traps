@@ -10,6 +10,7 @@
 #import <JSON/JSON.h>
 #import "BTNetwork.h"
 #import "asyncimageview.h"
+#import "BTUserProfile.h"
 
 @implementation BTUserInventoryTableView
 
@@ -95,6 +96,16 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 	return inventoryitemheight;
+}
+
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+	//TODO may need to conditionalize this for if we are in the select a trap to drop view
+	NSLog(@"selected %d", [indexPath row]);
+	[[BTUserProfile sharedBTUserProfile] setSelectedTrap:[indexPath row]];
+	
+	[self.navigationController popViewControllerAnimated:TRUE];
+	
 }
 
 // Customize the appearance of table view cells.

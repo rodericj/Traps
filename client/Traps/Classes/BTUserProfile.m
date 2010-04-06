@@ -16,6 +16,7 @@ static BTUserProfile *sharedBTUserProfile = nil;
 @synthesize lastName;
 @synthesize userImage;
 
+@synthesize selectedTrap;
 @synthesize coinCount;
 @synthesize hitPoints;
 @synthesize damageCaused;

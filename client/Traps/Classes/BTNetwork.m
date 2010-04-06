@@ -84,7 +84,6 @@ static BTNetwork *sharedBTNetwork = nil;
 											   domain:(NSString *)domain
 										  relativeURL:(NSString *)relativeURL
 											   params:(NSDictionary *)params {
-	
 	// Create an invocation for the operation queue
 	BTNetworkHttp *networkHTTP = [BTNetworkHttp networkHttpWithResponseObject:responseObject
 															  methodSignature:methodSignature];
