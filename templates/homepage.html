@@ -11,10 +11,10 @@
 	</a>	
 </div>
 <div id = "whats-happening">
-	<div class = 'placeholder'>
-	
-	</div>
+	<div id = 'map' style="width:100%; height:400px;">
 	<img src = "http://maps.google.com/maps/api/staticmap?zoom=12&size=512x512&maptype=roadmap&center=37.7935,-122.4243&sensor=false&markers={{ recent }};" />
+	</div>
+	
 	<h2>What's happening?</h2>
 </div>
 
@@ -22,4 +22,27 @@
 	Chilli, Spinach, and Custard pie. It's what's for dinner.
 </div>	
 
+<script>
+$(function(){
+	var ll = google.maps.LatLng
+
+    var latlng = new ll(37.7935,-122.4243);
+    var myOptions = {
+      zoom: 12,
+      center: latlng,
+      mapTypeId: google.maps.MapTypeId.TERRAIN
+    };
+    var map = new google.maps.Map($("#map")[0], myOptions);
+    
+    {% for x in recent_items %}
+  	var marker{{ x.pk }} = new google.maps.Marker({
+      position: new ll({{ x.venue.latitude }}, {{ x.venue.longitude }}),
+      map: map,
+      icon: '/site_media/{{ x.item.asset }}'
+    });
+    {% endfor %}  
+  
+});
+
+</script>
 {% endblock %}

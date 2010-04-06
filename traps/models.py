@@ -25,6 +25,10 @@ class Item(models.Model):
 	def __unicode__(self):
 		return str(self.id) + " " + self.name
 
+	@property
+	def asset(self):
+		return self.assetPath.split('site_media/')[1]
+
 class Venue(models.Model):
 	foursquareid = models.IntegerField(blank=False, null=False)
 	name = models.CharField(max_length=50)
