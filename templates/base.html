@@ -32,18 +32,24 @@ div#footer{
 	clear:both;
 }
 
+div.mystery{font-size:200%; text-align:center; padding:3em; font-family:courier; color:#9f9; text-transform:uppercase;}
+p.mystery-signup{position:absolute; font-size:90%; font-style:italic; bottom:0; font-family: "Bank Gothic";}
+div#auth{width:600px; margin:3em auto; text-align:center; font-family:"Bank Gothic";}
+div#auth span{font-size:50%;}
 		</style>
-		<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
-    
 		<script src = "/site_media/jquery.js"></script>
-		<script src = "/site_media/jmaps/dist/jquery.jmap.js"></script>
 	</head>
 	<body>
+		{% block body %}
 		<div id = "header">
 			<h1>The Trap Game</h1>
 		</div>
 		<div id = "cont">
 			{% block content %} {% endblock %}
 		</div>	
+		{% endblock %}
+		<!--script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script-->
+		
+		<script src = "/site_media/jmaps/dist/jquery.jmap.js"></script>
 	</body>
 </html>		

@@ -1,6 +1,30 @@
 {% extends "base.html" %}
 
-{% block content %}
-	<h2>You are on a mission. Head to Jackson and Van Ness, and look for the bald hipster with the really creepy mustache, he's  handing out flyers with a cool design on the back</h2>
+{% block body %}
+	<div class = 'mystery'>{{ next_clue|safe }}</div>
+	
+	
+	<p class = 'mystery-signup'>You are Operative {{ callsign }}. (<a id='auth' href = "#">Authenticate</a>)</p>
+	
+	
+	<div id = 'auth' style="display:none;">
+		<h2>Authenticate</h2>
+		<p>You are Operative {{ callsign }}.</p>
+		<p><label>Email:</label><input type="text" /> <span>(store progress and login later)</p>
+		<p><label>Password:</label><input type="password" /> <span>(optional, protect your account)</p>
+		
+	</div>
+	
+	
+	<script>
+$(function(){
+	$("a#auth").click(function(){
+		$('.mystery-signup, .mystery').fadeOut(function(){
+			$("div#auth").slideDown();
+		});
+		
+	});
+});	
+	</script>
 {% endblock %}
 

@@ -1,6 +1,6 @@
 from django.shortcuts import HttpResponse, HttpResponseRedirect, render_to_response, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
-from Traps.traps.models import Venue, Item, TrapsUser, VenueItem, Event
+from Traps.traps.models import Venue, Item, TrapsUser, VenueItem, Event, Clue
 import urllib
 import config
 import operator
@@ -495,8 +495,20 @@ def google_maps_items(events):
 	return "|".join(out)
 	
 def qr_code(request, code):
-	return render_to_response("qr_code.html")
+	clue = get_object_or_404(Clue, pk=code)
+	if request.user:
+		callsign = request.user.pk
+	elif request.session.get('callsign'):
+		callsign = request.session['callsign']
+	else:
+		callsign = "A%s" % math.randInt(1000000)	
+		request.session['callsign'] = callsign
+		
+		
+	return render_to_response("qr_code.html" , {'next_clue' : clue.text, 'callsign': callsign})
 
 def venue(request, eid):
+	
+			
 	v = get_object_or_404(Venue, pk=eid)
 	return render_to_response('venue.html', {'venue' : v})		

@@ -183,3 +183,12 @@ class UserItem(models.Model):
 
 	def __unicode__(self):
 		return str(self.user) + " " + str(self.item)
+
+
+class Clue(models.Model):
+	uid = models.CharField(max_length=50, primary_key=True)
+	next = models.ForeignKey('Clue', blank=True, null=True)
+	text = models.TextField()
+	
+	
+	
