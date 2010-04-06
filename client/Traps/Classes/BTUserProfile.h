@@ -20,20 +20,24 @@
 	int numTrapsSet;
 	int numTrapsTriggered;
 	int selectedTrap;
+	Boolean selectedTrapProcessed;
 	UIImage *userImage;
-	
+	NSDictionary *searchResults;
+	NSString *deviceToken;
 }
 
 @property (nonatomic, retain) NSString *firstName;
 @property (nonatomic, retain) NSString *lastName;
 @property (nonatomic, retain) UIImage *userImage;
 
+@property (nonatomic) Boolean selectedTrapProcessed;
 @property (nonatomic) int selectedTrap;
 @property (nonatomic) int coinCount;
 @property (nonatomic) int hitPoints;
 @property (nonatomic) int damageCaused;
 @property (nonatomic) int numTrapsSet;
 @property (nonatomic) int numTrapsTriggered;
+@property (nonatomic, retain) NSString *deviceToken;
 
 
 

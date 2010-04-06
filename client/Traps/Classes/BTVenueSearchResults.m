@@ -8,6 +8,10 @@
 
 #import "BTVenueSearchResults.h"
 #import "BTConstants.h"
+#import "BTUserProfile.h"
+#import "BTNetwork.h"
+
+#import <JSON/JSON.h>
 
 @implementation BTVenueSearchResults
 
@@ -21,6 +25,45 @@
     [super didReceiveMemoryWarning];
 	
 	// Release any cached data, images, etc that aren't in use.
+}
+- (void)viewDidAppear:(BOOL)animated{
+	int trap = [[BTUserProfile sharedBTUserProfile] selectedTrap];
+
+	[[BTUserProfile sharedBTUserProfile] setSelectedTrap:-1];
+	
+	if(trap != -1){
+		NSString *vid = [NSString stringWithFormat:@"%@", [venueInfo objectForKey:@"id"]];
+		NSLog(@"this is the searchResults %@", searchResults);
+		NSDictionary *profile = [searchResults objectForKey:@"profile"];
+		NSArray *inventory = [profile objectForKey:@"inventory"];
+		NSDictionary *inventoryItem = [inventory objectAtIndex:trap];
+		NSString *iid = [NSString stringWithFormat:@"%@", [inventoryItem objectForKey:@"id"]];
+		NSLog(@"venueId: %@, iid %@, inventory %@, and the inventoryItem %@", vid, iid, inventory, inventoryItem);
+		//Send the trap set request on trap
+		[[BTNetwork sharedNetwork] performHttpOperationWithResponseObject:self
+														  methodSignature:NSStringFromSelector(@selector(didDropTrap:))
+																   method:@"POST"
+																   domain:kHTTPHost
+															  relativeURL:@"SetTrap/"
+																   params:[NSDictionary dictionaryWithObjectsAndKeys:
+																		   vid, @"vid",
+																		   iid, @"iid",
+																		@"1234", @"deviceToken",
+																		   nil]];
+
+	}
+	
+	[super viewDidAppear:animated];
+
+}
+
+-(void)didDropTrap:(id)returnData{
+	NSString *responseString = [[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding];
+	
+	SBJSON *parser = [SBJSON new];
+	NSDictionary* responseAsDictionary = [parser objectWithString:responseString error:NULL];
+	NSLog(@"response from dropping trap is %@", responseAsDictionary);
+	
 }
 
 - (void)viewDidUnload {
@@ -87,7 +130,6 @@
 }
 
 - (UITableViewCell *) getMapCell:(NSString *)cellIdentifier{
-	NSLog(@"get the map in the search results");
 	CGRect mapFrame = CGRectMake(0, 0, 
 								 iphonescreenwidth, 
 								 iphonescreenheight - venuerowheight - navbarheight - 69);
@@ -101,7 +143,6 @@
 	span.latitudeDelta=0.0025;
 	span.longitudeDelta=0.0025;
 	
-	NSLog(@"venue info is %@", venueInfo);
 	CLLocationCoordinate2D location;
 	location.longitude = [[venueInfo objectForKey:@"geolong"] doubleValue];
 	location.latitude = [[venueInfo objectForKey:@"geolat"] doubleValue];
@@ -190,7 +231,7 @@
 	}
 	[inventoryView setUserInventory:[searchResults objectForKey:@"inventory"]];
 	[self.navigationController pushViewController:inventoryView animated:TRUE];
-	[inventoryView release];
+	//[inventoryView release];
 }
 
 - (void)dealloc {

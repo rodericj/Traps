@@ -234,6 +234,7 @@
 
 - (UITableViewCell *) getUserProfileCell:(NSString *)cellIdentifier leftSide:(NSString *)left rightSide:(NSString *)right{
 	BTUserProfile *profile = [BTUserProfile sharedBTUserProfile];
+	
 	CGRect CellFrame = CGRectMake(0, 0, iphonescreenwidth, 110);
 	UITableViewCell *cell = [[[UITableViewCell alloc] initWithFrame:CellFrame 
 													reuseIdentifier:cellIdentifier] autorelease];

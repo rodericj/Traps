@@ -72,6 +72,10 @@
 
 }
 
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *) error {
+	NSLog(@"Failed to register APN with error: %@", error);
+}
+
 - (NSDictionary *)parseQueryString:(NSString *)query {
     NSMutableDictionary *dict = [[[NSMutableDictionary alloc] initWithCapacity:6] autorelease];
     NSArray *pairs = [query componentsSeparatedByString:@"&"];
@@ -104,9 +108,7 @@
 	NSLog(@"call to SetDeviceToken Returned %@", webRequestResults);
 }
 
-- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *) error {
-	NSLog(@"Failed to register APN with error: %@", error);
-}
+
 
 - (void)dealloc {
     [window release];

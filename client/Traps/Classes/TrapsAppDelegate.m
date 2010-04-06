@@ -15,6 +15,8 @@
 #import "BTProfileNavigationController.h"
 #import "BTSearchNavigationController.h"
 #import "BTTabBarController.h"
+#import "BTNetwork.h"
+#import "BTUserProfile.h"
 
 @implementation TrapsAppDelegate
 
@@ -67,7 +69,36 @@
 	// finish window setup
     [window makeKeyAndVisible];
 	
+	[[UIApplication sharedApplication]
+	 registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
+										 UIRemoteNotificationTypeSound |
+										 UIRemoteNotificationTypeAlert)];
+	
 	return YES;
+}
+
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *) error {
+	NSLog(@"Failed to register APN with error: %@", error);
+}
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)_deviceToken {
+	NSLog(@"we did register for remote notifications %@", _deviceToken);
+	// Get a hex string from the device token with no spaces or < >
+	NSString *deviceToken = [[[[_deviceToken description] stringByReplacingOccurrencesOfString:@"<"withString:@""] 
+						 stringByReplacingOccurrencesOfString:@">" withString:@""] 
+						stringByReplacingOccurrencesOfString: @" " withString: @""];
+				
+	[[BTUserProfile sharedBTUserProfile] setDeviceToken:deviceToken];
+	[[BTNetwork sharedNetwork] performHttpOperationWithResponseObject:self
+													  methodSignature:NSStringFromSelector(@selector(ProfileLoaded:))
+															   method:@"POST"
+															   domain:kHTTPHost
+														  relativeURL:@"SetDeviceToken/"
+															   params:[NSDictionary dictionaryWithObjectsAndKeys:
+																	   deviceToken, @"deviceToken",
+																	   nil]];
+	
+	
 }
 
 

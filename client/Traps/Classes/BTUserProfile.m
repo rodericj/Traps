@@ -16,12 +16,14 @@ static BTUserProfile *sharedBTUserProfile = nil;
 @synthesize lastName;
 @synthesize userImage;
 
+@synthesize selectedTrapProcessed;
 @synthesize selectedTrap;
 @synthesize coinCount;
 @synthesize hitPoints;
 @synthesize damageCaused;
 @synthesize numTrapsSet;
 @synthesize numTrapsTriggered;
+@synthesize deviceToken;
 
 #pragma mark -
 #pragma mark Singleton
@@ -30,6 +32,7 @@ static BTUserProfile *sharedBTUserProfile = nil;
 	@synchronized(self) {
 		if (sharedBTUserProfile == nil) {
 			[[self alloc] init]; // assignment not done here
+			[sharedBTUserProfile setSelectedTrap:-1];
 		}
 	}
 	return sharedBTUserProfile;
