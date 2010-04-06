@@ -505,7 +505,7 @@ def qr_code(request, code):
 		request.session['callsign'] = callsign
 		
 		
-	return render_to_response("qr_code.html" , {'next_clue' : clue.text, 'callsign': callsign})
+	return render_to_response("qr_code.html" , {'clue' : clue, 'callsign': callsign})
 
 def venue(request, eid):
 	

@@ -190,5 +190,10 @@ class Clue(models.Model):
 	next = models.ForeignKey('Clue', blank=True, null=True)
 	text = models.TextField()
 	
+	@property
+	def qr_src(self):
+		return "http://chart.apis.google.com/chart" + \
+		"?cht=qr&chs=120x120&chl=http%%3A%%2F%%2Fthetrapgame.com%%2Fqr%%2F%s" % \
+		self.uid 
 	
 	

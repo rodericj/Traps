@@ -1,11 +1,10 @@
 {% extends "base.html" %}
 
 {% block body %}
-	<div class = 'mystery'>{{ next_clue|safe }}</div>
-	
+	<div class = 'mystery'>{{ clue.text|safe }}</div>
 	
 	<p class = 'mystery-signup'>You are Operative {{ callsign }}. (<a id='auth' href = "#">Authenticate</a>)</p>
-	
+
 	
 	<div id = 'auth' style="display:none;">
 		<h2>Authenticate</h2>
