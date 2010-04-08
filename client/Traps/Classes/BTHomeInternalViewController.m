@@ -153,7 +153,11 @@
 	if ([indexPath row] == 0) {
 		return fbprofileinforowheight;
 	}
-	return (iphonescreenheight - (navbarheight*2) - fbprofileinforowheight)/3;
+	if ([indexPath row] == 1 || [indexPath row] == 2) {
+		return profilestatusheight;
+	}
+
+	return iphonescreenheight - navbarheight - iphonetabbarheight - fbprofileinforowheight -(profilestatusheight*2);
 }
 
 
@@ -279,8 +283,8 @@
 	cell.backgroundView = backgroundView;
 	
 	//Set up the frames for the individual columns
-	CGRect LeftPicFrame = CGRectMake(0, 0, 160, 104);
-	CGRect RightPicFrame = CGRectMake(160, 0, 160, 104);
+	CGRect LeftPicFrame = CGRectMake(0, 0, 160, 110);
+	CGRect RightPicFrame = CGRectMake(160, 0, 160, 110);
 	
 	CGRect LeftLabelFrame = CGRectMake(100, 15, 64, 53);
 	CGRect RightLabelFrame = CGRectMake(260, 15, 64, 53);
