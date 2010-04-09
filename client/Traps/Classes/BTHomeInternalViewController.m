@@ -122,7 +122,7 @@
 		NSLog(@"session resumed");
 	}
 	else{
-		NSLog(@"should show dialog?");
+		NSLog(@"should show fb dialog?");
 		FBDialog *dialog = [[[FBLoginDialog alloc] initWithSession:mySession] autorelease];
 		dialog.delegate = self;
 		[dialog show];

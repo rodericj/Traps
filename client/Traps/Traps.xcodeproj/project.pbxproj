@@ -19,6 +19,7 @@
 		5F6071FF1167D710003625A1 /* BTVenueDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F6071FE1167D710003625A1 /* BTVenueDetailView.m */; };
 		5F6072D61167F7DA003625A1 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F6072D51167F7DA003625A1 /* MapKit.framework */; };
 		5F6074651169A789003625A1 /* BTVenueSearchResults.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F6074641169A789003625A1 /* BTVenueSearchResults.m */; };
+		5F72A76D116E3B0C00F8B7A0 /* UINavigationBar+CustomImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F72A76C116E3B0C00F8B7A0 /* UINavigationBar+CustomImage.m */; };
 		5F74866F114D65ED00A48653 /* BTSearchNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F74866E114D65ED00A48653 /* BTSearchNavigationController.m */; };
 		5F748680114D675800A48653 /* BTProfileNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F74867F114D675800A48653 /* BTProfileNavigationController.m */; };
 		5F74868D114D67C300A48653 /* BTLeaderBoardNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F74868C114D67C300A48653 /* BTLeaderBoardNavigationController.m */; };
@@ -28,7 +29,6 @@
 		5F748783114D938D00A48653 /* BTUserProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F748782114D938D00A48653 /* BTUserProfile.m */; };
 		5F7487B5114D9A5700A48653 /* BTNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F7487B4114D9A5700A48653 /* BTNetwork.m */; };
 		5F7487C6114D9CC900A48653 /* BTNetworkHttp.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F7487C5114D9CC900A48653 /* BTNetworkHttp.m */; };
-		5F748A2E11588BD200A48653 /* BTNavBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F748A2D11588BD200A48653 /* BTNavBarController.m */; };
 		5FF9348C1159F3EE00159ECA /* MyCLController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF9348B1159F3EE00159ECA /* MyCLController.m */; };
 		5FF9349B1159F70300159ECA /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FF9349A1159F70300159ECA /* CoreLocation.framework */; };
 		5FF9354C115B08AE00159ECA /* profilebar1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FF9354B115B08AE00159ECA /* profilebar1.png */; };
@@ -82,6 +82,8 @@
 		5F6072D51167F7DA003625A1 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		5F6074631169A789003625A1 /* BTVenueSearchResults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTVenueSearchResults.h; sourceTree = "<group>"; };
 		5F6074641169A789003625A1 /* BTVenueSearchResults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTVenueSearchResults.m; sourceTree = "<group>"; };
+		5F72A76B116E3B0C00F8B7A0 /* UINavigationBar+CustomImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationBar+CustomImage.h"; sourceTree = "<group>"; };
+		5F72A76C116E3B0C00F8B7A0 /* UINavigationBar+CustomImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationBar+CustomImage.m"; sourceTree = "<group>"; };
 		5F74866D114D65ED00A48653 /* BTSearchNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTSearchNavigationController.h; sourceTree = "<group>"; };
 		5F74866E114D65ED00A48653 /* BTSearchNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTSearchNavigationController.m; sourceTree = "<group>"; };
 		5F74867E114D675800A48653 /* BTProfileNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTProfileNavigationController.h; sourceTree = "<group>"; };
@@ -100,8 +102,6 @@
 		5F7487B4114D9A5700A48653 /* BTNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTNetwork.m; sourceTree = "<group>"; };
 		5F7487C4114D9CC900A48653 /* BTNetworkHttp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTNetworkHttp.h; sourceTree = "<group>"; };
 		5F7487C5114D9CC900A48653 /* BTNetworkHttp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTNetworkHttp.m; sourceTree = "<group>"; };
-		5F748A2C11588BD200A48653 /* BTNavBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTNavBarController.h; sourceTree = "<group>"; };
-		5F748A2D11588BD200A48653 /* BTNavBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTNavBarController.m; sourceTree = "<group>"; };
 		5FF9348A1159F3EE00159ECA /* MyCLController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyCLController.h; sourceTree = "<group>"; };
 		5FF9348B1159F3EE00159ECA /* MyCLController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyCLController.m; sourceTree = "<group>"; };
 		5FF9349A1159F70300159ECA /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -297,8 +297,8 @@
 		CD885DA1114D5E5C0002DFAF /* Views + Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				5F748A2C11588BD200A48653 /* BTNavBarController.h */,
-				5F748A2D11588BD200A48653 /* BTNavBarController.m */,
+				5F72A76B116E3B0C00F8B7A0 /* UINavigationBar+CustomImage.h */,
+				5F72A76C116E3B0C00F8B7A0 /* UINavigationBar+CustomImage.m */,
 				CD885DA2114D5EAD0002DFAF /* BTTabBarController.h */,
 				CD885DA3114D5EAD0002DFAF /* BTTabBarController.m */,
 				CD885DC7114D623F0002DFAF /* Home */,
@@ -491,13 +491,13 @@
 				5F7487C6114D9CC900A48653 /* BTNetworkHttp.m in Sources */,
 				CD885F13114D9F950002DFAF /* NSString+URLAdditions.m in Sources */,
 				CD885F43114DA38F0002DFAF /* BTInvocationMaker.m in Sources */,
-				5F748A2E11588BD200A48653 /* BTNavBarController.m in Sources */,
 				5FF9348C1159F3EE00159ECA /* MyCLController.m in Sources */,
 				5F606D711161C107003625A1 /* BTUserHistoryTableViewController.m in Sources */,
 				5F606DCA1161CBC9003625A1 /* BTUserInventoryTableView.m in Sources */,
 				5F606FA81162E31E003625A1 /* asyncimageview.m in Sources */,
 				5F6071FF1167D710003625A1 /* BTVenueDetailView.m in Sources */,
 				5F6074651169A789003625A1 /* BTVenueSearchResults.m in Sources */,
+				5F72A76D116E3B0C00F8B7A0 /* UINavigationBar+CustomImage.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
