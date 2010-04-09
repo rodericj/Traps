@@ -127,8 +127,6 @@ def getUserInventory(uid):
 	except:
 		raise
 		
-	print annotated_inv
-
 	inventory = [{'name':Item.objects.get(id = i['item']).name, 'id':Item.objects.get(id = i['item']).id, 'count':i['item__count'], 'path':'site_media'+Item.objects.get(id=i['item']).assetPath.split('site_media/')[1], 'type':Item.objects.get(id = i['item']).type, 'note':Item.objects.get(id=i['item']).note} for i in annotated_inv]
 	return inventory
 
