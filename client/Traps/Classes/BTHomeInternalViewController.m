@@ -244,7 +244,6 @@
 													reuseIdentifier:cellIdentifier] autorelease];
 	NSString *leftText;
 	NSString *rightText;
-	
 	if(right == @"coinCount"){
 		rightText = [NSString stringWithFormat:@"%d", [profile coinCount]];
 	}	
@@ -334,7 +333,7 @@
 	lblTemp.tag = 1;
 	[lblTemp setBackgroundColor:[UIColor clearColor]];
 	
-	[lblTemp setText:leftText];
+	[lblTemp setText:rightText];
 	
 	[lblTemp setFont:[UIFont fontWithName:@"Helvetica" size:28]];
 	[lblTemp setTextColor:[UIColor whiteColor]];
