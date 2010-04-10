@@ -127,13 +127,10 @@
 	
 - (UITableViewCell *) getTitleCell:(NSString *)cellIdentifier{
 	
-	CGRect titleHalfCellFrame = CGRectMake(0, 0, iphonescreenwidth, venuerowheight/2);
 	CGRect titleCellFrame = CGRectMake(0, 0, iphonescreenwidth, venuerowheight);
-	CGRect titleTextFrame = CGRectMake(25, 3, iphonescreenwidth, venuerowheight/4);
-	CGRect addressTextFrame = CGRectMake(25, venuerowheight/4 - 7, iphonescreenwidth, venuerowheight/4);
-	CGRect checkinButtonFrame = CGRectMake(iphonescreenwidth/4, venuerowheight/2, iphonescreenwidth/2, venuerowheight/2);
-	CGRect chanceOfDropFrame = CGRectMake(iphonescreenwidth/2, 0, iphonescreenwidth/2, venuerowheight/2);
-	NSLog(@"venue here in this cell should be %@", venueInfo);
+	CGRect titleTextFrame = CGRectMake(25, 10, iphonescreenwidth, venuerowheight/4);
+	CGRect addressTextFrame = CGRectMake(25, venuerowheight/4, iphonescreenwidth, venuerowheight/4);
+	
 	UITableViewCell *cell = [[[UITableViewCell alloc] initWithFrame:titleCellFrame 
 													reuseIdentifier:cellIdentifier] autorelease];
 	NSString *venueName = [venueInfo objectForKey:@"name"];
@@ -141,14 +138,17 @@
 
 	[cell setBackgroundColor:[UIColor blackColor]];
 	
-	UIImageView *ProfileBarTmp;
-	ProfileBarTmp = [[UIImageView alloc] initWithFrame:titleHalfCellFrame];
-	ProfileBarTmp.tag = 0;
+	UIButton *searchButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+	[searchButton setBackgroundImage:[UIImage imageNamed:@"searchvenuebar.png"] forState:UIControlStateNormal];
+	searchButton.frame = titleCellFrame;
+	[searchButton setBackgroundColor:[UIColor clearColor]];
+
+	//listen for clicks
+	[searchButton addTarget:self action:@selector(searchVenue) 
+		   forControlEvents:UIControlEventTouchUpInside];	
 	
-	UIImage *BarImage = [UIImage imageNamed:@"profilebar.png"];
-	[ProfileBarTmp setImage:BarImage];
-	[cell.contentView addSubview:ProfileBarTmp];
-	
+	//put button on View
+	[cell.contentView addSubview:searchButton];
 	
 	UILabel *lblTemp;
 	lblTemp = [[UILabel alloc] initWithFrame:titleTextFrame];
@@ -156,6 +156,8 @@
 	[lblTemp setBackgroundColor:[UIColor clearColor]];
 	[lblTemp setText:venueName];
 	[lblTemp setTextColor:[UIColor blackColor]];
+	[lblTemp setShadowOffset:CGSizeMake(1, 0)]; 
+	[lblTemp setShadowColor:[UIColor blackColor]];
 	[cell.contentView addSubview:lblTemp];
 	[lblTemp release];
 	
@@ -164,35 +166,9 @@
 	[lblTemp setBackgroundColor:[UIColor clearColor]];
 	[lblTemp setText:venueAddress];
 	[lblTemp setAdjustsFontSizeToFitWidth:TRUE];
-	[lblTemp setTextColor:[UIColor grayColor]];
+	[lblTemp setTextColor:[UIColor blackColor]];
 	[cell.contentView addSubview:lblTemp];
 	[lblTemp release];
-	
-	lblTemp = [[UILabel alloc] initWithFrame:chanceOfDropFrame];
-	lblTemp.tag = 3;
-	[lblTemp setBackgroundColor:[UIColor clearColor]];
-	[lblTemp setText:@"chance of drop: 10%"];
-	[lblTemp setAdjustsFontSizeToFitWidth:TRUE];
-	[lblTemp setTextColor:[UIColor grayColor]];
-	[cell.contentView addSubview:lblTemp];
-	[lblTemp release];
-	
-
-	
-	UIButton *searchButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-	
-	searchButton.frame = checkinButtonFrame;
-	[searchButton setTitle:@"Search this Venue" forState:UIControlStateNormal];
-	[searchButton setBackgroundColor:[UIColor blackColor]];
-	//Set Background image
-	//[searchButton setBackgroundImage:[UIImage imageNamed:@"searchnow.png"] forState:UIControlStateNormal];
-	
-	//listen for clicks
-	[searchButton addTarget:self action:@selector(searchVenue) 
-		   forControlEvents:UIControlEventTouchUpInside];	
-	
-	//put button on View
-	[cell.contentView addSubview:searchButton];
 	
 	return cell;
 }

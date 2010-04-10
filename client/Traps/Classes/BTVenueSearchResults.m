@@ -167,7 +167,6 @@
 	CGRect alertStatmentFrame = CGRectMake(0, venuerowheight/2, iphonescreenwidth, venuerowheight/2);
 	CGRect dropTrapsButtonFrame = CGRectMake(iphonescreenwidth/4*3, venuerowheight/2, iphonescreenwidth/4, venuerowheight/2);
 	
-	NSLog(@"venue here in this cell should be %@", venueInfo);
 	UITableViewCell *cell = [[[UITableViewCell alloc] initWithFrame:titleCellFrame 
 													reuseIdentifier:cellIdentifier] autorelease];
 	NSString *venueName = [venueInfo objectForKey:@"name"];

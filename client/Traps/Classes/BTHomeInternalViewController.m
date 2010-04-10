@@ -205,7 +205,7 @@
 
 - (UITableViewCell *) getButtonCell:(NSString *)cellIdentifier {
 	CGRect CellFrame = CGRectMake(0, 0, iphonescreenwidth, 110);
-	CGRect ButtonFrame = CGRectMake(110, 30, 120, 40);
+	CGRect ButtonFrame = CGRectMake(320/4, 30, 160, 20);
 
 	UITableViewCell	*cell = [[[UITableViewCell alloc] initWithFrame:CellFrame 
 														reuseIdentifier:cellIdentifier] autorelease];
@@ -220,8 +220,8 @@
 	searchButton.frame = ButtonFrame;
 
 	//Set Background image
-	[searchButton setBackgroundImage:[UIImage imageNamed:@"searchnow.png"] forState:UIControlStateNormal];
-	
+	[searchButton setImage:[UIImage imageNamed:@"searchnow.png"] forState:UIControlStateNormal];
+
 	//listen for clicks
 	[searchButton addTarget:self action:@selector(dropTrapButtonPushed) 
 	 forControlEvents:UIControlEventTouchUpInside];	
@@ -230,9 +230,8 @@
 	[cell.contentView addSubview:searchButton];
 	return cell;
 }
+
 - (void)dropTrapButtonPushed{
-	//TrapsAppDelegate *delegate = [[UIApplication sharedApplication] delegate];
-//	delegate.BTTabBarCrontroller.selectedIndex = 1;
 	NSLog(@"Need to switch views at this point");
 }
 
@@ -304,14 +303,7 @@
 	lblTemp.tag = 1;
 	[lblTemp setBackgroundColor:[UIColor clearColor]];
 	
-	//NSLog(@"left %@", [kvPair objectForKey:left] );
-	//if([kvPair objectForKey:left]!=nil){
-//		//NSLog(@"went in %@", [kvPair objectForKey:left] );
-//		
 	[lblTemp setText:leftText];
-//	}
-	//NSLog(@"got past left %@", [kvPair objectForKey:left] );
-
 	[lblTemp setFont:[UIFont fontWithName:@"Helvetica" size:28]];
 	[lblTemp setTextColor:[UIColor whiteColor]];
 	[cell.contentView addSubview:lblTemp];
@@ -373,7 +365,6 @@
 	CGRect ProfilePicFrame = CGRectMake(30, picTopLeft, 50, 50);
 	CGRect ProfileBarFrame = CGRectMake(0, 0, iphonescreenwidth, fbprofileinforowheight);
 	
-	//int buttonTopLeft = (fbprofileinforowheight - fblogoutbuttonheight)/2;
 	CGRect LogoutButtonFrame = CGRectMake(200, buttonTopLeft, fblogoutbuttonwidth, fblogoutbuttonheight);
 	
 	UIImageView *ProfileBarTmp;
@@ -406,7 +397,6 @@
 	picTemp = [[UIImageView alloc] initWithFrame:ProfilePicFrame];
 	picTemp.tag = 3;
 	
-	//UIImage *UserImage = [UIImage imageNamed:@"user.png"];
 	[picTemp setImage:userImage];
 	[cell.contentView addSubview:picTemp];
 	[picTemp release];
