@@ -28,6 +28,8 @@
 		5F72A84C1170E8E300F8B7A0 /* searchvenuebar.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F72A84B1170E8E300F8B7A0 /* searchvenuebar.png */; };
 		5F72AB9611714FC200F8B7A0 /* BTVenueAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F72AB9511714FC200F8B7A0 /* BTVenueAnnotation.m */; };
 		5F72ABCD117238EF00F8B7A0 /* BTVenueAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F72ABCC117238EF00F8B7A0 /* BTVenueAnnotationView.m */; };
+		5F72AC811172468F00F8B7A0 /* VenueAnnotation.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F72AC801172468F00F8B7A0 /* VenueAnnotation.png */; };
+		5F72ACD611728A4300F8B7A0 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F72ACD511728A4300F8B7A0 /* icon.png */; };
 		5F74866F114D65ED00A48653 /* BTSearchNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F74866E114D65ED00A48653 /* BTSearchNavigationController.m */; };
 		5F748680114D675800A48653 /* BTProfileNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F74867F114D675800A48653 /* BTProfileNavigationController.m */; };
 		5F74868D114D67C300A48653 /* BTLeaderBoardNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F74868C114D67C300A48653 /* BTLeaderBoardNavigationController.m */; };
@@ -97,6 +99,8 @@
 		5F72AB9511714FC200F8B7A0 /* BTVenueAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTVenueAnnotation.m; sourceTree = "<group>"; };
 		5F72ABCB117238EF00F8B7A0 /* BTVenueAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTVenueAnnotationView.h; sourceTree = "<group>"; };
 		5F72ABCC117238EF00F8B7A0 /* BTVenueAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTVenueAnnotationView.m; sourceTree = "<group>"; };
+		5F72AC801172468F00F8B7A0 /* VenueAnnotation.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = VenueAnnotation.png; sourceTree = "<group>"; };
+		5F72ACD511728A4300F8B7A0 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		5F74866D114D65ED00A48653 /* BTSearchNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTSearchNavigationController.h; sourceTree = "<group>"; };
 		5F74866E114D65ED00A48653 /* BTSearchNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTSearchNavigationController.m; sourceTree = "<group>"; };
 		5F74867E114D675800A48653 /* BTProfileNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTProfileNavigationController.h; sourceTree = "<group>"; };
@@ -222,6 +226,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources-iPhone */ = {
 			isa = PBXGroup;
 			children = (
+				5F72ACD511728A4300F8B7A0 /* icon.png */,
 				5F7489B611586DB500A48653 /* images */,
 				28AD733E0D9D9553002E5188 /* MainWindow.xib */,
 				8D1107310486CEB800E47090 /* Traps-Info.plist */,
@@ -245,6 +250,7 @@
 			isa = PBXGroup;
 			children = (
 				5F72A84B1170E8E300F8B7A0 /* searchvenuebar.png */,
+				5F72AC801172468F00F8B7A0 /* VenueAnnotation.png */,
 			);
 			name = SearchImages;
 			sourceTree = "<group>";
@@ -486,6 +492,8 @@
 				5F72A7BE116F8B2400F8B7A0 /* killCount.png in Resources */,
 				5F72A8031170E5E300F8B7A0 /* searchnow.png in Resources */,
 				5F72A84C1170E8E300F8B7A0 /* searchvenuebar.png in Resources */,
+				5F72AC811172468F00F8B7A0 /* VenueAnnotation.png in Resources */,
+				5F72ACD611728A4300F8B7A0 /* icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

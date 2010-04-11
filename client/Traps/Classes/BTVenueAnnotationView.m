@@ -11,16 +11,19 @@
 
 @implementation BTVenueAnnotationView
 
+@synthesize venueName;
+@synthesize chanceOfDrop;
+
 - (id)initWithAnnotation:(id <MKAnnotation>)annotation reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithAnnotation:annotation reuseIdentifier:reuseIdentifier];
     if (self != nil)
     {
         CGRect frame = self.frame;
-        frame.size = CGSizeMake(60.0, 85.0);
+        frame.size = CGSizeMake(185.0, 95.0);
         self.frame = frame;
         self.backgroundColor = [UIColor clearColor];
-        self.centerOffset = CGPointMake(30.0, 42.0);
+        self.centerOffset = CGPointMake(185/2+30, 95/2);
     }
     return self;
 }
@@ -39,8 +42,10 @@
 }
 
 -(void) drawRect:(CGRect) rect{
+	
 	CGContextRef context = UIGraphicsGetCurrentContext();
 	CGContextSetLineWidth(context, 1);
+	
 	
 	// draw the gray pointed shape:
 	CGMutablePathRef path = CGPathCreateMutable();
@@ -53,26 +58,13 @@
 	CGContextDrawPath(context, kCGPathFillStroke);
 	CGPathRelease(path);
 	
-	// draw the cyan rounded box
-	path = CGPathCreateMutable();
-	CGPathMoveToPoint(path, NULL, 15.0, 0.5);
-	CGPathAddArcToPoint(path, NULL, 59.5, 00.5, 59.5, 5.0, 5.0);
-	CGPathAddArcToPoint(path, NULL, 59.5, 69.5, 55.0, 69.5, 5.0);
-	CGPathAddArcToPoint(path, NULL, 10.5, 69.5, 10.5, 64.0, 5.0);
-	CGPathAddArcToPoint(path, NULL, 10.5, 00.5, 15.0, 0.5, 5.0);
-	CGContextAddPath(context, path);
-	CGContextSetFillColorWithColor(context, [UIColor blackColor].CGColor);
-	CGContextSetStrokeColorWithColor(context, [UIColor grayColor].CGColor);
-	CGContextDrawPath(context, kCGPathFillStroke);
-	CGPathRelease(path);
-	
-	NSInteger high = 1;
-	NSInteger low = 3;
-	
-	// draw the temperature string and weather graphic
-	NSString *temperature = [NSString stringWithFormat:@"%@\n%d / %d", @"blah", high, low];
+	[[UIImage imageNamed:@"VenueAnnotation.png"] drawInRect:rect];
+
+	// draw the strings from the Venue Details
 	[[UIColor whiteColor] set];
-	[temperature drawInRect:CGRectMake(15.0, 5.0, 50.0, 40.0) withFont:[UIFont systemFontOfSize:11.0]];
-	
+	NSLog(@"venueName is %@", venueName);
+	[venueName drawInRect:CGRectMake(15.0, 5.0, 100.0, 40.0) withFont:[UIFont systemFontOfSize:14.0]];
+	[chanceOfDrop drawInRect:CGRectMake(140.0, 65.0, 50.0, 40.0) withFont:[UIFont systemFontOfSize:14.0]];
+
 }
 @end

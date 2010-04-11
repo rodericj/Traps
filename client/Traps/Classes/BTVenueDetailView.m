@@ -94,27 +94,31 @@
 	//[cell setText:@"test"];
     return cell;
 }
-- (void) mapViewDidFinishLoadingMap:(MKMapView *)mapView{
+- (void) mapViewDidFinishLoadingMap:(MKMapView *)amapView{
 	NSLog(@"mapviewdidfinishloadingmap");
 	CLLocationCoordinate2D location;
 	location.latitude = [[venueInfo objectForKey:@"geolat"] doubleValue];
 	location.longitude = [[venueInfo objectForKey:@"geolong"] doubleValue];
 					
 	pin = [[BTVenueAnnotation alloc] initWithCoordinate:location];
-	[mapView addAnnotation:pin];
+	[amapView addAnnotation:pin];
 }
 
 - (MKAnnotationView *) mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>) annotation{
-    //MKPinAnnotationView *annView=[[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"currentloc"];
-//    annView.pinColor = MKPinAnnotationColorGreen;
-//    annView.animatesDrop=TRUE;
-//    annView.canShowCallout = YES;
-//    annView.calloutOffset = CGPointMake(-5, 5);
 	
 	BTVenueAnnotationView *annView = [[BTVenueAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"currentloc"];
 	
 	annView.canShowCallout = YES;
 	annView.calloutOffset = CGPointMake(-5, 5);
+	[annView setVenueName:[venueInfo objectForKey:@"name"]];
+	[annView setChanceOfDrop:@"10%"];
+	
+	UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+	[rightButton addTarget:self
+					action:@selector(searchVenue)
+		  forControlEvents:UIControlEventTouchUpInside];
+	
+	[annView setRightCalloutAccessoryView:rightButton];
     return annView;
 }
 
@@ -137,7 +141,11 @@
 	location.longitude = [[venueInfo objectForKey:@"geolong"] doubleValue];
 	location.latitude = [[venueInfo objectForKey:@"geolat"] doubleValue];
 	
-	region.center = location;
+	CLLocationCoordinate2D locationOffset;
+	locationOffset.longitude = [[venueInfo objectForKey:@"geolong"] doubleValue]+.0020;
+	locationOffset.latitude = [[venueInfo objectForKey:@"geolat"] doubleValue]-.0010;
+	
+	region.center = locationOffset;
 	region.span = span;
 	if(mapView == nil){
 		mapView = [[MKMapView alloc] initWithFrame:mapFrame];
