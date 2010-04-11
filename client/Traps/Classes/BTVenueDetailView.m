@@ -199,7 +199,7 @@
 	[lblTemp setBackgroundColor:[UIColor clearColor]];
 	[lblTemp setText:venueAddress];
 	[lblTemp setAdjustsFontSizeToFitWidth:TRUE];
-	[lblTemp setTextColor:[UIColor blackColor]];
+	[lblTemp setTextColor:[UIColor grayColor]];
 	[cell.contentView addSubview:lblTemp];
 	[lblTemp release];
 	

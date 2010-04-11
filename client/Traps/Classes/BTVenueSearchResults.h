@@ -9,12 +9,16 @@
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
 #import "BTUserInventoryTableView.h"
+#import "BTVenueAnnotation.h"
 
-@interface BTVenueSearchResults : UITableViewController {
+
+@interface BTVenueSearchResults : UITableViewController <MKMapViewDelegate>{
 	NSDictionary *venueInfo;
 	NSDictionary *searchResults;
 	MKMapView *mapView;
 	BTUserInventoryTableView *inventoryView;
+	BTVenueAnnotation *pin;
+
 }
 
 @property (nonatomic, retain) BTUserInventoryTableView *inventoryView;

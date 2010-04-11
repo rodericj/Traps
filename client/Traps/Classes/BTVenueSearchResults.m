@@ -7,6 +7,7 @@
 //
 
 #import "BTVenueSearchResults.h"
+#import "BTSearchResultsAnnotationView.h"
 #import "BTConstants.h"
 #import "BTUserProfile.h"
 #import "BTNetwork.h"
@@ -144,8 +145,8 @@
 	span.longitudeDelta=0.0025;
 	
 	CLLocationCoordinate2D location;
-	location.longitude = [[venueInfo objectForKey:@"geolong"] doubleValue];
-	location.latitude = [[venueInfo objectForKey:@"geolat"] doubleValue];
+	location.longitude = [[venueInfo objectForKey:@"geolong"] doubleValue]+.0020;
+	location.latitude = [[venueInfo objectForKey:@"geolat"] doubleValue] -.0010;
 	
 	region.center = location;
 	region.span = span;
@@ -155,17 +156,40 @@
 	[mapView setRegion:region animated:TRUE];
 	[mapView regionThatFits:region];
 	[cell.contentView addSubview:mapView];
+	[mapView setDelegate:self];
 	return cell;
+}
+
+- (void) mapViewDidFinishLoadingMap:(MKMapView *)amapView{
+	NSLog(@"mapviewdidfinishloadingmap");
+	CLLocationCoordinate2D location;
+	location.latitude = [[venueInfo objectForKey:@"geolat"] doubleValue];
+	location.longitude = [[venueInfo objectForKey:@"geolong"] doubleValue];
+	
+	pin = [[BTVenueAnnotation alloc] initWithCoordinate:location];
+	[amapView addAnnotation:pin];
+}
+
+- (MKAnnotationView *) mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>) annotation{
+	
+	BTSearchResultsAnnotationView *annView = [[BTSearchResultsAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"currentloc"];
+	
+	annView.canShowCallout = YES;
+	annView.calloutOffset = CGPointMake(-5, 5);
+	
+	[annView setResultsString:[searchResults objectForKey:@"alertStatement"]];
+	
+    return annView;
 }
 
 - (UITableViewCell *) getTitleCell:(NSString *)cellIdentifier{
 	NSLog(@"Search Results and Venue Detail: %@, \n\n\n\%@", searchResults, venueInfo);
-	CGRect titleHalfCellFrame = CGRectMake(0, 0, iphonescreenwidth, venuerowheight/2);
+
 	CGRect titleCellFrame = CGRectMake(0, 0, iphonescreenwidth, venuerowheight);
-	CGRect titleTextFrame = CGRectMake(25, 3, iphonescreenwidth, venuerowheight/4);
-	CGRect addressTextFrame = CGRectMake(25, venuerowheight/4 - 7, iphonescreenwidth, venuerowheight/4);
+	CGRect titleTextFrame = CGRectMake(25, 10, iphonescreenwidth, venuerowheight/4);
+	CGRect addressTextFrame = CGRectMake(25, venuerowheight/4, iphonescreenwidth, venuerowheight/4);
 	CGRect alertStatmentFrame = CGRectMake(0, venuerowheight/2, iphonescreenwidth, venuerowheight/2);
-	CGRect dropTrapsButtonFrame = CGRectMake(iphonescreenwidth/4*3, venuerowheight/2, iphonescreenwidth/4, venuerowheight/2);
+	CGRect dropTrapsButtonFrame = CGRectMake(iphonescreenwidth/4*3 -25, venuerowheight/4, iphonescreenwidth/4, venuerowheight/2);
 	
 	UITableViewCell *cell = [[[UITableViewCell alloc] initWithFrame:titleCellFrame 
 													reuseIdentifier:cellIdentifier] autorelease];
@@ -175,7 +199,7 @@
 	[cell setBackgroundColor:[UIColor blackColor]];
 	
 	UIImageView *ProfileBarTmp;
-	ProfileBarTmp = [[UIImageView alloc] initWithFrame:titleHalfCellFrame];
+	ProfileBarTmp = [[UIImageView alloc] initWithFrame:titleCellFrame];
 	ProfileBarTmp.tag = 0;
 	
 	UIImage *BarImage = [UIImage imageNamed:@"profilebar.png"];
@@ -201,18 +225,18 @@
 	[cell.contentView addSubview:lblTemp];
 	[lblTemp release];
 	
-	lblTemp = [[UILabel alloc] initWithFrame:alertStatmentFrame];
-	lblTemp.tag = 3;
-	[lblTemp setBackgroundColor:[UIColor clearColor]];
-	[lblTemp setText:[searchResults objectForKey:@"alertStatement"]];
-	[lblTemp setAdjustsFontSizeToFitWidth:TRUE];
-	[lblTemp setTextColor:[UIColor grayColor]];
-	[cell.contentView addSubview:lblTemp];
-	[lblTemp release];
+//	lblTemp = [[UILabel alloc] initWithFrame:alertStatmentFrame];
+//	lblTemp.tag = 3;
+//	[lblTemp setBackgroundColor:[UIColor clearColor]];
+//	[lblTemp setText:[searchResults objectForKey:@"alertStatement"]];
+//	[lblTemp setAdjustsFontSizeToFitWidth:TRUE];
+//	[lblTemp setTextColor:[UIColor grayColor]];
+//	[cell.contentView addSubview:lblTemp];
+//	[lblTemp release];
 	
 	UIButton *dropTrapsButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
 	[dropTrapsButton setFrame:dropTrapsButtonFrame];
-	[dropTrapsButton setTitle:@"drop" forState:UIControlStateNormal];
+	[dropTrapsButton setTitle:@"Drop Traps" forState:UIControlStateNormal];
 	NSLog(@"%@", [[searchResults objectForKey:@"hasTraps"] class]);
 	if([searchResults objectForKey:@"hasTraps"]){
 		[cell.contentView addSubview:dropTrapsButton];
