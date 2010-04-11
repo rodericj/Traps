@@ -9,6 +9,7 @@
 #import "BTVenueDetailView.h"
 #import "BTConstants.h"
 #import "BTNetwork.h"
+#import "BTVenueAnnotationView.h"
 
 #import <JSON/JSON.h>
 
@@ -93,6 +94,29 @@
 	//[cell setText:@"test"];
     return cell;
 }
+- (void) mapViewDidFinishLoadingMap:(MKMapView *)mapView{
+	NSLog(@"mapviewdidfinishloadingmap");
+	CLLocationCoordinate2D location;
+	location.latitude = [[venueInfo objectForKey:@"geolat"] doubleValue];
+	location.longitude = [[venueInfo objectForKey:@"geolong"] doubleValue];
+					
+	pin = [[BTVenueAnnotation alloc] initWithCoordinate:location];
+	[mapView addAnnotation:pin];
+}
+
+- (MKAnnotationView *) mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>) annotation{
+    //MKPinAnnotationView *annView=[[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"currentloc"];
+//    annView.pinColor = MKPinAnnotationColorGreen;
+//    annView.animatesDrop=TRUE;
+//    annView.canShowCallout = YES;
+//    annView.calloutOffset = CGPointMake(-5, 5);
+	
+	BTVenueAnnotationView *annView = [[BTVenueAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"currentloc"];
+	
+	annView.canShowCallout = YES;
+	annView.calloutOffset = CGPointMake(-5, 5);
+    return annView;
+}
 
 - (UITableViewCell *) getMapCell:(NSString *)cellIdentifier{
 	
@@ -120,6 +144,7 @@
 	}
 	[mapView setRegion:region animated:TRUE];
 	[mapView regionThatFits:region];
+	[mapView setDelegate:self];
 	[cell.contentView addSubview:mapView];
 	return cell;
 }

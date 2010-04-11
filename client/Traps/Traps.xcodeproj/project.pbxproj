@@ -26,6 +26,8 @@
 		5F72A7BE116F8B2400F8B7A0 /* killCount.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F72A7BA116F8B2400F8B7A0 /* killCount.png */; };
 		5F72A8031170E5E300F8B7A0 /* searchnow.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F72A8021170E5E300F8B7A0 /* searchnow.png */; };
 		5F72A84C1170E8E300F8B7A0 /* searchvenuebar.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F72A84B1170E8E300F8B7A0 /* searchvenuebar.png */; };
+		5F72AB9611714FC200F8B7A0 /* BTVenueAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F72AB9511714FC200F8B7A0 /* BTVenueAnnotation.m */; };
+		5F72ABCD117238EF00F8B7A0 /* BTVenueAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F72ABCC117238EF00F8B7A0 /* BTVenueAnnotationView.m */; };
 		5F74866F114D65ED00A48653 /* BTSearchNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F74866E114D65ED00A48653 /* BTSearchNavigationController.m */; };
 		5F748680114D675800A48653 /* BTProfileNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F74867F114D675800A48653 /* BTProfileNavigationController.m */; };
 		5F74868D114D67C300A48653 /* BTLeaderBoardNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F74868C114D67C300A48653 /* BTLeaderBoardNavigationController.m */; };
@@ -91,6 +93,10 @@
 		5F72A7BA116F8B2400F8B7A0 /* killCount.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = killCount.png; sourceTree = "<group>"; };
 		5F72A8021170E5E300F8B7A0 /* searchnow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = searchnow.png; sourceTree = "<group>"; };
 		5F72A84B1170E8E300F8B7A0 /* searchvenuebar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = searchvenuebar.png; sourceTree = "<group>"; };
+		5F72AB9411714FC200F8B7A0 /* BTVenueAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTVenueAnnotation.h; sourceTree = "<group>"; };
+		5F72AB9511714FC200F8B7A0 /* BTVenueAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTVenueAnnotation.m; sourceTree = "<group>"; };
+		5F72ABCB117238EF00F8B7A0 /* BTVenueAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTVenueAnnotationView.h; sourceTree = "<group>"; };
+		5F72ABCC117238EF00F8B7A0 /* BTVenueAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTVenueAnnotationView.m; sourceTree = "<group>"; };
 		5F74866D114D65ED00A48653 /* BTSearchNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTSearchNavigationController.h; sourceTree = "<group>"; };
 		5F74866E114D65ED00A48653 /* BTSearchNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTSearchNavigationController.m; sourceTree = "<group>"; };
 		5F74867E114D675800A48653 /* BTProfileNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTProfileNavigationController.h; sourceTree = "<group>"; };
@@ -243,6 +249,19 @@
 			name = SearchImages;
 			sourceTree = "<group>";
 		};
+		5F72AB9111714F1500F8B7A0 /* VenueDetail */ = {
+			isa = PBXGroup;
+			children = (
+				5F72ABCB117238EF00F8B7A0 /* BTVenueAnnotationView.h */,
+				5F72ABCC117238EF00F8B7A0 /* BTVenueAnnotationView.m */,
+				5F6071FD1167D710003625A1 /* BTVenueDetailView.h */,
+				5F6071FE1167D710003625A1 /* BTVenueDetailView.m */,
+				5F72AB9411714FC200F8B7A0 /* BTVenueAnnotation.h */,
+				5F72AB9511714FC200F8B7A0 /* BTVenueAnnotation.m */,
+			);
+			name = VenueDetail;
+			sourceTree = "<group>";
+		};
 		5F7487B2114D9A4900A48653 /* Network */ = {
 			isa = PBXGroup;
 			children = (
@@ -334,14 +353,13 @@
 		CD885DC8114D62450002DFAF /* Search */ = {
 			isa = PBXGroup;
 			children = (
+				5F72AB9111714F1500F8B7A0 /* VenueDetail */,
 				5FF9348A1159F3EE00159ECA /* MyCLController.h */,
 				5FF9348B1159F3EE00159ECA /* MyCLController.m */,
 				5F74866D114D65ED00A48653 /* BTSearchNavigationController.h */,
 				5F74866E114D65ED00A48653 /* BTSearchNavigationController.m */,
 				5F7486B9114D6F9C00A48653 /* BTSearchInternalViewController.h */,
 				5F7486BA114D6F9C00A48653 /* BTSearchInternalViewController.m */,
-				5F6071FD1167D710003625A1 /* BTVenueDetailView.h */,
-				5F6071FE1167D710003625A1 /* BTVenueDetailView.m */,
 				5F6074631169A789003625A1 /* BTVenueSearchResults.h */,
 				5F6074641169A789003625A1 /* BTVenueSearchResults.m */,
 			);
@@ -510,6 +528,8 @@
 				5F6071FF1167D710003625A1 /* BTVenueDetailView.m in Sources */,
 				5F6074651169A789003625A1 /* BTVenueSearchResults.m in Sources */,
 				5F72A76D116E3B0C00F8B7A0 /* UINavigationBar+CustomImage.m in Sources */,
+				5F72AB9611714FC200F8B7A0 /* BTVenueAnnotation.m in Sources */,
+				5F72ABCD117238EF00F8B7A0 /* BTVenueAnnotationView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
