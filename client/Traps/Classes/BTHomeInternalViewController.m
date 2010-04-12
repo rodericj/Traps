@@ -14,7 +14,6 @@
 #import "BTConstants.h"
 
 //From: from http://iphonedevelopertips.com/cocoa/json-framework-for-iphone-part-2.html
-//#import "SBJSON.h"   //Included in ~/Library/SDKs 
 #import <JSON/JSON.h>
 
 @implementation BTHomeInternalViewController
@@ -232,7 +231,7 @@
 }
 
 - (void)dropTrapButtonPushed{
-	NSLog(@"Need to switch views at this point");
+	[self.tabBarController setSelectedIndex:1];	
 }
 
 - (UITableViewCell *) getUserProfileCell:(NSString *)cellIdentifier leftSide:(NSString *)left rightSide:(NSString *)right{
