@@ -9,6 +9,7 @@
 #import "BTFoursquareLoginViewController.h"
 #import "BTConstants.h"
 #import "BTNetwork.h"
+#import <JSON/JSON.h>
 
 @implementation BTFoursquareLoginViewController
 
@@ -47,30 +48,32 @@
 	NSLog(@"login to foursquare");
 	[loginButton setEnabled:FALSE];
 	NSString *sourceString = [NSString stringWithFormat:@"%@:%@", [unameTextField text],[passwordTextField text]];
-	
 	NSData *sourceData = [sourceString dataUsingEncoding:NSUTF8StringEncoding];
+	
 	NSString *base64EncodedString = [sourceData base64EncodedString];
-	NSLog(@"encoding %@", base64EncodedString);
+	NSString *fullEncoded = [NSString stringWithFormat:@"Basic %@", base64EncodedString];
 	[[BTNetwork sharedNetwork] performHttpOperationWithResponseObject:self
 													  methodSignature:NSStringFromSelector(@selector(foursquareCallback:))
 															   method:@"GET"
 															   domain:foursquareApi
-														  relativeURL:@"v1/user/"
+														  relativeURL:@"v1/user.json"
 															   params:nil 
-															  headers:[NSArray arrayWithObjects:base64EncodedString,@"Authorization"]];
+															  headers:[NSArray arrayWithObjects:fullEncoded,
+																	   @"Authorization",
+																	   nil]];
 	
 	
 }
 
 -(void)foursquareCallback:(id)results{
 	NSLog(@"foursquare returned");
-	NSLog(@"foursquare returned with %@", results);
-	
-	
+	NSString *responseString = [[NSString alloc] initWithData:results encoding:NSUTF8StringEncoding];
+
+	SBJSON *parser = [SBJSON new];
+	NSDictionary* webRequestResults = [parser objectWithString:responseString error:NULL];
+	NSLog(@"foursquare returned %@", webRequestResults) ;
 }
 - (UITableViewCell *) getTopCell:(NSString *)cellIdentifier{
-	NSLog(@"we are setting up the topCell");
-	NSLog(@"the reusable identifier %@", cellIdentifier);
 
 	CGRect topCellFrame = CGRectMake(0, 0, iphonescreenwidth, foursquarerowheight);
 	CGRect topCellImageFrame = CGRectMake(0, 0, iphonescreenwidth, navbarheight);
@@ -112,12 +115,12 @@
 	CGRect unameLabel = CGRectMake(10, 15+textboxheight/2, 110, labelheight);
 	CGRect passwordLabel = CGRectMake(10, 50+textboxheight/2, 140, labelheight);
 	
-	NSLog(@"the reusable identifier %@", cellIdentifier);
 	UITableViewCell *cell = [[[UITableViewCell alloc] initWithFrame:loginCellFrame 
 													reuseIdentifier:cellIdentifier] autorelease];
 	
 	unameTextField = [[[UITextField alloc] initWithFrame:unameTextBoxFrame] autorelease];
 	[unameTextField setBorderStyle:UITextBorderStyleRoundedRect];
+	[unameTextField setAutocorrectionType:UITextAutocorrectionTypeNo];
 	[cell.contentView addSubview:unameTextField];
 	//[unameTextField release];
 	
@@ -176,19 +179,14 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
 	NSString *CellIdentifier = [NSString stringWithFormat:@"cell%d", [indexPath row]];
-    NSLog(@"setting up the cell %d", [indexPath row]);
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil){
-		NSLog(@"it is nil %d", [indexPath row]);
 
 		if([indexPath row] == 1) {
-			NSLog(@"setting up row 1");
 			cell =  [self getLoginInfoCell:CellIdentifier];
 
 		}
 		else if([indexPath row] == 0){
-			NSLog(@"setting up row 0 now");
-
 			cell = [self getTopCell:CellIdentifier];
 			[cell setUserInteractionEnabled:FALSE];
 

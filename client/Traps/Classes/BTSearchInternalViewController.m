@@ -193,8 +193,8 @@
 	
 	if ([responseString isKindOfClass:[NSError class]]) {
 		NSLog(@"code %d, domain %@", [responseString code], [responseString domain]);
-//		if ([responseString code] == 400) {
-		if (FALSE) {
+		if ([responseString code] == 400) {
+//		if (FALSE) {
 			NSLog(@"We've got a rate limiting situation. Let's show the modular view");
 			if (foursquareLoginView == nil) {
 				foursquareLoginView = [[BTFoursquareLoginViewController alloc] init];

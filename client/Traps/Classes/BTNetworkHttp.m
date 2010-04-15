@@ -81,13 +81,9 @@ NSString *const kHTTPRequestError = @"HTTPRequestError";
 							 headers:(NSArray *)headers{
 	_data		= [[NSMutableData alloc] init];
 	
-	//TODO need to set some headers here
-	//setValueForHeaderes on the request
-	
 	NSString *keyValuePairs = [self createKeyValuePairs:params];
 	NSMutableURLRequest *request;
 	NSString *urlString = [NSString stringWithFormat:@"http://%@/%@", domain, relativeURL];
-
 
 	if ([method compare:@"GET" options:NSCaseInsensitiveSearch] == NSOrderedSame) {
 		if ([keyValuePairs length] > 0) {
@@ -105,7 +101,7 @@ NSString *const kHTTPRequestError = @"HTTPRequestError";
 		int count = 0;
 		while (count < headers.count){
 			NSLog(@"adding %@, %@ to headers", [headers objectAtIndex:count], [headers objectAtIndex:count+1]);
-			[request setValue:[headers objectAtIndex:count] forHTTPHeaderField:[headers objectAtIndex:count+1]];
+			[request addValue:[headers objectAtIndex:count] forHTTPHeaderField:[headers objectAtIndex:count+1]];
 			NSLog(@"we've added %@, %@ to headers", [headers objectAtIndex:count], [headers objectAtIndex:count+1]);
 			
 			count += 2;

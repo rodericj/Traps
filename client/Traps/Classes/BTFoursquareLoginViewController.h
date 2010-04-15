@@ -16,6 +16,6 @@
 	UITextField *passwordTextField;
 	NSString *viewDescription;
 }
-
+-(void)foursquareCallback:(id)results;
 @property (nonatomic, retain) NSString *viewDescription;
 @end
