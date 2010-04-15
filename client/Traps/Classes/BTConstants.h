@@ -32,17 +32,13 @@
 #define oauth_key @"JL4SJUD5VDGKSXSNAJNTM5D12VELWCEVYXWZDI4CYGJ1HGBI"
 #define oauth_secret @"NFZME0GFKF3LM5EF3PO55BBNMB4ZLAE0K1T5K3AQ1JMZI3PW"
 
+#define foursquareApi @"api.foursquare.com"
+
 
 #define kHomeTitle			@"Home"
 #define kSearchTitle		@"Search"
 #define kProfileTitle		@"Profile"
 #define kLeaderboardTitle	@"Leaderboard"
-
-#pragma mark -
-#pragma mark HTTP
-
-#define foursquareApi @"api.foursquare.com"
-
 
 #pragma mark -
 #pragma mark FB
@@ -64,4 +60,16 @@
 
 #define venuerowheight 100
 
+#pragma mark -
+#pragma mark foursquare login view
+#define foursquarerowheight 120
+
+#define foursquarebuttonwidth 180
+#define foursquarebuttonheight 24
+#define textboxwidth 200
+#define textboxheight 25
+#define labelheight 20
+
+#define foursquareratelimitexceeded @"Sorry but it looks like we've exceeded the foursquare rate limit. We'll have to get you to log in, or just play around with the beginner venues."
+#define foursquarecheckinprefered @"Sign in to foursquare to have the option to checkin when searching!"
 

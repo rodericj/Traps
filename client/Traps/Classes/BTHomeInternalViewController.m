@@ -106,7 +106,8 @@
 								(NSString *)[user objectForKey:@"last_name"], @"last_name", 
 								(NSString *)[user objectForKey:@"first_name"], @"first_name", 
 								@"1", @"tutorial",
-								nil]];
+								nil]
+								headers:nil];
 	
 }
 
@@ -444,7 +445,8 @@
 															   method:@"POST"
 															   domain:kHTTPHost
 														  relativeURL:@"Logout/"
-															   params:nil];
+															   params:nil 
+															  headers:nil];
 	
 		
 	FBDialog *dialog = [[[FBLoginDialog alloc] initWithSession:session] autorelease];

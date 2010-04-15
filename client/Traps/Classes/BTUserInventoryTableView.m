@@ -25,7 +25,8 @@
 															   method:@"POST"
 															   domain:kHTTPHost
 														  relativeURL:@"GetMyUserProfile/"
-															   params:nil];
+															   params:nil 
+															  headers:nil];
     [super viewDidLoad];
 
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.

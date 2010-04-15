@@ -50,7 +50,8 @@
 																		   vid, @"vid",
 																		   iid, @"iid",
 																		@"1234", @"deviceToken",
-																		   nil]];
+																		   nil] 
+																  headers:nil];
 
 	}
 	
@@ -221,18 +222,9 @@
 	[lblTemp setBackgroundColor:[UIColor clearColor]];
 	[lblTemp setText:venueAddress];
 	[lblTemp setAdjustsFontSizeToFitWidth:TRUE];
-	[lblTemp setTextColor:[UIColor grayColor]];
+	[lblTemp setTextColor:[UIColor blackColor]];
 	[cell.contentView addSubview:lblTemp];
 	[lblTemp release];
-	
-//	lblTemp = [[UILabel alloc] initWithFrame:alertStatmentFrame];
-//	lblTemp.tag = 3;
-//	[lblTemp setBackgroundColor:[UIColor clearColor]];
-//	[lblTemp setText:[searchResults objectForKey:@"alertStatement"]];
-//	[lblTemp setAdjustsFontSizeToFitWidth:TRUE];
-//	[lblTemp setTextColor:[UIColor grayColor]];
-//	[cell.contentView addSubview:lblTemp];
-//	[lblTemp release];
 	
 	UIButton *dropTrapsButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
 	[dropTrapsButton setFrame:dropTrapsButtonFrame];

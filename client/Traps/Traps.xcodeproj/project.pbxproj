@@ -32,6 +32,11 @@
 		5F72ACD611728A4300F8B7A0 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F72ACD511728A4300F8B7A0 /* icon.png */; };
 		5F72AD0511728DA400F8B7A0 /* SearchResultsAnnotation.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F72AD0411728DA400F8B7A0 /* SearchResultsAnnotation.png */; };
 		5F72AD37117291C800F8B7A0 /* BTSearchResultsAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F72AD36117291C800F8B7A0 /* BTSearchResultsAnnotationView.m */; };
+		5F72AE2D1174111F00F8B7A0 /* BTFoursquareLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F72AE2C1174111F00F8B7A0 /* BTFoursquareLoginViewController.m */; };
+		5F72AE3B1174127600F8B7A0 /* signinwith-foursquare.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F72AE3A1174127600F8B7A0 /* signinwith-foursquare.png */; };
+		5F72AFD211759AF800F8B7A0 /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F72AFD111759AF800F8B7A0 /* NSData+Base64.m */; };
+		5F72B0841176A79C00F8B7A0 /* droptrap.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F72B0831176A79C00F8B7A0 /* droptrap.png */; };
+		5F72B0921176A7D200F8B7A0 /* mapannotation.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F72B0911176A7D200F8B7A0 /* mapannotation.png */; };
 		5F74866F114D65ED00A48653 /* BTSearchNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F74866E114D65ED00A48653 /* BTSearchNavigationController.m */; };
 		5F748680114D675800A48653 /* BTProfileNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F74867F114D675800A48653 /* BTProfileNavigationController.m */; };
 		5F74868D114D67C300A48653 /* BTLeaderBoardNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F74868C114D67C300A48653 /* BTLeaderBoardNavigationController.m */; };
@@ -106,6 +111,13 @@
 		5F72AD0411728DA400F8B7A0 /* SearchResultsAnnotation.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SearchResultsAnnotation.png; sourceTree = "<group>"; };
 		5F72AD35117291C800F8B7A0 /* BTSearchResultsAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTSearchResultsAnnotationView.h; sourceTree = "<group>"; };
 		5F72AD36117291C800F8B7A0 /* BTSearchResultsAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTSearchResultsAnnotationView.m; sourceTree = "<group>"; };
+		5F72AE2B1174111F00F8B7A0 /* BTFoursquareLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTFoursquareLoginViewController.h; sourceTree = "<group>"; };
+		5F72AE2C1174111F00F8B7A0 /* BTFoursquareLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTFoursquareLoginViewController.m; sourceTree = "<group>"; };
+		5F72AE3A1174127600F8B7A0 /* signinwith-foursquare.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "signinwith-foursquare.png"; sourceTree = "<group>"; };
+		5F72AFD011759AF800F8B7A0 /* NSData+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Base64.h"; sourceTree = "<group>"; };
+		5F72AFD111759AF800F8B7A0 /* NSData+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Base64.m"; sourceTree = "<group>"; };
+		5F72B0831176A79C00F8B7A0 /* droptrap.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = droptrap.png; sourceTree = "<group>"; };
+		5F72B0911176A7D200F8B7A0 /* mapannotation.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mapannotation.png; sourceTree = "<group>"; };
 		5F74866D114D65ED00A48653 /* BTSearchNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTSearchNavigationController.h; sourceTree = "<group>"; };
 		5F74866E114D65ED00A48653 /* BTSearchNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTSearchNavigationController.m; sourceTree = "<group>"; };
 		5F74867E114D675800A48653 /* BTProfileNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTProfileNavigationController.h; sourceTree = "<group>"; };
@@ -188,6 +200,8 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				5F72AFD011759AF800F8B7A0 /* NSData+Base64.h */,
+				5F72AFD111759AF800F8B7A0 /* NSData+Base64.m */,
 				CD885DAA114D5FA70002DFAF /* BTConstants.h */,
 				1D3623240D0F684500981E51 /* TrapsAppDelegate.h */,
 				1D3623250D0F684500981E51 /* TrapsAppDelegate.m */,
@@ -251,14 +265,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		5F72A84A1170E8D800F8B7A0 /* SearchImages */ = {
+		5F72A84A1170E8D800F8B7A0 /* MapAnnotations */ = {
 			isa = PBXGroup;
 			children = (
-				5F72A84B1170E8E300F8B7A0 /* searchvenuebar.png */,
+				5F72B0911176A7D200F8B7A0 /* mapannotation.png */,
 				5F72AD0411728DA400F8B7A0 /* SearchResultsAnnotation.png */,
 				5F72AC801172468F00F8B7A0 /* VenueAnnotation.png */,
 			);
-			name = SearchImages;
+			name = MapAnnotations;
 			sourceTree = "<group>";
 		};
 		5F72AB9111714F1500F8B7A0 /* VenueDetail */ = {
@@ -285,6 +299,17 @@
 			name = SearchResults;
 			sourceTree = "<group>";
 		};
+		5F72B0701176A77B00F8B7A0 /* buttons */ = {
+			isa = PBXGroup;
+			children = (
+				5F72A8021170E5E300F8B7A0 /* searchnow.png */,
+				5F72B0831176A79C00F8B7A0 /* droptrap.png */,
+				5F72A84B1170E8E300F8B7A0 /* searchvenuebar.png */,
+				5F72AE3A1174127600F8B7A0 /* signinwith-foursquare.png */,
+			);
+			name = buttons;
+			sourceTree = "<group>";
+		};
 		5F7487B2114D9A4900A48653 /* Network */ = {
 			isa = PBXGroup;
 			children = (
@@ -305,7 +330,8 @@
 		5F7489B611586DB500A48653 /* images */ = {
 			isa = PBXGroup;
 			children = (
-				5F72A84A1170E8D800F8B7A0 /* SearchImages */,
+				5F72B0701176A77B00F8B7A0 /* buttons */,
+				5F72A84A1170E8D800F8B7A0 /* MapAnnotations */,
 				5FF93531115B06F200159ECA /* TabBarIcons */,
 				5F7489B711586DBC00A48653 /* HomeViewImages */,
 			);
@@ -319,7 +345,6 @@
 				5FF9371B115C59C100159ECA /* homeViewTopBanner.png */,
 				5FF93668115B347100159ECA /* user.png */,
 				5FF93551115B095500159ECA /* profilebar.png */,
-				5F72A8021170E5E300F8B7A0 /* searchnow.png */,
 				5FF9354B115B08AE00159ECA /* profilebar1.png */,
 			);
 			name = HomeViewImages;
@@ -384,6 +409,8 @@
 				5F74866E114D65ED00A48653 /* BTSearchNavigationController.m */,
 				5F7486B9114D6F9C00A48653 /* BTSearchInternalViewController.h */,
 				5F7486BA114D6F9C00A48653 /* BTSearchInternalViewController.m */,
+				5F72AE2B1174111F00F8B7A0 /* BTFoursquareLoginViewController.h */,
+				5F72AE2C1174111F00F8B7A0 /* BTFoursquareLoginViewController.m */,
 			);
 			name = Search;
 			sourceTree = "<group>";
@@ -511,6 +538,9 @@
 				5F72AC811172468F00F8B7A0 /* VenueAnnotation.png in Resources */,
 				5F72ACD611728A4300F8B7A0 /* icon.png in Resources */,
 				5F72AD0511728DA400F8B7A0 /* SearchResultsAnnotation.png in Resources */,
+				5F72AE3B1174127600F8B7A0 /* signinwith-foursquare.png in Resources */,
+				5F72B0841176A79C00F8B7A0 /* droptrap.png in Resources */,
+				5F72B0921176A7D200F8B7A0 /* mapannotation.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -556,6 +586,8 @@
 				5F72AB9611714FC200F8B7A0 /* BTVenueAnnotation.m in Sources */,
 				5F72ABCD117238EF00F8B7A0 /* BTVenueAnnotationView.m in Sources */,
 				5F72AD37117291C800F8B7A0 /* BTSearchResultsAnnotationView.m in Sources */,
+				5F72AE2D1174111F00F8B7A0 /* BTFoursquareLoginViewController.m in Sources */,
+				5F72AFD211759AF800F8B7A0 /* NSData+Base64.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

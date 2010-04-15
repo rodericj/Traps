@@ -24,6 +24,7 @@
 											   method:(NSString *)method
 											   domain:(NSString *)domain
 										  relativeURL:(NSString *)relativeURL
-											   params:(NSDictionary *)params;
+											   params:(NSDictionary *)params
+											  headers:(NSArray *)headers;
 
 @end

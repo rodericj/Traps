@@ -96,7 +96,8 @@
 														  relativeURL:@"SetDeviceToken/"
 															   params:[NSDictionary dictionaryWithObjectsAndKeys:
 																	   deviceToken, @"deviceToken",
-																	   nil]];
+																	   nil]
+															  headers:nil];
 	
 	
 }

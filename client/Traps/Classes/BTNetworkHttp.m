@@ -77,12 +77,18 @@ NSString *const kHTTPRequestError = @"HTTPRequestError";
 - (void)performHTTPRequestWithMethod:(NSString *)method
 						  hostDomain:(NSString *)domain
 						 relativeURL:(NSString *)relativeURL
-							  params:(NSDictionary *)params {
+							  params:(NSDictionary *)params 
+							 headers:(NSArray *)headers{
 	_data		= [[NSMutableData alloc] init];
+	
+	//TODO need to set some headers here
+	//setValueForHeaderes on the request
 	
 	NSString *keyValuePairs = [self createKeyValuePairs:params];
 	NSMutableURLRequest *request;
 	NSString *urlString = [NSString stringWithFormat:@"http://%@/%@", domain, relativeURL];
+
+
 	if ([method compare:@"GET" options:NSCaseInsensitiveSearch] == NSOrderedSame) {
 		if ([keyValuePairs length] > 0) {
 			urlString = [NSString stringWithFormat:@"%@?%@", urlString, keyValuePairs];
@@ -93,6 +99,17 @@ NSString *const kHTTPRequestError = @"HTTPRequestError";
 		request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
 		[request setHTTPMethod:@"POST"];
 		[request setHTTPBody:[keyValuePairs dataUsingEncoding:NSUTF8StringEncoding]];
+	}
+	
+	if(headers != nil){
+		int count = 0;
+		while (count < headers.count){
+			NSLog(@"adding %@, %@ to headers", [headers objectAtIndex:count], [headers objectAtIndex:count+1]);
+			[request setValue:[headers objectAtIndex:count] forHTTPHeaderField:[headers objectAtIndex:count+1]];
+			NSLog(@"we've added %@, %@ to headers", [headers objectAtIndex:count], [headers objectAtIndex:count+1]);
+			
+			count += 2;
+		}
 	}
 	[request setValue:@"BoobyTraps/1.0 (iPhone)" forHTTPHeaderField:@"User-Agent"];
 	[request setValue:@"gzip" forHTTPHeaderField:@"Accept-Encoding"];

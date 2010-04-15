@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "BTConstants.h"
 #import "BTVenueDetailView.h"
+#import "BTFoursquareLoginViewController.h"
 
 #import "MyCLController.h"
 
@@ -16,6 +17,7 @@
 	MyCLController *locationController;
 	NSArray *venues;
 	BTVenueDetailView *venueDetailView;
+	BTFoursquareLoginViewController *foursquareLoginView;
 }
 
 @property (nonatomic, retain) BTVenueDetailView *venueDetailView;

@@ -199,7 +199,7 @@
 	[lblTemp setBackgroundColor:[UIColor clearColor]];
 	[lblTemp setText:venueAddress];
 	[lblTemp setAdjustsFontSizeToFitWidth:TRUE];
-	[lblTemp setTextColor:[UIColor grayColor]];
+	[lblTemp setTextColor:[UIColor blackColor]];
 	[cell.contentView addSubview:lblTemp];
 	[lblTemp release];
 	
@@ -217,7 +217,8 @@
 														  relativeURL:@"SearchVenue/"
 															   params:[NSDictionary dictionaryWithObjectsAndKeys:
 																	   vid, @"vid",
-																	   nil]];
+																	   nil] 
+															  headers:nil];
 }
 
 - (void)didSearchVenue:(id)returnData{

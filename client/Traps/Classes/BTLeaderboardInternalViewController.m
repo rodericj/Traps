@@ -114,7 +114,8 @@
 														  relativeURL:@"GetFriends"
 															   params:[NSDictionary dictionaryWithObjectsAndKeys:
 																	   friendListString, @"friends",
-																	   nil]];
+																	   nil] 
+															  headers:nil];
 }
 	
 

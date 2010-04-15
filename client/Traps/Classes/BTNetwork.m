@@ -83,7 +83,8 @@ static BTNetwork *sharedBTNetwork = nil;
 											   method:(NSString *)method
 											   domain:(NSString *)domain
 										  relativeURL:(NSString *)relativeURL
-											   params:(NSDictionary *)params {
+											   params:(NSDictionary *)params
+											  headers:(NSArray *)headers{
 	// Create an invocation for the operation queue
 	BTNetworkHttp *networkHTTP = [BTNetworkHttp networkHttpWithResponseObject:responseObject
 															  methodSignature:methodSignature];
@@ -94,7 +95,8 @@ static BTNetwork *sharedBTNetwork = nil;
 	[(BTNetworkHttp *)makeNetworkHTTP performHTTPRequestWithMethod:method
 														hostDomain:domain
 													   relativeURL:relativeURL
-															params:params];
+															params:params
+														   headers:headers];
 	
 	// Add the invocation onto the operation queue
 	NSInvocationOperation *httpOperation = [[NSInvocationOperation alloc]

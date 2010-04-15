@@ -182,7 +182,8 @@
 																   params:[NSDictionary dictionaryWithObjectsAndKeys:
 																		   lat, @"geolat",
 																		   lon, @"geolong", 
-																		   nil]];
+																		   nil] 
+																  headers:nil];
 	}
 	
 }
@@ -191,10 +192,22 @@
 
 	
 	if ([responseString isKindOfClass:[NSError class]]) {
+		NSLog(@"code %d, domain %@", [responseString code], [responseString domain]);
+//		if ([responseString code] == 400) {
+		if (FALSE) {
+			NSLog(@"We've got a rate limiting situation. Let's show the modular view");
+			if (foursquareLoginView == nil) {
+				foursquareLoginView = [[BTFoursquareLoginViewController alloc] init];
+			}
+			[foursquareLoginView setViewDescription:foursquareratelimitexceeded];
+			[self presentModalViewController:foursquareLoginView animated:YES];
+			return;
+		}
+		else{
 		NSLog(@"default to jackson street because there was an error");
 		responseString = @"{\"groups\":[{\"type\":\"Nearby\",\"venues\":[{\"id\":86638,\"name\":\"Joe Greenstein's\",\"address\":\"1740 Jackson St.\",\"city\":\"San Francisco\",\"state\":\"CA\",\"geolat\":37.7938,\"geolong\":-122.424,\"stats\":{\"herenow\":\"0\"},\"distance\":31},{\"id\":1235744,\"name\":\"1800 Washington Street\",\"address\":\"1800 Washington Street\",\"city\":\"San Francisco\",\"state\":\"CA\",\"geolat\":37.793433,\"geolong\":-122.423426,\"stats\":{\"herenow\":\"0\"},\"distance\":36}]}]}";
+		}
 	}
-	
 	SBJSON *parser = [SBJSON new];
 	NSDictionary* webRequestResults = [parser objectWithString:responseString error:NULL];
 	NSArray *groups = [webRequestResults objectForKey:@"groups"];
