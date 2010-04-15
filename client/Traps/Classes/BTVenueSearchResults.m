@@ -194,8 +194,8 @@
 	CGRect titleCellFrame = CGRectMake(0, 0, iphonescreenwidth, venuerowheight);
 	CGRect titleTextFrame = CGRectMake(25, 10, iphonescreenwidth, venuerowheight/4);
 	CGRect addressTextFrame = CGRectMake(25, venuerowheight/4, iphonescreenwidth, venuerowheight/4);
-	CGRect alertStatmentFrame = CGRectMake(0, venuerowheight/2, iphonescreenwidth, venuerowheight/2);
-	CGRect dropTrapsButtonFrame = CGRectMake(iphonescreenwidth/4*3 -25, venuerowheight/4, iphonescreenwidth/4, venuerowheight/2);
+	//CGRect alertStatmentFrame = CGRectMake(0, venuerowheight/2, iphonescreenwidth, venuerowheight/2);
+	CGRect dropTrapsButtonFrame = CGRectMake(iphonescreenwidth - 120, 35, 115*.75, 43*.75);
 	
 	UITableViewCell *cell = [[[UITableViewCell alloc] initWithFrame:titleCellFrame 
 													reuseIdentifier:cellIdentifier] autorelease];
@@ -231,11 +231,14 @@
 	[cell.contentView addSubview:lblTemp];
 	[lblTemp release];
 	
+	//TODO If we actually have traps
+	
 	UIButton *dropTrapsButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
 	[dropTrapsButton setFrame:dropTrapsButtonFrame];
-	[dropTrapsButton setTitle:@"Drop Traps" forState:UIControlStateNormal];
+	//[dropTrapsButton setTitle:@"Drop Traps" forState:UIControlStateNormal];
+	[dropTrapsButton setBackgroundImage:[UIImage imageNamed:@"droptrap.png"] forState:UIControlStateNormal];
 	NSLog(@"%@", [[searchResults objectForKey:@"hasTraps"] class]);
-	if([searchResults objectForKey:@"hasTraps"]){
+	if(![searchResults objectForKey:@"hasTraps"]){
 		[cell.contentView addSubview:dropTrapsButton];
 		//listen for clicks
 		[dropTrapsButton addTarget:self action:@selector(dropTrapButtonPushed) 
