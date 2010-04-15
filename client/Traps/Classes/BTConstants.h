@@ -63,6 +63,20 @@
 #define venuerowheight 100
 
 #pragma mark -
+#pragma mark Home view
+#pragma mark -
+#define leftstatusxcoord 0
+#define leftstatusycoord 0
+#define rightstatusxcoord 160
+#define rightstatusycoord 0
+
+#define statusboxwidth 160
+#define statusboxheight 110
+#define statusboxtextheight 28
+
+
+
+#pragma mark -
 #pragma mark annotation views
 #pragma mark -
 

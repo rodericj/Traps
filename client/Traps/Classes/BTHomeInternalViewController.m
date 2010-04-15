@@ -281,11 +281,12 @@
 	cell.backgroundView = backgroundView;
 	
 	//Set up the frames for the individual columns
-	CGRect LeftPicFrame = CGRectMake(0, 0, 160, 110);
-	CGRect RightPicFrame = CGRectMake(160, 0, 160, 110);
+	CGRect LeftPicFrame = CGRectMake(leftstatusxcoord, leftstatusycoord, statusboxwidth, statusboxheight);
+	CGRect RightPicFrame = CGRectMake(rightstatusxcoord, rightstatusycoord, statusboxwidth, statusboxheight);
 	
-	CGRect LeftLabelFrame = CGRectMake(100, 15, 64, 53);
-	CGRect RightLabelFrame = CGRectMake(260, 15, 64, 53);
+	CGRect LeftLabelFrame = CGRectMake(100, statusboxheight/2 - (statusboxtextheight/4*3), 64, statusboxtextheight);
+	CGRect RightLabelFrame = CGRectMake(260, statusboxheight/2 - statusboxtextheight/4*3, 64, statusboxtextheight);
+//	CGRect RightLabelFrame = CGRectMake(260, 15, 64, 53);
 
 	//Left
 	UIImageView *LeftPicTmp;
@@ -304,7 +305,7 @@
 	[lblTemp setBackgroundColor:[UIColor clearColor]];
 	
 	[lblTemp setText:leftText];
-	[lblTemp setFont:[UIFont fontWithName:@"Helvetica" size:28]];
+	[lblTemp setFont:[UIFont fontWithName:@"Helvetica" size:statusboxtextheight]];
 	[lblTemp setTextColor:[UIColor whiteColor]];
 	[cell.contentView addSubview:lblTemp];
 	[lblTemp release];
@@ -327,7 +328,7 @@
 	
 	[lblTemp setText:rightText];
 	
-	[lblTemp setFont:[UIFont fontWithName:@"Helvetica" size:28]];
+	[lblTemp setFont:[UIFont fontWithName:@"Helvetica" size:statusboxtextheight]];
 	[lblTemp setTextColor:[UIColor whiteColor]];
 	[cell.contentView addSubview:lblTemp];
 	[lblTemp release];
