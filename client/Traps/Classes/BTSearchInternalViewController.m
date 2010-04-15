@@ -23,7 +23,7 @@
 		return nil;
     }
 	
-	self.title = kSearchTitle;
+	//self.title = kSearchTitle;
 	
     return self;
 }
@@ -61,7 +61,7 @@
 	UIBarButtonItem *loadingView = [[UIBarButtonItem alloc] initWithCustomView:loading];
 	[loading release];
 	loadingView.target = self;
-	self.title = @"Locations";
+	//self.title = @"Locations";
 	self.navigationItem.rightBarButtonItem = loadingView;
 
 }

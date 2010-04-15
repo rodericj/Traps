@@ -284,9 +284,8 @@
 	CGRect LeftPicFrame = CGRectMake(leftstatusxcoord, leftstatusycoord, statusboxwidth, statusboxheight);
 	CGRect RightPicFrame = CGRectMake(rightstatusxcoord, rightstatusycoord, statusboxwidth, statusboxheight);
 	
-	CGRect LeftLabelFrame = CGRectMake(100, statusboxheight/2 - (statusboxtextheight/4*3), 64, statusboxtextheight);
+	CGRect LeftLabelFrame = CGRectMake(100, statusboxheight/2 - statusboxtextheight/4*3, 64, statusboxtextheight);
 	CGRect RightLabelFrame = CGRectMake(260, statusboxheight/2 - statusboxtextheight/4*3, 64, statusboxtextheight);
-//	CGRect RightLabelFrame = CGRectMake(260, 15, 64, 53);
 
 	//Left
 	UIImageView *LeftPicTmp;
