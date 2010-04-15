@@ -237,8 +237,9 @@
 	[dropTrapsButton setFrame:dropTrapsButtonFrame];
 	//[dropTrapsButton setTitle:@"Drop Traps" forState:UIControlStateNormal];
 	[dropTrapsButton setBackgroundImage:[UIImage imageNamed:@"droptrap.png"] forState:UIControlStateNormal];
-	NSLog(@"%@", [[searchResults objectForKey:@"hasTraps"] class]);
-	if(![searchResults objectForKey:@"hasTraps"]){
+	
+	//If we don't have traps, don't bother showing the drop trap button.
+	if([searchResults objectForKey:@"hasTraps"]){
 		[cell.contentView addSubview:dropTrapsButton];
 		//listen for clicks
 		[dropTrapsButton addTarget:self action:@selector(dropTrapButtonPushed) 

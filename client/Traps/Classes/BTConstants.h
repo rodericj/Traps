@@ -45,6 +45,8 @@
 #define fbAppId  @"3243a6e2dd3a0d084480d05f301cba85"
 #define fbSecret	 @"d8611553a286dce3531353b3de53ef2e"
 
+#pragma mark -
+#pragma mark general constants
 #define iphonescreenheight 480
 #define iphonescreenwidth 320
 #define navbarheight 44	
