@@ -7,12 +7,14 @@
 //
 
 #import "BTVenueAnnotationView.h"
+#import "BTConstants.h"
 
 
 @implementation BTVenueAnnotationView
 
 @synthesize venueName;
 @synthesize chanceOfDrop;
+@synthesize dudeIcon;
 
 - (id)initWithAnnotation:(id <MKAnnotation>)annotation reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -23,7 +25,7 @@
         frame.size = CGSizeMake(185.0, 95.0);
         self.frame = frame;
         self.backgroundColor = [UIColor clearColor];
-        self.centerOffset = CGPointMake(185/2+30, 95/2);
+        self.centerOffset = CGPointMake(0, -45);
     }
     return self;
 }
@@ -31,13 +33,6 @@
 - (void)setAnnotation:(id <MKAnnotation>)annotation
 {
     [super setAnnotation:annotation];
-    
-    // this annotation view has custom drawing code.  So when we reuse an annotation view
-    // (through MapView's delegate "dequeueReusableAnnoationViewWithIdentifier" which returns non-nil)
-    // we need to have it redraw the new annotation data.
-    //
-    // for any other custom annotation view which has just contains a simple image, this won't be needed
-    //
     [self setNeedsDisplay];
 }
 
@@ -46,25 +41,17 @@
 	CGContextRef context = UIGraphicsGetCurrentContext();
 	CGContextSetLineWidth(context, 1);
 	
-	
-	// draw the gray pointed shape:
-	CGMutablePathRef path = CGPathCreateMutable();
-	CGPathMoveToPoint(path, NULL, 14.0, 0.0);
-	CGPathAddLineToPoint(path, NULL, 0.0, 0.0); 
-	CGPathAddLineToPoint(path, NULL, 55.0, 50.0); 
-	CGContextAddPath(context, path);
-	CGContextSetFillColorWithColor(context, [UIColor lightGrayColor].CGColor);
-	CGContextSetStrokeColorWithColor(context, [UIColor grayColor].CGColor);
-	CGContextDrawPath(context, kCGPathFillStroke);
-	CGPathRelease(path);
-	
-	[[UIImage imageNamed:@"VenueAnnotation.png"] drawInRect:rect];
+	[[UIImage imageNamed:@"mapannotation.png"] drawInRect:rect];
 
 	// draw the strings from the Venue Details
 	[[UIColor whiteColor] set];
 	NSLog(@"venueName is %@", venueName);
-	[venueName drawInRect:CGRectMake(15.0, 5.0, 100.0, 40.0) withFont:[UIFont systemFontOfSize:14.0]];
-	[chanceOfDrop drawInRect:CGRectMake(140.0, 65.0, 50.0, 40.0) withFont:[UIFont systemFontOfSize:14.0]];
+	[venueName drawInRect:CGRectMake(annotationxcoord, annotationxcoord, 100.0, 40.0) withFont:[UIFont systemFontOfSize:14.0]];
+	[chanceOfDrop drawInRect:CGRectMake(120.0, chanceofdropycoord, 50.0, 40.0) withFont:[UIFont systemFontOfSize:14.0]];
+	
+	NSString *chanceOfDropLabel = @"Chance of drop";
+	[chanceOfDropLabel drawInRect:CGRectMake(annotationxcoord, chanceofdropycoord, 130, 40) withFont:[UIFont systemFontOfSize:14]];
+	[[UIImage imageNamed:dudeIcon] drawInRect:CGRectMake(guyorigxcoord, guyorigycoord, guywidth, guyheight)];
 
 }
 @end

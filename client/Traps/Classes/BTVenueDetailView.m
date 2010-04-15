@@ -112,6 +112,7 @@
 	annView.calloutOffset = CGPointMake(-5, 5);
 	[annView setVenueName:[venueInfo objectForKey:@"name"]];
 	[annView setChanceOfDrop:@"10%"];
+	[annView setDudeIcon:@"neutralDude.png"];
 	
 	UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
 	[rightButton addTarget:self
@@ -141,11 +142,11 @@
 	location.longitude = [[venueInfo objectForKey:@"geolong"] doubleValue];
 	location.latitude = [[venueInfo objectForKey:@"geolat"] doubleValue];
 	
-	CLLocationCoordinate2D locationOffset;
-	locationOffset.longitude = [[venueInfo objectForKey:@"geolong"] doubleValue]+.0020;
-	locationOffset.latitude = [[venueInfo objectForKey:@"geolat"] doubleValue]-.0010;
+	//CLLocationCoordinate2D locationOffset;
+//	locationOffset.longitude = [[venueInfo objectForKey:@"geolong"] doubleValue]+.0020;
+//	locationOffset.latitude = [[venueInfo objectForKey:@"geolat"] doubleValue]-.0010;
 	
-	region.center = locationOffset;
+	region.center = location;
 	region.span = span;
 	if(mapView == nil){
 		mapView = [[MKMapView alloc] initWithFrame:mapFrame];

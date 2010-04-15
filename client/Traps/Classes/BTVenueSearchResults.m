@@ -146,8 +146,10 @@
 	span.longitudeDelta=0.0025;
 	
 	CLLocationCoordinate2D location;
-	location.longitude = [[venueInfo objectForKey:@"geolong"] doubleValue]+.0020;
-	location.latitude = [[venueInfo objectForKey:@"geolat"] doubleValue] -.0010;
+	//location.longitude = [[venueInfo objectForKey:@"geolong"] doubleValue]+.0020;
+//	location.latitude = [[venueInfo objectForKey:@"geolat"] doubleValue] -.0010;
+	location.longitude = [[venueInfo objectForKey:@"geolong"] doubleValue];
+	location.latitude = [[venueInfo objectForKey:@"geolat"] doubleValue];
 	
 	region.center = location;
 	region.span = span;
@@ -178,6 +180,9 @@
 	annView.canShowCallout = YES;
 	annView.calloutOffset = CGPointMake(-5, 5);
 	
+	//TODO if this is a happy dude.....
+	[annView setDudeIcon:@"happyDude.png"];
+
 	[annView setResultsString:[searchResults objectForKey:@"alertStatement"]];
 	
     return annView;

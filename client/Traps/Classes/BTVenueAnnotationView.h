@@ -11,8 +11,10 @@
 @interface BTVenueAnnotationView : MKAnnotationView {
 	NSString *venueName;
 	NSString *chanceOfDrop;
+	NSString *dudeIcon;
 }
 
+@property (nonatomic, retain) NSString *dudeIcon; 
 @property (nonatomic, retain) NSString *venueName; 
 @property (nonatomic, retain) NSString *chanceOfDrop; 
 @end

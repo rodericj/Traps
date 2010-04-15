@@ -61,6 +61,24 @@
 #define venuerowheight 100
 
 #pragma mark -
+#pragma mark annotation views
+#pragma mark -
+
+#pragma mark guy coordinates
+#define guyorigxcoord 135
+#define guyorigycoord 3
+#define guywidth 40
+#define guyheight 55
+
+#pragma mark -
+#pragma mark text coordinates
+#define annotationxcoord 10
+#define annotationycoord 5
+#define chanceofdropycoord 60
+
+
+
+#pragma mark -
 #pragma mark foursquare login view
 #define foursquarerowheight 120
 
