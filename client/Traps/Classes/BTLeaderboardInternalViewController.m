@@ -131,7 +131,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 	if (friendsWithApp == nil) {
-		return 0;
+		return 10;
 	}
 
 	return [friendsWithApp count];
@@ -143,10 +143,14 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+
 	NSString *reuseId = [NSString stringWithFormat:@"home%d", [indexPath row]];
 	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseId];
 	NSLog(@"cell for row at %d", [indexPath row]);
-	if(cell == nil){
+	if (friendsWithApp == nil) {
+		cell = [self getBlankCell:reuseId];
+	}
+	else if(cell == nil){
 		cell = [self getFriendCell:reuseId friend:[friendsWithApp objectAtIndex:[indexPath row]]];
 	}
 	
@@ -175,8 +179,8 @@
 	
 	NSLog(@"getting the friend Cell %@", lastName);
 	CGRect CellFrame = CGRectMake(0, 0, iphonescreenwidth, fbprofileinforowheight);
-	UITableViewCell *cell = [[[UITableViewCell alloc] initWithFrame:CellFrame 
-													reuseIdentifier:cellIdentifier] autorelease];
+	UITableViewCell *cell = [[UITableViewCell alloc] initWithFrame:CellFrame 
+													reuseIdentifier:cellIdentifier];
 	
 	CGRect FirstNameLabelFrame = CGRectMake(90, 15, 120, 25);
 	CGRect LastNameLabelFrame = CGRectMake(90, 35, 120, 25);
@@ -253,6 +257,24 @@
 	
 	return cell;
 	
+}
+- (UITableViewCell *) getBlankCell:(NSString *)cellIdentifier{
+	CGRect CellFrame = CGRectMake(0, 0, iphonescreenwidth, fbprofileinforowheight);
+	UITableViewCell *cell = [[[UITableViewCell alloc] initWithFrame:CellFrame 
+													reuseIdentifier:cellIdentifier] autorelease];
+	
+	CGRect ProfileBarFrame = CGRectMake(0, 0, iphonescreenwidth, fbprofileinforowheight);
+
+	UIImageView *ProfileBarTmp;
+	ProfileBarTmp = [[UIImageView alloc] initWithFrame:ProfileBarFrame];
+	ProfileBarTmp.tag = 3;
+	
+	UIImage *BarImage = [UIImage imageNamed:@"profilebar.png"];
+	[ProfileBarTmp setImage:BarImage];
+	[cell.contentView addSubview:ProfileBarTmp];
+	[ProfileBarTmp release];
+
+	return cell;
 }
 
 @end
