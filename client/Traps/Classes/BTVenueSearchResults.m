@@ -218,7 +218,8 @@
 	lblTemp.tag = 1;
 	[lblTemp setBackgroundColor:[UIColor clearColor]];
 	[lblTemp setText:venueName];
-	[lblTemp setTextColor:[UIColor blackColor]];
+	[lblTemp setTextColor:[UIColor whiteColor]];
+	[lblTemp setShadowColor:[UIColor blackColor]];
 	[cell.contentView addSubview:lblTemp];
 	[lblTemp release];
 	
@@ -227,13 +228,13 @@
 	[lblTemp setBackgroundColor:[UIColor clearColor]];
 	[lblTemp setText:venueAddress];
 	[lblTemp setAdjustsFontSizeToFitWidth:TRUE];
-	[lblTemp setTextColor:[UIColor blackColor]];
+	[lblTemp setTextColor:[UIColor whiteColor]];
 	[cell.contentView addSubview:lblTemp];
 	[lblTemp release];
 	
 	//TODO If we actually have traps
 	
-	UIButton *dropTrapsButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+	UIButton *dropTrapsButton = [UIButton buttonWithType:UIButtonTypeCustom];
 	[dropTrapsButton setFrame:dropTrapsButtonFrame];
 	//[dropTrapsButton setTitle:@"Drop Traps" forState:UIControlStateNormal];
 	[dropTrapsButton setBackgroundImage:[UIImage imageNamed:@"droptrap.png"] forState:UIControlStateNormal];

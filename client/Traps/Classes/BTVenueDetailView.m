@@ -189,7 +189,7 @@
 	lblTemp.tag = 1;
 	[lblTemp setBackgroundColor:[UIColor clearColor]];
 	[lblTemp setText:venueName];
-	[lblTemp setTextColor:[UIColor blackColor]];
+	[lblTemp setTextColor:[UIColor whiteColor]];
 	[lblTemp setShadowOffset:CGSizeMake(1, 0)]; 
 	[lblTemp setShadowColor:[UIColor blackColor]];
 	[cell.contentView addSubview:lblTemp];
@@ -200,7 +200,7 @@
 	[lblTemp setBackgroundColor:[UIColor clearColor]];
 	[lblTemp setText:venueAddress];
 	[lblTemp setAdjustsFontSizeToFitWidth:TRUE];
-	[lblTemp setTextColor:[UIColor blackColor]];
+	[lblTemp setTextColor:[UIColor whiteColor]];
 	[cell.contentView addSubview:lblTemp];
 	[lblTemp release];
 	

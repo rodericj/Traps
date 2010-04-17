@@ -215,13 +215,13 @@
 	cell.backgroundView = backgroundView;
 	
 	//UIButton
-	UIButton *searchButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+	UIButton *searchButton = [UIButton buttonWithType:UIButtonTypeCustom];
 	
 	searchButton.frame = ButtonFrame;
 
 	//Set Background image
 	[searchButton setImage:[UIImage imageNamed:@"searchnow.png"] forState:UIControlStateNormal];
-
+	
 	//listen for clicks
 	[searchButton addTarget:self action:@selector(dropTrapButtonPushed) 
 	 forControlEvents:UIControlEventTouchUpInside];	
