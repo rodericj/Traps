@@ -99,6 +99,7 @@ def notifyTrapSetter(uid, venue):
 		airship.push({'aps':{'alert':alertNote}}, device_tokens=[token])
 		#airship.push({'aps':{'alert':alertNote}, aliases=[uid])
 	except:
+        print "failed"
 		pass
 	
 
