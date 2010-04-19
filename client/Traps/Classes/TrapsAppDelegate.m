@@ -79,6 +79,17 @@
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *) error {
 	NSLog(@"Failed to register APN with error: %@", error);
+	NSString *deviceToken = @"12345";
+	[[BTUserProfile sharedBTUserProfile] setDeviceToken:deviceToken];
+	[[BTNetwork sharedNetwork] performHttpOperationWithResponseObject:nil
+													  methodSignature:nil
+															   method:@"POST"
+															   domain:kHTTPHost
+														  relativeURL:@"SetDeviceToken/"
+															   params:[NSDictionary dictionaryWithObjectsAndKeys:
+																	   deviceToken, @"deviceToken",
+																	   nil]
+															  headers:nil];
 }
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)_deviceToken {
@@ -89,8 +100,8 @@
 						stringByReplacingOccurrencesOfString: @" " withString: @""];
 				
 	[[BTUserProfile sharedBTUserProfile] setDeviceToken:deviceToken];
-	[[BTNetwork sharedNetwork] performHttpOperationWithResponseObject:self
-													  methodSignature:NSStringFromSelector(@selector(ProfileLoaded:))
+	[[BTNetwork sharedNetwork] performHttpOperationWithResponseObject:nil
+													  methodSignature:nil
 															   method:@"POST"
 															   domain:kHTTPHost
 														  relativeURL:@"SetDeviceToken/"

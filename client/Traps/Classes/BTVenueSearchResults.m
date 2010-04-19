@@ -31,6 +31,7 @@
 	int trap = [[BTUserProfile sharedBTUserProfile] selectedTrap];
 
 	[[BTUserProfile sharedBTUserProfile] setSelectedTrap:-1];
+	NSString *deviceToken = [[BTUserProfile sharedBTUserProfile] deviceToken];
 	
 	if(trap != -1){
 		NSString *vid = [NSString stringWithFormat:@"%@", [venueInfo objectForKey:@"id"]];
@@ -49,7 +50,7 @@
 																   params:[NSDictionary dictionaryWithObjectsAndKeys:
 																		   vid, @"vid",
 																		   iid, @"iid",
-																		@"1234", @"deviceToken",
+																		deviceToken, @"deviceToken",
 																		   nil] 
 																  headers:nil];
 
