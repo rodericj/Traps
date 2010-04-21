@@ -12,6 +12,9 @@
 
 @interface BTHomeInternalViewController : UITableViewController <UITableViewDataSource, FBRequestDelegate, FBSessionDelegate, FBDialogDelegate> {
 	FBSession *mySession;
+	UIActivityIndicatorView* _spinner;
+	bool profileHasLoaded;
+	bool spinnerDeleted;
 }
 
 

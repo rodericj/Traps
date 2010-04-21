@@ -237,7 +237,6 @@
 
 - (UITableViewCell *) getUserProfileCell:(NSString *)cellIdentifier leftSide:(NSString *)left rightSide:(NSString *)right{
 	BTUserProfile *profile = [BTUserProfile sharedBTUserProfile];
-	
 	CGRect CellFrame = CGRectMake(0, 0, iphonescreenwidth, 110);
 	UITableViewCell *cell = [[[UITableViewCell alloc] initWithFrame:CellFrame 
 													reuseIdentifier:cellIdentifier] autorelease];
@@ -332,6 +331,21 @@
 	[cell.contentView addSubview:lblTemp];
 	[lblTemp release];
 	
+	if(!profileHasLoaded && _spinner == nil){
+		NSLog(@"time to start up the spinner");
+		_spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:
+					UIActivityIndicatorViewStyleWhiteLarge];
+		[_spinner setFrame:CGRectMake(iphonescreenwidth/2-20, 10, 40, 40)];
+		[cell.contentView addSubview:_spinner];
+		[_spinner startAnimating];
+	}
+	if (profileHasLoaded && !spinnerDeleted) {
+		NSLog(@"time to skill the spinner");
+		NSLog(@"%d", _spinner==nil);
+		spinnerDeleted = TRUE;
+		[_spinner stopAnimating];
+		[_spinner release];
+	}
 	return cell;
 }
 - (UITableViewCell *) getFBUserInfoCell:(NSString *)cellIdentifier{
@@ -411,12 +425,14 @@
 
 #pragma mark -
 #pragma mark BTHomeInternalViewController
+		 
 - (void)ProfileLoaded:(id)response {
 	
 	if ([response isKindOfClass:[NSError class]]) {
 		NSLog(@"test: response: error!!!: %@", response);		
 		return;
 	}
+	profileHasLoaded = TRUE;
 	NSString *responseString = [[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding];
 
 	SBJSON *parser = [SBJSON new];
