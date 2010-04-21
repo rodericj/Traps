@@ -13,6 +13,8 @@
 @interface BTLeaderboardInternalViewController : UITableViewController <FBSessionDelegate, FBRequestDelegate>{
 	FBSession *session;
 	NSArray *friendsWithApp;
+	UIActivityIndicatorView* _spinner;
+	bool spinnerDead;
 }
 
 @property (nonatomic, retain) NSArray *friendsWithApp;
@@ -20,5 +22,5 @@
 - (UITableViewCell *) getFriendCell:(NSString *)cellIdentifier friend:(NSDictionary *)friend;
 
 - (void)didGetFriends:(id)responseString;
-
+- (UITableViewCell *) getBlankCell:(NSString *)cellIdentifier;
 @end

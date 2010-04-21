@@ -179,8 +179,8 @@
 	
 	NSLog(@"getting the friend Cell %@", lastName);
 	CGRect CellFrame = CGRectMake(0, 0, iphonescreenwidth, fbprofileinforowheight);
-	UITableViewCell *cell = [[UITableViewCell alloc] initWithFrame:CellFrame 
-													reuseIdentifier:cellIdentifier];
+	UITableViewCell *cell = [[[UITableViewCell alloc] initWithFrame:CellFrame 
+													reuseIdentifier:cellIdentifier] autorelease];
 	
 	CGRect FirstNameLabelFrame = CGRectMake(90, 15, 120, 25);
 	CGRect LastNameLabelFrame = CGRectMake(90, 35, 120, 25);
@@ -255,6 +255,13 @@
 		[picTemp release];
 	}
 	
+	if (spinnerDead) {
+		NSLog(@"time to skill the spinner");
+		[_spinner stopAnimating];
+		[_spinner release];
+		spinnerDead = TRUE;
+	}
+	
 	return cell;
 	
 }
@@ -273,6 +280,15 @@
 	[ProfileBarTmp setImage:BarImage];
 	[cell.contentView addSubview:ProfileBarTmp];
 	[ProfileBarTmp release];
+	
+	if(_spinner == nil){
+		NSLog(@"time to start up the spinner");
+		_spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:
+					UIActivityIndicatorViewStyleWhiteLarge];
+		[_spinner setFrame:CGRectMake(iphonescreenwidth/2-20, iphonescreenheight/2 - navbarheight - iphonetabbarheight , 40, 40)];
+		[cell.contentView addSubview:_spinner];
+		[_spinner startAnimating];
+	}
 
 	return cell;
 }
