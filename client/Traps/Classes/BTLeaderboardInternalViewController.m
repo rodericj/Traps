@@ -173,11 +173,6 @@
 		firstName =@"_";
 	}
 	
-	if(![friend objectForKey:@"imagedata"]){
-		NSLog(@"there is no image data for %@", lastName);
-	}
-	
-	NSLog(@"getting the friend Cell %@", lastName);
 	CGRect CellFrame = CGRectMake(0, 0, iphonescreenwidth, fbprofileinforowheight);
 	UITableViewCell *cell = [[[UITableViewCell alloc] initWithFrame:CellFrame 
 													reuseIdentifier:cellIdentifier] autorelease];
@@ -191,7 +186,6 @@
 	
 	UIImage *userImage;
 	userImage = [UIImage imageNamed:@"user.png"];
-
 
 	UIImageView *ProfileBarTmp;
 	ProfileBarTmp = [[UIImageView alloc] initWithFrame:ProfileBarFrame];
@@ -235,7 +229,7 @@
 	[lblTemp release];
 	
 	
-	if([friend objectForKey:@"pic_square"] != nil){
+	if([[friend objectForKey:@"pic_square"] class] != [NSNull class]){
 		AsyncImageView *asyncImage = [[AsyncImageView alloc] initWithFrame:ProfilePicFrame];
 		asyncImage.tag = 999;
 		NSURL *url = [NSURL URLWithString:[friend objectForKey:@"pic_square"]];
