@@ -19,6 +19,7 @@
 		5F6071FF1167D710003625A1 /* BTVenueDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F6071FE1167D710003625A1 /* BTVenueDetailView.m */; };
 		5F6072D61167F7DA003625A1 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F6072D51167F7DA003625A1 /* MapKit.framework */; };
 		5F6074651169A789003625A1 /* BTVenueSearchResults.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F6074641169A789003625A1 /* BTVenueSearchResults.m */; };
+		5F6D5243117B814000C049AF /* Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5F6D5242117B814000C049AF /* Entitlements.plist */; };
 		5F72A76D116E3B0C00F8B7A0 /* UINavigationBar+CustomImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F72A76C116E3B0C00F8B7A0 /* UINavigationBar+CustomImage.m */; };
 		5F72A7BB116F8B2400F8B7A0 /* coinCount.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F72A7B7116F8B2400F8B7A0 /* coinCount.png */; };
 		5F72A7BC116F8B2400F8B7A0 /* hitPoints.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F72A7B8116F8B2400F8B7A0 /* hitPoints.png */; };
@@ -97,6 +98,7 @@
 		5F6072D51167F7DA003625A1 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		5F6074631169A789003625A1 /* BTVenueSearchResults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTVenueSearchResults.h; sourceTree = "<group>"; };
 		5F6074641169A789003625A1 /* BTVenueSearchResults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTVenueSearchResults.m; sourceTree = "<group>"; };
+		5F6D5242117B814000C049AF /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
 		5F72A76B116E3B0C00F8B7A0 /* UINavigationBar+CustomImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationBar+CustomImage.h"; sourceTree = "<group>"; };
 		5F72A76C116E3B0C00F8B7A0 /* UINavigationBar+CustomImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationBar+CustomImage.m"; sourceTree = "<group>"; };
 		5F72A7B7116F8B2400F8B7A0 /* coinCount.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = coinCount.png; sourceTree = "<group>"; };
@@ -235,6 +237,7 @@
 				29B97317FDCFA39411CA2CEA /* Resources-iPhone */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
+				5F6D5242117B814000C049AF /* Entitlements.plist */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
@@ -553,6 +556,7 @@
 				5F72B1051176ADFC00F8B7A0 /* happyDude.png in Resources */,
 				5F72B1061176ADFC00F8B7A0 /* neutralDude.png in Resources */,
 				5F72B1071176ADFC00F8B7A0 /* sadDude.png in Resources */,
+				5F6D5243117B814000C049AF /* Entitlements.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -611,6 +615,7 @@
 			buildSettings = {
 				ADDITIONAL_SDKS = "$HOME/Library/SDKs/JSON/$(PLATFORM_NAME).sdk";
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: roderic campbell (6453R9QR3T)";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -623,7 +628,7 @@
 					"-ljson",
 				);
 				PRODUCT_NAME = Traps;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "483C20E5-60DC-41CE-A346-DE0EAA0CA4AF";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "6DA09193-AD0B-4917-A2E8-C1AED459198E";
 			};
 			name = Debug;
 		};
@@ -632,6 +637,7 @@
 			buildSettings = {
 				ADDITIONAL_SDKS = "$HOME/Library/SDKs/JSON/$(PLATFORM_NAME).sdk";
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: roderic campbell (6453R9QR3T)";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -642,7 +648,7 @@
 					"-ljson",
 				);
 				PRODUCT_NAME = Traps;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "483C20E5-60DC-41CE-A346-DE0EAA0CA4AF";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "6DA09193-AD0B-4917-A2E8-C1AED459198E";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;

@@ -106,4 +106,4 @@
 
 #define foursquareratelimitexceeded @"Sorry but it looks like we've exceeded the foursquare rate limit. We'll have to get you to log in, or just play around with the beginner venues."
 #define foursquarecheckinprefered @"Sign in to foursquare to have the option to checkin when searching!"
-
+#define invalidloginalertstatement @"Looks like your username and password were not accepted. Let's try again"

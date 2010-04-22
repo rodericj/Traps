@@ -101,6 +101,7 @@ static BTNetwork *sharedBTNetwork = nil;
 	// Add the invocation onto the operation queue
 	NSInvocationOperation *httpOperation = [[NSInvocationOperation alloc]
 											initWithInvocation:makeNetworkHTTP.invocation];
+	NSLog(@"adding operation %@", relativeURL);
 	[httpOperationQueue addOperation:httpOperation];
 	[httpOperation release];
 	

@@ -8,6 +8,7 @@
 
 #import "BTSearchInternalViewController.h"
 #import "BTNetwork.h"
+#import "BTUserProfile.h"
 #import <JSON/JSON.h>
 
 @implementation BTSearchInternalViewController
@@ -68,7 +69,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-	
+	NSLog(@"view will appear, find the location");
 	locationController = [[MyCLController alloc] init];
 	locationController.delegate = self;
 	locationController.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
@@ -171,30 +172,37 @@
 		NSString *lat =[chunks objectAtIndex:0];
 		NSString *lon = [chunks objectAtIndex:1];
 		
-		
+		NSString *encoding = [[BTUserProfile sharedBTUserProfile] userBase64EncodedPassword];
+		NSArray *headers = nil;
+		NSLog(@"encoding %@", encoding);
+		if(encoding != nil){
+			NSLog(@"setting headers");
+			headers = [NSArray arrayWithObjects:encoding, @"Authorization", nil];
+		}
+		NSLog(@"HEADERS IS!!!!!! %@", headers);
 		
 		//Call to foursquare's location api
 		[[BTNetwork sharedNetwork] performHttpOperationWithResponseObject:self
 														  methodSignature:NSStringFromSelector(@selector(didGetNearbyLocations:))
 																   method:@"GET"
 																   domain:foursquareApi
-															  relativeURL:@"v1/venues"
+															  relativeURL:@"v1/venues.json"
 																   params:[NSDictionary dictionaryWithObjectsAndKeys:
 																		   lat, @"geolat",
 																		   lon, @"geolong", 
 																		   nil] 
-																  headers:nil];
+																  headers:headers];
 	}
 	
 }
 - (void)didGetNearbyLocations:(id)responseString{
 	NSLog(@"did get nearby locations %@", responseString);
 
-	
 	if ([responseString isKindOfClass:[NSError class]]) {
 		NSLog(@"code %d, domain %@", [responseString code], [responseString domain]);
-		if ([responseString code] == 400) {
-//		if (FALSE) {
+		//if ([responseString code] == 400) {
+		if (FALSE) {
+		//if (TRUE) {
 			NSLog(@"We've got a rate limiting situation. Let's show the modular view");
 			if (foursquareLoginView == nil) {
 				foursquareLoginView = [[BTFoursquareLoginViewController alloc] init];
@@ -204,8 +212,8 @@
 			return;
 		}
 		else{
-		NSLog(@"default to jackson street because there was an error");
-		responseString = @"{\"groups\":[{\"type\":\"Nearby\",\"venues\":[{\"id\":86638,\"name\":\"Joe Greenstein's\",\"address\":\"1740 Jackson St.\",\"city\":\"San Francisco\",\"state\":\"CA\",\"geolat\":37.7938,\"geolong\":-122.424,\"stats\":{\"herenow\":\"0\"},\"distance\":31},{\"id\":1235744,\"name\":\"1800 Washington Street\",\"address\":\"1800 Washington Street\",\"city\":\"San Francisco\",\"state\":\"CA\",\"geolat\":37.793433,\"geolong\":-122.423426,\"stats\":{\"herenow\":\"0\"},\"distance\":36}]}]}";
+			NSLog(@"default to jackson street because there was an error");
+			responseString = @"{\"groups\":[{\"type\":\"Nearby\",\"venues\":[{\"id\":86638,\"name\":\"Joe Greenstein's\",\"address\":\"1740 Jackson St.\",\"city\":\"San Francisco\",\"state\":\"CA\",\"geolat\":37.7938,\"geolong\":-122.424,\"stats\":{\"herenow\":\"0\"},\"distance\":31},{\"id\":1235744,\"name\":\"1800 Washington Street\",\"address\":\"1800 Washington Street\",\"city\":\"San Francisco\",\"state\":\"CA\",\"geolat\":37.793433,\"geolong\":-122.423426,\"stats\":{\"herenow\":\"0\"},\"distance\":36}]}]}";
 		}
 	}
 	SBJSON *parser = [SBJSON new];

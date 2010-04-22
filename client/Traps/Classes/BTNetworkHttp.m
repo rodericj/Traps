@@ -107,7 +107,7 @@ NSString *const kHTTPRequestError = @"HTTPRequestError";
 			count += 2;
 		}
 	}
-	[request setValue:@"BoobyTraps/1.0 (iPhone)" forHTTPHeaderField:@"User-Agent"];
+	[request setValue:@"Traps 1.0" forHTTPHeaderField:@"User-Agent"];
 	[request setValue:@"gzip" forHTTPHeaderField:@"Accept-Encoding"];
 	[request setCachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData];
 	[request setTimeoutInterval:3.0f];

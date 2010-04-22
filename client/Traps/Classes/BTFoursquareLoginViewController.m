@@ -9,6 +9,7 @@
 #import "BTFoursquareLoginViewController.h"
 #import "BTConstants.h"
 #import "BTNetwork.h"
+#import "BTUserProfile.h"
 #import <JSON/JSON.h>
 
 @implementation BTFoursquareLoginViewController
@@ -49,30 +50,97 @@
 	[loginButton setEnabled:FALSE];
 	NSString *sourceString = [NSString stringWithFormat:@"%@:%@", [unameTextField text],[passwordTextField text]];
 	NSData *sourceData = [sourceString dataUsingEncoding:NSUTF8StringEncoding];
-	
+	NSLog(@"the source string is%@", sourceString);
 	NSString *base64EncodedString = [sourceData base64EncodedString];
 	NSString *fullEncoded = [NSString stringWithFormat:@"Basic %@", base64EncodedString];
+	NSLog(@"the source string is %@, fullEncoded %@----- %@", sourceString,  base64EncodedString, fullEncoded);
+
 	[[BTNetwork sharedNetwork] performHttpOperationWithResponseObject:self
 													  methodSignature:NSStringFromSelector(@selector(foursquareCallback:))
 															   method:@"GET"
 															   domain:foursquareApi
-														  relativeURL:@"v1/user.json"
-															   params:nil 
+														  //relativeURL:@"v1/user.json"
+														  relativeURL:@"v1/venues"
+														  //relativeURL:@"v1/checkin.json"
+																params:[NSDictionary dictionaryWithObjectsAndKeys:
+																		@"-122.424", @"geolong",
+																		@"37.7938", @"geoat", 
+																	   nil]
+															  // params:[NSDictionary dictionaryWithObjectsAndKeys:
+																//	   @"1235744", @"vid",
+																//	   @"1", @"private", 
+																//	   @"word", @"shout", 
+																//	   nil]
+															   //params:nil 
+	 
 															  headers:[NSArray arrayWithObjects:fullEncoded,
 																	   @"Authorization",
 																	   nil]];
-	
+															  //headers:nil];
 	
 }
 
 -(void)foursquareCallback:(id)results{
 	NSLog(@"foursquare returned");
-	NSString *responseString = [[NSString alloc] initWithData:results encoding:NSUTF8StringEncoding];
+	
+	if ([results isKindOfClass:[NSError class]]) {
+		NSLog(@"test: response: error!!!: %@", results);
+		
+		int returnCode = [results code];
+		NSLog(@"code %d", returnCode);
+		switch (returnCode) {
+			case 401:
+				NSLog(@"return 401: Unauthorized access. Try again");
+				UIAlertView *alert;
+				NSString *alertStatement = invalidloginalertstatement;
+				alert = [[UIAlertView alloc] initWithTitle:@"Bad username/password" message:alertStatement delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil]; 
+				[alert show];
+				[alert release];
+				[loginButton setEnabled:TRUE];
+				break;
+			case 501:
+				NSLog(@"Not implemented on Foursquare's side. Hmmm, that is problematic");
+				break;
+			case 400:
+				NSLog(@"rate limit error again");
+				break;
+			default:
+				NSLog(@" some other kind of error %d", [results code]);
+				break;
+		}
+	}
+	else{
+		//Success
+		SBJSON *parser = [SBJSON new];
+		NSString *responseString = [[NSString alloc] initWithData:results encoding:NSUTF8StringEncoding];
+		
+		NSDictionary* webRequestResults = [parser objectWithString:responseString error:NULL];
+		NSLog(@"foursquare returned %@", webRequestResults) ;
+		
+		//Save the uname/password in the model
+		NSString *sourceString = [NSString stringWithFormat:@"%@:%@", [unameTextField text],[passwordTextField text]];
+		NSData *sourceData = [sourceString dataUsingEncoding:NSUTF8StringEncoding];
+		
+		NSString *base64EncodedString = [sourceData base64EncodedString];
+		NSString *fullEncoded = [NSString stringWithFormat:@"Basic %@", base64EncodedString];
 
-	SBJSON *parser = [SBJSON new];
-	NSDictionary* webRequestResults = [parser objectWithString:responseString error:NULL];
-	NSLog(@"foursquare returned %@", webRequestResults) ;
+		[[BTUserProfile sharedBTUserProfile] setUserBase64EncodedPassword:fullEncoded];		
+		
+		//Send the uname/password to django
+		NSLog(@"send back to %@", [self.parentViewController class]);
+		
+		//Put it away
+		[self.parentViewController dismissModalViewControllerAnimated:YES];
+		
+		
+	}
+		return;
 }
+
+	
+
+
+
 - (UITableViewCell *) getTopCell:(NSString *)cellIdentifier{
 
 	CGRect topCellFrame = CGRectMake(0, 0, iphonescreenwidth, foursquarerowheight);
@@ -132,6 +200,7 @@
 	
 	loginButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
 	[loginButton setBackgroundImage:[UIImage imageNamed:@"signinwith-foursquare.png"] forState:UIControlStateNormal];
+	[loginButton setBackgroundImage:[UIImage imageNamed:@"signinwith-foursquare.png"] forState:UIControlStateDisabled];
 	[loginButton setFrame:loginButtonFrame];
 	//[loginButton release];
 	
@@ -201,8 +270,10 @@
 	UIView* backgroundView = [ [ [ UIView alloc ] initWithFrame:CGRectZero ] autorelease ];
 	backgroundView.backgroundColor = [ UIColor blackColor ];
 	cell.backgroundView = backgroundView;
-    // Set up the cell...
-	//[cell setText:@"blah"];
+	
+	//disable clicks
+	cell.selectionStyle = UITableViewCellSelectionStyleNone;
+	
     return cell;
 }
 

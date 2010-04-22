@@ -24,6 +24,7 @@
 	UIImage *userImage;
 	NSDictionary *searchResults;
 	NSString *deviceToken;
+	NSString *userBase64EncodedPassword;
 }
 
 @property (nonatomic, retain) NSString *firstName;
@@ -38,6 +39,8 @@
 @property (nonatomic) int numTrapsSet;
 @property (nonatomic) int numTrapsTriggered;
 @property (nonatomic, retain) NSString *deviceToken;
+@property (nonatomic, retain) NSString *userBase64EncodedPassword;
+
 
 
 

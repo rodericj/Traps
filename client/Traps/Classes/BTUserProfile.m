@@ -24,6 +24,7 @@ static BTUserProfile *sharedBTUserProfile = nil;
 @synthesize numTrapsSet;
 @synthesize numTrapsTriggered;
 @synthesize deviceToken;
+@synthesize userBase64EncodedPassword;
 
 #pragma mark -
 #pragma mark Singleton

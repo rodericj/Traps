@@ -10,7 +10,6 @@
 
 
 @interface BTFoursquareLoginViewController : UITableViewController {
-
 	UIButton *loginButton;
 	UITextField *unameTextField;
 	UITextField *passwordTextField;
