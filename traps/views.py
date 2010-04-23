@@ -14,110 +14,91 @@ try:
 except:
 	pass
 
-def _set_tutorial(user_id, json):
-	""" 
-	Setting the tutorial text for a user. This usually means they are moving to the next step
+### IPhone views
+def set_device_token(request):
 	"""
-	u = TrapsUser.objects.get(id=user_id)
-	if u.tutorial == 1:
-		json['tutorialText'] = config.tutorial1
-		json['tutorialValue'] = 1
-
-	if u.tutorial == 2:
-		json['tutorialText'] = config.tutorial2
-		json['tutorialValue'] = 2
-
-	if u.tutorial == 3:
-		json['tutorialText'] = config.tutorial3
-		json['tutorialValue'] = 3
-
-	if u.tutorial == 4:
-		json['tutorialText'] = config.tutorial4
-		json['tutorialValue'] = 4
-	return json
-
-def _no_trap_was_here(user, venue):
+	In order to do push notifications for the iphone we need to store the phone's device id.
+	This takes the deviceToken and associates it with the user.
 	"""
-	The user has just searched this venue and found that there is no trap here. Perform actions as needed
-	"""
-
-	#potential coin reward - goes up 1 coin per minute to the max of that venue
-	timeDelta = datetime.now() - venue.lastUpdated
-	minutesSinceSearch = timeDelta.seconds/60
-	calculatedRewardValue = min(venue.coinValue, minutesSinceSearch)
-	reward = {'coins': calculatedRewardValue}
-
-	if venue.checkinCount == 0:
-		reward['coins'] = 3
-
-	#user = TrapsUser.objects.get(id=uid)
-	user.coinCount += calculatedRewardValue
-	user.save()
-	reward['usersCoinTotal'] = user.coinCount
-
-	itemsAtVenue = venue.item.values()
+	ret = {"rc":0}
+	try:
+		userprofile = _get_or_create_profile(request.user)
+		userprofile.iphoneDeviceToken = request.POST['deviceToken']
+		userprofile.save()
+		
+	except:
+		ret = {"rc":1}
+		
 	
-	return reward
-
-def get_user_feed(request):
-	"""
-	Retrieving the user's activity feed
-	"""
-	userProfile = _get_or_create_profile(request.user)
-	myActions = ['SE', 'ST', 'HT', 'FI', 'GC']
-	othersActions = ['HT']
-	events = Event.objects.filter(type__in=myActions, user__id__exact=userProfile.id) | Event.objects.filter(type__in=othersActions, data1__exact=userProfile.id)[:10]
-	ret = [e.objectify() for e in events]
-	ret.sort(lambda x,y:cmp(y['datetime'],x['datetime']))
-	#ret = [i for i in ret if 
-	#don't update, must do something else
-	for i in ret:
-		#TODO Boooooo default to the first venue? Ghetto
-		if len(i['data1']) > 0:	
-			name = Venue.objects.get(id=i['data1']).name
-		else:
-			name = ""
-		i['name'] = i['type'] + " " +name
-
 	return HttpResponse(simplejson.dumps(ret), mimetype='application/json')
 
-def _notify_trap_setter(uid, venue):
+
+def iphone_login(request):
 	"""
-	Use whatever methods we have to contact the user who set this trap.
-	Push notifications, activity feed stuff, email, etc
+	Called from the iPhone when the home view is loaded. 
+	-This checks to see if the user is currently logged in
+	-May actually be a bit redundant
 	"""
-	alertNote = 'Someone just hit the trap you left at %s' % (venue.name)
-	theTrapQuery = VenueItem.objects.filter(venue__id__exact=venue.id).filter(dateTimeUsed__isnull=True)
-	trapSetter = theTrapQuery[0].user
-	token = trapSetter.iphoneDeviceToken
+	jsonprofile = {}
+	profile = None
+	#TODO error case and feed it back to the iphone
+	#1. user name already exists does not work
+	#just in case
+	#logout(request)
+	uname = request.POST['uname']
+	password = request.POST['password']
+	first_name = request.POST.get('first_name', '')
+	last_name = request.POST.get('last_name', '')
+	tutorial = request.POST.get('tutorial', None)
+
+	user = authenticate(username=uname, password=password)
+	#user.userprofile = {}
+	if user is not None:
+		if user.is_active:
+			login(request, user)
+			user.userprofile = _get_or_create_profile(user)
+			user.userprofile.event_set.create(type='LI')
+			profile = user.userprofile
+			#TODO check and set???
+			profile.user.first_name = first_name
+			profile.user.last_name = last_name
+			profile.user.save()
+			
+		else:
+			#return a disabled account error message
+			pass
+	else:
+		profile = _do_login(request, uname, password)
+		
+	if tutorial and profile.tutorial < 2:
+		profile.tutorial = tutorial
+		profile.save()
+	jsonprofile = profile.objectify()
+	jsonprofile['inventory'] = getUserInventory(profile.id)
+
+	jsonprofile = _set_tutorial(profile.id, jsonprofile)
+	return HttpResponse(simplejson.dumps(jsonprofile), mimetype='application/json')
 	
-	trapSetter.trapsSetCount -= 1
+#@tb
+def app_logout(request):
+	"""
+	Log the user out. May need to verify that this happens appropriately so the client knows 
+	"""
+	logout(request)
+	return HttpResponse({'status':'success'}, mimetype='application/json')
+	#return HttpResponseRedirect('/loggedOut/')
 
-	trapSetter.killCount += 1
-	trapSetter.save()
-	trapSetter.event_set.create(type='HT', data1=uid)
-	##TODO: configify this: From go.urbanairship.com. This is the App key and the APP MASTER SECRET...not the app secret
+def Login(request):
+	"""
+	View for a web based login. This was a pre pre pre alpha view and may need to be deprecated
+	"""
+	uname = request.GET['uname']
+	password = request.GET['email']
 
-	#development urban airship values
-	airship = urbanairship.Airship('EK_BtrOrSOmo95TTsAb_Fw', 'vAixh-KLT5u0Ay8Xv6cf4Q')
+	profile = _do_login(request, uname, password)
 
-	#production urbain airship values
-	#airship = urbanairship.Airship('VsK3ssUxRzCQJ6Rs_Sf7wg', 'c_JO0OFcSNKPFhyM-3Jq2A')
-
-	#print "registering %s, %s" %(token, uid)
-	try:
-		airship.register(token)
-
-		#TODO This needs to be deferred for sure
-		airship.push({'aps':{'alert':alertNote}}, device_tokens=[token])
-	#airship.push({'aps':{'alert':alertNote}, aliases=[uid])
-	except:
-        #I'm not going to wait around for airship to not fail
-		#TODO send the exception so I know it's happening
-		#print "failed airship"
-		pass
+	return HttpResponseRedirect('/startup/')
 	
-
 def trapWasHere(user, venue, itemsThatAreTraps):
 	"""
 	The user has searched here and there was in fact a trap. Cause damage and most likely
@@ -438,134 +419,29 @@ def GetVenue(request, vid):
 	venue = Venue.objects.get(id=vid)
 
 	return HttpResponse(simplejson.dumps(venue.objectify()), mimetype='application/json')
-
-def _get_or_create_profile(user):
+def get_user_feed(request):
 	"""
-	Determines if we actually need to create a user based on what is passed in from the netz
-	If we do NOT have a user's (trpas) profile associated with this user, then create one
-	else, return the profile that is attached to this (django) user
+	Retrieving the user's activity feed
 	"""
-	try:
-		profile = user.get_profile()
-	except ObjectDoesNotExist:
-		profile = TrapsUser(user=user)
-		profile.save()
-	return profile
-
-def iphone_login(request):
-	"""
-	Called from the iPhone when the home view is loaded. 
-	-This checks to see if the user is currently logged in
-	-May actually be a bit redundant
-	"""
-	jsonprofile = {}
-	profile = None
-	#TODO error case and feed it back to the iphone
-	#1. user name already exists does not work
-	#just in case
-	#logout(request)
-	uname = request.POST['uname']
-	password = request.POST['password']
-	first_name = request.POST.get('first_name', '')
-	last_name = request.POST.get('last_name', '')
-	tutorial = request.POST.get('tutorial', None)
-
-	user = authenticate(username=uname, password=password)
-	#user.userprofile = {}
-	if user is not None:
-		if user.is_active:
-			login(request, user)
-			user.userprofile = _get_or_create_profile(user)
-			user.userprofile.event_set.create(type='LI')
-			profile = user.userprofile
-			#TODO check and set???
-			profile.user.first_name = first_name
-			profile.user.last_name = last_name
-			profile.user.save()
-			
+	userProfile = _get_or_create_profile(request.user)
+	myActions = ['SE', 'ST', 'HT', 'FI', 'GC']
+	othersActions = ['HT']
+	events = Event.objects.filter(type__in=myActions, user__id__exact=userProfile.id) | Event.objects.filter(type__in=othersActions, data1__exact=userProfile.id)[:10]
+	ret = [e.objectify() for e in events]
+	ret.sort(lambda x,y:cmp(y['datetime'],x['datetime']))
+	#ret = [i for i in ret if 
+	#don't update, must do something else
+	for i in ret:
+		#TODO Boooooo default to the first venue? Ghetto
+		if len(i['data1']) > 0:	
+			name = Venue.objects.get(id=i['data1']).name
 		else:
-			#return a disabled account error message
-			pass
-	else:
-		profile = _do_login(request, uname, password)
-		
-	if tutorial and profile.tutorial < 2:
-		profile.tutorial = tutorial
-		profile.save()
-	jsonprofile = profile.objectify()
-	jsonprofile['inventory'] = getUserInventory(profile.id)
+			name = ""
+		i['name'] = i['type'] + " " +name
 
-	jsonprofile = _set_tutorial(profile.id, jsonprofile)
-	return HttpResponse(simplejson.dumps(jsonprofile), mimetype='application/json')
-	
-#@tb
-def app_logout(request):
-	"""
-	Log the user out. May need to verify that this happens appropriately so the client knows 
-	"""
-	logout(request)
-	return HttpResponse({'status':'success'}, mimetype='application/json')
-	#return HttpResponseRedirect('/loggedOut/')
-
-def Login(request):
-	"""
-	View for a web based login. This was a pre pre pre alpha view and may need to be deprecated
-	"""
-	uname = request.GET['uname']
-	password = request.GET['email']
-
-	profile = _do_login(request, uname, password)
-
-	return HttpResponseRedirect('/startup/')
-	
-def _do_login(request, uname, password):
-	"""
-	The login function which actually executes the login with the password
-
-	"""
-	
-	if request.user.is_anonymous():
-		#create user and profile Create New User
-		user = User.objects.create_user(uname, 'none', password)
-		user = authenticate(username=uname, password=password)
-		login(request, user)
-		user.userprofile = _get_or_create_profile(user)
-		user.userprofile.event_set.create(type='LI')
-
-		last_name = request.POST.get('last_name', '')
-		first_name = request.POST.get('first_name', '')
-
-		user.first_name = first_name
-		user.last_name = last_name
-		user.save()
-		#create a whole bunch of bananas	
-		for i in range(config.numStarterItems):
-			starterItem = Item.objects.get(id=1)
-			user.userprofile.useritem_set.create(item=starterItem)
-	else:
-		user = request.user	
-		user.userprofile = _get_or_create_profile(user)
-		user.userprofile.event_set.create(type='LI')
-	
-	return user.userprofile
-	
-def set_device_token(request):
-	"""
-	In order to do push notifications for the iphone we need to store the phone's device id.
-	This takes the deviceToken and associates it with the user.
-	"""
-	ret = {"rc":0}
-	try:
-		userprofile = _get_or_create_profile(request.user)
-		userprofile.iphoneDeviceToken = request.POST['deviceToken']
-		userprofile.save()
-		
-	except:
-		ret = {"rc":1}
-		
-	
 	return HttpResponse(simplejson.dumps(ret), mimetype='application/json')
 
+### Web app views
 def holding(request):
 	"""
 	The front page for the project. Originally designed for people to go and find out about the product.
@@ -601,3 +477,136 @@ def qr_code(request, code):
 def venue(request, eid):
 	v = get_object_or_404(Venue, pk=eid)
 	return render_to_response('venue.html', {'venue' : v})		
+
+
+
+### Private methods
+
+def _set_tutorial(user_id, json):
+	""" 
+	Setting the tutorial text for a user. This usually means they are moving to the next step
+	"""
+	u = TrapsUser.objects.get(id=user_id)
+	if u.tutorial == 1:
+		json['tutorialText'] = config.tutorial1
+		json['tutorialValue'] = 1
+
+	if u.tutorial == 2:
+		json['tutorialText'] = config.tutorial2
+		json['tutorialValue'] = 2
+
+	if u.tutorial == 3:
+		json['tutorialText'] = config.tutorial3
+		json['tutorialValue'] = 3
+
+	if u.tutorial == 4:
+		json['tutorialText'] = config.tutorial4
+		json['tutorialValue'] = 4
+	return json
+
+def _no_trap_was_here(user, venue):
+	"""
+	The user has just searched this venue and found that there is no trap here. Perform actions as needed
+	"""
+
+	#potential coin reward - goes up 1 coin per minute to the max of that venue
+	timeDelta = datetime.now() - venue.lastUpdated
+	minutesSinceSearch = timeDelta.seconds/60
+	calculatedRewardValue = min(venue.coinValue, minutesSinceSearch)
+	reward = {'coins': calculatedRewardValue}
+
+	if venue.checkinCount == 0:
+		reward['coins'] = 3
+
+	#user = TrapsUser.objects.get(id=uid)
+	user.coinCount += calculatedRewardValue
+	user.save()
+	reward['usersCoinTotal'] = user.coinCount
+
+	itemsAtVenue = venue.item.values()
+	
+	return reward
+
+
+def _notify_trap_setter(uid, venue):
+	"""
+	Use whatever methods we have to contact the user who set this trap.
+	Push notifications, activity feed stuff, email, etc
+	"""
+	alertNote = 'Someone just hit the trap you left at %s' % (venue.name)
+	theTrapQuery = VenueItem.objects.filter(venue__id__exact=venue.id).filter(dateTimeUsed__isnull=True)
+	trapSetter = theTrapQuery[0].user
+	token = trapSetter.iphoneDeviceToken
+	
+	trapSetter.trapsSetCount -= 1
+
+	trapSetter.killCount += 1
+	trapSetter.save()
+	trapSetter.event_set.create(type='HT', data1=uid)
+	##TODO: configify this: From go.urbanairship.com. This is the App key and the APP MASTER SECRET...not the app secret
+
+	#development urban airship values
+	airship = urbanairship.Airship('EK_BtrOrSOmo95TTsAb_Fw', 'vAixh-KLT5u0Ay8Xv6cf4Q')
+
+	#production urbain airship values
+	#airship = urbanairship.Airship('VsK3ssUxRzCQJ6Rs_Sf7wg', 'c_JO0OFcSNKPFhyM-3Jq2A')
+
+	#print "registering %s, %s" %(token, uid)
+	try:
+		airship.register(token)
+
+		#TODO This needs to be deferred for sure
+		airship.push({'aps':{'alert':alertNote}}, device_tokens=[token])
+	#airship.push({'aps':{'alert':alertNote}, aliases=[uid])
+	except:
+        #I'm not going to wait around for airship to not fail
+		#TODO send the exception so I know it's happening
+		#print "failed airship"
+		pass
+	
+
+
+def _get_or_create_profile(user):
+	"""
+	Determines if we actually need to create a user based on what is passed in from the netz
+	If we do NOT have a user's (trpas) profile associated with this user, then create one
+	else, return the profile that is attached to this (django) user
+	"""
+	try:
+		profile = user.get_profile()
+	except ObjectDoesNotExist:
+		profile = TrapsUser(user=user)
+		profile.save()
+	return profile
+
+def _do_login(request, uname, password):
+	"""
+	The login function which actually executes the login with the password
+
+	"""
+	
+	if request.user.is_anonymous():
+		#create user and profile Create New User
+		user = User.objects.create_user(uname, 'none', password)
+		user = authenticate(username=uname, password=password)
+		login(request, user)
+		user.userprofile = _get_or_create_profile(user)
+		user.userprofile.event_set.create(type='LI')
+
+		last_name = request.POST.get('last_name', '')
+		first_name = request.POST.get('first_name', '')
+
+		user.first_name = first_name
+		user.last_name = last_name
+		user.save()
+		#create a whole bunch of bananas	
+		for i in range(config.numStarterItems):
+			starterItem = Item.objects.get(id=1)
+			user.userprofile.useritem_set.create(item=starterItem)
+	else:
+		user = request.user	
+		user.userprofile = _get_or_create_profile(user)
+		user.userprofile.event_set.create(type='LI')
+	
+	return user.userprofile
+	
