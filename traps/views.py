@@ -59,7 +59,7 @@ def noTrapWasHere(user, venue):
 	
 	return reward
 
-def GetUserFeed(request):
+def get_user_feed(request):
 	"""
 	Retrieving the user's activity feed
 	"""
@@ -172,8 +172,7 @@ def getUserProfile(uid):
 	userInfo = {'twitterid':user.twitterid, 'photo':user.photo, 'gender':user.gender, 'coinCount':user.coinCount, 'hitPoints':user.hitPoints, 'level':user.level, 'killCount':user.killCount, 'trapsSetCount':user.trapsSetCount, 'username':user.user.username, 'inventory':inventory}
 	return userInfo
 	
-#def SetTrap(request, vid, iid, uid):
-def SetTrap(request):
+def set_trap(request):
 	"""
 	The action for the user setting the trap. 
 	-Decreases the number of traps the user has 
@@ -237,7 +236,7 @@ def giveItemsAtVenueToUser(user, nonTrapVenueItems):
 		#item.save()
 
 #@tb
-def SearchVenue(request, vid=None):
+def search_venue(request, vid=None):
 	"""
 	Searching a venue is the critical part of this entire game. 
 	-Determines if there is a trap at this venue
@@ -356,7 +355,7 @@ def ShowAllTrapsSet(request):
 	VenueList = [i.objectify() for i in items]	
 	return render_to_response('ShowAllTrapsSet.html', {'VenueList':items})
 
-def GetFriends(request):
+def get_friends(request):
 	"""
 	Given a list of facebook friends. Show the stats for each of these friends.
 	Returns a json encoded array of friend dictionaries
@@ -393,7 +392,7 @@ def GetUserProfileFromProfile(userprofile):
 	profile['inventory'] = getUserInventory(userprofile.id)
 	return profile
 	
-def GetMyUserProfile(request):
+def get_my_user_profile(request):
 	"""
 	Get's the logged in user's profile
 	"""
@@ -456,7 +455,7 @@ def get_or_create_profile(user):
 		profile.save()
 	return profile
 
-def IPhoneLogin(request):
+def iphone_login(request):
 	"""
 	Called from the iPhone when the home view is loaded. 
 	-This checks to see if the user is currently logged in
@@ -504,7 +503,7 @@ def IPhoneLogin(request):
 	return HttpResponse(simplejson.dumps(jsonprofile), mimetype='application/json')
 	
 #@tb
-def Logout(request):
+def app_logout(request):
 	"""
 	Log the user out. May need to verify that this happens appropriately so the client knows 
 	"""
@@ -554,7 +553,7 @@ def doLogin(request, uname, password):
 	
 	return user.userprofile
 	
-def SetDeviceToken(request):
+def set_device_token(request):
 	"""
 	In order to do push notifications for the iphone we need to store the phone's device id.
 	This takes the deviceToken and associates it with the user.
