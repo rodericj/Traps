@@ -114,7 +114,7 @@ def notifyTrapSetter(uid, venue):
 	except:
         #I'm not going to wait around for airship to not fail
 		#TODO send the exception so I know it's happening
-		print "failed airship"
+		#print "failed airship"
 		pass
 	
 
