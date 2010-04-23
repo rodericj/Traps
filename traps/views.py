@@ -14,7 +14,7 @@ try:
 except:
 	pass
 
-def setTutorial(user_id, json):
+def _set_tutorial(user_id, json):
 	""" 
 	Setting the tutorial text for a user. This usually means they are moving to the next step
 	"""
@@ -36,7 +36,7 @@ def setTutorial(user_id, json):
 		json['tutorialValue'] = 4
 	return json
 
-def noTrapWasHere(user, venue):
+def _no_trap_was_here(user, venue):
 	"""
 	The user has just searched this venue and found that there is no trap here. Perform actions as needed
 	"""
@@ -63,7 +63,7 @@ def get_user_feed(request):
 	"""
 	Retrieving the user's activity feed
 	"""
-	userProfile = get_or_create_profile(request.user)
+	userProfile = _get_or_create_profile(request.user)
 	myActions = ['SE', 'ST', 'HT', 'FI', 'GC']
 	othersActions = ['HT']
 	events = Event.objects.filter(type__in=myActions, user__id__exact=userProfile.id) | Event.objects.filter(type__in=othersActions, data1__exact=userProfile.id)[:10]
@@ -81,7 +81,7 @@ def get_user_feed(request):
 
 	return HttpResponse(simplejson.dumps(ret), mimetype='application/json')
 
-def notifyTrapSetter(uid, venue):
+def _notify_trap_setter(uid, venue):
 	"""
 	Use whatever methods we have to contact the user who set this trap.
 	Push notifications, activity feed stuff, email, etc
@@ -123,7 +123,6 @@ def trapWasHere(user, venue, itemsThatAreTraps):
 	The user has searched here and there was in fact a trap. Cause damage and most likely
 	remove the trap that was at this venue
 	"""
-	#notifyTrapSetter(uid, venue)	
 	totalDamage = 0
 	trapData = [] 
 	for trap in itemsThatAreTraps:
@@ -179,7 +178,7 @@ def set_trap(request):
 	-adds the trap as a VenueItem
 	-sets up the user for notifications
 	"""
-	request.user.userprofile = get_or_create_profile(request.user)
+	request.user.userprofile = _get_or_create_profile(request.user)
 	uid = request.user.userprofile.id
 	vid = request.POST['vid']
 	iid = request.POST['iid']
@@ -209,7 +208,7 @@ def set_trap(request):
 		pass
 	
 	ret = {}
-	request.user.userprofile = get_or_create_profile(request.user)
+	request.user.userprofile = _get_or_create_profile(request.user)
 	request.user.userprofile.event_set.create(type='ST', data1=venue.id)
 	#ret = getUserProfile(uid)
 	user = TrapsUser.objects.get(id=uid)
@@ -248,7 +247,7 @@ def search_venue(request, vid=None):
 	
 	tutorial = request.POST.get('tutorial', 3)
 
-	request.user.userprofile = get_or_create_profile(request.user)
+	request.user.userprofile = _get_or_create_profile(request.user)
 
 
 	uid = request.user.userprofile.id
@@ -282,15 +281,13 @@ def search_venue(request, vid=None):
 	if len(itemsThatAreTraps) > 0:
 		#There are traps, take action	
 		ret['isTrapSet'] = True
-		#request.user.userprofile = get_or_create_profile(request.user)
-		notifyTrapSetter(uid, venue)	
+		_notify_trap_setter(uid, venue)	
 		ret['damage'] = trapWasHere(request.user.userprofile, venue, itemsThatAreTraps)
 		ret['alertStatement'] = "There are traps at this venue. You took %s damage. %s" % (str(ret['damage']['hitpointslost']), optionString)
 	else:
 		#no traps here, give the go ahead to get coins and whatever
 		ret['isTrapSet'] = False
 
-		#request.user.userprofile = get_or_create_profile(request.user)
 		request.user.userprofile.event_set.create(type='NT', data1=venue.id)
 
 		if len(itemsThatAreTraps) < len(itemsAtVenue):
@@ -299,7 +296,7 @@ def search_venue(request, vid=None):
 			#The assumption here is that if it is not a trap, I should get it
 			giveItemsAtVenueToUser(request.user.userprofile, nonTraps)
 
-		ret['reward'] = noTrapWasHere(request.user.userprofile, venue)
+		ret['reward'] = _no_trap_was_here(request.user.userprofile, venue)
 		ret['alertStatement'] = ""
 		
 		alertStatement = "There are no traps here. You got %s coins." % ret['reward']['coins'] 
@@ -343,7 +340,7 @@ def search_venue(request, vid=None):
 
 	return HttpResponse(simplejson.dumps(ret), mimetype='application/json')
 
-def ShowAllTrapsSet(request):
+def show_all_traps_set(request):
 	"""
 	The admin view for showing all of the traps that are in the system.
 	This will need a bit of work and MUST require you to login as an admin.
@@ -396,14 +393,14 @@ def get_my_user_profile(request):
 	"""
 	Get's the logged in user's profile
 	"""
-	userprofile = get_or_create_profile(request.user)
+	userprofile = _get_or_create_profile(request.user)
 	return GetUserProfile(request, userprofile.id)
 
 def GetUserProfile(request, uid):
 	"""
 	Return the user's profile of the user with passed in uid
 	"""
-	userprofile = get_or_create_profile(request.user)
+	userprofile = _get_or_create_profile(request.user)
 	profile = userprofile.objectify()
 	profile['inventory'] = getUserInventory(uid)
 	return HttpResponse(simplejson.dumps(profile), mimetype='application/json')
@@ -412,7 +409,7 @@ def GetUserDropHistory(request):
 	"""
 	Returns all of the VenueItems that are associated with this user
 	"""
-	userprofile = get_or_create_profile(request.user)
+	userprofile = _get_or_create_profile(request.user)
 	#relevantHistoryItems = ['LI', 'PC', 'SE', 'UI', 'HT', 'ST']
 	#history=userprofile.event_set.filter(type__in=relevantHistoryItems)	
 	history = VenueItem.objects.filter(user__id__exact=userprofile.id)
@@ -424,7 +421,7 @@ def GetUserHistory(request):
 	"""
 	Returns the list of all of the events that have happened to or by this user
 	"""
-	userprofile = get_or_create_profile(request.user)
+	userprofile = _get_or_create_profile(request.user)
 	relevantHistoryItems = ['LI', 'PC', 'SE', 'UI', 'HT', 'ST']
 	history = userprofile.event_set.filter(type__in=relevantHistoryItems)	
 	jsonHistory = [h.objectify() for h in history]
@@ -436,13 +433,13 @@ def GetVenue(request, vid):
 	Returns the details of the venue described by the vid
 	-This event is logged. Though may not be needed
 	"""
-	request.user.userprofile = get_or_create_profile(request.user)
+	request.user.userprofile = _get_or_create_profile(request.user)
 	request.user.userprofile.event_set.create(type='GV')
 	venue = Venue.objects.get(id=vid)
 
 	return HttpResponse(simplejson.dumps(venue.objectify()), mimetype='application/json')
 
-def get_or_create_profile(user):
+def _get_or_create_profile(user):
 	"""
 	Determines if we actually need to create a user based on what is passed in from the netz
 	If we do NOT have a user's (trpas) profile associated with this user, then create one
@@ -473,13 +470,12 @@ def iphone_login(request):
 	last_name = request.POST.get('last_name', '')
 	tutorial = request.POST.get('tutorial', None)
 
-	#profile = doLogin(request, uname, password)
 	user = authenticate(username=uname, password=password)
 	#user.userprofile = {}
 	if user is not None:
 		if user.is_active:
 			login(request, user)
-			user.userprofile = get_or_create_profile(user)
+			user.userprofile = _get_or_create_profile(user)
 			user.userprofile.event_set.create(type='LI')
 			profile = user.userprofile
 			#TODO check and set???
@@ -491,7 +487,7 @@ def iphone_login(request):
 			#return a disabled account error message
 			pass
 	else:
-		profile = doLogin(request, uname, password)
+		profile = _do_login(request, uname, password)
 		
 	if tutorial and profile.tutorial < 2:
 		profile.tutorial = tutorial
@@ -499,7 +495,7 @@ def iphone_login(request):
 	jsonprofile = profile.objectify()
 	jsonprofile['inventory'] = getUserInventory(profile.id)
 
-	jsonprofile = setTutorial(profile.id, jsonprofile)
+	jsonprofile = _set_tutorial(profile.id, jsonprofile)
 	return HttpResponse(simplejson.dumps(jsonprofile), mimetype='application/json')
 	
 #@tb
@@ -518,11 +514,11 @@ def Login(request):
 	uname = request.GET['uname']
 	password = request.GET['email']
 
-	profile = doLogin(request, uname, password)
+	profile = _do_login(request, uname, password)
 
 	return HttpResponseRedirect('/startup/')
 	
-def doLogin(request, uname, password):
+def _do_login(request, uname, password):
 	"""
 	The login function which actually executes the login with the password
 
@@ -533,7 +529,7 @@ def doLogin(request, uname, password):
 		user = User.objects.create_user(uname, 'none', password)
 		user = authenticate(username=uname, password=password)
 		login(request, user)
-		user.userprofile = get_or_create_profile(user)
+		user.userprofile = _get_or_create_profile(user)
 		user.userprofile.event_set.create(type='LI')
 
 		last_name = request.POST.get('last_name', '')
@@ -548,7 +544,7 @@ def doLogin(request, uname, password):
 			user.userprofile.useritem_set.create(item=starterItem)
 	else:
 		user = request.user	
-		user.userprofile = get_or_create_profile(user)
+		user.userprofile = _get_or_create_profile(user)
 		user.userprofile.event_set.create(type='LI')
 	
 	return user.userprofile
@@ -560,7 +556,7 @@ def set_device_token(request):
 	"""
 	ret = {"rc":0}
 	try:
-		userprofile = get_or_create_profile(request.user)
+		userprofile = _get_or_create_profile(request.user)
 		userprofile.iphoneDeviceToken = request.POST['deviceToken']
 		userprofile.save()
 		

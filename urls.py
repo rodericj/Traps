@@ -36,7 +36,7 @@ urlpatterns = patterns('',
     (r'^get_my_user_profile/', 'Traps.traps.views.get_my_user_profile'),
     (r'^search_venue/', 'Traps.traps.views.search_venue'),
     (r'^search_venue/(?P<vid>\d+)/', 'Traps.traps.views.search_venue'),
-    (r'^ShowAllTrapsSet/', 'Traps.traps.views.ShowAllTrapsSet'),
+    (r'^show_all_traps_set/', 'Traps.traps.views.show_all_traps_set'),
     (r'^site_media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': doc_root}),
 	
 	#(r'^qr/(?P<code>\d*)$', 'Traps.traps.views.qr_code'),
