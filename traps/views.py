@@ -15,6 +15,9 @@ except:
 	pass
 
 def setTutorial(user_id, json):
+	""" 
+	Setting the tutorial text for a user. This usually means they are moving to the next step
+	"""
 	u = TrapsUser.objects.get(id=user_id)
 	if u.tutorial == 1:
 		json['tutorialText'] = config.tutorial1
@@ -34,6 +37,9 @@ def setTutorial(user_id, json):
 	return json
 
 def noTrapWasHere(user, venue):
+	"""
+	The user has just searched this venue and found that there is no trap here. Perform actions as needed
+	"""
 
 	#potential coin reward - goes up 1 coin per minute to the max of that venue
 	timeDelta = datetime.now() - venue.lastUpdated
@@ -54,6 +60,9 @@ def noTrapWasHere(user, venue):
 	return reward
 
 def GetUserFeed(request):
+	"""
+	Retrieving the user's activity feed
+	"""
 	userProfile = get_or_create_profile(request.user)
 	myActions = ['SE', 'ST', 'HT', 'FI', 'GC']
 	othersActions = ['HT']
@@ -73,6 +82,10 @@ def GetUserFeed(request):
 	return HttpResponse(simplejson.dumps(ret), mimetype='application/json')
 
 def notifyTrapSetter(uid, venue):
+	"""
+	Use whatever methods we have to contact the user who set this trap.
+	Push notifications, activity feed stuff, email, etc
+	"""
 	alertNote = 'Someone just hit the trap you left at %s' % (venue.name)
 	theTrapQuery = VenueItem.objects.filter(venue__id__exact=venue.id).filter(dateTimeUsed__isnull=True)
 	trapSetter = theTrapQuery[0].user
@@ -104,6 +117,10 @@ def notifyTrapSetter(uid, venue):
 	
 
 def trapWasHere(user, venue, itemsThatAreTraps):
+	"""
+	The user has searched here and there was in fact a trap. Cause damage and most likely
+	remove the trap that was at this venue
+	"""
 	#notifyTrapSetter(uid, venue)	
 	totalDamage = 0
 	trapData = [] 
@@ -120,6 +137,21 @@ def trapWasHere(user, venue, itemsThatAreTraps):
 	return {'traps':trapData, 'hitpointslost':totalDamage , 'hitpointsleft': user.hitPoints}
 
 def getUserInventory(uid):
+	"""
+	Retrieve all of the items in the users inventory in an annotated list format with all the relevant data:
+    example of a user with 863 banana peels
+
+        {
+        count = 863;
+        id = 1;
+        name = "Banana Peel";
+        note = "This is a banana peel. it will knock you over.";
+        path = "site_media/images/banana.png";
+        type = TP;
+    }
+
+	This is called at least 2x in the iphone client
+	"""
 	#>>> roditems = user.useritem_set.all()
 	traps = TrapsUser.objects.get(id=uid).useritem_set.all()
 	
@@ -140,6 +172,12 @@ def getUserProfile(uid):
 	
 #def SetTrap(request, vid, iid, uid):
 def SetTrap(request):
+	"""
+	The action for the user setting the trap. 
+	-Decreases the number of traps the user has 
+	-adds the trap as a VenueItem
+	-sets up the user for notifications
+	"""
 	request.user.userprofile = get_or_create_profile(request.user)
 	uid = request.user.userprofile.id
 	vid = request.POST['vid']
@@ -178,6 +216,10 @@ def SetTrap(request):
 	return HttpResponse(simplejson.dumps(ret), mimetype='application/json')
 
 def giveItemsAtVenueToUser(user, nonTrapVenueItems):
+	"""
+	When a user searches at an item, they pick up the things that were laying there.
+	This is the mechanism which transfers the VenueItem to a UserItem
+	"""
 	#Must do one of each type of rare item
 	for nonTrap in nonTrapVenueItems:
 		#nonTrap.count -= 1
@@ -194,6 +236,12 @@ def giveItemsAtVenueToUser(user, nonTrapVenueItems):
 
 #@tb
 def SearchVenue(request, vid=None):
+	"""
+	Searching a venue is the critical part of this entire game. 
+	-Determines if there is a trap at this venue
+	-tells the user what is here
+	-gives coins, xp, items to the user
+	"""
 	if vid == None:
 		vid = request.POST['vid']
 	
@@ -295,13 +343,22 @@ def SearchVenue(request, vid=None):
 	return HttpResponse(simplejson.dumps(ret), mimetype='application/json')
 
 def ShowAllTrapsSet(request):
+	"""
+	The admin view for showing all of the traps that are in the system.
+	This will need a bit of work and MUST require you to login as an admin.
+	"""
+	#TODO Must require login. Must lock this view down
+
 	#items = VenueItem.objects.all()
 	items = VenueItem.objects.filter(dateTimeUsed__exact=None)
 	VenueList = [i.objectify() for i in items]	
 	return render_to_response('ShowAllTrapsSet.html', {'VenueList':items})
 
 def GetFriends(request):
-
+	"""
+	Given a list of facebook friends. Show the stats for each of these friends.
+	Returns a json encoded array of friend dictionaries
+	"""
 	u = request.user
 	#get the string argument
 	#friendString = request.POST['friends']
@@ -326,22 +383,34 @@ def GetFriends(request):
 	return HttpResponse(simplejson.dumps(friendArray), mimetype='application/json')
 	
 def GetUserProfileFromProfile(userprofile):
+	"""
+	returns a users serialized profile with the inventory attached
+	"""
 	dir(userprofile)
 	profile = userprofile.objectify()
 	profile['inventory'] = getUserInventory(userprofile.id)
 	return profile
 	
 def GetMyUserProfile(request):
+	"""
+	Get's the logged in user's profile
+	"""
 	userprofile = get_or_create_profile(request.user)
 	return GetUserProfile(request, userprofile.id)
 
 def GetUserProfile(request, uid):
+	"""
+	Return the user's profile of the user with passed in uid
+	"""
 	userprofile = get_or_create_profile(request.user)
 	profile = userprofile.objectify()
 	profile['inventory'] = getUserInventory(uid)
 	return HttpResponse(simplejson.dumps(profile), mimetype='application/json')
 
 def GetUserDropHistory(request):
+	"""
+	Returns all of the VenueItems that are associated with this user
+	"""
 	userprofile = get_or_create_profile(request.user)
 	#relevantHistoryItems = ['LI', 'PC', 'SE', 'UI', 'HT', 'ST']
 	#history=userprofile.event_set.filter(type__in=relevantHistoryItems)	
@@ -351,6 +420,9 @@ def GetUserDropHistory(request):
 	return HttpResponse(simplejson.dumps(jsonHistory), mimetype='application/json')
 
 def GetUserHistory(request):
+	"""
+	Returns the list of all of the events that have happened to or by this user
+	"""
 	userprofile = get_or_create_profile(request.user)
 	relevantHistoryItems = ['LI', 'PC', 'SE', 'UI', 'HT', 'ST']
 	history = userprofile.event_set.filter(type__in=relevantHistoryItems)	
@@ -359,6 +431,10 @@ def GetUserHistory(request):
 	return HttpResponse(simplejson.dumps(jsonHistory), mimetype='application/json')
 
 def GetVenue(request, vid):
+	"""
+	Returns the details of the venue described by the vid
+	-This event is logged. Though may not be needed
+	"""
 	request.user.userprofile = get_or_create_profile(request.user)
 	request.user.userprofile.event_set.create(type='GV')
 	venue = Venue.objects.get(id=vid)
@@ -366,6 +442,11 @@ def GetVenue(request, vid):
 	return HttpResponse(simplejson.dumps(venue.objectify()), mimetype='application/json')
 
 def get_or_create_profile(user):
+	"""
+	Determines if we actually need to create a user based on what is passed in from the netz
+	If we do NOT have a user's (trpas) profile associated with this user, then create one
+	else, return the profile that is attached to this (django) user
+	"""
 	try:
 		profile = user.get_profile()
 	except ObjectDoesNotExist:
@@ -374,6 +455,11 @@ def get_or_create_profile(user):
 	return profile
 
 def IPhoneLogin(request):
+	"""
+	Called from the iPhone when the home view is loaded. 
+	-This checks to see if the user is currently logged in
+	-May actually be a bit redundant
+	"""
 	jsonprofile = {}
 	profile = None
 	#TODO error case and feed it back to the iphone
@@ -417,20 +503,17 @@ def IPhoneLogin(request):
 	
 #@tb
 def Logout(request):
+	"""
+	Log the user out. May need to verify that this happens appropriately so the client knows 
+	"""
 	logout(request)
 	return HttpResponse({'status':'success'}, mimetype='application/json')
 	#return HttpResponseRedirect('/loggedOut/')
 
-def ProfileRefresh(request):
-	user = request.user
-	user.userprofile = get_or_create_profile(user)
-	user.userprofile.event_set.create(type='LI')
-	return HttpResponse(simplejson.dumps(profileRefresh(user.userprofile)), mimetype='application/json')
-
-def profileRefresh(userprofile):
-	return userprofile.objectify()
-
 def Login(request):
+	"""
+	View for a web based login. This was a pre pre pre alpha view and may need to be deprecated
+	"""
 	uname = request.GET['uname']
 	password = request.GET['email']
 
@@ -439,6 +522,10 @@ def Login(request):
 	return HttpResponseRedirect('/startup/')
 	
 def doLogin(request, uname, password):
+	"""
+	The login function which actually executes the login with the password
+
+	"""
 	
 	if request.user.is_anonymous():
 		#create user and profile Create New User
@@ -466,6 +553,10 @@ def doLogin(request, uname, password):
 	return user.userprofile
 	
 def SetDeviceToken(request):
+	"""
+	In order to do push notifications for the iphone we need to store the phone's device id.
+	This takes the deviceToken and associates it with the user.
+	"""
 	ret = {"rc":0}
 	try:
 		userprofile = get_or_create_profile(request.user)
@@ -479,14 +570,25 @@ def SetDeviceToken(request):
 	return HttpResponse(simplejson.dumps(ret), mimetype='application/json')
 
 def holding(request):
+	"""
+	The front page for the project. Originally designed for people to go and find out about the product.
+	Ultimately this will be the login page for new and existing users
+	"""
 	return render_to_response('holding_page.html')
 
 def home_page(request):
+	"""
+	Show us the traps that have been set off
+	"""
 	objs = VenueItem.objects.order_by('-dateTimeUsed')[:15]
 	recent = google_maps_items([(x.venue.latitude, x.venue.longitude) for x in objs])
 	return render_to_response('homepage.html',{'recent' : recent, 'recent_items' : objs})
 
 def google_maps_items(events):
+	"""
+	Something Peter put in. No internet at this place, so I can't see what it is. 
+	Maybe he is up to no good.
+	"""
 	out = []
 	out.append("icon:http://imgur.com/BRyp5.png")
 	for e in events:
@@ -494,6 +596,9 @@ def google_maps_items(events):
 	return "|".join(out)
 	
 def qr_code(request, code):
+	"""
+	QR Codes.....You bastard!!!
+	"""
 	return render_to_response("qr_code.html")
 
 def venue(request, eid):
