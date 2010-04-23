@@ -19,7 +19,7 @@
 #pragma mark Application Sections
 
 #define kHTTPHost	@"thetrapgame.com"
-#define kHTTPHost	@"192.168.1.101:8000"
+//#define kHTTPHost	@"192.168.1.101:8000"
 //#define kHTTPHost	@"192.168.0.116:8000"
 //#define kHTTPHost	@"10.0.1.182:8000"
 
@@ -29,7 +29,7 @@
 
 #define django_login				@"iphone_login/"
 #define django_get_user_feed		@"get_user_feed"
-#define django_get_user_venue		@"search_venue/"
+#define django_search_venue			@"search_venue/"
 #define django_set_device_token		@"set_device_token/"
 #define django_logout				@"app_logout/"
 #define django_set_trap				@"set_trap/"

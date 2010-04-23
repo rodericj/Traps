@@ -215,7 +215,7 @@
 													  methodSignature:NSStringFromSelector(@selector(didSearchVenue:))
 															   method:@"POST"
 															   domain:kHTTPHost
-														  relativeURL:django_get_user_venue
+														  relativeURL:django_search_venue
 															   params:[NSDictionary dictionaryWithObjectsAndKeys:
 																	   vid, @"vid",
 																	   nil] 
