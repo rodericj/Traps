@@ -99,7 +99,7 @@
 								methodSignature:NSStringFromSelector(@selector(ProfileLoaded:))
 								method:@"POST"
 								domain:kHTTPHost
-								relativeURL:@"IPhoneLogin/"
+								relativeURL:django_login
 								params:[NSDictionary dictionaryWithObjectsAndKeys:
 								(NSString *)[user objectForKey:@"uid"], @"uname",
 								(NSString *)[user objectForKey:@"uid"], @"password", 
@@ -460,7 +460,7 @@
 													  methodSignature:NSStringFromSelector(@selector(ProfileLoaded:))
 															   method:@"POST"
 															   domain:kHTTPHost
-														  relativeURL:@"Logout/"
+														  relativeURL:django_logout
 															   params:nil 
 															  headers:nil];
 	

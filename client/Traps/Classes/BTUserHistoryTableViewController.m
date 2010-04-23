@@ -29,7 +29,7 @@
 													  methodSignature:NSStringFromSelector(@selector(didGetFeed:))
 															   method:@"GET"
 															   domain:kHTTPHost
-														  relativeURL:@"GetUserFeed"
+														  relativeURL:django_get_user_feed
 															   params:nil 
 															  headers:nil];
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.

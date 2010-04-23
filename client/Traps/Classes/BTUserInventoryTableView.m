@@ -24,7 +24,7 @@
 													  methodSignature:NSStringFromSelector(@selector(ProfileLoaded:))
 															   method:@"POST"
 															   domain:kHTTPHost
-														  relativeURL:@"GetMyUserProfile/"
+														  relativeURL:django_get_my_user_profile
 															   params:nil 
 															  headers:nil];
     [super viewDidLoad];

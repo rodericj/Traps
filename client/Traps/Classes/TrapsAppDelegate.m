@@ -85,7 +85,7 @@
 													  methodSignature:nil
 															   method:@"POST"
 															   domain:kHTTPHost
-														  relativeURL:@"SetDeviceToken/"
+														  relativeURL:django_set_device_token
 															   params:[NSDictionary dictionaryWithObjectsAndKeys:
 																	   deviceToken, @"deviceToken",
 																	   nil]
@@ -104,7 +104,7 @@
 													  methodSignature:nil
 															   method:@"POST"
 															   domain:kHTTPHost
-														  relativeURL:@"SetDeviceToken/"
+														  relativeURL:django_set_device_token
 															   params:[NSDictionary dictionaryWithObjectsAndKeys:
 																	   deviceToken, @"deviceToken",
 																	   nil]

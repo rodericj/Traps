@@ -111,7 +111,7 @@
 													  methodSignature:NSStringFromSelector(@selector(didGetFriends:))
 															   method:@"GET"
 															   domain:kHTTPHost
-														  relativeURL:@"GetFriends"
+														  relativeURL:django_get_friends
 															   params:[NSDictionary dictionaryWithObjectsAndKeys:
 																	   friendListString, @"friends",
 																	   nil] 

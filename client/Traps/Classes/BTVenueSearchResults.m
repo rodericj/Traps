@@ -46,7 +46,7 @@
 														  methodSignature:NSStringFromSelector(@selector(didDropTrap:))
 																   method:@"POST"
 																   domain:kHTTPHost
-															  relativeURL:@"SetTrap/"
+															  relativeURL:django_set_trap
 																   params:[NSDictionary dictionaryWithObjectsAndKeys:
 																		   vid, @"vid",
 																		   iid, @"iid",

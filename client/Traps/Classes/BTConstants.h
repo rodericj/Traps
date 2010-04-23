@@ -19,18 +19,32 @@
 #pragma mark Application Sections
 
 #define kHTTPHost	@"thetrapgame.com"
-//#define kHTTPHost	@"192.168.1.110:8000"
+#define kHTTPHost	@"192.168.1.101:8000"
 //#define kHTTPHost	@"192.168.0.116:8000"
 //#define kHTTPHost	@"10.0.1.182:8000"
+
+
+#pragma mark -
+#pragma mark django views
+
+#define django_login @"IPhoneLogin/"
+#define django_get_user_feed @"GetUserFeed"
+#define django_get_user_venue @"SearchVenue/"
+#define django_set_device_token @"SetDeviceToken/"
+#define django_logout @"Logout/"
+#define django_set_trap @"SetTrap/"
+#define django_get_my_user_profile @"GetMyUserProfile/"
+#define django_get_friends @"GetFriends"
 
 #pragma mark -
 #pragma mark Foursquare api
 #define oauth_request_token_url @"http://foursquare.com/oauth/request_token"
 #define oauth_access_token_url @"http://foursquare.com/oauth/access_token"
 #define oauth_authorize_url @"http://foursquare.com/oauth/authorize"
+#define oauth_exchange_url @"/v1/authexchange"
 
-#define oauth_key @"JL4SJUD5VDGKSXSNAJNTM5D12VELWCEVYXWZDI4CYGJ1HGBI"
-#define oauth_secret @"NFZME0GFKF3LM5EF3PO55BBNMB4ZLAE0K1T5K3AQ1JMZI3PW"
+#define oauth_key @"52e6db5e1d8bd8c481e8e1e3f798652004a7fbfc8"
+#define oauth_secret @"57c1aac04b076d8743664e2d935da13b"
 
 #define foursquareApi @"api.foursquare.com"
 
