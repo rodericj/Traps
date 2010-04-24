@@ -22,9 +22,9 @@ def set_device_token(request):
 	"""
 	ret = {"rc":0}
 	try:
-		userprofile = _get_or_create_profile(request.user)
-		userprofile.iphoneDeviceToken = request.POST['deviceToken']
-		userprofile.save()
+		user_profile = _get_or_create_profile(request.user)
+		user_profile.iphoneDeviceToken = request.POST['deviceToken']
+		user_profile.save()
 		
 	except:
 		ret = {"rc":1}
@@ -52,13 +52,12 @@ def iphone_login(request):
 	tutorial = request.POST.get('tutorial', None)
 
 	user = authenticate(username=uname, password=password)
-	#user.userprofile = {}
 	if user is not None:
 		if user.is_active:
 			login(request, user)
-			user.userprofile = _get_or_create_profile(user)
-			user.userprofile.event_set.create(type='LI')
-			profile = user.userprofile
+			user.user_profile = _get_or_create_profile(user)
+			user.user_profile.event_set.create(type='LI')
+			profile = user.user_profile
 			#TODO check and set???
 			profile.user.first_name = first_name
 			profile.user.last_name = last_name
@@ -74,7 +73,7 @@ def iphone_login(request):
 		profile.tutorial = tutorial
 		profile.save()
 	jsonprofile = profile.objectify()
-	jsonprofile['inventory'] = getUserInventory(profile.id)
+	jsonprofile['inventory'] = _get_user_inventory(profile.id)
 
 	jsonprofile = _set_tutorial(profile.id, jsonprofile)
 	return HttpResponse(simplejson.dumps(jsonprofile), mimetype='application/json')
@@ -118,7 +117,7 @@ def trapWasHere(user, venue, itemsThatAreTraps):
 	user.save()
 	return {'traps':trapData, 'hitpointslost':totalDamage , 'hitpointsleft': user.hitPoints}
 
-def getUserInventory(uid):
+def _get_user_inventory(uid):
 	"""
 	Retrieve all of the items in the users inventory in an annotated list format with all the relevant data:
     example of a user with 863 banana peels
@@ -147,7 +146,7 @@ def getUserInventory(uid):
 
 def getUserProfile(uid):
 	user = TrapsUser.objects.get(id=uid)
-	inventory = getUserInventory(uid)
+	inventory = _get_user_inventory(uid)
 	#inventory = user.useritem_set.all()
 	userInfo = {'twitterid':user.twitterid, 'photo':user.photo, 'gender':user.gender, 'coinCount':user.coinCount, 'hitPoints':user.hitPoints, 'level':user.level, 'killCount':user.killCount, 'trapsSetCount':user.trapsSetCount, 'username':user.user.username, 'inventory':inventory}
 	return userInfo
@@ -159,8 +158,8 @@ def set_trap(request):
 	-adds the trap as a VenueItem
 	-sets up the user for notifications
 	"""
-	request.user.userprofile = _get_or_create_profile(request.user)
-	uid = request.user.userprofile.id
+	request.user.user_profile = _get_or_create_profile(request.user)
+	uid = request.user.user_profile.id
 	vid = request.POST['vid']
 	iid = request.POST['iid']
 	iphonetoken = request.POST['deviceToken']
@@ -189,8 +188,8 @@ def set_trap(request):
 		pass
 	
 	ret = {}
-	request.user.userprofile = _get_or_create_profile(request.user)
-	request.user.userprofile.event_set.create(type='ST', data1=venue.id)
+	request.user.user_profile = _get_or_create_profile(request.user)
+	request.user.user_profile.event_set.create(type='ST', data1=venue.id)
 	#ret = getUserProfile(uid)
 	user = TrapsUser.objects.get(id=uid)
 	ret['profile'] = user.objectify()
@@ -228,11 +227,11 @@ def search_venue(request, vid=None):
 	
 	tutorial = request.POST.get('tutorial', 3)
 
-	request.user.userprofile = _get_or_create_profile(request.user)
+	request.user.user_profile = _get_or_create_profile(request.user)
 
 
-	uid = request.user.userprofile.id
-	thisUsersTraps = request.user.userprofile.useritem_set.filter(item__type='TP')
+	uid = request.user.user_profile.id
+	thisUsersTraps = request.user.user_profile.useritem_set.filter(item__type='TP')
 	ret = {}
 	if thisUsersTraps.count() != 0:
 		optionString = "You have %d traps. Would you like to set one?" %(thisUsersTraps.count())
@@ -254,7 +253,7 @@ def search_venue(request, vid=None):
 		v.save()
 
 	venue = Venue.objects.get(foursquareid=vid)
-	request.user.userprofile.event_set.create(type='SE', data1=venue.id)
+	request.user.user_profile.event_set.create(type='SE', data1=venue.id)
 	itemsAtVenue = venue.venueitem_set.filter()
 	itemsThatAreTraps = [i for i in itemsAtVenue if i.item.type == 'TP' and i.dateTimeUsed == None]
 	
@@ -263,21 +262,21 @@ def search_venue(request, vid=None):
 		#There are traps, take action	
 		ret['isTrapSet'] = True
 		_notify_trap_setter(uid, venue)	
-		ret['damage'] = trapWasHere(request.user.userprofile, venue, itemsThatAreTraps)
+		ret['damage'] = trapWasHere(request.user.user_profile, venue, itemsThatAreTraps)
 		ret['alertStatement'] = "There are traps at this venue. You took %s damage. %s" % (str(ret['damage']['hitpointslost']), optionString)
 	else:
 		#no traps here, give the go ahead to get coins and whatever
 		ret['isTrapSet'] = False
 
-		request.user.userprofile.event_set.create(type='NT', data1=venue.id)
+		request.user.user_profile.event_set.create(type='NT', data1=venue.id)
 
 		if len(itemsThatAreTraps) < len(itemsAtVenue):
 			nonTraps = [i for i in itemsAtVenue if i.item.type != 'TP']
 
 			#The assumption here is that if it is not a trap, I should get it
-			giveItemsAtVenueToUser(request.user.userprofile, nonTraps)
+			giveItemsAtVenueToUser(request.user.user_profile, nonTraps)
 
-		ret['reward'] = _no_trap_was_here(request.user.userprofile, venue)
+		ret['reward'] = _no_trap_was_here(request.user.user_profile, venue)
 		ret['alertStatement'] = ""
 		
 		alertStatement = "There are no traps here. You got %s coins." % ret['reward']['coins'] 
@@ -288,24 +287,21 @@ def search_venue(request, vid=None):
 	ret['venueid'] = vid
 	ret['userid'] = uid
 	
-	#ret['profile'] = request.user.userprofile.objectify()
-	ret['profile'] = request.user.userprofile.objectify()
-	ret['profile']['inventory'] = getUserInventory(uid)
+	ret['profile'] = request.user.user_profile.objectify()
+	ret['profile']['inventory'] = _get_user_inventory(uid)
 	
 
 	#if this user is in tutorial mode, we'll have to return a different result
-	#if tutorial and request.user.userprofile.tutorial == 2:
 	if int(tutorial) == 4:
 
 		#If they hit a trap during the tutorial, I wanna make it up to them
 		damage = ret.get('damage', {'hitpointslost':0})
-		request.user.userprofile.hitPoints += damage['hitpointslost']
+		request.user.user_profile.hitPoints += damage['hitpointslost']
 
 		#must give the guy the egg/newbie badge
 		#golden_egg = Item.objects.get(id=config.golden_egg_iid)
 		banana_trap = Item.objects.get(id=config.banana_iid)
-		#request.user.userprofile.useritem_set.create(item=golden_egg)
-		request.user.userprofile.useritem_set.create(item=banana_trap)
+		request.user.user_profile.useritem_set.create(item=banana_trap)
 
 		#fabricate a return statement
 		ret = {'alertStatement':config.tutorial3,
@@ -313,10 +309,10 @@ def search_venue(request, vid=None):
 				'isTrapSet':0,
 				'userid':request.user.id,
 				'venueid':vid}
-		ret['profile'] = request.user.userprofile.objectify()
-		ret['profile']['inventory'] = getUserInventory(request.user.userprofile.id)
-		request.user.userprofile.tutorial += 1
-		request.user.userprofile.save()
+		ret['profile'] = request.user.user_profile.objectify()
+		ret['profile']['inventory'] = _get_user_inventory(request.user.user_profile.id)
+		request.user.user_profile.tutorial += 1
+		request.user.user_profile.save()
 		return HttpResponse(simplejson.dumps(ret), mimetype='application/json')
 
 	return HttpResponse(simplejson.dumps(ret), mimetype='application/json')
@@ -361,39 +357,37 @@ def get_friends(request):
 	friendArray.sort(lambda x,y:cmp(y['killCount'],x['killCount']))
 	return HttpResponse(simplejson.dumps(friendArray), mimetype='application/json')
 	
-def GetUserProfileFromProfile(userprofile):
+def GetUserProfileFromProfile(user_profile):
 	"""
 	returns a users serialized profile with the inventory attached
 	"""
-	dir(userprofile)
-	profile = userprofile.objectify()
-	profile['inventory'] = getUserInventory(userprofile.id)
+	profile = user_profile.objectify()
+	profile['inventory'] = _get_user_inventory(user_profile.id)
 	return profile
 	
 def get_my_user_profile(request):
 	"""
 	Get's the logged in user's profile
 	"""
-	userprofile = _get_or_create_profile(request.user)
-	return GetUserProfile(request, userprofile.id)
+	user_profile = _get_or_create_profile(request.user)
+	return GetUserProfile(request, user_profile.id)
 
 def GetUserProfile(request, uid):
 	"""
 	Return the user's profile of the user with passed in uid
 	"""
-	userprofile = _get_or_create_profile(request.user)
-	profile = userprofile.objectify()
-	profile['inventory'] = getUserInventory(uid)
+	user_profile = _get_or_create_profile(request.user)
+	profile = user_profile.objectify()
+	profile['inventory'] = _get_user_inventory(uid)
 	return HttpResponse(simplejson.dumps(profile), mimetype='application/json')
 
 def GetUserDropHistory(request):
 	"""
 	Returns all of the VenueItems that are associated with this user
 	"""
-	userprofile = _get_or_create_profile(request.user)
+	user_profile = _get_or_create_profile(request.user)
 	#relevantHistoryItems = ['LI', 'PC', 'SE', 'UI', 'HT', 'ST']
-	#history=userprofile.event_set.filter(type__in=relevantHistoryItems)	
-	history = VenueItem.objects.filter(user__id__exact=userprofile.id)
+	history = VenueItem.objects.filter(user__id__exact=user_profile.id)
 	jsonHistory = [h.objectify() for h in history]
 		
 	return HttpResponse(simplejson.dumps(jsonHistory), mimetype='application/json')
@@ -402,9 +396,9 @@ def GetUserHistory(request):
 	"""
 	Returns the list of all of the events that have happened to or by this user
 	"""
-	userprofile = _get_or_create_profile(request.user)
+	user_profile = _get_or_create_profile(request.user)
 	relevantHistoryItems = ['LI', 'PC', 'SE', 'UI', 'HT', 'ST']
-	history = userprofile.event_set.filter(type__in=relevantHistoryItems)	
+	history = user_profile.event_set.filter(type__in=relevantHistoryItems)	
 	jsonHistory = [h.objectify() for h in history]
 		
 	return HttpResponse(simplejson.dumps(jsonHistory), mimetype='application/json')
@@ -414,8 +408,8 @@ def GetVenue(request, vid):
 	Returns the details of the venue described by the vid
 	-This event is logged. Though may not be needed
 	"""
-	request.user.userprofile = _get_or_create_profile(request.user)
-	request.user.userprofile.event_set.create(type='GV')
+	request.user.user_profile = _get_or_create_profile(request.user)
+	request.user.user_profile.event_set.create(type='GV')
 	venue = Venue.objects.get(id=vid)
 
 	return HttpResponse(simplejson.dumps(venue.objectify()), mimetype='application/json')
@@ -590,8 +584,8 @@ def _do_login(request, uname, password):
 		user = User.objects.create_user(uname, 'none', password)
 		user = authenticate(username=uname, password=password)
 		login(request, user)
-		user.userprofile = _get_or_create_profile(user)
-		user.userprofile.event_set.create(type='LI')
+		user.user_profile = _get_or_create_profile(user)
+		user.user_profile.event_set.create(type='LI')
 
 		last_name = request.POST.get('last_name', '')
 		first_name = request.POST.get('first_name', '')
@@ -602,11 +596,11 @@ def _do_login(request, uname, password):
 		#create a whole bunch of bananas	
 		for i in range(config.numStarterItems):
 			starterItem = Item.objects.get(id=1)
-			user.userprofile.useritem_set.create(item=starterItem)
+			user.user_profile.useritem_set.create(item=starterItem)
 	else:
 		user = request.user	
-		user.userprofile = _get_or_create_profile(user)
-		user.userprofile.event_set.create(type='LI')
+		user.user_profile = _get_or_create_profile(user)
+		user.user_profile.event_set.create(type='LI')
 	
-	return user.userprofile
+	return user.user_profile
 	
