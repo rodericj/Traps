@@ -1,1 +1,5 @@
-easy_install South
+What you need to know to dev on this
+
+Install South:
+   easy_install South
+
