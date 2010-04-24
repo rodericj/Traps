@@ -225,30 +225,29 @@
 - (void)didSearchVenue:(id)returnData{
 	//TODO stop the loading scroller thing
 	//TODO the button is pushable 2x. boooo
-	
 	NSString *responseString = [[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding];
-	
+
 	SBJSON *parser = [SBJSON new];
 	NSDictionary* responseAsDictionary = [parser objectWithString:responseString error:NULL];
-	
-	//Create the new View
-	if(searchResultsView != nil){
-		[searchResultsView release];
+
+	if(searchResultsView == nil){
+		BTVenueSearchResults *aResultsView = [[BTVenueSearchResults alloc] init];
+		searchResultsView = aResultsView;
 	}
-	BTVenueSearchResults *aResultsView = [[BTVenueSearchResults alloc] init];
-	searchResultsView = aResultsView;
-	
+
 	//set the values of the view
 	[searchResultsView setSearchResults:responseAsDictionary];
 	[searchResultsView setVenueInfo:venueInfo];
-	
+
 	//push the view controller
 	[self.navigationController pushViewController:searchResultsView animated:TRUE];
-	[searchResultsView release];
+
 }
 
 - (void)dealloc {
 	[mapView release];
+	[searchResultsView release];
+
     [super dealloc];
 }
 
