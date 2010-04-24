@@ -29,8 +29,11 @@
 															  headers:nil];
     [super viewDidLoad];
 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+	NSLog(@"time to start up the spinner");
+	_spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+	[_spinner setFrame:CGRectMake(iphonescreenwidth/2-20, iphonescreenheight/2 - navbarheight - iphonetabbarheight - inventoryitemheight, 40, 40)];
+	[self.view addSubview:_spinner];
+	[_spinner startAnimating];
 }
 
 
@@ -83,6 +86,8 @@
 	if (userInventory == nil) {
 		return 0;
 	}
+	[_spinner stopAnimating];
+	[_spinner release];
     return [userInventory count];
 }
 

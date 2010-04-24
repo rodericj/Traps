@@ -12,6 +12,7 @@
 
 @interface BTUserInventoryTableView : UITableViewController {
 	NSArray *userInventory;
+	UIActivityIndicatorView *_spinner;
 }
 
 @property (nonatomic, retain) NSArray *userInventory;
