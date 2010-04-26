@@ -6,9 +6,6 @@ from django.contrib.auth.models import User
 # Create your models here.
 class Item(models.Model):
 	TYPE_CHOICES = (
-		#('PR', 'Permanent'),
-		#('SP', 'Special'),
-		#('TM', 'Temporary'),
 		('RR', 'Rare'),
 		('TP', 'Trap'),
 		('DF', 'Defense'),
@@ -34,7 +31,6 @@ class Venue(models.Model):
 	name = models.CharField(max_length=50)
 	latitude = models.FloatField()
 	longitude = models.FloatField()
-	#yelpAddress = models.CharField(max_length=100)
 	streetName = models.CharField(max_length=100)
 	city = models.CharField(max_length=30)
 	state = models.CharField(max_length=30)
@@ -67,22 +63,14 @@ class Venue(models.Model):
 	#item = models.ForeignKey(Item)
 
 class TrapsUser(models.Model):
-	GENDER_CHOICES = (
-		('M', 'Male'),
-		('F', 'Female')
-	)
-	#userName = models.CharField(max_length=20)
-	#email = models.EmailField()
 	fbid = models.IntegerField(null=True, blank=True)
 	twitterid = models.CharField(max_length=15, null=True, blank=True)
 	photo = models.FilePathField(path="images/avatars", null=True, blank=True)
-	gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
 	coinCount = models.IntegerField(default=config.startUserWithCoins)
 	hitPoints = models.IntegerField(default=100)
 	level = models.IntegerField(default=1)
 	killCount = models.IntegerField(default=0)
 	trapsSetCount = models.IntegerField(default=0)
-	friends = models.ManyToManyField("self")
 	user = models.ForeignKey(User, unique=True)
 	lastUpdated = models.DateTimeField(auto_now=True, auto_now_add=True)
 	iphoneDeviceToken = models.CharField(max_length=64, null=True, blank=True)
