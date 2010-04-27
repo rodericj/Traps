@@ -70,6 +70,7 @@
 	location.latitude = [[venueInfo objectForKey:@"geolat"] doubleValue];
 	location.longitude = [[venueInfo objectForKey:@"geolong"] doubleValue];
 	
+	[dropTrapsButton setEnabled:FALSE];
 	pin = [[BTVenueAnnotation alloc] initWithCoordinate:location];
 	[mapView addAnnotation:pin];
 }
@@ -245,9 +246,8 @@
 	
 	//TODO If we actually have traps
 	
-	UIButton *dropTrapsButton = [UIButton buttonWithType:UIButtonTypeCustom];
+	dropTrapsButton = [UIButton buttonWithType:UIButtonTypeCustom];
 	[dropTrapsButton setFrame:dropTrapsButtonFrame];
-	//[dropTrapsButton setTitle:@"Drop Traps" forState:UIControlStateNormal];
 	[dropTrapsButton setBackgroundImage:[UIImage imageNamed:@"droptrap.png"] forState:UIControlStateNormal];
 	
 	//If we don't have traps, don't bother showing the drop trap button.
