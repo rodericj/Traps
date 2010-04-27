@@ -3,3 +3,6 @@ What you need to know to dev on this
 Install South:
    easy_install South
 
+Running a migration:
+Production: python2.5 ./manage.py migrate myapp 0001 --fake
+Dev: python manage.py migrate myapp 0001 --fake
