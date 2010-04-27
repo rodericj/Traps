@@ -15,6 +15,7 @@
 @implementation BTUserInventoryTableView
 
 @synthesize userInventory;
+@synthesize trapsOnly;
 //TODO get rid of all of the unused / commented out code
 
 
@@ -56,7 +57,21 @@
 	NSDictionary* responseAsDictionary = [parser objectWithString:responseString error:NULL];
 	NSLog(@"returned from the server for inventory %@", responseAsDictionary);
 	userInventory = [[responseAsDictionary objectForKey:@"inventory"] copy];
-	NSLog(@"the inventory is %@", userInventory);
+	NSLog(@"the inventory is %@ %@", userInventory, [userInventory class]);
+	userTraps = [[NSMutableArray alloc] init];
+	for (NSDictionary *item in userInventory){
+		NSString *type = [item objectForKey:@"type"];
+		if([type isEqual:@"TP"]){
+			NSLog(@"this one is a trap");
+			NSLog(@" %@", item);
+			[userTraps addObject:item];
+		}
+		else{
+			NSLog(@"this is not a trap");
+			NSLog(@" %@", item);
+		}
+	}
+	
 	[self.tableView reloadData];
 }
 
@@ -83,12 +98,20 @@
 
 // Customize the number of rows in the table view.
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-	if (userInventory == nil) {
+    NSArray *thisArray;
+	if(trapsOnly){
+		thisArray = userTraps;
+	}
+	else{
+		thisArray = userInventory;
+	}
+	
+	if (thisArray == nil) {
 		return 0;
 	}
 	[_spinner stopAnimating];
 	[_spinner release];
-    return [userInventory count];
+    return [thisArray count];
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -108,14 +131,20 @@
 
 // Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+    NSArray *thisArray;
+	if(trapsOnly){
+		thisArray = userTraps;
+	}
+	else{
+		thisArray = userInventory;
+	}
     //static NSString *CellIdentifier = @"Cell";
 	NSString *reuseId = [NSString stringWithFormat:@"home%d", [indexPath row]];
 
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseId];
     if (cell == nil) {
        // cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
-		cell = [self getInventoryItemCell:reuseId item:[userInventory objectAtIndex:[indexPath row]]];
+		cell = [self getInventoryItemCell:reuseId item:[thisArray objectAtIndex:[indexPath row]]];
 	}
         
 	// Set up the cell...

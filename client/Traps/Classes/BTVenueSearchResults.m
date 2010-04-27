@@ -257,6 +257,7 @@
 		inventoryView = [[BTUserInventoryTableView alloc] init];
 	}
 	[inventoryView setUserInventory:[searchResults objectForKey:@"inventory"]];
+	[inventoryView setTrapsOnly:TRUE];
 	[self.navigationController pushViewController:inventoryView animated:TRUE];
 	//[inventoryView release];
 }
