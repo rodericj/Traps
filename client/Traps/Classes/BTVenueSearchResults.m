@@ -29,18 +29,16 @@
 }
 - (void)viewDidAppear:(BOOL)animated{
 	int trap = [[BTUserProfile sharedBTUserProfile] selectedTrap];
-
+	NSLog(@"hey we are appearing");
 	[[BTUserProfile sharedBTUserProfile] setSelectedTrap:-1];
 	NSString *deviceToken = [[BTUserProfile sharedBTUserProfile] deviceToken];
 	
 	if(trap != -1){
 		NSString *vid = [NSString stringWithFormat:@"%@", [venueInfo objectForKey:@"id"]];
-		NSLog(@"this is the searchResults %@", searchResults);
 		NSDictionary *profile = [searchResults objectForKey:@"profile"];
 		NSArray *inventory = [profile objectForKey:@"inventory"];
 		NSDictionary *inventoryItem = [inventory objectAtIndex:trap];
 		NSString *iid = [NSString stringWithFormat:@"%@", [inventoryItem objectForKey:@"id"]];
-		NSLog(@"venueId: %@, iid %@, inventory %@, and the inventoryItem %@", vid, iid, inventory, inventoryItem);
 		//Send the trap set request on trap
 		[[BTNetwork sharedNetwork] performHttpOperationWithResponseObject:self
 														  methodSignature:NSStringFromSelector(@selector(didDropTrap:))
@@ -66,7 +64,14 @@
 	SBJSON *parser = [SBJSON new];
 	NSDictionary* responseAsDictionary = [parser objectWithString:responseString error:NULL];
 	NSLog(@"response from dropping trap is %@", responseAsDictionary);
+	[mapView removeAnnotation:pin];
+	[searchResults setValue:yousetatrap forKey:@"alertStatement"];
+	CLLocationCoordinate2D location;
+	location.latitude = [[venueInfo objectForKey:@"geolat"] doubleValue];
+	location.longitude = [[venueInfo objectForKey:@"geolong"] doubleValue];
 	
+	pin = [[BTVenueAnnotation alloc] initWithCoordinate:location];
+	[mapView addAnnotation:pin];
 }
 
 - (void)viewDidUnload {
@@ -185,8 +190,12 @@
 	//TODO if this is a happy dude.....
 	[annView setDudeIcon:@"happyDude.png"];
 
-	[annView setResultsString:[searchResults objectForKey:@"alertStatement"]];
-	
+	if([[BTUserProfile sharedBTUserProfile] selectedTrap] != -1){
+		[annView setResultsString:@"hello"];
+	}
+	else{
+		[annView setResultsString:[searchResults objectForKey:@"alertStatement"]];
+	}
     return annView;
 }
 

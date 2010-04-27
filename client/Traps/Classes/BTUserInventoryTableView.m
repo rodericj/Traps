@@ -121,9 +121,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	//TODO may need to conditionalize this for if we are in the select a trap to drop view
-	NSLog(@"selected %d", [indexPath row]);
 	[[BTUserProfile sharedBTUserProfile] setSelectedTrap:[indexPath row]];
-	NSLog(@"selected from profile %d", [[BTUserProfile sharedBTUserProfile] selectedTrap]);
 
 	[self.navigationController popViewControllerAnimated:TRUE];
 	
@@ -147,6 +145,9 @@
 		cell = [self getInventoryItemCell:reuseId item:[thisArray objectAtIndex:[indexPath row]]];
 	}
         
+	if (!trapsOnly) {
+		cell.selectionStyle = UITableViewCellSelectionStyleNone;
+	}
 	// Set up the cell...
     return cell;
 }

@@ -19,7 +19,7 @@
 #pragma mark Application Sections
 
 #define kHTTPHost	@"thetrapgame.com"
-//#define kHTTPHost	@"192.168.1.101:8000"
+#define kHTTPHost	@"192.168.1.101:8000"
 //#define kHTTPHost	@"192.168.0.116:8000"
 //#define kHTTPHost	@"10.0.1.182:8000"
 
@@ -120,3 +120,4 @@
 #define foursquareratelimitexceeded		@"Sorry but it looks like we've exceeded the foursquare rate limit. We'll have to get you to log in, or just play around with the beginner venues."
 #define foursquarecheckinprefered		@"Sign in to foursquare to have the option to checkin when searching!"
 #define invalidloginalertstatement		@"Looks like your username and password were not accepted. Let's try again"
+#define yousetatrap						@"Congrats, you've just set a trap here!"
