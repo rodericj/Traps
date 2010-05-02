@@ -181,6 +181,8 @@
 		}
 		NSLog(@"HEADERS IS!!!!!! %@", headers);
 		
+		
+		//[_oauthAPI performMethod:method atURL:_oauthAPI.baseURL withParameters:params withTarget:self andAction:@selector(_methodLoadedFromURL:withResponseString:)];
 		//Call to foursquare's location api
 		[[BTNetwork sharedNetwork] performHttpOperationWithResponseObject:self
 														  methodSignature:NSStringFromSelector(@selector(didGetNearbyLocations:))
@@ -200,8 +202,8 @@
 
 	if ([responseString isKindOfClass:[NSError class]]) {
 		NSLog(@"code %d, domain %@", [responseString code], [responseString domain]);
-		//if ([responseString code] == 400) {
-		if (FALSE) {
+		if ([responseString code] == 400) {
+		//if (FALSE) {
 		//if (TRUE) {
 			NSLog(@"We've got a rate limiting situation. Let's show the modular view");
 			if (foursquareLoginView == nil) {

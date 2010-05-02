@@ -18,11 +18,11 @@
 #pragma mark -
 #pragma mark Application Sections
 
-#define kHTTPHost	@"thetrapgame.com"
-#define kHTTPHost	@"192.168.1.101:8000"
+//#define kHTTPHost	@"thetrapgame.com"
+//#define kHTTPHost	@"192.168.1.101:8000"
 //#define kHTTPHost	@"192.168.0.116:8000"
-//#define kHTTPHost	@"10.0.1.182:8000"
-
+//#define kHTTPHost	@"10.0.1.172:8000"
+#define kHTTPHost  @"http://10.247.1.151:8000"
 
 #pragma mark -
 #pragma mark django views
@@ -36,28 +36,26 @@
 #define django_get_my_user_profile	@"get_my_user_profile/"
 #define django_get_friends			@"get_friends"
 
-#pragma mark -
-#pragma mark Foursquare api
-#define oauth_request_token_url		@"http://foursquare.com/oauth/request_token"
-#define oauth_access_token_url		@"http://foursquare.com/oauth/access_token"
-#define oauth_authorize_url			@"http://foursquare.com/oauth/authorize"
-#define oauth_exchange_url			@"/v1/authexchange"
+#define oauth_key					@"1VPFYWEOQITVCFURSTB0PXKAEA5CBCMDKO2PXHPPIZI5RTYM"
+#define oauth_secret				@"ZEZ1HY0HYQORJG0YRKSI25VGCD3DRDMECS2URZHYXGRMK01R"
 
-#define oauth_key		@"52e6db5e1d8bd8c481e8e1e3f798652004a7fbfc8"
-#define oauth_secret	@"57c1aac04b076d8743664e2d935da13b"
+#define twitter_oauth_key			@"8DRCvYvHLLU0W1ZPHZ4MsA"
+#define twitter_oauth_secret		@"RCvPfSCT8th85uAjB7Ddd1YYa8WI4XDhB6Imx3iibWk"
 
-#define foursquareApi	@"api.foursquare.com"
+#define foursquareApi				@"api.foursquare.com"
+#define foursquareApiBase			@"http://api.foursquare.com"
+#define foursquareAuthUrl			@"http://www.foursquare.com/oauth/"
 
 
-#define kHomeTitle			@"Home"
-#define kSearchTitle		@"Search"
-#define kProfileTitle		@"Profile"
-#define kLeaderboardTitle	@"Leaderboard"
+#define kHomeTitle					@"Home"
+#define kSearchTitle				@"Search"
+#define kProfileTitle				@"Profile"
+#define kLeaderboardTitle			@"Leaderboard"
 
 #pragma mark -
 #pragma mark FB
-#define fbAppId		@"3243a6e2dd3a0d084480d05f301cba85"
-#define fbSecret	@"d8611553a286dce3531353b3de53ef2e"
+#define fbAppId						@"3243a6e2dd3a0d084480d05f301cba85"
+#define fbSecret					@"d8611553a286dce3531353b3de53ef2e"
 
 #pragma mark -
 #pragma mark general constants
