@@ -10,6 +10,8 @@
 #import "BTConstants.h"
 #import "BTNetwork.h"
 #import "BTVenueAnnotationView.h"
+#import "BTUserProfile.h"
+#import "MPURLRequestParameter.h"
 
 #import <JSON/JSON.h>
 
@@ -46,7 +48,7 @@
 // Customize the number of rows in the table view.
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 	[self.tableView setScrollEnabled:FALSE];
-	return 2;
+	return 3;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -57,8 +59,11 @@
 			height = venuerowheight;
 			break;		
 		case 1:
-			//not sure why I need that last 20 pixels
-			height = iphonescreenheight - venuerowheight -(navbarheight*2)-20; 
+			height = iphonescreenheight - venuerowheight - wantfoursquarecheckinrowheight - (navbarheight*2)-20; 
+			height = detailmapviewheight;
+			break;
+		case 2:
+			height = wantfoursquarecheckinrowheight;
 			break;
 		default:
 			break;
@@ -81,7 +86,9 @@
 			case 1:
 				cell = [self getMapCell:CellIdentifier];
 				break;
-				
+			case 2:
+				cell = [self getOptionRow:CellIdentifier whichOption:0];
+				break;
 			default:
 				cell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"HomeCell"] autorelease];
 				[cell setBackgroundColor:[UIColor redColor]];
@@ -127,7 +134,8 @@
 	
 	CGRect mapFrame = CGRectMake(0, 0, 
 								 iphonescreenwidth, 
-								 iphonescreenheight - venuerowheight - navbarheight - 69);
+								 detailmapviewheight);
+								 //iphonescreenheight - venuerowheight - navbarheight - 69);
 
 	UITableViewCell *cell = [[[UITableViewCell alloc] initWithFrame:mapFrame 
 													reuseIdentifier:cellIdentifier] autorelease];
@@ -158,7 +166,48 @@
 	return cell;
 }
 	
+- (UITableViewCell *) getOptionRow:(NSString *)cellIdentifier whichOption:(int)option{
+	CGRect rowFrame = CGRectMake(0, 0, iphonescreenwidth, wantfoursquarecheckinrowheight);
+	CGRect textFrame = CGRectMake(25, wantfoursquarecheckinrowheight/3, iphonescreenwidth, 15);
+	CGRect switchFrame = CGRectMake(206, (wantfoursquarecheckinrowheight-27)/2, 94, 27);
+
+	UITableViewCell *cell = [[[UITableViewCell alloc] initWithFrame:rowFrame 
 	
+													reuseIdentifier:cellIdentifier] autorelease];
+	
+	UIImageView *ProfileBarTmp;
+	ProfileBarTmp = [[UIImageView alloc] initWithFrame:rowFrame];
+	ProfileBarTmp.tag = 0;
+	
+	UIImage *BarImage = [UIImage imageNamed:@"profilebar.png"];
+	[ProfileBarTmp setImage:BarImage];
+	[cell.contentView addSubview:ProfileBarTmp];
+	
+	UILabel *lblTemp;
+	lblTemp = [[UILabel alloc] initWithFrame:textFrame];
+	lblTemp.tag = 1;
+	[lblTemp setBackgroundColor:[UIColor clearColor]];
+	[lblTemp setText:doyouwanttocheckin];
+	[lblTemp setFont:[UIFont systemFontOfSize:14]];
+	[lblTemp setTextColor:[UIColor whiteColor]];
+	//[lblTemp setShadowOffset:CGSizeMake(1, 0)]; 
+	//[lblTemp setShadowColor:[UIColor whiteColor]];
+	[cell.contentView addSubview:lblTemp];
+	[lblTemp release];	
+	
+	if(checkinSwitch == nil){
+		checkinSwitch = [[UISwitch alloc] initWithFrame:switchFrame];
+	}
+	[cell.contentView addSubview:checkinSwitch];
+	
+	//listen for changes
+	[checkinSwitch addTarget:self action:@selector(authenticateFoursquare) 
+		   forControlEvents:UIControlEventTouchUpInside];
+	[checkinSwitch release];
+	return cell;
+	
+}
+
 - (UITableViewCell *) getTitleCell:(NSString *)cellIdentifier{
 	
 	CGRect titleCellFrame = CGRectMake(0, 0, iphonescreenwidth, venuerowheight);
@@ -207,10 +256,54 @@
 	return cell;
 }
 
+#pragma mark -
+#pragma mark UI Interactions
 -(void)searchVenue{
-
-	//TODO start the loading scroller thing
 	NSString *vid = [NSString stringWithFormat:@"%@", [venueInfo objectForKey:@"id"]];
+
+	NSLog(@"checking into %@", vid);
+	MPOAuthAPI *_oauthAPI = [[BTUserProfile sharedBTUserProfile] _oauthAPI];
+	if([_oauthAPI isAuthenticated] && [checkinSwitch isOn]){
+		NSLog(@"YESSSSSSS lets do the checkin!!!!");
+	}
+	else{
+		NSLog(@"ok, we either not authenticated or not suppoesd to checkin or both");
+		if([_oauthAPI isAuthenticated]){
+			NSLog(@"we are authenticated....");
+		}
+		if([checkinSwitch isOn]){
+			NSLog(@"we are supposed to checkin");
+			
+			NSMutableArray *params = [[NSMutableArray alloc ] init];
+
+			MPURLRequestParameter *venueParam = [[[MPURLRequestParameter alloc] init] autorelease];
+			[venueParam setName:@"vid"];
+			[venueParam setValue:vid];
+			[params addObject:venueParam];
+			[venueParam release];
+
+			MPURLRequestParameter *shout = [[[MPURLRequestParameter alloc] init] autorelease];
+			[shout setName:@"shout"];
+			[shout setValue:@"testing."];
+			[params addObject:shout];
+			[shout release];
+
+			MPURLRequestParameter *facebookParam = [[[MPURLRequestParameter alloc] init] autorelease];
+			[facebookParam setName:@"facebook"];
+			[facebookParam setValue:@"1"];
+			[params addObject:facebookParam];
+			[facebookParam release];
+			
+			//- (void)performPOSTMethod:(NSString *)inMethod atURL:(NSURL *)inURL withParameters:(NSArray *)inParameters withTarget:(id)inTarget andAction:(SEL)inAction {
+			NSLog(@"calling perform %@", _oauthAPI);
+			[_oauthAPI performPOSTMethod:foursquare_checkin_endpoint atURL:_oauthAPI.baseURL withParameters:params withTarget:self andAction:@selector(didCheckinOnFoursquare:)];
+			NSLog(@"done calling perform");
+
+		}
+	}
+	
+	
+	//TODO start the loading scroller thing
 	[[BTNetwork sharedNetwork] performHttpOperationWithResponseObject:self
 													  methodSignature:NSStringFromSelector(@selector(didSearchVenue:))
 															   method:@"POST"
@@ -220,6 +313,39 @@
 																	   vid, @"vid",
 																	   nil] 
 															  headers:nil];
+	
+	
+	
+}
+
+-(void) didCheckinOnFoursquare:(NSString *)returned{
+	NSLog(@"WOOOOOOT! we did checking on foursquare");
+	NSLog(@"returned %@", returned);
+}
+
+-(void) authenticateFoursquare{
+	NSLog(@"this is the switch: are there 2 of them? %@", checkinSwitch);
+	@synchronized(self){
+		if([checkinSwitch isOn]){
+			NSLog(@"Switched the switch ");
+			MPOAuthAPI *_oauthAPI = [[BTUserProfile sharedBTUserProfile] _oauthAPI];
+			if([_oauthAPI isAuthenticated]){
+				NSLog(@"we are authenticated");
+			}
+			else{
+				NSLog(@"no we aren't authenticated");
+				if (foursquareLoginView == nil) {
+					foursquareLoginView = [[BTFoursquareLoginViewController alloc] init];
+					NSLog(@"we've got the foursquare view set up");
+					[foursquareLoginView setViewDescription:foursquarecheckinprefered];
+					NSLog(@"and we've set the text");
+					[self presentModalViewController:foursquareLoginView animated:YES];
+				}
+				
+				//return;
+			}
+		}
+	}
 }
 
 - (void)didSearchVenue:(id)returnData{
@@ -247,7 +373,7 @@
 - (void)dealloc {
 	[mapView release];
 	[searchResultsView release];
-
+	[checkinSwitch release];
     [super dealloc];
 }
 

@@ -201,7 +201,7 @@
 }
 
 - (UITableViewCell *) getTitleCell:(NSString *)cellIdentifier{
-	NSLog(@"Search Results and Venue Detail: %@, \n\n\n\%@", searchResults, venueInfo);
+	//NSLog(@"Search Results and Venue Detail: %@, \n\n\n\%@", searchResults, venueInfo);
 
 	CGRect titleCellFrame = CGRectMake(0, 0, iphonescreenwidth, venuerowheight);
 	CGRect titleTextFrame = CGRectMake(25, 10, iphonescreenwidth, venuerowheight/4);

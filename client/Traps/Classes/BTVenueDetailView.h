@@ -10,16 +10,21 @@
 #import <MapKit/MapKit.h>
 #import "BTVenueSearchResults.h"
 #import "BTVenueAnnotation.h"
+#import "BTFoursquareLoginViewController.h"
 
 @interface BTVenueDetailView : UITableViewController <MKMapViewDelegate>{
 	NSDictionary *venueInfo;
 	MKMapView *mapView;
 	BTVenueSearchResults *searchResultsView;
 	BTVenueAnnotation *pin;
+	UISwitch *checkinSwitch;
+	BTFoursquareLoginViewController *foursquareLoginView;
+
 }
 - (void)updateVenueDetails:(NSDictionary *)venue;
 - (UITableViewCell *) getTitleCell:(NSString *)cellIdentifier;
 - (UITableViewCell *) getMapCell:(NSString *)cellIdentifier;
+- (UITableViewCell *) getOptionRow:(NSString *)cellIdentifier whichOption:(int)option;
 - (void)didSearchVenue:(id)returnData;
 -(void)searchVenue;
 

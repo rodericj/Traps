@@ -196,7 +196,7 @@
 			_oauthAPI = [[MPOAuthAPI alloc] initWithCredentials:credentials
 											  authenticationURL:[NSURL URLWithString:foursquare_auth_url]
 													 andBaseURL:[NSURL URLWithString:foursquare_api_base]];
-			
+			[[BTUserProfile sharedBTUserProfile] set_oauthAPI:_oauthAPI];
 		}
 		//	NSMutableArray *parameters = [NSMutableArray arrayWithObject:[[[MPURLRequestParameter alloc] initWithName:@"file" 
 //																										 andValue:@"vacation.jpg"] autorelease]];
@@ -227,9 +227,7 @@
 	
 }
 - (void)didGetNearbyLocations:(id)responseString{
-	NSLog(@"did get nearby locations %@", responseString);
 	NSString *res = [[NSString alloc] initWithData:responseString encoding:NSUTF8StringEncoding];
-	NSLog(@"did get nearby locations %@", res);
 	if ([responseString isKindOfClass:[NSError class]]) {
 		NSLog(@"code %d, domain %@", [responseString code], [responseString domain]);
 		if ([responseString code] == 400) {
@@ -252,22 +250,18 @@
 		NSLog(@"NOT AN ERROR!!!");
 	}
 	SBJSON *parser = [SBJSON new];
-	NSLog(@"jsoning1");
 	NSDictionary* webRequestResults = [parser objectWithString:res error:NULL];
 	[res release];
 
 	NSArray *groups = [webRequestResults objectForKey:@"groups"];
-	NSLog(@"jsoning2");
 
 	NSDictionary *venueDict = [groups objectAtIndex:0];
 	venues = [[venueDict objectForKey:@"venues"] copy];
-	NSLog(@"jsoning3");
 
 	[self.tableView reloadData];
 	//NSLog(@"venueArray is: %@", venueArray);
 	//UserProfile *userProfile = [UserProfile sharedSingleton];
 //	[userProfile setLocations:venueArray];
-	NSLog(@"jsoning4");
 
 	self.navigationItem.rightBarButtonItem = nil;
 	//[self didGetNearbyLocations];

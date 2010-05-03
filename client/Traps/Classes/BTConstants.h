@@ -18,11 +18,11 @@
 #pragma mark -
 #pragma mark Application Sections
 
-//#define kHTTPHost	@"thetrapgame.com"
+#define kHTTPHost	@"thetrapgame.com"
 //#define kHTTPHost	@"192.168.1.101:8000"
 //#define kHTTPHost	@"192.168.0.116:8000"
 //#define kHTTPHost	@"10.0.1.172:8000"
-#define kHTTPHost  @"http://10.247.1.151:8000"
+//#define kHTTPHost  @"http://10.247.1.151:8000"
 
 #pragma mark -
 #pragma mark django views
@@ -47,6 +47,7 @@
 #define foursquare_auth_url			@"http://www.foursquare.com/oauth/"
 
 #define foursquare_venues_endpoint	@"v1/venues.json"
+#define foursquare_checkin_endpoint	@"v1/checkin.json"
 
 #define kHomeTitle					@"Home"
 #define kSearchTitle				@"Search"
@@ -74,6 +75,8 @@
 #define inventoryitemwidth	100
 
 #define venuerowheight		100
+#define wantfoursquarecheckinrowheight 50
+#define detailmapviewheight iphonescreenheight - venuerowheight - wantfoursquarecheckinrowheight - (navbarheight*2)-24
 
 #pragma mark -
 #pragma mark Home view
@@ -116,6 +119,7 @@
 #define textboxheight			25
 #define labelheight				20
 
+#define doyouwanttocheckin				@"Check-in to foursquare?"
 #define foursquareratelimitexceeded		@"Sorry but it looks like we've exceeded the foursquare rate limit. We'll have to get you to log in, or just play around with the beginner venues."
 #define foursquarecheckinprefered		@"Sign in to foursquare to have the option to checkin when searching!"
 #define invalidloginalertstatement		@"Looks like your username and password were not accepted. Let's try again"

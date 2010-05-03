@@ -71,6 +71,9 @@
 		NSLog(@"the creds were already set");
 		[_oauthAPI authenticate];
 	}
+	NSLog(@"this is the end of authorize");
+	[self.parentViewController dismissModalViewControllerAnimated:YES];
+
 }
 
 
