@@ -57,7 +57,7 @@ NSString * const MPOAuthTokenRefreshDateDefaultsKey		= @"MPOAuthAutomaticTokenRe
 		NSLog(@"2");
 		self.baseURL = inBaseURL;
 		self.authenticationState = MPOAuthAuthenticationStateUnauthenticated;
-		NSLog(@"3");
+		NSLog(@"3 credentials");
 		credentials_ = [[MPOAuthCredentialConcreteStore alloc] initWithCredentials:inCredentials forBaseURL:inBaseURL withAuthenticationURL:inAuthURL];
 		NSLog(@"creds");
 		NSLog(@"%@", credentials_);
@@ -139,31 +139,34 @@ NSString * const MPOAuthTokenRefreshDateDefaultsKey		= @"MPOAuthAutomaticTokenRe
 }
 
 - (void)performMethod:(NSString *)inMethod atURL:(NSURL *)inURL withParameters:(NSArray *)inParameters withTarget:(id)inTarget andAction:(SEL)inAction {
-	NSLog(@"MPOAuthAPI: performMethod2");
+	NSLog(@"MPOAuthAPI: performMethod2 %@", inMethod);
 
 	[self performMethod:inMethod atURL:inURL withParameters:inParameters withTarget:inTarget andAction:inAction usingHTTPMethod:@"GET"];
 }
 
 - (void)performPOSTMethod:(NSString *)inMethod atURL:(NSURL *)inURL withParameters:(NSArray *)inParameters withTarget:(id)inTarget andAction:(SEL)inAction {
-	NSLog(@"MPOAuthAPI: performPOSTMethod");
+	NSLog(@"MPOAuthAPI: performPOSTMethod, ");
 
 	[self performMethod:inMethod atURL:inURL withParameters:inParameters withTarget:inTarget andAction:inAction usingHTTPMethod:@"POST"];
 }
 
 - (void)performMethod:(NSString *)inMethod atURL:(NSURL *)inURL withParameters:(NSArray *)inParameters withTarget:(id)inTarget andAction:(SEL)inAction usingHTTPMethod:(NSString *)inHTTPMethod {
 	NSLog(@"MPOAuthAPI: performMethod3");
-
+	NSLog(@"inURL = %@ method = %@", inURL, inMethod);
+	NSLog(@"params =%@", inParameters);
 	if (!inMethod && ![inURL path] && ![inURL query]) {
 		[NSException raise:@"MPOAuthNilMethodRequestException" format:@"Nil was passed as the method to be performed on %@", inURL];
 	}
 	NSLog(@"MPOAuthAPI: inURL: %@", inURL);
 	NSURL *requestURL = inMethod ? [NSURL URLWithString:inMethod relativeToURL:inURL] : inURL;
-	NSLog(@"creating request");
+	NSLog(@"creating request %@", [requestURL absoluteString]);
 	MPOAuthURLRequest *aRequest = [[MPOAuthURLRequest alloc] initWithURL:requestURL andParameters:inParameters];
 	NSLog(@"creating loader");
 
 	MPOAuthAPIRequestLoader *loader = [[MPOAuthAPIRequestLoader alloc] initWithRequest:aRequest];
 	NSLog(@"setting up loader and request");
+	NSLog(@"inTarget %@", inTarget);
+	//NSLog(@"action %@", inAction);
 	aRequest.HTTPMethod = inHTTPMethod;
 	loader.credentials = self.credentials;
 	loader.target = inTarget;
@@ -171,7 +174,7 @@ NSString * const MPOAuthTokenRefreshDateDefaultsKey		= @"MPOAuthAutomaticTokenRe
 	loader.action = inAction ? inAction : @selector(_performedLoad:receivingData:);
 	NSLog(@"2");
 	//NSLog(@"credentials:  %@   target: %@   action %@", loader.credentials, loader.target, loader.action);
-	NSLog(@"3");
+	NSLog(@"3.1");
 	[loader loadSynchronously:NO];
 	NSLog(@"4");
 	//	[self.activeLoaders addObject:loader];

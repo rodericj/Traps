@@ -64,45 +64,30 @@ NSString * const MPOAuthAccessTokenURLKey					= @"MPOAuthAccessTokenURL";
 
 + (Class)_authorizationMethodClassForURL:(NSURL *)inBaseURL withConfiguration:(NSDictionary **)outConfig {
 	Class methodClass = [MPOAuthAuthenticationMethodOAuth class];
-	NSLog(@"about to get plist");
 	NSString *oauthConfigPath = [[NSBundle bundleForClass:[self class]] pathForResource:@"oauthAutoConfig" ofType:@"plist"];
-	NSLog(@"got plist");
 	NSDictionary *oauthConfigDictionary = [NSDictionary dictionaryWithContentsOfFile:oauthConfigPath];
-	NSLog(@"inBaseUrl %@", inBaseURL);
 	for ( NSString *domainString in [oauthConfigDictionary keyEnumerator]) {
-		NSLog(@"in for %@", domainString);
 		if ([inBaseURL domainMatches:domainString]) {
-			NSLog(@"in if");
 			NSDictionary *oauthConfig = [oauthConfigDictionary objectForKey:domainString];
 			
 			NSArray *requestedMethods = [oauthConfig objectForKey:@"MPOAuthAuthenticationPreferredMethods"];
 			NSString *requestedMethod = nil;
-			NSLog(@"before for");
 			for (requestedMethod in requestedMethods) {
-				NSLog(@"in for again");
 				Class requestedMethodClass = NSClassFromString(requestedMethod);
 				
 				if (requestedMethodClass) {
 					methodClass = requestedMethodClass;
 				}
-				NSLog(@"breaking");
 				break;
 			}
-			NSLog(@"after the for loop");
 			if (requestedMethod) {
-				NSLog(@"the requested method %@", requestedMethod);
-				NSLog(@"setting config 1 %@", oauthConfig);
 				*outConfig = [oauthConfig objectForKey:requestedMethod];
 			} else {
-				NSLog(@"setting config 2");
 				*outConfig = oauthConfig;
 			}
-			NSLog(@"config is %@", *outConfig);
 			break;
 		}
-	}
-	NSLog(@"the method Class is %@", methodClass);
-	
+	}	
 	return methodClass; 
 }
 

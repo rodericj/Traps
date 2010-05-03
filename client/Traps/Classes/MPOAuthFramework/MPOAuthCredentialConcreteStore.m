@@ -33,7 +33,6 @@ extern NSString * const MPOAuthCredentialSessionHandleKey;
 - (id)initWithCredentials:(NSDictionary *)inCredentials forBaseURL:(NSURL *)inBaseURL withAuthenticationURL:(NSURL *)inAuthenticationURL {
 	if (self = [super init]) {
 		store_ = [[NSMutableDictionary alloc] initWithDictionary:inCredentials];
-		NSLog(@"the store is %@", store_);
 		self.baseURL = inBaseURL;
 		self.authenticationURL = inAuthenticationURL;
 		

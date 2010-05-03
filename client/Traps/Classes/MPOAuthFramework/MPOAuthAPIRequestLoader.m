@@ -86,7 +86,6 @@ NSString * const MPOAuthNotificationErrorHasOccurred		= @"MPOAuthNotificationErr
 	if (!_dataAsString) {
 		_dataAsString = [[NSString alloc] initWithData:self.data encoding:[self.oauthResponse.urlResponse encoding]];
 	}
-	NSLog(@"data string is %@", _dataAsString);
 	return _dataAsString;
 }
 

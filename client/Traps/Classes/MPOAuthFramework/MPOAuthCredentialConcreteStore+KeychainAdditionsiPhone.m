@@ -50,17 +50,13 @@
 }
 
 - (NSString *)findValueFromKeychainUsingName:(NSString *)inName {
-	NSLog(@"the name of the value from keychain is %@", inName);
 	return [self findValueFromKeychainUsingName:inName returningItem:NULL];
 }
 
 - (NSString *)findValueFromKeychainUsingName:(NSString *)inName returningItem:(NSDictionary **)outKeychainItemRef {
-	NSLog(@"find value from keychain using name");
 	NSString *foundPassword = nil;
-	NSLog(@"find host");
 	NSString *serverName = [self.baseURL host];
 	NSString *securityDomain = [self.authenticationURL host];
-	NSLog(@"find host");
 
 	NSDictionary *attributesDictionary = nil;
 	NSData *foundValue = nil;
