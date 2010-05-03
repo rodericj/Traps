@@ -8,6 +8,7 @@
 
 //TODO: This gives me an error. Possibly missing a framework? Do I need this framework? Seems like no. Kelvin? #import <Cocoa/Cocoa.h>
 #import <UIKit/UIKit.h>
+#import "MPOAuthAPI.h"
 
 @interface BTUserProfile : NSObject {
 
@@ -25,6 +26,7 @@
 	NSDictionary *searchResults;
 	NSString *deviceToken;
 	NSString *userBase64EncodedPassword;
+	MPOAuthAPI *_oauthAPI;
 }
 
 @property (nonatomic, retain) NSString *firstName;
@@ -40,6 +42,7 @@
 @property (nonatomic) int numTrapsTriggered;
 @property (nonatomic, retain) NSString *deviceToken;
 @property (nonatomic, retain) NSString *userBase64EncodedPassword;
+@property (nonatomic, retain) MPOAuthAPI *_oauthAPI;
 
 
 

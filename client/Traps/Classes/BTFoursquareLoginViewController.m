@@ -60,11 +60,11 @@
 									 [unameTextField text], kMPOAuthCredentialUsername,
 									 [passwordTextField text], kMPOAuthCredentialPassword,
 									 nil];
-		NSLog(@"authenticationURL is: %@ andBaseURL is %@ %@" foursquareAuthUrl, foursquareApiBase, foursquareApiBase);
-		NSLog(@"base is %@", foursquareApiBase);
+		NSLog(@"authenticationURL is: %@ andBaseURL is %@ %@" foursquare_auth_url, foursquare_api_base, foursquare_api_base);
+		NSLog(@"base is %@", foursquare_api_base);
 		_oauthAPI = [[MPOAuthAPI alloc] initWithCredentials:credentials
-										  authenticationURL:[NSURL URLWithString:foursquareAuthUrl]
-												 andBaseURL:[NSURL URLWithString:foursquareApiBase]];
+										  authenticationURL:[NSURL URLWithString:foursquare_auth_url]
+												 andBaseURL:[NSURL URLWithString:foursquare_api_base]];
 		
 		[(MPOAuthAuthenticationMethodOAuth *)[_oauthAPI authenticationMethod] setDelegate:(id <MPOAuthAuthenticationMethodOAuthDelegate>)[UIApplication sharedApplication].delegate];
 	} else {

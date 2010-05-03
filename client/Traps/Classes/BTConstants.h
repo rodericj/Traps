@@ -42,10 +42,11 @@
 #define twitter_oauth_key			@"8DRCvYvHLLU0W1ZPHZ4MsA"
 #define twitter_oauth_secret		@"RCvPfSCT8th85uAjB7Ddd1YYa8WI4XDhB6Imx3iibWk"
 
-#define foursquareApi				@"api.foursquare.com"
-#define foursquareApiBase			@"http://api.foursquare.com"
-#define foursquareAuthUrl			@"http://www.foursquare.com/oauth/"
+#define foursquare_api				@"api.foursquare.com"
+#define foursquare_api_base			@"http://api.foursquare.com"
+#define foursquare_auth_url			@"http://www.foursquare.com/oauth/"
 
+#define foursquare_venues_endpoint	@"v1/venues.json"
 
 #define kHomeTitle					@"Home"
 #define kSearchTitle				@"Search"
