@@ -281,20 +281,7 @@
 			[venueParam setValue:vid];
 			[params addObject:venueParam];
 			[venueParam release];
-
-			MPURLRequestParameter *shout = [[[MPURLRequestParameter alloc] init] autorelease];
-			[shout setName:@"shout"];
-			[shout setValue:@"testing."];
-			[params addObject:shout];
-			[shout release];
-
-			MPURLRequestParameter *facebookParam = [[[MPURLRequestParameter alloc] init] autorelease];
-			[facebookParam setName:@"facebook"];
-			[facebookParam setValue:@"1"];
-			[params addObject:facebookParam];
-			[facebookParam release];
 			
-			//- (void)performPOSTMethod:(NSString *)inMethod atURL:(NSURL *)inURL withParameters:(NSArray *)inParameters withTarget:(id)inTarget andAction:(SEL)inAction {
 			NSLog(@"calling perform %@", _oauthAPI);
 			[_oauthAPI performPOSTMethod:foursquare_checkin_endpoint atURL:_oauthAPI.baseURL withParameters:params withTarget:self andAction:@selector(didCheckinOnFoursquare:)];
 			NSLog(@"done calling perform");
