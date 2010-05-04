@@ -227,7 +227,9 @@
 	
 }
 - (void)didGetNearbyLocations:(id)responseString{
+	NSLog(@"did get nearby locations");
 	NSString *res = [[NSString alloc] initWithData:responseString encoding:NSUTF8StringEncoding];
+	NSLog(@"it was a valid string");
 	if ([responseString isKindOfClass:[NSError class]]) {
 		NSLog(@"code %d, domain %@", [responseString code], [responseString domain]);
 		if ([responseString code] == 400) {
@@ -247,7 +249,7 @@
 		}
 	}
 	else{
-		NSLog(@"NOT AN ERROR!!!");
+		NSLog(@"Did get location and it was not an error");
 	}
 	SBJSON *parser = [SBJSON new];
 	NSDictionary* webRequestResults = [parser objectWithString:res error:NULL];

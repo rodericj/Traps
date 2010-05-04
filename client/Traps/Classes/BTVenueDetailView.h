@@ -19,7 +19,7 @@
 	BTVenueAnnotation *pin;
 	UISwitch *checkinSwitch;
 	BTFoursquareLoginViewController *foursquareLoginView;
-
+	UIButton *searchButton;
 }
 - (void)updateVenueDetails:(NSDictionary *)venue;
 - (UITableViewCell *) getTitleCell:(NSString *)cellIdentifier;

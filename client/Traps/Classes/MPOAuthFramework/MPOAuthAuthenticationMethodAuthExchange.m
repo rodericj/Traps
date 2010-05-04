@@ -81,18 +81,25 @@
 	xmlNodePtr currentNode = rootNode->children;
 	const char *currentNodeName = NULL;
 	
+	NSLog(@"going through each of the nodes");
+	xmlChar *tmp;
 	for ( ; currentNode; currentNode = currentNode->next) {
 		currentNodeName = (const char *)currentNode->name;
+		tmp =  xmlNodeGetContent(currentNode);
+		NSLog(@"current node is %@", [NSString stringWithUTF8String:(const char *) tmp]);
+		NSLog(@"current node name is %@", [NSString stringWithUTF8String:(const char *) currentNodeName]);
 		
 		if (strcmp("oauth_token", currentNodeName) == 0) {
+			NSLog(@"setting the oauth_token");
 			xmlChar *oauthToken = xmlNodeGetContent(currentNode);
 			accessToken = [NSString stringWithUTF8String:(const char *)oauthToken];
 		} else if (strcmp("oauth_token_secret", currentNodeName) == 0) {
+			NSLog(@"setting the oauth_token");
 			xmlChar *oauthTokenSecret = xmlNodeGetContent(currentNode);
 			accessTokenSecret = [NSString stringWithUTF8String:(const char *)oauthTokenSecret];
 		}
 	}
-	
+	NSLog(@"done going through each of the nodes");
 	if (accessToken && accessTokenSecret) {
 		[self.oauthAPI removeCredentialNamed:kMPOAuthCredentialPassword];
 		[self.oauthAPI setCredential:accessToken withName:kMPOAuthCredentialAccessToken];

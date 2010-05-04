@@ -29,7 +29,6 @@
 }
 - (void)viewDidAppear:(BOOL)animated{
 	int trap = [[BTUserProfile sharedBTUserProfile] selectedTrap];
-	NSLog(@"hey we are appearing");
 	[[BTUserProfile sharedBTUserProfile] setSelectedTrap:-1];
 	NSString *deviceToken = [[BTUserProfile sharedBTUserProfile] deviceToken];
 	
@@ -243,9 +242,7 @@
 	[lblTemp setTextColor:[UIColor whiteColor]];
 	[cell.contentView addSubview:lblTemp];
 	[lblTemp release];
-	
-	//TODO If we actually have traps
-	
+		
 	dropTrapsButton = [UIButton buttonWithType:UIButtonTypeCustom];
 	[dropTrapsButton setFrame:dropTrapsButtonFrame];
 	[dropTrapsButton setBackgroundImage:[UIImage imageNamed:@"droptrap.png"] forState:UIControlStateNormal];

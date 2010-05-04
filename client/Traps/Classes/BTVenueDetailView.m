@@ -221,7 +221,7 @@
 
 	[cell setBackgroundColor:[UIColor blackColor]];
 	
-	UIButton *searchButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+	searchButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
 	[searchButton setBackgroundImage:[UIImage imageNamed:@"searchvenuebar.png"] forState:UIControlStateNormal];
 	searchButton.frame = titleCellFrame;
 	[searchButton setBackgroundColor:[UIColor clearColor]];
@@ -260,11 +260,25 @@
 #pragma mark UI Interactions
 -(void)searchVenue{
 	NSString *vid = [NSString stringWithFormat:@"%@", [venueInfo objectForKey:@"id"]];
-
+	[searchButton setEnabled:FALSE];
 	NSLog(@"checking into %@", vid);
 	MPOAuthAPI *_oauthAPI = [[BTUserProfile sharedBTUserProfile] _oauthAPI];
 	if([_oauthAPI isAuthenticated] && [checkinSwitch isOn]){
 		NSLog(@"YESSSSSSS lets do the checkin!!!!");
+		NSLog(@"we are supposed to checkin");
+		
+		NSMutableArray *params = [[NSMutableArray alloc ] init];
+		
+		MPURLRequestParameter *venueParam = [[[MPURLRequestParameter alloc] init] autorelease];
+		[venueParam setName:@"vid"];
+		[venueParam setValue:vid];
+		[params addObject:venueParam];
+		[venueParam release];
+		
+		NSLog(@"calling perform %@", _oauthAPI);
+		[_oauthAPI performPOSTMethod:foursquare_checkin_endpoint atURL:_oauthAPI.baseURL withParameters:params withTarget:self andAction:@selector(didCheckinOnFoursquare:withValue:)];
+		NSLog(@"done calling perform");
+		
 	}
 	else{
 		NSLog(@"ok, we either not authenticated or not suppoesd to checkin or both");
@@ -283,14 +297,14 @@
 			[venueParam release];
 			
 			NSLog(@"calling perform %@", _oauthAPI);
-			[_oauthAPI performPOSTMethod:foursquare_checkin_endpoint atURL:_oauthAPI.baseURL withParameters:params withTarget:self andAction:@selector(didCheckinOnFoursquare:)];
+			[_oauthAPI performPOSTMethod:foursquare_checkin_endpoint atURL:_oauthAPI.baseURL withParameters:params withTarget:self andAction:@selector(didCheckinOnFoursquare:withValue:)];
 			NSLog(@"done calling perform");
 
 		}
 	}
 	
-	
-	//TODO start the loading scroller thing
+	[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+
 	[[BTNetwork sharedNetwork] performHttpOperationWithResponseObject:self
 													  methodSignature:NSStringFromSelector(@selector(didSearchVenue:))
 															   method:@"POST"
@@ -305,19 +319,24 @@
 	
 }
 
--(void) didCheckinOnFoursquare:(NSString *)returned{
+-(void) didCheckinOnFoursquare:(NSString *)methodCalled withValue:(NSString *)returned{
 	NSLog(@"WOOOOOOT! we did checking on foursquare");
-	NSLog(@"returned %@", returned);
+	NSLog(@"returned %@ %@", methodCalled, returned);
 }
 
 -(void) authenticateFoursquare{
 	NSLog(@"this is the switch: are there 2 of them? %@", checkinSwitch);
 	@synchronized(self){
+		NSLog(@"we are in the synchronized");
 		if([checkinSwitch isOn]){
 			NSLog(@"Switched the switch ");
 			MPOAuthAPI *_oauthAPI = [[BTUserProfile sharedBTUserProfile] _oauthAPI];
-			if([_oauthAPI isAuthenticated]){
-				NSLog(@"we are authenticated");
+			NSLog(@"the credential for access token is %@", [_oauthAPI credentialNamed:MPOAuthCredentialAccessTokenKey]);
+
+			if([_oauthAPI credentialNamed:MPOAuthCredentialAccessTokenKey] != nil){
+			// #TODO. For some reason we are getting authenticated here. That's not right
+				NSLog(@"the access token key is not nil, so you should be able to log in.");
+				
 			}
 			else{
 				NSLog(@"no we aren't authenticated");
@@ -335,8 +354,8 @@
 	}
 }
 
-- (void)didSearchVenue:(id)returnData{
-	//TODO stop the loading scroller thing
+- (void)didSearchVenue:(id)returnData{ 
+	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 	//TODO the button is pushable 2x. boooo
 	NSString *responseString = [[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding];
 
