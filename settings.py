@@ -60,7 +60,7 @@ if PRODUCTION:
 	#MEDIA_ROOT = '/home/rodericj/webapps/traps/media/'
 	#MEDIA_ROOT = '/home/rodericj/webapps/traps_media/'
 	#MEDIA_ROOT = '/home/rodericj/webapps/django/Traps/site_media/'
-	MEDIA_ROOT = '/home/rodericj/webapps/trap_media/site_media/'
+	MEDIA_ROOT = '/home/rodericj/webapps/trap_media/images/'
 else:
 	MEDIA_ROOT = os.getcwd()+'/site_media/'
 
