@@ -140,8 +140,19 @@ def _get_user_inventory(uid):
 		annotated_inv = traps.values('item').annotate(Count('item')).order_by()
 	except:
 		raise
-		
-	inventory = [{'name':Item.objects.get(id = i['item']).name, 'id':Item.objects.get(id = i['item']).id, 'count':i['item__count'], 'path':'site_media'+Item.objects.get(id=i['item']).assetPath.split('site_media/')[1], 'type':Item.objects.get(id = i['item']).type, 'note':Item.objects.get(id=i['item']).note} for i in annotated_inv]
+
+	inventory = []
+	for i in annotated_inv:
+		item = Item.objects.get(id = i['item'])
+		name = item.name
+		id = item.id
+		count = i['item__count']
+		path = 'site_media/'+item.assetPath.split('trap_media/')[1]
+		type = item.type
+		note = item.note
+
+		inventory.append({'name':name, 'id':id, 'count':count, 'path':path, 'type':type, 'note':note})
+
 	return inventory
 
 def getUserProfile(uid):
@@ -427,10 +438,14 @@ def get_user_feed(request):
 	#don't update, must do something else
 	for i in ret:
 		#TODO Boooooo default to the first venue? Ghetto
-		if len(i['data1']) > 0:	
-			name = Venue.objects.get(id=i['data1']).name
-		else:
-			name = ""
+		try:
+			if len(i['data1']) > 0:	
+				name = Venue.objects.get(id=i['data1']).name
+			else:
+				name = ""
+
+		except:
+			name = "id = "+i['data1']
 		i['name'] = i['type'] + " " +name
 
 	return HttpResponse(simplejson.dumps(ret), mimetype='application/json')

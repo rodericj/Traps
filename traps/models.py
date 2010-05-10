@@ -24,7 +24,7 @@ class Item(models.Model):
 
 	@property
 	def asset(self):
-		return self.assetPath.split('site_media/')[1]
+		return self.assetPath.split('trap_media/')[1]
 
 class Venue(models.Model):
 	foursquareid = models.IntegerField(blank=False, null=False)
