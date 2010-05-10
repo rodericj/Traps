@@ -53,9 +53,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-	//#TODO put the fb back in
-	//FBLoginDialog* dialog = [[[FBLoginDialog alloc] initWithSession:mySession] autorelease];
-//    [dialog show];
 }
 
 - (void)dialogDidCancel:(FBDialog *)dialog{

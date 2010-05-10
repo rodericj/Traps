@@ -29,18 +29,15 @@
 }
 - (void)viewDidAppear:(BOOL)animated{
 	int trap = [[BTUserProfile sharedBTUserProfile] selectedTrap];
-
 	[[BTUserProfile sharedBTUserProfile] setSelectedTrap:-1];
 	NSString *deviceToken = [[BTUserProfile sharedBTUserProfile] deviceToken];
 	
 	if(trap != -1){
 		NSString *vid = [NSString stringWithFormat:@"%@", [venueInfo objectForKey:@"id"]];
-		NSLog(@"this is the searchResults %@", searchResults);
 		NSDictionary *profile = [searchResults objectForKey:@"profile"];
 		NSArray *inventory = [profile objectForKey:@"inventory"];
 		NSDictionary *inventoryItem = [inventory objectAtIndex:trap];
 		NSString *iid = [NSString stringWithFormat:@"%@", [inventoryItem objectForKey:@"id"]];
-		NSLog(@"venueId: %@, iid %@, inventory %@, and the inventoryItem %@", vid, iid, inventory, inventoryItem);
 		//Send the trap set request on trap
 		[[BTNetwork sharedNetwork] performHttpOperationWithResponseObject:self
 														  methodSignature:NSStringFromSelector(@selector(didDropTrap:))
@@ -66,7 +63,15 @@
 	SBJSON *parser = [SBJSON new];
 	NSDictionary* responseAsDictionary = [parser objectWithString:responseString error:NULL];
 	NSLog(@"response from dropping trap is %@", responseAsDictionary);
+	[mapView removeAnnotation:pin];
+	[searchResults setValue:yousetatrap forKey:@"alertStatement"];
+	CLLocationCoordinate2D location;
+	location.latitude = [[venueInfo objectForKey:@"geolat"] doubleValue];
+	location.longitude = [[venueInfo objectForKey:@"geolong"] doubleValue];
 	
+	[dropTrapsButton setEnabled:FALSE];
+	pin = [[BTVenueAnnotation alloc] initWithCoordinate:location];
+	[mapView addAnnotation:pin];
 }
 
 - (void)viewDidUnload {
@@ -185,13 +190,17 @@
 	//TODO if this is a happy dude.....
 	[annView setDudeIcon:@"happyDude.png"];
 
-	[annView setResultsString:[searchResults objectForKey:@"alertStatement"]];
-	
+	if([[BTUserProfile sharedBTUserProfile] selectedTrap] != -1){
+		[annView setResultsString:@"hello"];
+	}
+	else{
+		[annView setResultsString:[searchResults objectForKey:@"alertStatement"]];
+	}
     return annView;
 }
 
 - (UITableViewCell *) getTitleCell:(NSString *)cellIdentifier{
-	NSLog(@"Search Results and Venue Detail: %@, \n\n\n\%@", searchResults, venueInfo);
+	//NSLog(@"Search Results and Venue Detail: %@, \n\n\n\%@", searchResults, venueInfo);
 
 	CGRect titleCellFrame = CGRectMake(0, 0, iphonescreenwidth, venuerowheight);
 	CGRect titleTextFrame = CGRectMake(25, 10, iphonescreenwidth, venuerowheight/4);
@@ -233,12 +242,9 @@
 	[lblTemp setTextColor:[UIColor whiteColor]];
 	[cell.contentView addSubview:lblTemp];
 	[lblTemp release];
-	
-	//TODO If we actually have traps
-	
-	UIButton *dropTrapsButton = [UIButton buttonWithType:UIButtonTypeCustom];
+		
+	dropTrapsButton = [UIButton buttonWithType:UIButtonTypeCustom];
 	[dropTrapsButton setFrame:dropTrapsButtonFrame];
-	//[dropTrapsButton setTitle:@"Drop Traps" forState:UIControlStateNormal];
 	[dropTrapsButton setBackgroundImage:[UIImage imageNamed:@"droptrap.png"] forState:UIControlStateNormal];
 	
 	//If we don't have traps, don't bother showing the drop trap button.
@@ -257,6 +263,7 @@
 		inventoryView = [[BTUserInventoryTableView alloc] init];
 	}
 	[inventoryView setUserInventory:[searchResults objectForKey:@"inventory"]];
+	[inventoryView setTrapsOnly:TRUE];
 	[self.navigationController pushViewController:inventoryView animated:TRUE];
 	//[inventoryView release];
 }

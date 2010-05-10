@@ -7,13 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "MPOAuthAPI.h"
 
 @interface BTFoursquareLoginViewController : UITableViewController {
 	UIButton *loginButton;
 	UITextField *unameTextField;
 	UITextField *passwordTextField;
 	NSString *viewDescription;
+	MPOAuthAPI *_oauthAPI;
 }
 -(void)foursquareCallback:(id)results;
 @property (nonatomic, retain) NSString *viewDescription;

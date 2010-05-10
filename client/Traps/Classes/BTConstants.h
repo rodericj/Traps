@@ -21,8 +21,8 @@
 #define kHTTPHost	@"thetrapgame.com"
 //#define kHTTPHost	@"192.168.1.101:8000"
 //#define kHTTPHost	@"192.168.0.116:8000"
-//#define kHTTPHost	@"10.0.1.182:8000"
-
+//#define kHTTPHost	@"10.0.1.172:8000"
+//#define kHTTPHost  @"http://10.247.1.151:8000"
 
 #pragma mark -
 #pragma mark django views
@@ -36,28 +36,28 @@
 #define django_get_my_user_profile	@"get_my_user_profile/"
 #define django_get_friends			@"get_friends"
 
-#pragma mark -
-#pragma mark Foursquare api
-#define oauth_request_token_url		@"http://foursquare.com/oauth/request_token"
-#define oauth_access_token_url		@"http://foursquare.com/oauth/access_token"
-#define oauth_authorize_url			@"http://foursquare.com/oauth/authorize"
-#define oauth_exchange_url			@"/v1/authexchange"
+#define oauth_key					@"1VPFYWEOQITVCFURSTB0PXKAEA5CBCMDKO2PXHPPIZI5RTYM"
+#define oauth_secret				@"ZEZ1HY0HYQORJG0YRKSI25VGCD3DRDMECS2URZHYXGRMK01R"
 
-#define oauth_key		@"52e6db5e1d8bd8c481e8e1e3f798652004a7fbfc8"
-#define oauth_secret	@"57c1aac04b076d8743664e2d935da13b"
+#define twitter_oauth_key			@"8DRCvYvHLLU0W1ZPHZ4MsA"
+#define twitter_oauth_secret		@"RCvPfSCT8th85uAjB7Ddd1YYa8WI4XDhB6Imx3iibWk"
 
-#define foursquareApi	@"api.foursquare.com"
+#define foursquare_api				@"api.foursquare.com"
+#define foursquare_api_base			@"http://api.foursquare.com"
+#define foursquare_auth_url			@"http://www.foursquare.com/oauth/"
 
+#define foursquare_venues_endpoint	@"v1/venues.json"
+#define foursquare_checkin_endpoint	@"v1/checkin.json"
 
-#define kHomeTitle			@"Home"
-#define kSearchTitle		@"Search"
-#define kProfileTitle		@"Profile"
-#define kLeaderboardTitle	@"Leaderboard"
+#define kHomeTitle					@"Home"
+#define kSearchTitle				@"Search"
+#define kProfileTitle				@"Profile"
+#define kLeaderboardTitle			@"Leaderboard"
 
 #pragma mark -
 #pragma mark FB
-#define fbAppId		@"3243a6e2dd3a0d084480d05f301cba85"
-#define fbSecret	@"d8611553a286dce3531353b3de53ef2e"
+#define fbAppId						@"3243a6e2dd3a0d084480d05f301cba85"
+#define fbSecret					@"d8611553a286dce3531353b3de53ef2e"
 
 #pragma mark -
 #pragma mark general constants
@@ -75,6 +75,8 @@
 #define inventoryitemwidth	100
 
 #define venuerowheight		100
+#define wantfoursquarecheckinrowheight 50
+#define detailmapviewheight iphonescreenheight - venuerowheight - wantfoursquarecheckinrowheight - (navbarheight*2)-24
 
 #pragma mark -
 #pragma mark Home view
@@ -117,6 +119,8 @@
 #define textboxheight			25
 #define labelheight				20
 
+#define doyouwanttocheckin				@"Check-in to foursquare?"
 #define foursquareratelimitexceeded		@"Sorry but it looks like we've exceeded the foursquare rate limit. We'll have to get you to log in, or just play around with the beginner venues."
 #define foursquarecheckinprefered		@"Sign in to foursquare to have the option to checkin when searching!"
 #define invalidloginalertstatement		@"Looks like your username and password were not accepted. Let's try again"
+#define yousetatrap						@"Congrats, you've just set a trap here!"

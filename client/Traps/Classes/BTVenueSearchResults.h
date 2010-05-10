@@ -18,7 +18,7 @@
 	MKMapView *mapView;
 	BTUserInventoryTableView *inventoryView;
 	BTVenueAnnotation *pin;
-
+	UIButton *dropTrapsButton;
 }
 
 @property (nonatomic, retain) BTUserInventoryTableView *inventoryView;

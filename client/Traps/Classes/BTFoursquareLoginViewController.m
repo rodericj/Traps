@@ -11,6 +11,10 @@
 #import "BTNetwork.h"
 #import "BTUserProfile.h"
 #import <JSON/JSON.h>
+#import "MPOAuthAuthenticationMethodOAuth.h"
+
+//#import "MPOAuthAPI.h"
+
 
 @implementation BTFoursquareLoginViewController
 
@@ -45,40 +49,28 @@
 	return 4;
 }
 
--(void)loginToFoursquare{
-	NSLog(@"login to foursquare");
-	[loginButton setEnabled:FALSE];
-	NSString *sourceString = [NSString stringWithFormat:@"%@:%@", [unameTextField text],[passwordTextField text]];
-	NSData *sourceData = [sourceString dataUsingEncoding:NSUTF8StringEncoding];
-	NSLog(@"the source string is%@", sourceString);
-	NSString *base64EncodedString = [sourceData base64EncodedString];
-	NSString *fullEncoded = [NSString stringWithFormat:@"Basic %@", base64EncodedString];
-	NSLog(@"the source string is %@, fullEncoded %@----- %@", sourceString,  base64EncodedString, fullEncoded);
+-(void) authorize{
+	//[_oauthAPI discardCredentials];
 
-	[[BTNetwork sharedNetwork] performHttpOperationWithResponseObject:self
-													  methodSignature:NSStringFromSelector(@selector(foursquareCallback:))
-															   method:@"GET"
-															   domain:foursquareApi
-														  //relativeURL:@"v1/user.json"
-														  relativeURL:@"v1/venues"
-														  //relativeURL:@"v1/checkin.json"
-																params:[NSDictionary dictionaryWithObjectsAndKeys:
-																		@"-122.424", @"geolong",
-																		@"37.7938", @"geoat", 
-																	   nil]
-															  // params:[NSDictionary dictionaryWithObjectsAndKeys:
-																//	   @"1235744", @"vid",
-																//	   @"1", @"private", 
-																//	   @"word", @"shout", 
-																//	   nil]
-															   //params:nil 
-	 
-															  headers:[NSArray arrayWithObjects:fullEncoded,
-																	   @"Authorization",
-																	   nil]];
-															  //headers:nil];
-	
+	if (!_oauthAPI) {
+		NSDictionary *credentials = [NSDictionary dictionaryWithObjectsAndKeys:	
+									 oauth_key, kMPOAuthCredentialConsumerKey,
+									 oauth_secret, kMPOAuthCredentialConsumerSecret,
+									 [unameTextField text], kMPOAuthCredentialUsername,
+									 [passwordTextField text], kMPOAuthCredentialPassword,
+									 nil];
+		_oauthAPI = [[MPOAuthAPI alloc] initWithCredentials:credentials
+										  authenticationURL:[NSURL URLWithString:foursquare_auth_url]
+												 andBaseURL:[NSURL URLWithString:foursquare_api_base]];
+		
+		[(MPOAuthAuthenticationMethodOAuth *)[_oauthAPI authenticationMethod] setDelegate:(id <MPOAuthAuthenticationMethodOAuthDelegate>)[UIApplication sharedApplication].delegate];
+	} else {
+		[_oauthAPI authenticate];
+	}
+	[self.parentViewController dismissModalViewControllerAnimated:YES];
+
 }
+
 
 -(void)foursquareCallback:(id)results{
 	NSLog(@"foursquare returned");
@@ -205,7 +197,7 @@
 	//[loginButton release];
 	
 	//listen for clicks
-	[loginButton addTarget:self action:@selector(loginToFoursquare) 
+	[loginButton addTarget:self action:@selector(authorize) 
 		   forControlEvents:UIControlEventTouchUpInside];	
 	
 	//put button on View

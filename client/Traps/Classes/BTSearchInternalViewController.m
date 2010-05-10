@@ -10,6 +10,7 @@
 #import "BTNetwork.h"
 #import "BTUserProfile.h"
 #import <JSON/JSON.h>
+#import "MPURLRequestParameter.h"
 
 @implementation BTSearchInternalViewController
 
@@ -40,6 +41,9 @@
 }
 
 - (void)dealloc {	
+	if(foursquareLoginView){
+		[foursquareLoginView release];
+	}
     [super dealloc];
 }
 
@@ -168,25 +172,52 @@
 		//Make location string 2 separate lat/long
 		NSString *latlong = [[[location description] stringByReplacingOccurrencesOfString:@"<" withString:@""] 
 							 stringByReplacingOccurrencesOfString:@">" withString:@""];
+		NSLog(@"the latlong is %@", latlong);
 		NSArray *chunks = [latlong componentsSeparatedByString:@" "];
-		NSString *lat =[chunks objectAtIndex:0];
+		NSString *lat =[[chunks objectAtIndex:0] stringByReplacingOccurrencesOfString:@"," withString:@""];
 		NSString *lon = [chunks objectAtIndex:1];
 		
 		NSString *encoding = [[BTUserProfile sharedBTUserProfile] userBase64EncodedPassword];
 		NSArray *headers = nil;
-		NSLog(@"encoding %@", encoding);
 		if(encoding != nil){
-			NSLog(@"setting headers");
 			headers = [NSArray arrayWithObjects:encoding, @"Authorization", nil];
 		}
-		NSLog(@"HEADERS IS!!!!!! %@", headers);
 		
 		//Call to foursquare's location api
+		MPOAuthAPI *_oauthAPI = [[BTUserProfile sharedBTUserProfile] _oauthAPI];
+		if (!_oauthAPI) {
+			NSLog(@"need to create an api object");
+			NSDictionary *credentials = [NSDictionary dictionaryWithObjectsAndKeys:	
+										 oauth_key, kMPOAuthCredentialConsumerKey,
+										 oauth_secret, kMPOAuthCredentialConsumerSecret,
+										 @"", kMPOAuthCredentialUsername,
+										 @"", kMPOAuthCredentialPassword,
+										 nil];
+			_oauthAPI = [[MPOAuthAPI alloc] initWithCredentials:credentials
+											  authenticationURL:[NSURL URLWithString:foursquare_auth_url]
+													 andBaseURL:[NSURL URLWithString:foursquare_api_base]];
+			[[BTUserProfile sharedBTUserProfile] set_oauthAPI:_oauthAPI];
+		}
+		//	NSMutableArray *parameters = [NSMutableArray arrayWithObject:[[[MPURLRequestParameter alloc] initWithName:@"file" 
+//																										 andValue:@"vacation.jpg"] autorelease]];
+		MPURLRequestParameter *latParam = [[[MPURLRequestParameter alloc] init] autorelease];
+		MPURLRequestParameter *lonParam = [[[MPURLRequestParameter alloc] init] autorelease];
+		[latParam setName:@"geolat"];
+		[latParam setValue:lat];
+		[lonParam setName:@"geolong"];
+		[lonParam setValue:lon];
+		NSMutableArray *params = [[NSMutableArray alloc ] init];
+		[params addObject:latParam];
+		[params addObject:lonParam];
+		NSLog(@"the params are %@", params);
+		NSLog(@"so we've got the api object, lets try to make a call");
+		//[_oauthAPI performMethod:foursquare_venues_endpoint atURL:_oauthAPI.baseURL withParameters:params withTarget:self andAction:@selector(didGetNearbyLocations:)];
+	
 		[[BTNetwork sharedNetwork] performHttpOperationWithResponseObject:self
 														  methodSignature:NSStringFromSelector(@selector(didGetNearbyLocations:))
 																   method:@"GET"
-																   domain:foursquareApi
-															  relativeURL:@"v1/venues.json"
+																   domain:foursquare_api
+															  relativeURL:foursquare_venues_endpoint
 																   params:[NSDictionary dictionaryWithObjectsAndKeys:
 																		   lat, @"geolat",
 																		   lon, @"geolong", 
@@ -196,12 +227,13 @@
 	
 }
 - (void)didGetNearbyLocations:(id)responseString{
-	NSLog(@"did get nearby locations %@", responseString);
-
+	NSLog(@"did get nearby locations");
+	NSString *res = [[NSString alloc] initWithData:responseString encoding:NSUTF8StringEncoding];
+	NSLog(@"it was a valid string");
 	if ([responseString isKindOfClass:[NSError class]]) {
 		NSLog(@"code %d, domain %@", [responseString code], [responseString domain]);
-		//if ([responseString code] == 400) {
-		if (FALSE) {
+		if ([responseString code] == 400) {
+		//if (FALSE) {
 		//if (TRUE) {
 			NSLog(@"We've got a rate limiting situation. Let's show the modular view");
 			if (foursquareLoginView == nil) {
@@ -216,10 +248,15 @@
 			responseString = @"{\"groups\":[{\"type\":\"Nearby\",\"venues\":[{\"id\":86638,\"name\":\"Joe Greenstein's\",\"address\":\"1740 Jackson St.\",\"city\":\"San Francisco\",\"state\":\"CA\",\"geolat\":37.7938,\"geolong\":-122.424,\"stats\":{\"herenow\":\"0\"},\"distance\":31},{\"id\":1235744,\"name\":\"1800 Washington Street\",\"address\":\"1800 Washington Street\",\"city\":\"San Francisco\",\"state\":\"CA\",\"geolat\":37.793433,\"geolong\":-122.423426,\"stats\":{\"herenow\":\"0\"},\"distance\":36}]}]}";
 		}
 	}
+	else{
+		NSLog(@"Did get location and it was not an error");
+	}
 	SBJSON *parser = [SBJSON new];
-	NSDictionary* webRequestResults = [parser objectWithString:responseString error:NULL];
+	NSDictionary* webRequestResults = [parser objectWithString:res error:NULL];
+	[res release];
+
 	NSArray *groups = [webRequestResults objectForKey:@"groups"];
-			  
+
 	NSDictionary *venueDict = [groups objectAtIndex:0];
 	venues = [[venueDict objectForKey:@"venues"] copy];
 
@@ -227,7 +264,7 @@
 	//NSLog(@"venueArray is: %@", venueArray);
 	//UserProfile *userProfile = [UserProfile sharedSingleton];
 //	[userProfile setLocations:venueArray];
-	
+
 	self.navigationItem.rightBarButtonItem = nil;
 	//[self didGetNearbyLocations];
 }

@@ -20,7 +20,6 @@
 //}
 -(id)initWithCoordinate:(CLLocationCoordinate2D) c{
 	coordinate=c;
-	NSLog(@"Setting up the annotation %f,%f",c.latitude,c.longitude);
 	return self;
 }
 

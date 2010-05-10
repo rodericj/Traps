@@ -26,6 +26,8 @@ static BTUserProfile *sharedBTUserProfile = nil;
 @synthesize deviceToken;
 @synthesize userBase64EncodedPassword;
 
+@synthesize _oauthAPI;
+
 #pragma mark -
 #pragma mark Singleton
 
@@ -72,8 +74,4 @@ static BTUserProfile *sharedBTUserProfile = nil;
 	return self;
 }
 
-
-
-
-//TODO: Do I need the retaincount and retain and copyWithZone here? Kelvin?
 @end
