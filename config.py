@@ -1,3 +1,37 @@
+import os
+
+PRODUCTION_SERVERS = ['web111.webfaction.com']
+
+if os.environ.get('HOSTNAME', '') in PRODUCTION_SERVERS:
+	PRODUCTION = True
+
+	MEDIA_DIRECTORY = '/trap_media'
+	MEDIA_ROOT = '/home/rodericj/webapps'+MEDIA_DIRECTORY
+	MEDIA_URL = 'http://thetrapgame.com/site_media'
+
+	ADMIN_MEDIA_PREFIX = 'http://thetrapgame.com/media/admin/'
+
+	TEMPLATE_DIRS = (
+    	# Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
+    	# Always use forward slashes, even on Windows.
+    	# Don't forget to use absolute paths, not relative paths.
+		'/home/rodericj/webapps/django/Traps/templates/'
+	)
+
+else:
+	PRODUCTION = False
+
+	MEDIA_DIRECTORY = '/site_media'
+	MEDIA_ROOT = os.getcwd()+MEDIA_DIRECTORY
+	MEDIA_URL = '/site_media/'
+
+	ADMIN_MEDIA_PREFIX = '/media/'
+
+	TEMPLATE_DIRS = (
+		os.getcwd()+'/templates/',
+	)
+
+
 yelp_api_key = 'Ad6eKfALxhzXVw_WqsWo7A'
 
 startVenueWithCoins = 3

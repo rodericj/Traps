@@ -1,5 +1,6 @@
 from django.conf.urls.defaults import *
 import os
+import config
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
@@ -7,12 +8,6 @@ admin.autodiscover()
 
 #TODO there has to be a better way to do this...
 PRODUCTION_SERVERS = ['web111.webfaction.com']
-if os.environ.get('HOSTNAME', '') in PRODUCTION_SERVERS:
-	#doc_root = '/home/rodericj/webapps/django/Traps/site_media'
-	doc_root = '/home/rodericj/webapps/traps_media/site_media/'
-else: 
-	#http://192.168.1.110:8000/site_media/bananapeel.png
-	doc_root = os.getcwd()+'/site_media/'
 
 urlpatterns = patterns('',
     # Example:
@@ -37,7 +32,7 @@ urlpatterns = patterns('',
     (r'^search_venue/', 'Traps.traps.views.search_venue'),
     (r'^search_venue/(?P<vid>\d+)/', 'Traps.traps.views.search_venue'),
     (r'^show_all_traps_set/', 'Traps.traps.views.show_all_traps_set'),
-    (r'^site_media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': doc_root}),
+    (r'^site_media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': config.MEDIA_ROOT}),
 	
 	#(r'^qr/(?P<code>\d*)$', 'Traps.traps.views.qr_code'),
 	(r'^$', 'Traps.traps.views.home_page'),

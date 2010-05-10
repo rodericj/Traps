@@ -1,16 +1,13 @@
 # Django settings for Traps project.
 import os
+import config
 
-PRODUCTION_SERVERS = ['web111.webfaction.com']
-
-if os.environ.get('HOSTNAME', '') in PRODUCTION_SERVERS:
-	PRODUCTION = True
-else:
-	PRODUCTION = False
+PRODUCTION = config.PRODUCTION
 
 #DEBUG = True
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
+TEMPLATE_DIRS = config.TEMPLATE_DIRS
 
 ADMINS = (
     # ('Your Name', 'your_email@domain.com'),
@@ -55,31 +52,18 @@ USE_I18N = True
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
-if PRODUCTION:
-	#http://thetrapgame.com/site_media/banana.png
-	#MEDIA_ROOT = '/home/rodericj/webapps/traps/media/'
-	#MEDIA_ROOT = '/home/rodericj/webapps/traps_media/'
-	#MEDIA_ROOT = '/home/rodericj/webapps/django/Traps/site_media/'
-	MEDIA_ROOT = '/home/rodericj/webapps/trap_media'
-else:
-	MEDIA_ROOT = os.getcwd()+'/site_media/'
+
+MEDIA_ROOT = config.MEDIA_ROOT
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
 # Examples: "http://media.lawrence.com", "http://example.com/media/"
-if PRODUCTION:
-	#MEDIA_URL = 'http://thetrapgame.com/media'
-	MEDIA_URL = 'http://thetrapgame.com/site_media'
-else:
-	MEDIA_URL = '/site_media/'
+MEDIA_URL = config.MEDIA_URL
 
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
 # Examples: "http://foo.com/media/", "/media/".
-if PRODUCTION:
-	ADMIN_MEDIA_PREFIX = 'http://thetrapgame.com/media/admin/'
-else:
-	ADMIN_MEDIA_PREFIX = '/media/'
+ADMIN_MEDIA_PREFIX = config.ADMIN_MEDIA_PREFIX
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'yd_9ogfx_!&0$qk^l(_3gcemx8r81d))4tab1xs98d_dhkf0z#'
@@ -101,18 +85,6 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'Traps.urls'
 
-if PRODUCTION:
-	TEMPLATE_DIRS = (
-    	# Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    	# Always use forward slashes, even on Windows.
-    	# Don't forget to use absolute paths, not relative paths.
-		'/home/rodericj/webapps/django/Traps/templates'
-	)
-
-else:
-	TEMPLATE_DIRS = (
-		os.getcwd()+'/templates',
-	)
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',

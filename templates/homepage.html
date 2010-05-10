@@ -38,7 +38,7 @@ $(function(){
   	var marker{{ x.pk }} = new google.maps.Marker({
       position: new ll({{ x.venue.latitude }}, {{ x.venue.longitude }}),
       map: map,
-      icon: '/site_media/{{ x.item.asset }}'
+      //icon: '/site_media/{{ x.item.asset }}'
     });
     {% endfor %}  
   

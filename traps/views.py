@@ -147,7 +147,7 @@ def _get_user_inventory(uid):
 		name = item.name
 		id = item.id
 		count = i['item__count']
-		path = 'site_media/'+item.assetPath.split('trap_media/')[1]
+		path = 'site_media/'+item.assetPath.split(config.MEDIA_DIRECTORY)[1]
 		type = item.type
 		note = item.note
 
@@ -464,6 +464,7 @@ def home_page(request):
 	"""
 	objs = VenueItem.objects.order_by('-dateTimeUsed')[:15]
 	recent = google_maps_items([(x.venue.latitude, x.venue.longitude) for x in objs])
+	print config.TEMPLATE_DIRS
 	return render_to_response('homepage.html',{'recent' : recent, 'recent_items' : objs})
 
 def google_maps_items(events):
