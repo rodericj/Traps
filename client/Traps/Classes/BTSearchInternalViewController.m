@@ -121,14 +121,13 @@
 	
 	NSInteger row = [indexPath row];
 	if(venueDetailView != nil){
-		[venueDetailView release];
-	}
+		venueDetailView = nil;
+	}	
 	BTVenueDetailView *aVenueDetail = [[BTVenueDetailView alloc] init];
 	venueDetailView = aVenueDetail;
 	
 	NSDictionary *venue = [venues objectAtIndex:row];
 	NSLog(@"selected %d", [indexPath row]);
-	//venueDetailView.title = [venue objectForKey:@"name"];
 	
 	NSLog(@"loading each row %@", venueDetailView.title);
 	
@@ -136,8 +135,6 @@
 	[venueDetailView updateVenueDetails:venue];
 	
 	[self.navigationController pushViewController:venueDetailView animated:TRUE];
-	//BoobyTrap3AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
-	//[delegate.dropTrapsNavController pushViewController:venueDetailView animated:YES];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
