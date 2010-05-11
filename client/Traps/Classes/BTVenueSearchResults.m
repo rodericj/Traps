@@ -69,7 +69,6 @@
 	location.latitude = [[venueInfo objectForKey:@"geolat"] doubleValue];
 	location.longitude = [[venueInfo objectForKey:@"geolong"] doubleValue];
 	
-	[dropTrapsButton setEnabled:FALSE];
 	pin = [[BTVenueAnnotation alloc] initWithCoordinate:location];
 	[mapView addAnnotation:pin];
 }
@@ -259,6 +258,7 @@
 }
 
 - (void)dropTrapButtonPushed{
+	[dropTrapsButton setEnabled:FALSE];
 	if(inventoryView == nil){
 		inventoryView = [[BTUserInventoryTableView alloc] init];
 	}
