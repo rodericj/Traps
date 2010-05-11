@@ -225,9 +225,28 @@
 	
 	//put button on View
 	[cell.contentView addSubview:searchButton];
+	
+	NSLog(@"adding tmp button");
+	//The temporary solution for clearing user data
+	CGRect aButtonFrame = CGRectMake(300, 30, 15, 15);
+	UIButton *asearchButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+	asearchButton.frame = aButtonFrame;
+	//[asearchButton setImage:[UIImage imageNamed:@"happydude.png"] forState:UIControlStateNormal];
+	[asearchButton addTarget:self action:@selector(clearCredentials) 
+		   forControlEvents:UIControlEventTouchUpInside];	
+	[cell.contentView addSubview:asearchButton];
+
+	
 	return cell;
 }
-
+- (void)clearCredentials {
+	MPOAuthAPI *_oauthAPI = [[BTUserProfile sharedBTUserProfile] _oauthAPI];
+	[_oauthAPI discardCredentials];
+	UIAlertView *alert;
+	alert = [[UIAlertView alloc] initWithTitle:@"OAuth" message:@"OAuth credentials cleared" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil]; 
+	[alert show];
+	[alert release];
+}
 - (void)dropTrapButtonPushed{
 	[self.tabBarController setSelectedIndex:1];	
 }

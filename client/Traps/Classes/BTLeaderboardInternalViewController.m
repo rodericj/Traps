@@ -146,7 +146,6 @@
 
 	NSString *reuseId = [NSString stringWithFormat:@"home%d", [indexPath row]];
 	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseId];
-	NSLog(@"cell for row at %d", [indexPath row]);
 	if (friendsWithApp == nil) {
 		cell = [self getBlankCell:reuseId];
 	}

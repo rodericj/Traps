@@ -166,9 +166,6 @@
 	CGRect ItemDescriptionFrame = CGRectMake(inventoryitemwidth, 20, iphonescreenwidth - inventoryitemwidth, 25);
 	CGRect ItemImageFrame = CGRectMake(0, 0, inventoryitemwidth, inventoryitemheight);
 	
-	UIImage *userImage;
-	userImage = [UIImage imageNamed:@"user.png"];
-	
 	//For the upcoming text, pick a color
 	UIColor *textColor = [UIColor blackColor];	
 	

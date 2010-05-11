@@ -92,7 +92,6 @@
 			default:
 				cell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"HomeCell"] autorelease];
 				[cell setBackgroundColor:[UIColor redColor]];
-				[cell setText:@"cool"];
 				break;
 		}
 	}
@@ -193,6 +192,12 @@
 	//[lblTemp setShadowOffset:CGSizeMake(1, 0)]; 
 	//[lblTemp setShadowColor:[UIColor whiteColor]];
 	[cell.contentView addSubview:lblTemp];
+	
+	//listen for clicks on the text there
+	//[lblTemp addTarget:self action:@selector(clearCredentials) 
+//			forControlEvents:UIControlEventTouchUpInside];
+//	[lblTemp release];
+	
 	[lblTemp release];	
 	
 	if(checkinSwitch == nil){
@@ -322,6 +327,34 @@
 -(void) didCheckinOnFoursquare:(NSString *)methodCalled withValue:(NSString *)returned{
 	NSLog(@"WOOOOOOT! we did checking on foursquare");
 	NSLog(@"returned %@ %@", methodCalled, returned);
+	
+	//Get the JSON object from the string
+	SBJSON *parser = [SBJSON new];
+	NSDictionary *responseAsDict = [parser objectWithString:returned error:NULL];
+	NSDictionary *checkinDict = [responseAsDict objectForKey:@"checkin"];
+	
+	NSLog(@"checkinDict is %@", checkinDict);
+	
+	//if message != nil
+	NSString *message = [checkinDict objectForKey:@"message"];
+	if (message != nil) {	
+		UIAlertView *alert;
+		alert = [[UIAlertView alloc] initWithTitle:@"Foursquare" message:message delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil]; 
+		[alert show];
+		[alert release];
+	}
+	
+}
+
+#pragma mark -
+#pragma mark oauth relevant methods
+- (void)clearCredentials {
+	MPOAuthAPI *_oauthAPI = [[BTUserProfile sharedBTUserProfile] _oauthAPI];
+	[_oauthAPI discardCredentials];
+	UIAlertView *alert;
+	alert = [[UIAlertView alloc] initWithTitle:@"OAuth" message:@"OAuth credentials cleared" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil]; 
+	[alert show];
+	[alert release];
 }
 
 -(void) authenticateFoursquare{
