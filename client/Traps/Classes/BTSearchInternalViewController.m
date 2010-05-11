@@ -24,7 +24,7 @@
     if ((self = [super initWithStyle:UITableViewStylePlain]) == nil) {
 		return nil;
     }
-	
+			
 	//self.title = kSearchTitle;
 	
     return self;
@@ -53,6 +53,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
+	[self restartLocationGatheringIndicator];
+
+}
+-(void)restartLocationSearch{
+	[self restartLocationGatheringIndicator];
+	[self kickOffLocationManager];
+}
+-(void)restartLocationGatheringIndicator{
+	NSLog(@"restart indicator");
 	CGRect frame = CGRectMake(0.0, 0.0, 25.0, 25.0);
 	UIActivityIndicatorView *loading = [[UIActivityIndicatorView alloc] initWithFrame:frame];
 	[loading startAnimating];
@@ -68,17 +77,17 @@
 	loadingView.target = self;
 	//self.title = @"Locations";
 	self.navigationItem.rightBarButtonItem = loadingView;
-
 }
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-	NSLog(@"view will appear, find the location");
+- (void)kickOffLocationManager{
 	locationController = [[MyCLController alloc] init];
 	locationController.delegate = self;
 	locationController.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
 	[locationController.locationManager startUpdatingLocation];
-
+}
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+	NSLog(@"view will appear, find the location");
+	[self kickOffLocationManager];
 }
 
 
@@ -265,7 +274,11 @@
 	//UserProfile *userProfile = [UserProfile sharedSingleton];
 //	[userProfile setLocations:venueArray];
 
-	self.navigationItem.rightBarButtonItem = nil;
+	//self.navigationItem.rightBarButtonItem = nil;
+	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh 
+																						   target:self 
+																						   action:@selector(restartLocationSearch)];
+	
 	//[self didGetNearbyLocations];
 }
 

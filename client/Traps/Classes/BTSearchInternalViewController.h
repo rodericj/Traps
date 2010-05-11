@@ -31,5 +31,8 @@
 - (void)getNearbyLocations:(CLLocation *)location;
 - (void)locationUpdate:(CLLocation *)location; 
 - (void)locationError:(NSError *)error;
+- (void)restartLocationGatheringIndicator;
+- (void)kickOffLocationManager;
+
 
 @end
