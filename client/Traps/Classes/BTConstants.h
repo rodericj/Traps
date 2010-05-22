@@ -46,6 +46,7 @@
 #define foursquare_api_base			@"http://api.foursquare.com"
 #define foursquare_auth_url			@"http://www.foursquare.com/oauth/"
 
+#define CRASH_REPORTER_URL			@"http://crashreport.rodericj.webfactional.com/server/server/crash_v200.php"
 #define foursquare_venues_endpoint	@"v1/venues.json"
 #define foursquare_checkin_endpoint	@"v1/checkin.json"
 
