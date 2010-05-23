@@ -172,8 +172,9 @@
 
 	NSInteger row = [indexPath row];
 	NSString *CellIdentifier = [NSString stringWithFormat:@"home%d", row];
-	[cell setText:[NSString stringWithFormat:@"%d", row]];
+	//[cell setText:[NSString stringWithFormat:@"%d", row]];
 
+	[cell.textLabel setText:[NSString stringWithFormat:@"%d", row]];
 	if (cell == nil){
 		switch (row) {
 			case 0:

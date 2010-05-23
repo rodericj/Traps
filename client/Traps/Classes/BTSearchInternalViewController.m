@@ -147,7 +147,7 @@
 	
 	NSDictionary *currentVenue = [venues objectAtIndex:[indexPath row]];
 	
-	[cell setText:[currentVenue objectForKey:@"name"]];
+	[cell.textLabel setText:[currentVenue objectForKey:@"name"]];
     return cell;
 }
 
@@ -275,10 +275,18 @@
 	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh 
 																						   target:self 
 																						   action:@selector(restartLocationSearch)];
-	
+
 	//[self didGetNearbyLocations];
 }
 
+- (void)locationError:(NSError *)error{
+	//TODO handle this better.
+	NSLog(@"An error occured while getting the location");
+	UIAlertView *alert;
+	alert = [[UIAlertView alloc] initWithTitle:@"Location Error" message:@"Having some trouble getting your location. Try again." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil]; 
+	[alert show];
+	[alert release];
+}
 
 
 @end

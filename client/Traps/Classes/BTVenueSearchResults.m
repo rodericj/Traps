@@ -127,7 +127,7 @@
 			default:
 				cell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:@"HomeCell"] autorelease];
 				[cell setBackgroundColor:[UIColor redColor]];
-				[cell setText:@"cool"];
+				[cell.textLabel setText:@"cool"];
 				break;
 		}
 	}

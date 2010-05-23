@@ -18,6 +18,9 @@
 #import "BTNetwork.h"
 #import "BTUserProfile.h"
 
+#import "CrashReportSender.h"
+
+
 @implementation TrapsAppDelegate
 
 @synthesize window;
@@ -26,6 +29,13 @@
 #pragma mark Application lifecycle
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+	//if (![[NSUserDefaults standardUserDefaults] boolForKey: kAutomaticallySendCrashReports]) {
+	[[NSUserDefaults standardUserDefaults] setBool:TRUE forKey:kAutomaticallySendCrashReports];
+	
+	NSURL *crashUrl = [NSURL URLWithString:CRASH_REPORTER_URL];
+	[[CrashReportSender sharedCrashReportSender] sendCrashReportToURL:crashUrl delegate:self activateFeedback:FALSE];
+	//[[CrashReportSender sharedCrashReportSender] sendCrashReportToURL:crashUrl delegate:self 
+		//												  act:@"The Trap Game"];	
 	// setup tab bar
 	BTTabBarController *tabBarController = [BTTabBarController sharedTabBarController];
 	[window addSubview:tabBarController.view];

@@ -107,7 +107,7 @@
     }
     
     // Set up the cell...
-	[cell setText:@"userHistory"];
+	[cell.textLabel setText:@"userHistory"];
     return cell;
 }
 

@@ -12,6 +12,7 @@
 #import "BTUserProfile.h"
 #import <JSON/JSON.h>
 #import "MPOAuthAuthenticationMethodOAuth.h"
+#import "NSData+Base64.h"
 
 //#import "MPOAuthAPI.h"
 
