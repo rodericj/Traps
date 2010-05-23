@@ -56,10 +56,13 @@
 	[self restartLocationGatheringIndicator];
 
 }
+
 -(void)restartLocationSearch{
+	NSLog(@"restartLocationSearch");
 	[self restartLocationGatheringIndicator];
 	[self kickOffLocationManager];
 }
+
 -(void)restartLocationGatheringIndicator{
 	NSLog(@"restart indicator");
 	CGRect frame = CGRectMake(0.0, 0.0, 25.0, 25.0);
@@ -79,6 +82,8 @@
 	self.navigationItem.rightBarButtonItem = loadingView;
 }
 - (void)kickOffLocationManager{
+	NSLog(@"kickoff locatin manager");
+	
 	locationController = [[MyCLController alloc] init];
 	locationController.delegate = self;
 	locationController.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
@@ -89,8 +94,6 @@
 	NSLog(@"view will appear, find the location");
 	[self kickOffLocationManager];
 }
-
-
 
 - (void)viewDidDisappear:(BOOL)animated {
 	[super viewDidDisappear:animated];
@@ -120,9 +123,11 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	
 	NSInteger row = [indexPath row];
+	
 	if(venueDetailView != nil){
 		venueDetailView = nil;
 	}	
+	
 	BTVenueDetailView *aVenueDetail = [[BTVenueDetailView alloc] init];
 	venueDetailView = aVenueDetail;
 	
@@ -130,7 +135,6 @@
 	NSLog(@"selected %d", [indexPath row]);
 	
 	NSLog(@"loading each row %@", venueDetailView.title);
-	
 	
 	[venueDetailView updateVenueDetails:venue];
 	
@@ -282,10 +286,15 @@
 - (void)locationError:(NSError *)error{
 	//TODO handle this better.
 	NSLog(@"An error occured while getting the location");
+	
+	[locationController.locationManager stopUpdatingLocation];
+	
 	UIAlertView *alert;
 	alert = [[UIAlertView alloc] initWithTitle:@"Location Error" message:@"Having some trouble getting your location. Try again." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil]; 
 	[alert show];
 	[alert release];
+	[self.tabBarController setSelectedIndex:0];	
+
 }
 
 

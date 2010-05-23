@@ -393,9 +393,6 @@
 	//TODO the button is pushable 2x. boooo
 	NSString *responseString = [[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding];
 
-	//TODO Intentional error for crash reporting
-	[responseString release];
-	
 	SBJSON *parser = [SBJSON new];
 	NSDictionary* responseAsDictionary = [parser objectWithString:responseString error:NULL];
 
