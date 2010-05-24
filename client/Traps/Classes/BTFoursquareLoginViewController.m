@@ -49,6 +49,9 @@
 	[tableView setScrollEnabled:NO];
 	return 4;
 }
+-(void) cancelButtonPushed{
+	[self.parentViewController dismissModalViewControllerAnimated:YES];
+}
 
 -(void) authorize{
 	//[_oauthAPI discardCredentials];
@@ -207,7 +210,11 @@
 	UIButton *cancelButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
 	[cancelButton setTitle:@"Cancel" forState:UIControlStateNormal];
 	[cancelButton setFrame:cancelButtonFrame];
+	[cancelButton addTarget:self action:@selector(cancelButtonPushed) 
+		  forControlEvents:UIControlEventTouchUpInside];
+	
 	[cell addSubview:cancelButton];
+
 	
 	UILabel *lblTemp;
 	lblTemp = [[UILabel alloc] initWithFrame:unameLabel];

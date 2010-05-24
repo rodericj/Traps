@@ -16,6 +16,8 @@
 	NSString *viewDescription;
 	MPOAuthAPI *_oauthAPI;
 }
+
+-(void) cancelButtonPushed;
 -(void)foursquareCallback:(id)results;
 @property (nonatomic, retain) NSString *viewDescription;
 @end

@@ -288,16 +288,13 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				5FC04C1311A9DC7A008AEE74 /* Lib */,
 				5F72AFD011759AF800F8B7A0 /* NSData+Base64.h */,
 				5F72AFD111759AF800F8B7A0 /* NSData+Base64.m */,
 				CD885DAA114D5FA70002DFAF /* BTConstants.h */,
 				1D3623240D0F684500981E51 /* TrapsAppDelegate.h */,
 				1D3623250D0F684500981E51 /* TrapsAppDelegate.m */,
+				5FC04C1311A9DC7A008AEE74 /* Lib */,
 				CD885E97114D84C10002DFAF /* Model */,
-				5F20DBC911880C7700521BA3 /* MPOAuthFramework */,
-				5F7487B2114D9A4900A48653 /* Network */,
-				CD885E56114D80D40002DFAF /* FBConnect */,
 				CD885DA1114D5E5C0002DFAF /* Views + Controllers */,
 			);
 			path = Classes;
@@ -510,7 +507,10 @@
 		5FC04C1311A9DC7A008AEE74 /* Lib */ = {
 			isa = PBXGroup;
 			children = (
+				5F7487B2114D9A4900A48653 /* Network */,
+				5F20DBC911880C7700521BA3 /* MPOAuthFramework */,
 				5FC04C1411A9DC83008AEE74 /* CrashReport */,
+				CD885E56114D80D40002DFAF /* FBConnect */,
 			);
 			name = Lib;
 			sourceTree = "<group>";

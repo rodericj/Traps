@@ -377,11 +377,12 @@
 				if (foursquareLoginView == nil) {
 					foursquareLoginView = [[BTFoursquareLoginViewController alloc] init];
 					NSLog(@"we've got the foursquare view set up");
-					[foursquareLoginView setViewDescription:foursquarecheckinprefered];
 					NSLog(@"and we've set the text");
-					[self presentModalViewController:foursquareLoginView animated:YES];
 				}
-				
+				[foursquareLoginView setViewDescription:foursquarecheckinprefered];
+
+				[self presentModalViewController:foursquareLoginView animated:YES];
+
 				//return;
 			}
 		}
