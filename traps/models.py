@@ -52,7 +52,8 @@ class Venue(models.Model):
 				 'state':self.state,
 				 'coinValue':str(self.coinValue),
 				 'phone':self.phone,
-				 'checkinCount':str(self.checkinCount)
+				 'checkinCount':str(self.checkinCount),
+				 'chanceOfDrop':str(self.chanceOfDrop*100)+"%"
 				}
 
 	def __unicode__(self):
