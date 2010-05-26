@@ -50,7 +50,7 @@
 	return 4;
 }
 -(void) cancelButtonPushed{
-	[self.parentViewController dismissModalViewControllerAnimated:YES];
+	[self.parentViewController dismissModalViewControllerAnimated:NO];
 }
 
 -(void) authorize{
@@ -71,7 +71,7 @@
 	} else {
 		[_oauthAPI authenticate];
 	}
-	[self.parentViewController dismissModalViewControllerAnimated:YES];
+	[self.parentViewController dismissModalViewControllerAnimated:NO];
 
 }
 
@@ -126,7 +126,7 @@
 		NSLog(@"send back to %@", [self.parentViewController class]);
 		
 		//Put it away
-		[self.parentViewController dismissModalViewControllerAnimated:YES];
+		[self.parentViewController dismissModalViewControllerAnimated:NO];
 		
 		
 	}

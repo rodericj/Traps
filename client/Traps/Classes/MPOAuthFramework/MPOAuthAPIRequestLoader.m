@@ -152,15 +152,18 @@ NSString * const MPOAuthNotificationErrorHasOccurred		= @"MPOAuthNotificationErr
 #pragma mark -
 
 - (void)_interrogateResponseForOAuthData {
+	NSLog(@"_interrogateResponseForOAuthData");
 	NSString *response = self.responseString;
 	NSDictionary *foundParameters = nil;
 	NSInteger status = [(NSHTTPURLResponse *)[self.oauthResponse urlResponse] statusCode];
-	
+	NSLog(@"status is %d, response is: %@", status, response);
 	if ([response length] > 5 && [[response substringToIndex:5] isEqualToString:@"oauth"]) {
 		foundParameters = [MPURLRequestParameter parameterDictionaryFromString:response];
 		self.oauthResponse.oauthParameters = foundParameters;
 		
 		if (status == 401 || ([response length] > 13 && [[response substringToIndex:13] isEqualToString:@"oauth_problem"])) {
+			NSLog(@"_interrogateResponseForOAuthData 1");
+
 			NSString *aParameterValue = nil;
 			MPLog(@"oauthProblem = %@", foundParameters);
 			
@@ -189,11 +192,17 @@ NSString * const MPOAuthNotificationErrorHasOccurred		= @"MPOAuthNotificationErr
 																  userInfo:foundParameters];
 			}
 		} else if ([response length] > 11 && [[response substringToIndex:11] isEqualToString:@"oauth_token"]) {
+			NSLog(@"_interrogateResponseForOAuthData 2");
+
 			NSString *aParameterValue = nil;
 			MPLog(@"foundParameters = %@", foundParameters);
 
 			if ([foundParameters count] && (aParameterValue = [foundParameters objectForKey:@"oauth_token"])) {
+				NSLog(@"_interrogateResponseForOAuthData 3");
+
 				if (!self.credentials.requestToken && !self.credentials.accessToken) {
+					NSLog(@"_interrogateResponseForOAuthData 4");
+
 					[_credentials setRequestToken:aParameterValue];
 					[_credentials setRequestTokenSecret:[foundParameters objectForKey:@"oauth_token_secret"]];
 					
@@ -202,6 +211,7 @@ NSString * const MPOAuthNotificationErrorHasOccurred		= @"MPOAuthNotificationErr
 																	  userInfo:foundParameters];
 					
 				} else if (!self.credentials.accessToken && self.credentials.requestToken) {
+					NSLog(@"_interrogateResponseForOAuthData 5");
 					[_credentials setRequestToken:nil];
 					[_credentials setRequestTokenSecret:nil];
 					[_credentials setAccessToken:aParameterValue];
@@ -212,6 +222,7 @@ NSString * const MPOAuthNotificationErrorHasOccurred		= @"MPOAuthNotificationErr
 																	  userInfo:foundParameters];
 					
 				} else if (self.credentials.accessToken && !self.credentials.requestToken) {
+					NSLog(@"_interrogateResponseForOAuthData 6");
 					// replace the current token
 					[_credentials setAccessToken:aParameterValue];
 					[_credentials setAccessTokenSecret:[foundParameters objectForKey:@"oauth_token_secret"]];

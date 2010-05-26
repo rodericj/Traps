@@ -396,7 +396,7 @@
 				}
 				[foursquareLoginView setViewDescription:foursquarecheckinprefered];
 
-				[self presentModalViewController:foursquareLoginView animated:YES];
+				[self presentModalViewController:foursquareLoginView animated:NO];
 
 				//return;
 			}
