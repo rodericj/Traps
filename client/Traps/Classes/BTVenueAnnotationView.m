@@ -13,7 +13,6 @@
 @implementation BTVenueAnnotationView
 
 @synthesize venueName;
-@synthesize chanceOfDrop;
 @synthesize dudeIcon;
 
 - (id)initWithAnnotation:(id <MKAnnotation>)annotation reuseIdentifier:(NSString *)reuseIdentifier
@@ -47,10 +46,6 @@
 	[[UIColor whiteColor] set];
 	NSLog(@"venueName is %@", venueName);
 	[venueName drawInRect:CGRectMake(annotationxcoord, annotationxcoord, 100.0, 40.0) withFont:[UIFont systemFontOfSize:14.0]];
-	[chanceOfDrop drawInRect:CGRectMake(120.0, chanceofdropycoord, 50.0, 40.0) withFont:[UIFont systemFontOfSize:14.0]];
-	
-	NSString *chanceOfDropLabel = @"Chance of drop";
-	[chanceOfDropLabel drawInRect:CGRectMake(annotationxcoord, chanceofdropycoord, 130, 40) withFont:[UIFont systemFontOfSize:14]];
 	[[UIImage imageNamed:dudeIcon] drawInRect:CGRectMake(guyorigxcoord, guyorigycoord, guywidth, guyheight)];
 
 }

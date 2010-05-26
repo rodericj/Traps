@@ -118,7 +118,6 @@
 	annView.canShowCallout = YES;
 	annView.calloutOffset = CGPointMake(-5, 5);
 	[annView setVenueName:[venueInfo objectForKey:@"name"]];
-	[annView setChanceOfDrop:@"10%"];
 	[annView setDudeIcon:@"neutralDude.png"];
 	
 	UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];

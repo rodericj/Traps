@@ -107,7 +107,6 @@
 #pragma mark text coordinates
 #define annotationxcoord	10
 #define annotationycoord	5
-#define chanceofdropycoord	60
 
 #pragma mark -
 #pragma mark foursquare login view

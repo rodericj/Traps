@@ -132,10 +132,6 @@
 	venueDetailView = aVenueDetail;
 	
 	NSDictionary *venue = [venues objectAtIndex:row];
-	NSLog(@"selected %d", [indexPath row]);
-	
-	NSLog(@"loading each row %@", venueDetailView.title);
-	
 	[venueDetailView updateVenueDetails:venue];
 	
 	[self.navigationController pushViewController:venueDetailView animated:TRUE];
