@@ -36,6 +36,7 @@ class Venue(models.Model):
 	state = models.CharField(max_length=30)
 	zip = models.CharField(max_length=10)
 	coinValue = models.IntegerField(default=config.startVenueWithCoins)
+	chanceOfDrop = models.FloatField(default=config.startVenueWithChanceOfDrop)
 	phone = models.CharField(max_length=11)
 	item = models.ManyToManyField(Item, blank=True, null=True)
 	checkinCount = models.IntegerField(default=0)
