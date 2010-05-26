@@ -218,7 +218,8 @@
 	CGRect titleCellFrame = CGRectMake(0, 0, iphonescreenwidth, venuerowheight);
 	CGRect titleTextFrame = CGRectMake(25, 10, iphonescreenwidth, venuerowheight/4);
 	CGRect addressTextFrame = CGRectMake(25, venuerowheight/4, iphonescreenwidth, venuerowheight/4);
-	
+	CGRect ButtonFrame = CGRectMake(320/4, 50, 169, 36);
+
 	UITableViewCell *cell = [[[UITableViewCell alloc] initWithFrame:titleCellFrame 
 													reuseIdentifier:cellIdentifier] autorelease];
 	NSString *venueName = [venueInfo objectForKey:@"name"];
@@ -226,9 +227,18 @@
 
 	[cell setBackgroundColor:[UIColor blackColor]];
 	
-	searchButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-	[searchButton setBackgroundImage:[UIImage imageNamed:@"searchvenuebar.png"] forState:UIControlStateNormal];
-	searchButton.frame = titleCellFrame;
+	UIImageView *ProfileBarTmp;
+	ProfileBarTmp = [[UIImageView alloc] initWithFrame:titleCellFrame];
+	ProfileBarTmp.tag = 0;
+	 
+	UIImage *BarImage = [UIImage imageNamed:@"profilebar.png"];
+	[ProfileBarTmp setImage:BarImage];
+	[cell.contentView addSubview:ProfileBarTmp]; 
+	 
+	
+	searchButton = [UIButton buttonWithType:UIButtonTypeCustom];
+	[searchButton setBackgroundImage:[UIImage imageNamed:@"searchnow.png"] forState:UIControlStateNormal];
+	searchButton.frame = ButtonFrame;
 	[searchButton setBackgroundColor:[UIColor clearColor]];
 
 	//listen for clicks
@@ -266,6 +276,7 @@
 -(void)searchVenue{
 	NSString *vid = [NSString stringWithFormat:@"%@", [venueInfo objectForKey:@"id"]];
 	[searchButton setEnabled:FALSE];
+	[searchButton setShowsTouchWhenHighlighted:FALSE];
 	NSLog(@"checking into %@", vid);
 	MPOAuthAPI *_oauthAPI = [[BTUserProfile sharedBTUserProfile] _oauthAPI];
 	if([_oauthAPI isAuthenticated] && [checkinSwitch isOn]){
@@ -310,6 +321,11 @@
 	
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 
+	_spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+	[_spinner setFrame:CGRectMake(iphonescreenwidth/2-20, iphonescreenheight/2 - navbarheight - iphonetabbarheight - inventoryitemheight, 40, 40)];
+	[self.view addSubview:_spinner];
+	[_spinner startAnimating];
+	
 	[[BTNetwork sharedNetwork] performHttpOperationWithResponseObject:self
 													  methodSignature:NSStringFromSelector(@selector(didSearchVenue:))
 															   method:@"POST"
@@ -389,6 +405,8 @@
 }
 
 - (void)didSearchVenue:(id)returnData{ 
+	[_spinner stopAnimating];
+	[_spinner release];
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 	//TODO the button is pushable 2x. boooo
 	NSString *responseString = [[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding];

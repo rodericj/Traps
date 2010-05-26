@@ -20,6 +20,7 @@
 	UISwitch *checkinSwitch;
 	BTFoursquareLoginViewController *foursquareLoginView;
 	UIButton *searchButton;
+	UIActivityIndicatorView *_spinner;
 }
 - (void)updateVenueDetails:(NSDictionary *)venue;
 - (UITableViewCell *) getTitleCell:(NSString *)cellIdentifier;
