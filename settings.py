@@ -65,6 +65,8 @@ MEDIA_URL = config.MEDIA_URL
 # Examples: "http://foo.com/media/", "/media/".
 ADMIN_MEDIA_PREFIX = config.ADMIN_MEDIA_PREFIX
 
+LOGIN_URL = '/admin'
+
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'yd_9ogfx_!&0$qk^l(_3gcemx8r81d))4tab1xs98d_dhkf0z#'
 
