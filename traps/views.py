@@ -1,5 +1,8 @@
 from django.shortcuts import HttpResponse, HttpResponseRedirect, render_to_response, get_object_or_404
+
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+
 from Traps.traps.models import Venue, Item, TrapsUser, VenueItem, Event
 import urllib
 import config
@@ -8,6 +11,7 @@ from datetime import datetime
 from django.utils import simplejson
 from django.contrib.auth.models import User
 from django.db.models import Count
+
 from django.core.exceptions import ObjectDoesNotExist
 try:
 	import urbanairship
@@ -106,8 +110,8 @@ def trapWasHere(user, venue, itemsThatAreTraps):
 	totalDamage = 0
 	trapData = [] 
 	for trap in itemsThatAreTraps:
-		#TODO see if they have a sheild
-		#TODO see if there was a multiplier on the trap
+		#TODO v2 see if they have a shield
+		#TODO v2 see if there was a multiplier on the trap
 		totalDamage += trap.item.value
 		trapData.append({'trapname':trap.item.name,'trapvalue':trap.item.value, 'trapperid':trap.user_id, 'trappername':trap.user.user.username})
 		trap.dateTimeUsed = datetime.now() 
@@ -187,8 +191,6 @@ def set_trap(request):
 		item = alltraps[0].item
 		#put this item on the VenueItem table	
 		venue.venueitem_set.create(item=item, user=user)
-		#TODO I'm not defining WHICH trap I'm setting here
-		#TODO actually this is kinda messy. I need to find only the holding traps
 		armedTrap = user.useritem_set.get(id=alltraps[0].id)
 		armedTrap.delete()
 		#armedTrap.isHolding=False
@@ -216,15 +218,7 @@ def giveItemsAtVenueToUser(user, nonTrapVenueItems):
 		#nonTrap.count -= 1
 		nonTrap.save()
 
-		#TODO Revisit this idea here. No more count for UserItemo	Keep in mind that there IS a count at the VenueItem level
-		#try:
-			#item = user.useritem_set.get(item=nonTrap.item)
-		#except:
-			#item = user.useritem_set.create(item=nonTrap.item)	
 		item = user.useritem_set.create(item=nonTrap.item)	
-		#item.count += 1
-		#item.save()
-
 #@tb
 def search_venue(request, vid=None):
 	"""
@@ -328,6 +322,7 @@ def search_venue(request, vid=None):
 
 	return HttpResponse(simplejson.dumps(ret), mimetype='application/json')
 
+@login_required
 def show_all_traps_set(request):
 	"""
 	The admin view for showing all of the traps that are in the system.
