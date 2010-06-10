@@ -279,6 +279,8 @@
 	[searchButton setShowsTouchWhenHighlighted:FALSE];
 	NSLog(@"checking into %@", vid);
 	MPOAuthAPI *_oauthAPI = [[BTUserProfile sharedBTUserProfile] _oauthAPI];
+	NSLog(@"The shared oauthAPI object is");
+	NSLog(@"%@", _oauthAPI);
 	if([_oauthAPI isAuthenticated] && [checkinSwitch isOn]){
 		NSLog(@"YESSSSSSS lets do the checkin!!!!");
 		NSLog(@"we are supposed to checkin");
@@ -300,6 +302,10 @@
 		NSLog(@"ok, we either not authenticated or not suppoesd to checkin or both");
 		if([_oauthAPI isAuthenticated]){
 			NSLog(@"we are authenticated....");
+		}
+		else{
+			NSLog(@"so what is the authentication state?");
+			NSLog(@"%@", [_oauthAPI authenticationState]);
 		}
 		if([checkinSwitch isOn]){
 			NSLog(@"we are supposed to checkin");
@@ -343,10 +349,11 @@
 -(void) didCheckinOnFoursquare:(NSString *)methodCalled withValue:(NSString *)returned{
 	NSLog(@"WOOOOOOT! we did checking on foursquare");
 	NSLog(@"returned %@ %@", methodCalled, returned);
-	
+	BOOL gotSomething = FALSE;
 	//Get the JSON object from the string
 	SBJSON *parser = [SBJSON new];
 	NSDictionary *responseAsDict = [parser objectWithString:returned error:NULL];
+	NSLog(@"Response as dict is %@", responseAsDict);
 	NSDictionary *checkinDict = [responseAsDict objectForKey:@"checkin"];
 	
 	NSLog(@"checkinDict is %@", checkinDict);
@@ -359,6 +366,17 @@
 		[alert show];
 		[alert release];
 	}
+	
+	//if message != nil
+	NSString *unauthorized = [responseAsDict objectForKey:@"unauthorized"];
+	NSLog(@"unauth %@", unauthorized);
+	if (unauthorized != nil) {	
+		UIAlertView *alert;
+		alert = [[UIAlertView alloc] initWithTitle:@"Foursquare unauthorized" message:unauthorized delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil]; 
+		[alert show];
+		[alert release];
+	}
+	
 	
 }
 
@@ -381,10 +399,12 @@
 			NSLog(@"Switched the switch ");
 			MPOAuthAPI *_oauthAPI = [[BTUserProfile sharedBTUserProfile] _oauthAPI];
 			NSLog(@"the credential for access token is %@", [_oauthAPI credentialNamed:MPOAuthCredentialAccessTokenKey]);
+			NSLog(@"Authentication state is more important... object: %@ %d", _oauthAPI, [_oauthAPI authenticationState]);
+			//if([_oauthAPI credentialNamed:MPOAuthCredentialAccessTokenKey] != nil){
+			if([_oauthAPI authenticationState] == MPOAuthAuthenticationStateAuthenticated){
 
-			if([_oauthAPI credentialNamed:MPOAuthCredentialAccessTokenKey] != nil){
-			// #TODO. For some reason we are getting authenticated here. That's not right
-				NSLog(@"the access token key is not nil, so you should be able to log in.");
+				// #TODO. For some reason we are getting authenticated here. That's not right
+				NSLog(@"We are authenticated, so you should be able to log in.");
 				
 			}
 			else{

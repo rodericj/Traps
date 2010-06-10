@@ -217,7 +217,7 @@
 		[params addObject:lonParam];
 		NSLog(@"the params are %@", params);
 		NSLog(@"so we've got the api object, lets try to make a call");
-		//[_oauthAPI performMethod:foursquare_venues_endpoint atURL:_oauthAPI.baseURL withParameters:params withTarget:self andAction:@selector(didGetNearbyLocations:)];
+	//	[_oauthAPI performMethod:foursquare_venues_endpoint atURL:_oauthAPI.baseURL withParameters:params withTarget:self andAction:@selector(didGetNearbyLocations:)];
 	
 		[[BTNetwork sharedNetwork] performHttpOperationWithResponseObject:self
 														  methodSignature:NSStringFromSelector(@selector(didGetNearbyLocations:))
@@ -234,13 +234,15 @@
 }
 - (void)didGetNearbyLocations:(id)responseString{
 	NSLog(@"did get nearby locations");
-	NSString *res = [[NSString alloc] initWithData:responseString encoding:NSUTF8StringEncoding];
+	NSLog(@"responseString as id is %@", responseString);
 	NSLog(@"it was a valid string");
+	NSString *res;
 	if ([responseString isKindOfClass:[NSError class]]) {
 		NSLog(@"code %d, domain %@", [responseString code], [responseString domain]);
+		if ([responseString code] == -1001) {
+			NSLog(@"this is a timeout");
+		}
 		if ([responseString code] == 400) {
-		//if (FALSE) {
-		//if (TRUE) {
 			NSLog(@"We've got a rate limiting situation. Let's show the modular view");
 			if (foursquareLoginView == nil) {
 				foursquareLoginView = [[BTFoursquareLoginViewController alloc] init];
@@ -251,11 +253,13 @@
 		}
 		else{
 			NSLog(@"default to jackson street because there was an error");
-			responseString = @"{\"groups\":[{\"type\":\"Nearby\",\"venues\":[{\"id\":86638,\"name\":\"Joe Greenstein's\",\"address\":\"1740 Jackson St.\",\"city\":\"San Francisco\",\"state\":\"CA\",\"geolat\":37.7938,\"geolong\":-122.424,\"stats\":{\"herenow\":\"0\"},\"distance\":31},{\"id\":1235744,\"name\":\"1800 Washington Street\",\"address\":\"1800 Washington Street\",\"city\":\"San Francisco\",\"state\":\"CA\",\"geolat\":37.793433,\"geolong\":-122.423426,\"stats\":{\"herenow\":\"0\"},\"distance\":36}]}]}";
+			res = @"{\"groups\":[{\"type\":\"Nearby\",\"venues\":[{\"id\":86638,\"name\":\"Joe Greenstein's\",\"address\":\"1740 Jackson St.\",\"city\":\"San Francisco\",\"state\":\"CA\",\"geolat\":37.7938,\"geolong\":-122.424,\"stats\":{\"herenow\":\"0\"},\"distance\":31},{\"id\":1235744,\"name\":\"1800 Washington Street\",\"address\":\"1800 Washington Street\",\"city\":\"San Francisco\",\"state\":\"CA\",\"geolat\":37.793433,\"geolong\":-122.423426,\"stats\":{\"herenow\":\"0\"},\"distance\":36}]}]}";
 		}
 	}
 	else{
 		NSLog(@"Did get location and it was not an error");
+		res = [[NSString alloc] initWithData:responseString encoding:NSUTF8StringEncoding];
+
 	}
 	SBJSON *parser = [SBJSON new];
 	NSDictionary* webRequestResults = [parser objectWithString:res error:NULL];

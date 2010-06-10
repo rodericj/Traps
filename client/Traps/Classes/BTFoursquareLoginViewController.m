@@ -11,7 +11,7 @@
 #import "BTNetwork.h"
 #import "BTUserProfile.h"
 #import <JSON/JSON.h>
-#import "MPOAuthAuthenticationMethodOAuth.h"
+#import "MPOAuthAuthenticationMethodAuthExchange.h"
 #import "NSData+Base64.h"
 
 //#import "MPOAuthAPI.h"
@@ -55,24 +55,44 @@
 
 -(void) authorize{
 	//[_oauthAPI discardCredentials];
-
-	if (!_oauthAPI) {
-		NSDictionary *credentials = [NSDictionary dictionaryWithObjectsAndKeys:	
-									 oauth_key, kMPOAuthCredentialConsumerKey,
-									 oauth_secret, kMPOAuthCredentialConsumerSecret,
-									 [unameTextField text], kMPOAuthCredentialUsername,
-									 [passwordTextField text], kMPOAuthCredentialPassword,
-									 nil];
-		_oauthAPI = [[MPOAuthAPI alloc] initWithCredentials:credentials
-										  authenticationURL:[NSURL URLWithString:foursquare_auth_url]
-												 andBaseURL:[NSURL URLWithString:foursquare_api_base]];
-		
-		[(MPOAuthAuthenticationMethodOAuth *)[_oauthAPI authenticationMethod] setDelegate:(id <MPOAuthAuthenticationMethodOAuthDelegate>)[UIApplication sharedApplication].delegate];
-	} else {
-		[_oauthAPI authenticate];
+	NSString *uname = [unameTextField text];
+	NSString *password = [passwordTextField text];
+	if(!uname || !password){
+		UIAlertView *alert;
+		alert = [[UIAlertView alloc] initWithTitle:@"Missing Credentials" message:@"Must pass in username and password" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil]; 
+		[alert show];
+		[alert release];
 	}
-	[self.parentViewController dismissModalViewControllerAnimated:NO];
-
+	else{
+		
+		_oauthAPI = [[BTUserProfile sharedBTUserProfile] _oauthAPI];
+		NSLog(@"the _oauthAPI object inside BTFoursquareLoginViewController: %@", _oauthAPI);
+		//For some reason I am not getting the old oauthAPI object from the UserProfile....I'll comment this out and get that now.
+		if (![_oauthAPI isAuthenticated]) {
+			NSLog(@"Authorize was called, we are not authenticated");
+			NSDictionary *credentials = [NSDictionary dictionaryWithObjectsAndKeys:	
+										 oauth_key, kMPOAuthCredentialConsumerKey,
+										 oauth_secret, kMPOAuthCredentialConsumerSecret,
+										 [unameTextField text], kMPOAuthCredentialUsername,
+										[passwordTextField text], kMPOAuthCredentialPassword,
+										 nil];
+			_oauthAPI = [[MPOAuthAPI alloc] initWithCredentials:credentials
+											  authenticationURL:[NSURL URLWithString:foursquare_auth_url]
+													 andBaseURL:[NSURL URLWithString:foursquare_api_base]];
+			NSLog(@"the _oauthAPI object that we just created inside BTFoursquareLoginViewController: %@", _oauthAPI);
+			NSLog(@"the shared one is %@", [[BTUserProfile sharedBTUserProfile] _oauthAPI]);
+			[[BTUserProfile sharedBTUserProfile] set_oauthAPI:_oauthAPI];
+			[(MPOAuthAuthenticationMethodAuthExchange *)[_oauthAPI authenticationMethod] setDelegate:(id <MPOAuthAuthenticationMethodOAuthDelegate>)[UIApplication sharedApplication].delegate];
+		} else {
+			NSLog(@"we are authenticated? So authenticate???? What?!?!");
+			[_oauthAPI authenticate];
+		}
+		if([_oauthAPI credentialNamed:MPOAuthCredentialAccessTokenKey] != nil){
+			NSLog(@"we do not have a accesstokenkey");
+		}
+		//NSLog(@"%@", [_oauthAPI authenticationState]);
+		[self.parentViewController dismissModalViewControllerAnimated:NO];
+	}
 }
 
 

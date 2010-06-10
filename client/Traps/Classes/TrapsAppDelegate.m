@@ -119,8 +119,11 @@
 																	   deviceToken, @"deviceToken",
 																	   nil]
 															  headers:nil];
-	
-	
+}
+
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
+	NSLog(@"the callback to the application did happen");
+	return YES;
 }
 
 

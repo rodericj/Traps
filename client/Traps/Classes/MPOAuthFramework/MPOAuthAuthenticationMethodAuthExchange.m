@@ -56,6 +56,7 @@
 		NSDate *tokenExpiryDate = [NSDate dateWithTimeIntervalSinceReferenceDate:expiryDateInterval];
 		
 		if ([tokenExpiryDate compare:[NSDate date]] == NSOrderedAscending) {
+			NSLog(@"refreshAccesstoken. This means that we already have an access token and its refresh date has expired. ");
 			[self refreshAccessToken];
 		}
 	}	
@@ -72,8 +73,8 @@
 	NSString *allthedata = [[NSString alloc] initWithData:inData encoding:NSUTF8StringEncoding];
 	//const char *xmlCString = (const char *)[inData bytes];
 	const char *xmlCString = [allthedata UTF8String];
-	NSLog(@"the xml string is %@", allthedata);
-	[allthedata release];
+	NSLog(@"the xml string is %@", allthedata);		
+
 	
 	xmlParserCtxtPtr parserContext = xmlNewParserCtxt();
 	xmlDocPtr accessTokenXML = xmlCtxtReadMemory(parserContext, xmlCString, strlen(xmlCString), NULL, NULL, XML_PARSE_NOBLANKS);
@@ -81,13 +82,25 @@
 	xmlNodePtr currentNode = rootNode->children;
 	const char *currentNodeName = NULL;
 	
+	NSRange match;
+	match = [allthedata rangeOfString: @"<error>"];
+	if(match.location){
+		NSLog(@"we have an error here, should jump out");
+		//currentNodeName = xmlNodeGetContent(currentNode);
+
+		//NSLog(@"current node name is %@", [NSString stringWithUTF8String:(const char *) currentNodeName]);
+	}
+	[allthedata release];
+	
 	NSLog(@"going through each of the nodes");
 	xmlChar *tmp;
 	for ( ; currentNode; currentNode = currentNode->next) {
 		currentNodeName = (const char *)currentNode->name;
+		//currentNodeName = (const char *)currentNode->content;
 		tmp =  xmlNodeGetContent(currentNode);
 		NSLog(@"current node is %@", [NSString stringWithUTF8String:(const char *) tmp]);
 		NSLog(@"current node name is %@", [NSString stringWithUTF8String:(const char *) currentNodeName]);
+		//NSLog(@"current node name is %@", [NSString stringWithUTF8String:(const char *) currentNodeContent]);
 		
 		if (strcmp("oauth_token", currentNodeName) == 0) {
 			NSLog(@"setting the oauth_token");
@@ -101,13 +114,16 @@
 	}
 	NSLog(@"done going through each of the nodes");
 	if (accessToken && accessTokenSecret) {
+		NSLog(@"we have access token and accesstokensecret, should be authenticated at this point");
 		[self.oauthAPI removeCredentialNamed:kMPOAuthCredentialPassword];
 		[self.oauthAPI setCredential:accessToken withName:kMPOAuthCredentialAccessToken];
 		[self.oauthAPI setCredential:accessTokenSecret withName:kMPOAuthCredentialAccessTokenSecret];
+		[self.oauthAPI setAuthenticationState:MPOAuthAuthenticationStateAuthenticated];
 	}
-	
-	[self.oauthAPI setAuthenticationState:MPOAuthAuthenticationStateAuthenticated];
-	
+	NSLog(@"this oauthAPI object is:");
+	NSLog(@"%@", self.oauthAPI);
+	//[self.oauthAPI setAuthenticationState:MPOAuthAuthenticationStateAuthenticated];
+	NSLog(@"ending performedLoad:receivingData. object is %@, State is: %d", self.oauthAPI, [self.oauthAPI authenticationState]);
 	xmlFreeDoc(accessTokenXML);
 	xmlFreeParserCtxt(parserContext);
 }

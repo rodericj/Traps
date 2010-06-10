@@ -92,7 +92,8 @@ NSString * const MPOAuthNotificationErrorHasOccurred		= @"MPOAuthNotificationErr
 - (void)loadSynchronously:(BOOL)inSynchronous {
 	NSAssert(_credentials, @"Unable to load without valid credentials");
 	NSAssert(_credentials.consumerKey, @"Unable to load, credentials contain no consumer key");
-	
+	NSLog(@"LoadSynchronously");
+
 	if (!inSynchronous) {
 		[MPOAuthConnection connectionWithRequest:self.oauthRequest delegate:self credentials:self.credentials];
 	} else {
@@ -135,15 +136,15 @@ NSString * const MPOAuthNotificationErrorHasOccurred		= @"MPOAuthNotificationErr
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
-	NSLog(@"did finish loading");
+	NSLog(@"MPOAuthAPIRequestLoader did finish loading");
 	[self _interrogateResponseForOAuthData];
 	NSLog(@"did finish interrogating");
 	if (_action) {
 		if ([_target conformsToProtocol:@protocol(MPOAuthAPIInternalClient)]) {
-			NSLog(@"first part of if");
+			NSLog(@"Target does conform to protocol");
 			[_target performSelector:_action withObject:self withObject:self.data];
 		} else {
-			NSLog(@"second part of if %@", _target);
+			NSLog(@"Target does NOT conform to protocol second part of if %@", _target);
 			[_target performSelector:_action withObject:self.oauthRequest.url withObject:self.responseString];
 		}
 	}
@@ -156,7 +157,9 @@ NSString * const MPOAuthNotificationErrorHasOccurred		= @"MPOAuthNotificationErr
 	NSString *response = self.responseString;
 	NSDictionary *foundParameters = nil;
 	NSInteger status = [(NSHTTPURLResponse *)[self.oauthResponse urlResponse] statusCode];
-	NSLog(@"status is %d, response is: %@", status, response);
+	NSLog(@"status is %d, response length is %d, response is: %@", status, [response length], response);
+	//foundParameters = [MPURLRequestParameter parameterDictionaryFromString:response];
+	//NSLog(@"parameters are %@", foundParameters);
 	if ([response length] > 5 && [[response substringToIndex:5] isEqualToString:@"oauth"]) {
 		foundParameters = [MPURLRequestParameter parameterDictionaryFromString:response];
 		self.oauthResponse.oauthParameters = foundParameters;

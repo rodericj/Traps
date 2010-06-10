@@ -114,6 +114,7 @@ NSString * const MPOAuthAccessTokenURLKey					= @"MPOAuthAccessTokenURL";
 		sessionHandleParameter.value = credentials.sessionHandle;
 	}
 	
+	NSLog(@"refreshing access token with target of nil");
 	[self.oauthAPI performMethod:nil
 						   atURL:self.oauthGetAccessTokenURL
 				  withParameters:sessionHandleParameter ? [NSArray arrayWithObject:sessionHandleParameter] : nil

@@ -50,31 +50,19 @@ NSString * const MPOAuthTokenRefreshDateDefaultsKey		= @"MPOAuthAutomaticTokenRe
 }
 
 - (id)initWithCredentials:(NSDictionary *)inCredentials authenticationURL:(NSURL *)inAuthURL andBaseURL:(NSURL *)inBaseURL autoStart:(BOOL)aFlag {
-	NSLog(@"initWithCreds");
 	if (self = [super init]) {
-		NSLog(@"1");
 		self.authenticationURL = inAuthURL;
-		NSLog(@"2");
 		self.baseURL = inBaseURL;
 		self.authenticationState = MPOAuthAuthenticationStateUnauthenticated;
-		NSLog(@"3 credentials");
 		credentials_ = [[MPOAuthCredentialConcreteStore alloc] initWithCredentials:inCredentials forBaseURL:inBaseURL withAuthenticationURL:inAuthURL];
-		NSLog(@"creds");
-		NSLog(@"%@", credentials_);
 		self.authenticationMethod = [[MPOAuthAuthenticationMethod alloc] initWithAPI:self forURL:inAuthURL];	
-		NSLog(@"3.5");
 		self.signatureScheme = MPOAuthSignatureSchemeHMACSHA1;
-		NSLog(@"4");
 
 		activeLoaders_ = [[NSMutableArray alloc] initWithCapacity:10];
-		NSLog(@"all set up, lets authenticate");
 		if (aFlag) {
-			NSLog(@"authenticating");
 			[self authenticate];
-			NSLog(@"done authenticating");
 		}
 	}
-	NSLog(@"bounce out");
 	return self;	
 }
 
@@ -170,15 +158,8 @@ NSString * const MPOAuthTokenRefreshDateDefaultsKey		= @"MPOAuthAutomaticTokenRe
 	aRequest.HTTPMethod = inHTTPMethod;
 	loader.credentials = self.credentials;
 	loader.target = inTarget;
-	NSLog(@"1");
 	loader.action = inAction ? inAction : @selector(_performedLoad:receivingData:);
-	NSLog(@"2");
-	//NSLog(@"credentials:  %@   target: %@   action %@", loader.credentials, loader.target, loader.action);
-	NSLog(@"3.1");
-	[loader loadSynchronously:NO];
-	NSLog(@"4");
-	//	[self.activeLoaders addObject:loader];
-	
+	[loader loadSynchronously:NO];	
 	[loader release];
 	[aRequest release];
 }
