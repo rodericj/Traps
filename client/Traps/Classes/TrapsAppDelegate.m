@@ -61,6 +61,11 @@
 	UITabBarItem *leaderboardItem = [[UITabBarItem alloc] initWithTitle:@"Leaderboard" image:leaderboardImage tag:0];
 	[leaderboard setTabBarItem:leaderboardItem];
 	
+	[leaderboardItem release];
+	[profileItem release];
+	[searchItem release];
+	[homeItem release];
+	
 	// add view controllers to tab bar
 	[tabBarController setViewControllers:[NSArray arrayWithObjects:
 										  home,

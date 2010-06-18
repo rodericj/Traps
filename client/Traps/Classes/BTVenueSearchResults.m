@@ -62,6 +62,7 @@
 	
 	SBJSON *parser = [SBJSON new];
 	NSDictionary* responseAsDictionary = [parser objectWithString:responseString error:NULL];
+	[parser release];
 	NSLog(@"response from dropping trap is %@", responseAsDictionary);
 	[mapView removeAnnotation:pin];
 	[searchResults setValue:yousetatrap forKey:@"alertStatement"];

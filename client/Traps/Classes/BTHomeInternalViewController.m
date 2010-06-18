@@ -74,7 +74,6 @@
 - (void) request:(FBRequest *)request didLoad:(id)result {
 	NSArray *users = result;
 	NSDictionary *user = [users objectAtIndex:0];
-	NSLog(@"the user returned was %@", user);
 	
 	BTUserProfile *profile = [BTUserProfile sharedBTUserProfile];
 	[profile setLastName:(NSString *)[user objectForKey:@"last_name"]];
@@ -89,9 +88,7 @@
 		UIImage *profileImage =	[UIImage imageWithData:photoData];
 		[profile setUserImage:profileImage];
 	}
-	
 	[self loadView];
-
 	[[BTNetwork sharedNetwork] performHttpOperationWithResponseObject:self
 								methodSignature:NSStringFromSelector(@selector(ProfileLoaded:))
 								method:@"POST"
@@ -130,10 +127,6 @@
 	[super viewDidDisappear:animated];
 	
 	//XXX: add code here
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 #pragma mark -
@@ -226,17 +219,6 @@
 	
 	//put button on View
 	[cell.contentView addSubview:searchButton];
-	
-	NSLog(@"adding tmp button");
-	//The temporary solution for clearing user data
-	CGRect aButtonFrame = CGRectMake(300, 30, 15, 15);
-	UIButton *asearchButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-	asearchButton.frame = aButtonFrame;
-	//[asearchButton setImage:[UIImage imageNamed:@"happydude.png"] forState:UIControlStateNormal];
-	[asearchButton addTarget:self action:@selector(clearCredentials) 
-		   forControlEvents:UIControlEventTouchUpInside];	
-	[cell.contentView addSubview:asearchButton];
-
 	
 	return cell;
 }
@@ -444,13 +426,14 @@
 #pragma mark BTHomeInternalViewController
 		 
 - (void)ProfileLoaded:(id)response {
-	
+	NSLog(@"profile loaded");
 	if ([response isKindOfClass:[NSError class]]) {
 		NSLog(@"test: response: error!!!: %@", response);		
 		return;
 	}
 	profileHasLoaded = TRUE;
 	NSString *responseString = [[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding];
+	NSLog(@"profile loaded. string: %@", responseString);
 
 	SBJSON *parser = [SBJSON new];
 	NSDictionary* responseAsDictionary = [parser objectWithString:responseString error:NULL];

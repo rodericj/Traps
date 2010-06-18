@@ -136,15 +136,11 @@ NSString * const MPOAuthNotificationErrorHasOccurred		= @"MPOAuthNotificationErr
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
-	NSLog(@"MPOAuthAPIRequestLoader did finish loading");
 	[self _interrogateResponseForOAuthData];
-	NSLog(@"did finish interrogating");
 	if (_action) {
 		if ([_target conformsToProtocol:@protocol(MPOAuthAPIInternalClient)]) {
-			NSLog(@"Target does conform to protocol");
 			[_target performSelector:_action withObject:self withObject:self.data];
 		} else {
-			NSLog(@"Target does NOT conform to protocol second part of if %@", _target);
 			[_target performSelector:_action withObject:self.oauthRequest.url withObject:self.responseString];
 		}
 	}

@@ -206,8 +206,8 @@
 		}
 		//	NSMutableArray *parameters = [NSMutableArray arrayWithObject:[[[MPURLRequestParameter alloc] initWithName:@"file" 
 //																										 andValue:@"vacation.jpg"] autorelease]];
-		MPURLRequestParameter *latParam = [[[MPURLRequestParameter alloc] init] autorelease];
-		MPURLRequestParameter *lonParam = [[[MPURLRequestParameter alloc] init] autorelease];
+		MPURLRequestParameter *latParam = [[MPURLRequestParameter alloc] init];
+		MPURLRequestParameter *lonParam = [[MPURLRequestParameter alloc] init];
 		[latParam setName:@"geolat"];
 		[latParam setValue:lat];
 		[lonParam setName:@"geolong"];
@@ -215,6 +215,8 @@
 		NSMutableArray *params = [[NSMutableArray alloc ] init];
 		[params addObject:latParam];
 		[params addObject:lonParam];
+
+		
 		NSLog(@"the params are %@", params);
 		NSLog(@"so we've got the api object, lets try to make a call");
 	//	[_oauthAPI performMethod:foursquare_venues_endpoint atURL:_oauthAPI.baseURL withParameters:params withTarget:self andAction:@selector(didGetNearbyLocations:)];
@@ -229,6 +231,9 @@
 																		   lon, @"geolong", 
 																		   nil] 
 																  headers:headers];
+		[latParam release];
+		[lonParam release];
+		[params release];
 	}
 	
 }
@@ -263,6 +268,7 @@
 	SBJSON *parser = [SBJSON new];
 	NSDictionary* webRequestResults = [parser objectWithString:res error:NULL];
 	[res release];
+	[parser release];
 
 	NSArray *groups = [webRequestResults objectForKey:@"groups"];
 

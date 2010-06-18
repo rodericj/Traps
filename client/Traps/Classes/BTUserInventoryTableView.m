@@ -70,6 +70,8 @@
 	}
 	
 	[self.tableView reloadData];
+	[userTraps release];
+	[parser release];
 }
 
 
