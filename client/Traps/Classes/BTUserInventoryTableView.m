@@ -108,10 +108,13 @@
 	}
 	[_spinner stopAnimating];
 	[_spinner release];
-    return [thisArray count];
+    return [thisArray count]+1;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+	if([indexPath row] == 0){
+		return 60;
+	}
 	return inventoryitemheight;
 }
 
@@ -123,34 +126,37 @@
 	[self.navigationController popViewControllerAnimated:TRUE];
 	
 }
-
 // Customize the appearance of table view cells.
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSArray *thisArray;
+//- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+//
+//    //static NSString *CellIdentifier = @"Cell";
+//	NSString *reuseId = [NSString stringWithFormat:@"home%d", [indexPath row]];
+//
+//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseId];
+//    if (cell == nil) {
+//       // cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+//		cell = [self getInventoryItemCell:reuseId item:[thisArray objectAtIndex:[indexPath row]]];
+//	}
+//        
+//	if (!trapsOnly) {
+//		cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//	}
+//	// Set up the cell...
+//    return cell;
+//}
+
+
+- (UITableViewCell *) getItemCell:(NSString *)cellIdentifier item:(NSUInteger)whichItem{
+	NSArray *thisArray;
 	if(trapsOnly){
 		thisArray = userTraps;
 	}
 	else{
 		thisArray = userInventory;
 	}
-    //static NSString *CellIdentifier = @"Cell";
-	NSString *reuseId = [NSString stringWithFormat:@"home%d", [indexPath row]];
 
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseId];
-    if (cell == nil) {
-       // cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
-		cell = [self getInventoryItemCell:reuseId item:[thisArray objectAtIndex:[indexPath row]]];
-	}
-        
-	if (!trapsOnly) {
-		cell.selectionStyle = UITableViewCellSelectionStyleNone;
-	}
-	// Set up the cell...
-    return cell;
-}
-
-
-- (UITableViewCell *) getInventoryItemCell:(NSString *)cellIdentifier item:(NSDictionary *)item{
+	NSDictionary *item = [thisArray objectAtIndex:whichItem];
+	
 	//name
 	NSString *itemName = [item objectForKey:@"name"];
 	NSString *itemDescription = [item objectForKey:@"note"];
@@ -158,6 +164,10 @@
 	CGRect CellFrame = CGRectMake(0, 0, iphonescreenwidth, inventoryitemheight);
 	UITableViewCell *cell = [[[UITableViewCell alloc] initWithFrame:CellFrame 
 													reuseIdentifier:cellIdentifier] autorelease];
+	
+	if (!trapsOnly) {
+		cell.selectionStyle = UITableViewCellSelectionStyleNone;
+	}
 	
 	CGRect ItemNameLabelFrame = CGRectMake(inventoryitemwidth, 0, iphonescreenwidth - inventoryitemwidth, 25);
 	CGRect ItemDescriptionFrame = CGRectMake(inventoryitemwidth, 20, iphonescreenwidth - inventoryitemwidth, 25);

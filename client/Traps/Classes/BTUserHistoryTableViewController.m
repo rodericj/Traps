@@ -95,45 +95,30 @@
     return 3;
 }
 
+- (UITableViewCell *) getItemCell:(NSString *)cellIdentifier item:(NSUInteger)whichItem{
+	CGRect CellFrame = CGRectMake(0, 0, iphonescreenwidth, inventoryitemheight);
 
-// Customize the appearance of table view cells.
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    static NSString *CellIdentifier = @"Cell";
-    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
-    }
-    
-    // Set up the cell...
+	UITableViewCell *cell = [[[UITableViewCell alloc] initWithFrame:CellFrame 
+													reuseIdentifier:cellIdentifier] autorelease];
+	
+   // UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
 	[cell.textLabel setText:@"userHistory"];
-    return cell;
+	return cell;
 }
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:YES];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
+// Customize the appearance of table view cells.
+//- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+//    
+//    static NSString *CellIdentifier = @"Cell";
+//    
+//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+//    if (cell == nil) {
+//        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+//    }
+//    
+//    // Set up the cell...
+//	[cell.textLabel setText:@"userHistory"];
+//    return cell;
+//}
 
 - (void)didGetFeed:(id)response{
 	//NSLog(@"got the user feed for this user");
@@ -141,10 +126,10 @@
 		NSLog(@"test: response: error!!!: %@", response);		
 		return;
 	}
-	NSString *responseString = [[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding];
+	//NSString *responseString = [[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding];
 	
-	SBJSON *parser = [SBJSON new];
-	NSArray* responseAsArray = [parser objectWithString:responseString error:NULL];
+	//SBJSON *parser = [SBJSON new];
+	//NSArray* responseAsArray = [parser objectWithString:responseString error:NULL];
 	//NSLog(@"returned %@", responseAsArray);
 }
 

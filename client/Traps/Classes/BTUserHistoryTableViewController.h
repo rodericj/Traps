@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+#import "BTProfileInternalViewController.h"
 
-@interface BTUserHistoryTableViewController : UITableViewController {
+@interface BTUserHistoryTableViewController : BTProfileInternalViewController {
 
 }
 

@@ -349,7 +349,7 @@
 -(void) didCheckinOnFoursquare:(NSString *)methodCalled withValue:(NSString *)returned{
 	NSLog(@"WOOOOOOT! we did checking on foursquare");
 	NSLog(@"returned %@ %@", methodCalled, returned);
-	BOOL gotSomething = FALSE;
+	//BOOL gotSomething = FALSE;
 	//Get the JSON object from the string
 	SBJSON *parser = [SBJSON new];
 	NSDictionary *responseAsDict = [parser objectWithString:returned error:NULL];

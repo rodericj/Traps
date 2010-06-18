@@ -8,9 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+#import "BTProfileInternalViewController.h"
 
-
-@interface BTUserInventoryTableView : UITableViewController {
+@interface BTUserInventoryTableView : BTProfileInternalViewController {
 	NSArray *userInventory;
 	UIActivityIndicatorView *_spinner;
 	Boolean trapsOnly;
@@ -20,7 +20,7 @@
 @property (nonatomic, retain) NSArray *userInventory;
 @property Boolean trapsOnly;
 
-- (UITableViewCell *) getInventoryItemCell:(NSString *)cellIdentifier item:(NSDictionary *)item;
+- (UITableViewCell *) getItemCell:(NSString *)cellIdentifier item:(NSUInteger)whichItem;
 
 	
 @end

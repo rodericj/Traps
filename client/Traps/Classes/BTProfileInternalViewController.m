@@ -23,7 +23,7 @@
     }
 	
 	self.title = @"";//kProfileTitle;
-	segmentedControl = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"Activity",
+	segmentedControl = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects://@"Activity",
 																  @"Inventory",
 																  nil]];
 	//set up the segment control
@@ -137,13 +137,18 @@
 			[segmentedControl setFrame:CGRectMake((iphonescreenwidth-200)/2, 10, 200, 40)];
 			[cell addSubview:segmentedControl];
 			break;
-		case 1:
-			NSLog(@"");
-			UITableViewController *current = [segmentViews objectAtIndex:[segmentedControl selectedSegmentIndex]];
-			[cell addSubview:[current view]];
-			//}
-			break;
+		//case 1:
+//			NSLog(@"");
+//			UITableViewController *current = [segmentViews objectAtIndex:[segmentedControl selectedSegmentIndex]];
+//			[cell addSubview:[current view]];
+//			//}
+//			break;
 		default:
+			//getItemCell shouldn't take anything
+			//   -inventory getItemCell needs to determine which array to use
+			//   -userhistory is not defined yet
+			cell = [self getItemCell:reuseIdentifier item:[indexPath row]-1];
+
 			break;
 	}
 	cell.selectionStyle = UITableViewCellSelectionStyleNone;

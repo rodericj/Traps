@@ -7,7 +7,7 @@
 //
 
 #import "BTProfileNavigationController.h"
-#import "BTProfileInternalViewController.h"
+#import "BTUserInventoryTableView.h"
 
 @implementation BTProfileNavigationController
 
@@ -23,7 +23,7 @@
 													   tag:0]
 					   autorelease];
 	
-	BTProfileInternalViewController *internalViewController = [[BTProfileInternalViewController alloc] init];
+	BTUserInventoryTableView *internalViewController = [[BTUserInventoryTableView alloc] init];
 	[self pushViewController:internalViewController animated:YES];
 	
 	internalViewController.tabBarItem = self.tabBarItem;
