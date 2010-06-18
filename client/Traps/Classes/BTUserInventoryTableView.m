@@ -55,15 +55,12 @@
 	
 	SBJSON *parser = [SBJSON new];
 	NSDictionary* responseAsDictionary = [parser objectWithString:responseString error:NULL];
-	NSLog(@"returned from the server for inventory %@", responseAsDictionary);
+	//NSLog(@"returned from the server for inventory %@", responseAsDictionary);
 	userInventory = [[responseAsDictionary objectForKey:@"inventory"] copy];
-	NSLog(@"the inventory is %@ %@", userInventory, [userInventory class]);
 	userTraps = [[NSMutableArray alloc] init];
 	for (NSDictionary *item in userInventory){
 		NSString *type = [item objectForKey:@"type"];
 		if([type isEqual:@"TP"]){
-			NSLog(@"this one is a trap");
-			NSLog(@" %@", item);
 			[userTraps addObject:item];
 		}
 		else{

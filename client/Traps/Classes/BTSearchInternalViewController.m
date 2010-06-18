@@ -234,11 +234,10 @@
 }
 - (void)didGetNearbyLocations:(id)responseString{
 	NSLog(@"did get nearby locations");
-	NSLog(@"responseString as id is %@", responseString);
-	NSLog(@"it was a valid string");
 	NSString *res;
 	if ([responseString isKindOfClass:[NSError class]]) {
 		NSLog(@"code %d, domain %@", [responseString code], [responseString domain]);
+		//TODO we should handle this better. Instead of showing default my house, perhaps alert the user
 		if ([responseString code] == -1001) {
 			NSLog(@"this is a timeout");
 		}

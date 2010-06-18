@@ -32,7 +32,10 @@ else:
 	)
 
 
-yelp_api_key = 'Ad6eKfALxhzXVw_WqsWo7A'
+#URBANAIRSHIPAPPKEY='VsK3ssUxRzCQJ6Rs_Sf7wg'
+#URBANAIRSHIPMASTERSECRET='c_JO0OFcSNKPFhyM-3Jq2A'
+URBANAIRSHIPAPPKEY='EK_BtrOrSOmo95TTsAb_Fw'
+URBANAIRSHIPMASTERSECRET='vAixh-KLT5u0Ay8Xv6cf4Q'
 
 startVenueWithCoins = 3
 startVenueWithChanceOfDrop = .1 

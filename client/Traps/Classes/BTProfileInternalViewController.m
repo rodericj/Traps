@@ -98,10 +98,19 @@
 #pragma mark UITableView
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+	NSString *reuseIdentifier = [NSString stringWithFormat:@"%d", [indexPath row]];
+	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
+	
+	NSLog(@"heightForRow cell is %d %@", [indexPath row], cell);
+	
 	if([indexPath row] == 0){
+		NSLog(@"returning 60");
 		return 60;
 	}
-	return iphonescreenheight - 60 - navbarheight;
+	NSLog(@"returning 1000");
+	
+	//return iphonescreenheight - 60 - navbarheight;
+	return 1000;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -117,7 +126,7 @@
 	
 	NSString *reuseIdentifier = [NSString stringWithFormat:@"%d", [indexPath row]];
 	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
-	
+	NSLog(@"cellForRowAtIndexPath cell is %d, %@", [indexPath row], cell);
 	if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier] autorelease];
 	}

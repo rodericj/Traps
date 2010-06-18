@@ -136,7 +136,7 @@
 
 
 - (void)didGetFeed:(id)response{
-	NSLog(@"got the user feed for this user");
+	//NSLog(@"got the user feed for this user");
 	if ([response isKindOfClass:[NSError class]]) {
 		NSLog(@"test: response: error!!!: %@", response);		
 		return;
@@ -145,7 +145,7 @@
 	
 	SBJSON *parser = [SBJSON new];
 	NSArray* responseAsArray = [parser objectWithString:responseString error:NULL];
-	NSLog(@"returned %@", responseAsArray);
+	//NSLog(@"returned %@", responseAsArray);
 }
 
 

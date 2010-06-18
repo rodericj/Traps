@@ -328,9 +328,6 @@ def show_all_traps_set(request):
 	The admin view for showing all of the traps that are in the system.
 	This will need a bit of work and MUST require you to login as an admin.
 	"""
-	#TODO Must require login. Must lock this view down
-
-	#items = VenueItem.objects.all()
 	items = VenueItem.objects.filter(dateTimeUsed__exact=None)
 	VenueList = [i.objectify() for i in items]	
 	return render_to_response('ShowAllTrapsSet.html', {'VenueList':items})
@@ -432,7 +429,7 @@ def get_user_feed(request):
 	#ret = [i for i in ret if 
 	#don't update, must do something else
 	for i in ret:
-		#TODO Boooooo default to the first venue? Ghetto
+		#TODO v2 Boooooo default to the first venue? Ghetto
 		try:
 			if len(i['data1']) > 0:	
 				name = Venue.objects.get(id=i['data1']).name
