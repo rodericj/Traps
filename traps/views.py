@@ -3,16 +3,19 @@ from django.shortcuts import HttpResponse, HttpResponseRedirect, render_to_respo
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
-from Traps.traps.models import Venue, Item, TrapsUser, VenueItem, Event
 import urllib
-import config
 import operator
+
 from datetime import datetime
 from django.utils import simplejson
 from django.contrib.auth.models import User
 from django.db.models import Count
 
 from django.core.exceptions import ObjectDoesNotExist
+
+from Traps.traps.models import Venue, Item, TrapsUser, VenueItem, Event
+from lib.trapsdecorators import IsLoggedInDecorator
+import config
 try:
 	import urbanairship
 except:
@@ -368,10 +371,12 @@ def GetUserProfileFromProfile(user_profile):
 	profile['inventory'] = _get_user_inventory(user_profile.id)
 	return profile
 	
+@IsLoggedInDecorator
 def get_my_user_profile(request):
 	"""
 	Get's the logged in user's profile
 	"""
+	print "in get my"
 	user_profile = _get_or_create_profile(request.user)
 	return GetUserProfile(request, user_profile.id)
 
