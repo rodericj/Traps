@@ -29,15 +29,18 @@
 }
 - (void)viewDidAppear:(BOOL)animated{
 	int trap = [[BTUserProfile sharedBTUserProfile] selectedTrap];
+	NSLog(@"the selected trap is %d", trap);
 	[[BTUserProfile sharedBTUserProfile] setSelectedTrap:-1];
 	NSString *deviceToken = [[BTUserProfile sharedBTUserProfile] deviceToken];
 	
 	if(trap != -1){
+		NSLog(@"the trap has been selected, send to server");
 		NSString *vid = [NSString stringWithFormat:@"%@", [venueInfo objectForKey:@"id"]];
 		NSDictionary *profile = [searchResults objectForKey:@"profile"];
 		NSArray *inventory = [profile objectForKey:@"inventory"];
 		NSDictionary *inventoryItem = [inventory objectAtIndex:trap];
 		NSString *iid = [NSString stringWithFormat:@"%@", [inventoryItem objectForKey:@"id"]];
+		NSLog(@"the trap has been selected, send to server");
 		//Send the trap set request on trap
 		[[BTNetwork sharedNetwork] performHttpOperationWithResponseObject:self
 														  methodSignature:NSStringFromSelector(@selector(didDropTrap:))
@@ -58,8 +61,9 @@
 }
 
 -(void)didDropTrap:(id)returnData{
+	NSLog(@"didDropTrap");
 	NSString *responseString = [[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding];
-	
+	NSLog(@"responseString %@", responseString);
 	SBJSON *parser = [SBJSON new];
 	NSDictionary* responseAsDictionary = [parser objectWithString:responseString error:NULL];
 	[parser release];

@@ -882,7 +882,10 @@
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = ../;
+				HEADER_SEARCH_PATHS = (
+					"Lib//**",
+					/usr/include/libxml2,
+				);
 				OTHER_LDFLAGS = "-lcrypto";
 				PREBINDING = NO;
 				SDKROOT = iphoneos3.0;

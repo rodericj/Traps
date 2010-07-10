@@ -2,6 +2,7 @@ from django.conf.urls.defaults import *
 import os
 import config
 
+
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
 admin.autodiscover()
@@ -28,6 +29,7 @@ urlpatterns = patterns('',
     (r'^GetUserDropHistory/', 'Traps.traps.views.GetUserDropHistory'),
     (r'^GetVenue/(?P<vid>\d+)/', 'Traps.traps.views.GetVenue'),
     (r'^GetUserProfile/(?P<uid>\d*)/?', 'Traps.traps.views.GetUserProfile'),
+    #(r'^get_my_user_profile/', 'Traps.traps.views.get_my_user_profile'),
     (r'^get_my_user_profile/', 'Traps.traps.views.get_my_user_profile'),
     (r'^search_venue/', 'Traps.traps.views.search_venue'),
     (r'^search_venue/(?P<vid>\d+)/', 'Traps.traps.views.search_venue'),

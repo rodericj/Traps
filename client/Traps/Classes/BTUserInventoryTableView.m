@@ -70,7 +70,6 @@
 	}
 	
 	[self.tableView reloadData];
-	[userTraps release];
 	[parser release];
 }
 
@@ -123,8 +122,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	//TODO may need to conditionalize this for if we are in the select a trap to drop view
-	[[BTUserProfile sharedBTUserProfile] setSelectedTrap:[indexPath row]];
-
+	[[BTUserProfile sharedBTUserProfile] setSelectedTrap:[indexPath row]-1];
+	NSLog(@"we are setting in the singleton %d", [indexPath row]);
 	[self.navigationController popViewControllerAnimated:TRUE];
 	
 }
@@ -150,6 +149,7 @@
 
 - (UITableViewCell *) getItemCell:(NSString *)cellIdentifier item:(NSUInteger)whichItem{
 	NSArray *thisArray;
+	NSLog(@"getting item cell");
 	if(trapsOnly){
 		thisArray = userTraps;
 	}
@@ -157,6 +157,7 @@
 		thisArray = userInventory;
 	}
 
+	NSLog(@"the array to use is %@", thisArray);
 	NSDictionary *item = [thisArray objectAtIndex:whichItem];
 	
 	//name

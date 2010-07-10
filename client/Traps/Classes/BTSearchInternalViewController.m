@@ -201,7 +201,8 @@
 										 nil];
 			_oauthAPI = [[MPOAuthAPI alloc] initWithCredentials:credentials
 											  authenticationURL:[NSURL URLWithString:foursquare_auth_url]
-													 andBaseURL:[NSURL URLWithString:foursquare_api_base]];
+													 andBaseURL:[NSURL URLWithString:foursquare_api_base]
+													  autoStart:FALSE];
 			[[BTUserProfile sharedBTUserProfile] set_oauthAPI:_oauthAPI];
 		}
 		//	NSMutableArray *parameters = [NSMutableArray arrayWithObject:[[[MPURLRequestParameter alloc] initWithName:@"file" 

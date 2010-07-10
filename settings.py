@@ -4,8 +4,8 @@ import config
 
 PRODUCTION = config.PRODUCTION
 
-DEBUG = True
-#DEBUG = False
+#DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 TEMPLATE_DIRS = config.TEMPLATE_DIRS
 

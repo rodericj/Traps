@@ -65,6 +65,7 @@
 
 - (void)_performedLoad:(MPOAuthAPIRequestLoader *)inLoader receivingData:(NSData *)inData {
 	MPLog(@"loaded %@, and got:\n %@", inLoader, inData);
+	NSLog(@"loaded %@, and got:\n %@", inLoader, inData);
 	NSLog(@"performed load");
 	
 	NSString *accessToken = nil;
@@ -74,22 +75,28 @@
 	//const char *xmlCString = (const char *)[inData bytes];
 	const char *xmlCString = [allthedata UTF8String];
 	NSLog(@"the xml string is %@", allthedata);		
-
+	
+	NSRange match, matchBrace;
+	match = [allthedata rangeOfString: @"<error>"];
+	matchBrace = [allthedata rangeOfString:@"<"];
+	if(match.location || !matchBrace.location){
+		NSLog(@"we have an error here, should jump out");
+		//currentNodeName = xmlNodeGetContent(currentNode);
+		
+		//NSLog(@"current node name is %@", [NSString stringWithUTF8String:(const char *) currentNodeName]);
+	}
 	
 	xmlParserCtxtPtr parserContext = xmlNewParserCtxt();
 	xmlDocPtr accessTokenXML = xmlCtxtReadMemory(parserContext, xmlCString, strlen(xmlCString), NULL, NULL, XML_PARSE_NOBLANKS);
 	xmlNodePtr rootNode = xmlDocGetRootElement(accessTokenXML);
+	NSLog(@"rootNode");
 	xmlNodePtr currentNode = rootNode->children;
-	const char *currentNodeName = NULL;
-	
-	NSRange match;
-	match = [allthedata rangeOfString: @"<error>"];
-	if(match.location){
-		NSLog(@"we have an error here, should jump out");
-		//currentNodeName = xmlNodeGetContent(currentNode);
+	NSLog(@"currentNode");
 
-		//NSLog(@"current node name is %@", [NSString stringWithUTF8String:(const char *) currentNodeName]);
-	}
+	const char *currentNodeName = NULL;
+
+
+	NSLog(@"and release");
 	[allthedata release];
 	
 	NSLog(@"going through each of the nodes");
