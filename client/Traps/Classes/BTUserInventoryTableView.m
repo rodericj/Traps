@@ -163,6 +163,7 @@
 	//name
 	NSString *itemName = [item objectForKey:@"name"];
 	NSString *itemDescription = [item objectForKey:@"note"];
+	NSString *itemCount = [item objectForKey:@"count"];
 	
 	CGRect CellFrame = CGRectMake(0, 0, iphonescreenwidth, inventoryitemheight);
 	UITableViewCell *cell = [[[UITableViewCell alloc] initWithFrame:CellFrame 
@@ -172,8 +173,9 @@
 		cell.selectionStyle = UITableViewCellSelectionStyleNone;
 	}
 	
-	CGRect ItemNameLabelFrame = CGRectMake(inventoryitemwidth, 0, iphonescreenwidth - inventoryitemwidth, 25);
-	CGRect ItemDescriptionFrame = CGRectMake(inventoryitemwidth, 20, iphonescreenwidth - inventoryitemwidth, 25);
+	CGRect ItemNameLabelFrame = CGRectMake(inventoryitemwidth + 20, 0, iphonescreenwidth - inventoryitemwidth, 25);
+	CGRect ItemDescriptionFrame = CGRectMake(inventoryitemwidth, 20, iphonescreenwidth - 20, 25);
+	CGRect ItemCountFrame = CGRectMake(inventoryitemwidth, 0, 20, 25);
 	CGRect ItemImageFrame = CGRectMake(0, 0, inventoryitemwidth, inventoryitemheight);
 	
 	//For the upcoming text, pick a color
@@ -192,6 +194,15 @@
 	lblTemp.tag = 1;
 	[lblTemp setBackgroundColor:[UIColor clearColor]];
 	[lblTemp setText:itemDescription];
+	[lblTemp setAdjustsFontSizeToFitWidth:TRUE];
+	[lblTemp setTextColor:textColor];
+	[cell.contentView addSubview:lblTemp];
+	[lblTemp release];
+	
+	lblTemp = [[UILabel alloc] initWithFrame:ItemCountFrame];
+	lblTemp.tag = 1;
+	[lblTemp setBackgroundColor:[UIColor clearColor]];
+	[lblTemp setText:[NSString stringWithFormat:@"%@", itemCount] ];
 	[lblTemp setAdjustsFontSizeToFitWidth:TRUE];
 	[lblTemp setTextColor:textColor];
 	[cell.contentView addSubview:lblTemp];
