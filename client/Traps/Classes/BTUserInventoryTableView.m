@@ -21,6 +21,24 @@
 
 
 - (void)viewDidLoad {
+//	[[BTNetwork sharedNetwork] performHttpOperationWithResponseObject:self
+//													  methodSignature:NSStringFromSelector(@selector(ProfileLoaded:))
+//															   method:@"POST"
+//															   domain:kHTTPHost
+//														  relativeURL:django_get_my_user_profile
+//															   params:nil 
+//															  headers:nil];
+//	_spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+//	[_spinner setFrame:CGRectMake(iphonescreenwidth/2-20, iphonescreenheight/2 - navbarheight - iphonetabbarheight - inventoryitemheight, 40, 40)];
+//	[self.view addSubview:_spinner];
+//	[_spinner startAnimating];
+    
+	[super viewDidLoad];
+
+
+}
+
+- (void)viewDidAppear:(BOOL)animated{
 	[[BTNetwork sharedNetwork] performHttpOperationWithResponseObject:self
 													  methodSignature:NSStringFromSelector(@selector(ProfileLoaded:))
 															   method:@"POST"
@@ -28,19 +46,13 @@
 														  relativeURL:django_get_my_user_profile
 															   params:nil 
 															  headers:nil];
-    [super viewDidLoad];
-
-	NSLog(@"time to start up the spinner");
 	_spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
 	[_spinner setFrame:CGRectMake(iphonescreenwidth/2-20, iphonescreenheight/2 - navbarheight - iphonetabbarheight - inventoryitemheight, 40, 40)];
 	[self.view addSubview:_spinner];
 	[_spinner startAnimating];
-}
-
-
-
-- (void)viewWillAppear:(BOOL)animated {
 	
+}
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 }
 

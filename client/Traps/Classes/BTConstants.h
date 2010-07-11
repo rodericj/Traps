@@ -18,8 +18,8 @@
 #pragma mark -
 #pragma mark Application Sections
 
-//#define kHTTPHost	@"thetrapgame.com"
-#define kHTTPHost	@"192.168.1.114:8080"
+#define kHTTPHost	@"thetrapgame.com"
+//#define kHTTPHost	@"192.168.1.114:8080"
 //#define kHTTPHost	@"10.0.1.101:8080"
 //#define kHTTPHost  @"http://10.247.1.151:8000"
 
@@ -27,13 +27,13 @@
 #pragma mark django views
 
 #define django_login				@"iphone_login/"
-#define django_get_user_feed		@"get_user_feed"
+#define django_get_user_feed		@"get_user_feed/"
 #define django_search_venue			@"search_venue/"
 #define django_set_device_token		@"set_device_token/"
 #define django_logout				@"app_logout/"
 #define django_set_trap				@"set_trap/"
 #define django_get_my_user_profile	@"get_my_user_profile/"
-#define django_get_friends			@"get_friends"
+#define django_get_friends			@"get_friends/"
 
 #define oauth_key					@"1VPFYWEOQITVCFURSTB0PXKAEA5CBCMDKO2PXHPPIZI5RTYM"
 #define oauth_secret				@"ZEZ1HY0HYQORJG0YRKSI25VGCD3DRDMECS2URZHYXGRMK01R"
@@ -44,6 +44,11 @@
 #define foursquare_api				@"api.foursquare.com"
 #define foursquare_api_base			@"http://api.foursquare.com"
 #define foursquare_auth_url			@"http://www.foursquare.com/oauth/"
+
+#pragma mark -
+#pragma mark FB
+#define fbAppId						@"3243a6e2dd3a0d084480d05f301cba85"
+#define fbSecret					@"d8611553a286dce3531353b3de53ef2e"
 
 #define DEBUG 1
 
@@ -64,10 +69,7 @@
 #define kProfileTitle				@"Profile"
 #define kLeaderboardTitle			@"Leaderboard"
 
-#pragma mark -
-#pragma mark FB
-#define fbAppId						@"3243a6e2dd3a0d084480d05f301cba85"
-#define fbSecret					@"d8611553a286dce3531353b3de53ef2e"
+
 
 #pragma mark -
 #pragma mark general constants
