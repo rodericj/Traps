@@ -19,7 +19,7 @@
 #pragma mark Application Sections
 
 //#define kHTTPHost	@"thetrapgame.com"
-#define kHTTPHost	@"192.168.1.149:8080"
+#define kHTTPHost	@"192.168.1.114:8080"
 //#define kHTTPHost	@"10.0.1.101:8080"
 //#define kHTTPHost  @"http://10.247.1.151:8000"
 

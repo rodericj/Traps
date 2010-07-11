@@ -134,7 +134,7 @@
 		return 10;
 	}
 
-	return [friendsWithApp count];
+	return [friendsWithApp count]+4;
 
 }
 
@@ -150,9 +150,13 @@
 		cell = [self getBlankCell:reuseId];
 	}
 	else if(cell == nil){
-		cell = [self getFriendCell:reuseId friend:[friendsWithApp objectAtIndex:[indexPath row]]];
+		if( [indexPath row] >= [friendsWithApp count]){
+			cell = [self getBlankCell:reuseId];
+		}
+		else{
+			cell = [self getFriendCell:reuseId friend:[friendsWithApp objectAtIndex:[indexPath row]]];
+		}
 	}
-	
     return cell;
 }
 							
