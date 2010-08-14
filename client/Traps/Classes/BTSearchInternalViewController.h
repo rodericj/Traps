@@ -11,6 +11,7 @@
 #import "BTVenueDetailView.h"
 #import "BTFoursquareLoginViewController.h"
 
+#import "UITableViewController+NetworkErrorHandler.h"
 #import "MyCLController.h"
 
 @interface BTSearchInternalViewController : UITableViewController <MyCLControllerDelegate, UITableViewDataSource, UITableViewDelegate>{

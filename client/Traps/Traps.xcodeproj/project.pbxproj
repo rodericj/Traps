@@ -80,6 +80,7 @@
 		5FF230A01214EF12009A83CE /* SBJsonBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF230981214EF12009A83CE /* SBJsonBase.m */; };
 		5FF230A11214EF12009A83CE /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF2309A1214EF12009A83CE /* SBJsonParser.m */; };
 		5FF230A21214EF12009A83CE /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF2309C1214EF12009A83CE /* SBJsonWriter.m */; };
+		5FF230C61214FA4A009A83CE /* UITableViewController+NetworkErrorHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF230C51214FA4A009A83CE /* UITableViewController+NetworkErrorHandler.m */; };
 		5FF9348C1159F3EE00159ECA /* MyCLController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF9348B1159F3EE00159ECA /* MyCLController.m */; };
 		5FF9349B1159F70300159ECA /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FF9349A1159F70300159ECA /* CoreLocation.framework */; };
 		5FF9354C115B08AE00159ECA /* profilebar1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FF9354B115B08AE00159ECA /* profilebar1.png */; };
@@ -234,6 +235,8 @@
 		5FF2309A1214EF12009A83CE /* SBJsonParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonParser.m; sourceTree = "<group>"; };
 		5FF2309B1214EF12009A83CE /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
 		5FF2309C1214EF12009A83CE /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
+		5FF230C41214FA4A009A83CE /* UITableViewController+NetworkErrorHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableViewController+NetworkErrorHandler.h"; sourceTree = "<group>"; };
+		5FF230C51214FA4A009A83CE /* UITableViewController+NetworkErrorHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableViewController+NetworkErrorHandler.m"; sourceTree = "<group>"; };
 		5FF9348A1159F3EE00159ECA /* MyCLController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyCLController.h; sourceTree = "<group>"; };
 		5FF9348B1159F3EE00159ECA /* MyCLController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyCLController.m; sourceTree = "<group>"; };
 		5FF9349A1159F70300159ECA /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -301,6 +304,8 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				5FF230C41214FA4A009A83CE /* UITableViewController+NetworkErrorHandler.h */,
+				5FF230C51214FA4A009A83CE /* UITableViewController+NetworkErrorHandler.m */,
 				5F72AFD011759AF800F8B7A0 /* NSData+Base64.h */,
 				5F72AFD111759AF800F8B7A0 /* NSData+Base64.m */,
 				CD885DAA114D5FA70002DFAF /* BTConstants.h */,
@@ -832,6 +837,7 @@
 				5FF230A01214EF12009A83CE /* SBJsonBase.m in Sources */,
 				5FF230A11214EF12009A83CE /* SBJsonParser.m in Sources */,
 				5FF230A21214EF12009A83CE /* SBJsonWriter.m in Sources */,
+				5FF230C61214FA4A009A83CE /* UITableViewController+NetworkErrorHandler.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -863,13 +869,12 @@
 				INFOPLIST_FILE = "Traps-Info.plist";
 				LIBRARY_SEARCH_PATHS = "~/Library/SDKs//**";
 				OTHER_LDFLAGS = (
-					"-ljson",
 					"-lxml2",
 					"-ObjC",
 					"-all_load",
 				);
 				PRODUCT_NAME = Traps;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "6DA09193-AD0B-4917-A2E8-C1AED459198E";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "09270DB4-7FA2-43C2-ACD2-0FE6E8FAA126";
 			};
 			name = Debug;
 		};
@@ -888,10 +893,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Traps_Prefix.pch;
 				INFOPLIST_FILE = "Traps-Info.plist";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-ljson",
-				);
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = Traps;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "6DA09193-AD0B-4917-A2E8-C1AED459198E";
 				VALIDATE_PRODUCT = YES;
@@ -902,9 +904,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: roderic campbell";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: roderic campbell (6453R9QR3T)";
 				GCC_C_LANGUAGE_STANDARD = c99;
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
@@ -913,18 +915,18 @@
 				);
 				OTHER_LDFLAGS = "-lcrypto";
 				PREBINDING = NO;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "25573FD4-DE73-4F71-B43F-967896144CC3";
-				SDKROOT = iphoneos3.2;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "09270DB4-7FA2-43C2-ACD2-0FE6E8FAA126";
+				SDKROOT = iphoneos4.0;
 			};
 			name = Distribution;
 		};
 		5F17A2E011E95E2E00EF3395 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ADDITIONAL_SDKS = "$HOME/Library/SDKs/JSON/$(PLATFORM_NAME).sdk";
+				ADDITIONAL_SDKS = "";
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CODE_SIGN_ENTITLEMENTS = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: roderic campbell";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: roderic campbell (6453R9QR3T)";
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -933,12 +935,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Traps_Prefix.pch;
 				INFOPLIST_FILE = "Traps-Info.plist";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-ljson",
-				);
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = Traps;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "25573FD4-DE73-4F71-B43F-967896144CC3";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "09270DB4-7FA2-43C2-ACD2-0FE6E8FAA126";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Distribution;
@@ -947,7 +946,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: roderic campbell (6453R9QR3T)";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -957,12 +956,12 @@
 					/usr/include/libxml2,
 				);
 				OTHER_LDFLAGS = (
-					"-ljson",
 					"-lxml2",
 					"-ObjC",
 					"-all_load\n",
 				);
 				PREBINDING = NO;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "09270DB4-7FA2-43C2-ACD2-0FE6E8FAA126";
 				SDKROOT = iphoneos4.0;
 			};
 			name = Debug;
@@ -971,7 +970,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: roderic campbell (6453R9QR3T)";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -982,7 +981,8 @@
 				);
 				OTHER_LDFLAGS = "-lcrypto";
 				PREBINDING = NO;
-				SDKROOT = iphoneos3.2;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "09270DB4-7FA2-43C2-ACD2-0FE6E8FAA126";
+				SDKROOT = iphoneos4.0;
 			};
 			name = Release;
 		};

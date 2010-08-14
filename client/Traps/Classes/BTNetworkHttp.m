@@ -36,7 +36,7 @@ NSString *const kHTTPRequestError = @"HTTPRequestError";
 	
 	_responseObject = [responseObject retain];
 	_responseMethodSignature = [methodSignature retain];
-	
+	_responseMethodError = @"handleError";
 	return self;
 }
 
@@ -69,6 +69,7 @@ NSString *const kHTTPRequestError = @"HTTPRequestError";
 	
 	RELEASE_SAFELY(_responseObject);
 	RELEASE_SAFELY(_responseMethodSignature);
+	RELEASE_SAFELY(_responseMethodError);
 }
 
 #pragma mark -
@@ -158,8 +159,8 @@ NSString *const kHTTPRequestError = @"HTTPRequestError";
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
 	_finished = YES;
-	
-	SEL selector = NSSelectorFromString(_responseMethodSignature);
+	NSLog(@"Aight, so it failed, now do something");
+	SEL selector = NSSelectorFromString(_responseMethodError);
 	[_responseObject performSelectorOnMainThread:selector withObject:error waitUntilDone:NO];
 	
 	[self resetState];

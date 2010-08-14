@@ -10,7 +10,7 @@
 #import "BTNetwork.h"
 #import "BTConstants.h"
 
-#import <JSON/JSON.h>
+#import "JSON.h"
 @implementation BTUserHistoryTableViewController
 
 /*

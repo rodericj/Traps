@@ -13,7 +13,7 @@
 #import "BTUserProfile.h"
 #import "MPURLRequestParameter.h"
 
-#import <JSON/JSON.h>
+#import "JSON.h"
 
 @implementation BTVenueDetailView
 

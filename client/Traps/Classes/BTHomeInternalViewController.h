@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "FBConnect.h"
 #import "BTConstants.h"
+#import "UITableViewController+NetworkErrorHandler.h"
 
 @interface BTHomeInternalViewController : UITableViewController <UITableViewDataSource, FBRequestDelegate, FBSessionDelegate, FBDialogDelegate> {
 	FBSession *mySession;

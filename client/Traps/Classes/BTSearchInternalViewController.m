@@ -9,7 +9,7 @@
 #import "BTSearchInternalViewController.h"
 #import "BTNetwork.h"
 #import "BTUserProfile.h"
-#import <JSON/JSON.h>
+#import "JSON.h"
 #import "MPURLRequestParameter.h"
 
 @implementation BTSearchInternalViewController

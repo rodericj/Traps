@@ -20,7 +20,7 @@ extern NSString *const kHTTPRequestError;
 	
 	id _responseObject;
 	NSString *_responseMethodSignature;
-	
+	NSString *_responseMethodError;
 	NSMutableData	*_data;
 }
 

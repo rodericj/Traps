@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
+#import "UITableViewController+NetworkErrorHandler.h"
 #import "BTVenueSearchResults.h"
 #import "BTVenueAnnotation.h"
 #import "BTFoursquareLoginViewController.h"

@@ -14,7 +14,7 @@
 #import "BTConstants.h"
 
 //From: from http://iphonedevelopertips.com/cocoa/json-framework-for-iphone-part-2.html
-#import <JSON/JSON.h>
+#import "JSON.h"
 
 @implementation BTHomeInternalViewController
 

@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "BTConstants.h"
+#import "UITableViewController+NetworkErrorHandler.h"
 #import "FBConnect/FBConnect.h"
 
 @interface BTLeaderboardInternalViewController : UITableViewController <FBSessionDelegate, FBRequestDelegate>{

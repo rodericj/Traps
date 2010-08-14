@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
+#import "UITableViewController+NetworkErrorHandler.h"
 #import "BTUserInventoryTableView.h"
 #import "BTVenueAnnotation.h"
 

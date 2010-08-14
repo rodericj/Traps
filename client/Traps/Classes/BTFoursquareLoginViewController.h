@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "UITableViewController+NetworkErrorHandler.h"
 #import "MPOAuthAPI.h"
 
 @interface BTFoursquareLoginViewController : UITableViewController {

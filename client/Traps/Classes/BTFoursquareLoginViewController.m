@@ -10,7 +10,7 @@
 #import "BTConstants.h"
 #import "BTNetwork.h"
 #import "BTUserProfile.h"
-#import <JSON/JSON.h>
+#import "JSON.h"
 #import "MPOAuthAuthenticationMethodAuthExchange.h"
 #import "NSData+Base64.h"
 
