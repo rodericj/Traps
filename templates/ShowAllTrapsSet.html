@@ -3,7 +3,7 @@ Live Traps
 {% if VenueList %}
 {% for venueobj in VenueList %}
 <li>
-	<form action="/SearchVenue/" method="post">
+	<form action="/search_venue/" method="post">
 	{{venueobj.user.user.first_name}} {{venueobj.user.user.last_name}} left a {{venueobj.item.name}} at {{venueobj.venue.name}}:{{venueobj.venue.foursquareid}}
 	<input type="hidden" name="vid" value="{{venueobj.venue.foursquareid}}">
 	<input type="submit" value="Trigger the Trap" />
