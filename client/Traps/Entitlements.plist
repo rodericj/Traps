@@ -3,8 +3,8 @@
 <plist version="1.0">
 <dict>
 	<key>aps-environment</key>
-	<string></string>
+	<string>com.myeleye.trapgame</string>
 	<key>get-task-allow</key>
-	<true/>
+	<false/>
 </dict>
 </plist>

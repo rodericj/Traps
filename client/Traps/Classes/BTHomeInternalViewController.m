@@ -108,7 +108,6 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 	
-	//XXX: add code here
 }
 
 -(void)viewDidAppear:(BOOL)animated{

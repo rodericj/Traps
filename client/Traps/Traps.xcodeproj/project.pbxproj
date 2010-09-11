@@ -849,7 +849,7 @@
 			buildSettings = {
 				ADDITIONAL_SDKS = "$HOME/Library/SDKs/JSON/$(PLATFORM_NAME).sdk";
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
+				CODE_SIGN_ENTITLEMENTS = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: roderic campbell (6453R9QR3T)";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -874,7 +874,6 @@
 					"-all_load",
 				);
 				PRODUCT_NAME = Traps;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "09270DB4-7FA2-43C2-ACD2-0FE6E8FAA126";
 			};
 			name = Debug;
 		};
@@ -882,6 +881,49 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ADDITIONAL_SDKS = "$HOME/Library/SDKs/JSON/$(PLATFORM_NAME).sdk";
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_ENTITLEMENTS = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: roderic campbell";
+				COPY_PHASE_STRIP = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Traps_Prefix.pch;
+				INFOPLIST_FILE = "Traps-Info.plist";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = Traps;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "BE527BFB-A9A1-4319-B114-9E26C37EF2E6";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		5F17A2DF11E95E2E00EF3395 /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_ENTITLEMENTS = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: roderic campbell (6453R9QR3T)";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_VERSION = "";
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"Lib//**",
+					/usr/include/libxml2,
+				);
+				OTHER_LDFLAGS = "-lcrypto";
+				PREBINDING = NO;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "DAFD38EF-54B9-4546-9181-2A51CE266A55";
+				SDKROOT = iphoneos4.0;
+			};
+			name = Distribution;
+		};
+		5F17A2E011E95E2E00EF3395 /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ADDITIONAL_SDKS = "";
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: roderic campbell (6453R9QR3T)";
@@ -895,49 +937,7 @@
 				INFOPLIST_FILE = "Traps-Info.plist";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = Traps;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "6DA09193-AD0B-4917-A2E8-C1AED459198E";
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
-		5F17A2DF11E95E2E00EF3395 /* Distribution */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: roderic campbell (6453R9QR3T)";
-				GCC_C_LANGUAGE_STANDARD = c99;
-				GCC_VERSION = "";
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = (
-					"Lib//**",
-					/usr/include/libxml2,
-				);
-				OTHER_LDFLAGS = "-lcrypto";
-				PREBINDING = NO;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "09270DB4-7FA2-43C2-ACD2-0FE6E8FAA126";
-				SDKROOT = iphoneos4.0;
-			};
-			name = Distribution;
-		};
-		5F17A2E011E95E2E00EF3395 /* Distribution */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ADDITIONAL_SDKS = "";
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_ENTITLEMENTS = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: roderic campbell (6453R9QR3T)";
-				COPY_PHASE_STRIP = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)\"",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = Traps_Prefix.pch;
-				INFOPLIST_FILE = "Traps-Info.plist";
-				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = Traps;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "09270DB4-7FA2-43C2-ACD2-0FE6E8FAA126";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "DAFD38EF-54B9-4546-9181-2A51CE266A55";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Distribution;
@@ -961,7 +961,6 @@
 					"-all_load\n",
 				);
 				PREBINDING = NO;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "09270DB4-7FA2-43C2-ACD2-0FE6E8FAA126";
 				SDKROOT = iphoneos4.0;
 			};
 			name = Debug;
@@ -970,7 +969,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: roderic campbell (6453R9QR3T)";
+				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: roderic campbell";
+				CODE_SIGN_RESOURCE_RULES_PATH = "$(SDKROOT)/ResourceRules.plist";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -981,7 +982,7 @@
 				);
 				OTHER_LDFLAGS = "-lcrypto";
 				PREBINDING = NO;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "09270DB4-7FA2-43C2-ACD2-0FE6E8FAA126";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "BE527BFB-A9A1-4319-B114-9E26C37EF2E6";
 				SDKROOT = iphoneos4.0;
 			};
 			name = Release;
