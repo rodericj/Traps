@@ -1,25 +1,21 @@
-from django.shortcuts import HttpResponse, HttpResponseRedirect, render_to_response, get_object_or_404
-
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
-
 import urllib
 import operator
-
+import config
 from datetime import datetime
+
+from traps import push
+
+from Traps.traps.models import Venue, Item, TrapsUser, VenueItem, Event
+
+from django.shortcuts import HttpResponse, HttpResponseRedirect, render_to_response, get_object_or_404
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.utils import simplejson
 from django.contrib.auth.models import User
 from django.db.models import Count
-
 from django.core.exceptions import ObjectDoesNotExist
 
-from Traps.traps.models import Venue, Item, TrapsUser, VenueItem, Event
-#from lib.trapsdecorators import IsLoggedInDecorator
-import config
-try:
-	import urbanairship
-except:
-	pass
+
 
 ### IPhone views
 def set_device_token(request):
@@ -98,12 +94,14 @@ def Login(request):
 	"""
 	View for a web based login. This was a pre pre pre alpha view and may need to be deprecated
 	"""
-	uname = request.GET['uname']
-	password = request.GET['email']
+	uname = request.POST['uname']
+	password = request.POST['password']
 
 	profile = _do_login(request, uname, password)
 
-	return HttpResponseRedirect('/startup/')
+	ret = {}
+	ret['profile'] = profile.objectify()
+	return HttpResponse(simplejson.dumps(ret), mimetype='application/json')
 	
 def trapWasHere(user, venue, itemsThatAreTraps):
 	"""
@@ -379,6 +377,18 @@ def get_my_user_profile(request):
 	response =  GetUserProfile(request, user_profile.id)
 	return response
 
+def DoesUserExist(request, uid):
+	"""
+	For the webapp, need to determine if the given user exists
+	"""
+	ret = {}
+	try:
+		User.objects.get(username=uid)
+		ret['exists'] = True
+	except:
+		ret['exists'] = False
+	return HttpResponse(simplejson.dumps(ret), mimetype='application/json')
+
 def GetUserProfile(request, uid):
 	"""
 	Return the user's profile of the user with passed in uid
@@ -548,29 +558,11 @@ def _notify_trap_setter(uid, venue):
 	trapSetter.killCount += 1
 	trapSetter.save()
 	trapSetter.event_set.create(type='HT', data1=uid)
-	##TODO: configify this: From go.urbanairship.com. This is the App key and the APP MASTER SECRET...not the app secret
 
-	#development urban airship values
-	airship = urbanairship.Airship('EK_BtrOrSOmo95TTsAb_Fw', 'vAixh-KLT5u0Ay8Xv6cf4Q')
-
-	#production urbain airship values
-	#airship = urbanairship.Airship('VsK3ssUxRzCQJ6Rs_Sf7wg', 'c_JO0OFcSNKPFhyM-3Jq2A')
-
-	#print "registering %s, %s" %(token, uid)
-	try:
-		airship.register(token)
-
-		#TODO This needs to be deferred for sure
-		airship.push({'aps':{'alert':alertNote}}, device_tokens=[token])
-	#airship.push({'aps':{'alert':alertNote}, aliases=[uid])
-	except:
-        #I'm not going to wait around for airship to not fail
-		#TODO send the exception so I know it's happening
-		#print "failed airship"
-		pass
+	setterPhone = push.iPhone()
+	setterPhone.udid = token
+	setterPhone.send_message(alertNote, sandbox=not config.PRODUCTION)
 	
-
-
 def _get_or_create_profile(user):
 	"""
 	Determines if we actually need to create a user based on what is passed in from the netz

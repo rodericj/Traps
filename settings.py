@@ -102,3 +102,8 @@ EMAIL_HOST_USER = 'rodericj'
 EMAIL_HOST_PASSWORD = 'emailpass'
 DEFAULT_FROM_EMAIL = 'roderic@gmail.com'
 SERVER_EMAIL = 'roderic@gmail.com'
+
+if PRODUCTION:
+	IPHONE_APN_PUSH_CERT = '/Users/roderic/dev/Traps/iPhoneSDKCertificates/push_certs/apns-dev.pem'
+else:
+	IPHONE_APN_PUSH_CERT = '/Users/roderic/dev/Traps/iPhoneSDKCertificates/push_certs/apns-dev.pem'
