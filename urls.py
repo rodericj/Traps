@@ -12,7 +12,6 @@ PRODUCTION_SERVERS = ['web111.webfaction.com']
 
 urlpatterns = patterns('',
     # Example:
-    (r'^startup/', 'django.views.generic.simple.direct_to_template', {'template':'nearbyplaces.html'}),
     (r'^testViews/', 'django.views.generic.simple.direct_to_template', {'template':'testviews.html'}),
     (r'^history/', 'django.views.generic.simple.direct_to_template', {'template':'history.html'}),
     (r'^profile/', 'django.views.generic.simple.direct_to_template', {'template':'profile.html'}),
@@ -29,6 +28,7 @@ urlpatterns = patterns('',
     (r'^GetUserDropHistory/', 'Traps.traps.views.GetUserDropHistory'),
     (r'^GetVenue/(?P<vid>\d+)/', 'Traps.traps.views.GetVenue'),
     (r'^GetUserProfile/(?P<uid>\d*)/?', 'Traps.traps.views.GetUserProfile'),
+    (r'^DoesUserExist/(?P<uid>\d*)/?', 'Traps.traps.views.DoesUserExist'),
     #(r'^get_my_user_profile/', 'Traps.traps.views.get_my_user_profile'),
     (r'^get_my_user_profile/', 'Traps.traps.views.get_my_user_profile'),
     (r'^search_venue/', 'Traps.traps.views.search_venue'),
