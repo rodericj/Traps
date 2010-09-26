@@ -104,6 +104,8 @@ DEFAULT_FROM_EMAIL = 'roderic@gmail.com'
 SERVER_EMAIL = 'roderic@gmail.com'
 
 if PRODUCTION:
-	IPHONE_APN_PUSH_CERT = '/Users/roderic/dev/Traps/iPhoneSDKCertificates/push_certs/apns-dev.pem'
+	IPHONE_APN_PUSH_CERT = '/home/rodericj/webapps/django/Traps/iPhoneSDKCertificates/push_certs/apns-prod-cert.pem'
+	IPHONE_APN_PUSH_KEY = '/home/rodericj/webapps/django/Traps/iPhoneSDKCertificates/push_certs/apns-prod-key.pem'
 else:
 	IPHONE_APN_PUSH_CERT = '/Users/roderic/dev/Traps/iPhoneSDKCertificates/push_certs/apns-dev.pem'
+	IPHONE_APN_PUSH_KEY = '/Users/roderic/dev/Traps/iPhoneSDKCertificates/push_certs/apns-dev.pem'
