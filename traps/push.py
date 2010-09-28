@@ -5,9 +5,11 @@ from socket import socket
 
 import datetime
 import struct
-import ssl
+#import ssl
+import OpenSSL
 import binascii
-import json
+#import json
+from django.utils import simplejson
 
 class iPhone(models.Model):
     """
@@ -72,8 +74,8 @@ class iPhone(models.Model):
         payload = custom_params
         payload['aps'] = aps_payload
 
-        s_payload = json.dumps(payload, separators=(',',':'))
-
+        #s_payload = json.dumps(payload, separators=(',',':'))
+        s_payload = simplejson.dumps(payload)
         fmt = "!cH32sH%ds" % len(s_payload)
         command = '\x00'
         msg = struct.pack(fmt, command, 32, binascii.unhexlify(self.udid), len(s_payload), s_payload)
@@ -86,6 +88,9 @@ class iPhone(models.Model):
             c = ssl.wrap_socket(s,
                                 ssl_version=ssl.PROTOCOL_SSLv3,
                                 certfile=settings.IPHONE_APN_PUSH_CERT)
+            context = SSL.Context(SSL.SSLv3_METHOD)
+            context.use_certificate_file('/home/rodericj/webapps/django/Traps/iPhoneSDKCertificates/push_certs/apns-prod-cert.pem')
+            context.use_privatekey_file('/home/rodericj/webapps/django/Traps/iPhoneSDKCertificates/push_certs/apns-prod-key.pem')
             c.connect((host_name, 2195))
             c.write(msg)
             c.close()

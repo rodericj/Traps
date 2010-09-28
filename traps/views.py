@@ -3,7 +3,7 @@ import operator
 import config
 from datetime import datetime
 
-from traps import push
+#from traps import push
 
 from Traps.traps.models import Venue, Item, TrapsUser, VenueItem, Event
 
@@ -559,9 +559,9 @@ def _notify_trap_setter(uid, venue):
 	trapSetter.save()
 	trapSetter.event_set.create(type='HT', data1=uid)
 
-	setterPhone = push.iPhone()
-	setterPhone.udid = token
-	setterPhone.send_message(alertNote, sandbox=not config.PRODUCTION)
+	#setterPhone = push.iPhone()
+	#setterPhone.udid = token
+	#setterPhone.send_message(alertNote, sandbox=not config.PRODUCTION)
 	
 def _get_or_create_profile(user):
 	"""
