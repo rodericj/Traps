@@ -27,7 +27,7 @@ class Item(models.Model):
 		return self.assetPath.split(config.MEDIA_DIRECTORY)[1]
 
 class Venue(models.Model):
-	foursquareid = models.IntegerField(blank=False, null=False)
+	foursquareid = models.IntegerField(blank=False, null=False, unique=True)
 	name = models.CharField(max_length=50)
 	latitude = models.FloatField()
 	longitude = models.FloatField()
