@@ -163,7 +163,7 @@ class VenueItem(models.Model):
 				'datetimeused':str(self.dateTimeUsed)}
 
 	def __unicode__(self):
-		return str(self.venue) + " has a " + str(self.item)
+		return str(self.venue.id) + " has a " + str(self.item)
 
 class UserItem(models.Model):
 	user = models.ForeignKey(TrapsUser)
