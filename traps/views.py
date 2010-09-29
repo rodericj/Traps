@@ -344,7 +344,7 @@ def get_friends(request):
 	friendString = request.GET['friends']
 
 	#convert the string to an array of dicts
-	friendArray = simplejson.loads(str(friendString))
+	friendArray = simplejson.loads(str(friendString.encode('utf-8')))
 	friendArray[0]['is_self']=True
 
 	#get a list of the friend ids
